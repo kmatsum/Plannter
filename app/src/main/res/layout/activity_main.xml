@@ -6,47 +6,89 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <FrameLayout
+    <ImageView
+        android:id="@+id/imgBackgroundColor"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="286dp"
-        tools:layout_editor_absoluteY="352dp">
+        android:background="@color/colorPrimary"
+        android:contentDescription="background Color for the start menu" />
 
-        <Button
-            android:id="@+id/btnStart"
-            android:layout_width="250dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="150dp"
-            android:text="Start"
-            android:textSize="50sp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/imgBackgroundColor"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorPrimary"
-            android:contentDescription="background Color for the start menu" />
+            android:layout_height="0dp"
+            android:layout_weight="70"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="80">
+
+                    <ImageView
+                        android:id="@+id/imageView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitXY"
+                        app:srcCompat="@drawable/startmenu_button_woodsign" />
+
+                    <TextView
+                        android:id="@+id/txtTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="casual"
+                        android:gravity="center"
+                        android:text="Plannter"
+                        android:textAlignment="center"
+                        android:textColor="#000000"
+                        android:textSize="50sp"
+                        android:textStyle="bold" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </FrameLayout>
+
+                <Button
+                    android:id="@+id/button"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="20"
+                    android:background="#00FFFFFF"
+                    android:fontFamily="@font/finger_paint"
+                    android:paddingLeft="20sp"
+                    android:text="Start"
+                    android:textColor="#4CAF50"
+                    android:textSize="40sp" />
+
+            </LinearLayout>
+        </ScrollView>
 
         <ImageView
             android:id="@+id/imgBackgroundBanner"
-            android:layout_width="wrap_content"
-            android:layout_height="237dp"
-            android:layout_gravity="bottom"
-            android:contentDescription="background banner for the start menu"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="30"
+            android:scaleType="fitXY"
             app:srcCompat="@drawable/startmenu_background_banner2" />
 
-        <TextView
-            android:id="@+id/txtTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center|top"
-            android:layout_marginTop="50dp"
-            android:text="Plannter"
-            android:textAlignment="center"
-            android:textColor="#FFFFFF"
-            android:textSize="50sp"
-            android:textStyle="bold" />
+    </LinearLayout>
 
-    </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
