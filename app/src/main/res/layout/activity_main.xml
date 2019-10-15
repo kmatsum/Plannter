@@ -30,9 +30,9 @@
 
         <ImageView
             android:id="@+id/imgBackgroundPlant"
-            android:layout_width="wrap_content"
+            android:layout_width="366dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center"
+            android:layout_gravity="bottom|left"
             android:layout_marginBottom="25dp"
             app:srcCompat="@drawable/startmenu_background_plant" />
 
@@ -42,7 +42,7 @@
             android:layout_height="237dp"
             android:layout_gravity="bottom"
             android:contentDescription="background banner for the start menu"
-            tools:srcCompat="@drawable/startmenu_background_banner2" />
+            app:srcCompat="@drawable/startmenu_background_banner2" />
 
         <TextView
             android:id="@+id/txtTitle"
