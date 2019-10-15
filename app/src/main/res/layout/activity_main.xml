@@ -29,14 +29,6 @@
             android:contentDescription="background Color for the start menu" />
 
         <ImageView
-            android:id="@+id/imgBackgroundPlant"
-            android:layout_width="366dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|left"
-            android:layout_marginBottom="25dp"
-            app:srcCompat="@drawable/startmenu_background_plant" />
-
-        <ImageView
             android:id="@+id/imgBackgroundBanner"
             android:layout_width="wrap_content"
             android:layout_height="237dp"
