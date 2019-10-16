@@ -14,6 +14,7 @@
         android:contentDescription="background Color for the start menu" />
 
     <LinearLayout
+        android:id="@+id/outerLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -23,24 +24,27 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ScrollView
+            android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="70"
             android:fillViewport="true">
 
             <LinearLayout
+                android:id="@+id/scrollLinearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:orientation="vertical">
 
                 <FrameLayout
+                    android:id="@+id/frameLayout"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="80">
 
                     <ImageView
-                        android:id="@+id/imageView"
+                        android:id="@+id/imgWoodenSign"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="fitXY"
@@ -58,16 +62,10 @@
                         android:textSize="50sp"
                         android:textStyle="bold" />
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
                 </FrameLayout>
 
                 <Button
-                    android:id="@+id/button"
+                    android:id="@+id/btnStart"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="20"
