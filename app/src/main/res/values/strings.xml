@@ -1,11 +1,12 @@
 <resources>
     <string name="app_name">Plannter</string>
     <string name="background_color_for_the_start_menu">background Color for the start menu</string>
+
     <string name="next">Next</string>
     <string name="back">Back</string>
     <string name="plant">Plant</string>
     <string name="harvest">Harvest</string>
     <string name="plant_crop">Plant Crop</string>
-    <string name="plant_date">Plant Date</string>
+    <string name="plant_date">Plant By Date</string>
     <string name="crop_info">Crop Info</string>
 </resources>
