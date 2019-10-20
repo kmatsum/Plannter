@@ -22,7 +22,7 @@
             android:onClick="menuItemClicked"
             android:paddingLeft="20sp"
             android:text="@string/plant_date"
-            android:textColor="#4CAF50"
+            android:textColor="@color/colorTitleText"
             android:textSize="40sp" />
 
         <Button
@@ -48,7 +48,7 @@
             android:onClick="menuItemClicked"
             android:paddingLeft="20sp"
             android:text="@string/crop_info"
-            android:textColor="#4CAF50"
+            android:textColor="@color/colorTitleText"
             android:textSize="40sp" />
 
     </LinearLayout>

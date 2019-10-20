@@ -55,7 +55,7 @@
                 android:onClick="onClick"
                 android:text="@string/back"
                 android:textAlignment="center"
-                android:textColor="#4CAF50"
+                android:textColor="@color/colorTitleText"
                 android:textSize="25sp" />
 
             <Button
@@ -68,7 +68,7 @@
                 android:onClick="onClick"
                 android:text="@string/next"
                 android:textAlignment="center"
-                android:textColor="#4CAF50"
+                android:textColor="@color/colorTitleText"
                 android:textSize="25sp" />
 
         </LinearLayout>
