@@ -71,6 +71,7 @@
                     android:layout_weight="20"
                     android:background="#00FFFFFF"
                     android:fontFamily="@font/finger_paint"
+                    android:onClick="toMainMenu"
                     android:paddingLeft="20sp"
                     android:text="Start"
                     android:textColor="#4CAF50"
