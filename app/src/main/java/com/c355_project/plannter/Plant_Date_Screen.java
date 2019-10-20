@@ -2,6 +2,7 @@ package com.c355_project.plannter;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -27,6 +28,11 @@ public class Plant_Date_Screen extends AppCompatActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case (R.id.btnBack): {
+                Intent openMainMenu = new Intent(getApplicationContext(), Main_Menu.class);
+                startActivity(openMainMenu);
+            } break;
+
+            case (R.id.btnNext): {
 
             } break;
 
