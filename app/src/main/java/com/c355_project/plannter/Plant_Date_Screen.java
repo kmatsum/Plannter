@@ -4,7 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.CalendarView;
+import android.widget.Switch;
+import android.widget.Toast;
 
 public class Plant_Date_Screen extends AppCompatActivity {
 
@@ -16,6 +19,20 @@ public class Plant_Date_Screen extends AppCompatActivity {
         setContentView(R.layout.activity_plant_date_ui);
 
         calendarView = findViewById(R.id.calendarView);
-        calendarView.setBackgroundColor(Color.WHITE);
+        calendarView.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+    }
+
+
+
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case (R.id.btnBack): {
+
+            } break;
+
+            default: {
+                Toast.makeText(this, "[ERROR] Menu request did not function correctly, try again!", Toast.LENGTH_SHORT).show();
+            } break;
+        }
     }
 }
