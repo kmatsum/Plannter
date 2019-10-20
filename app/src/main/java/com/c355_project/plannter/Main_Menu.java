@@ -5,19 +5,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
-public class MainActivity extends AppCompatActivity {
+public class Main_Menu extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_menu);
     }
 
 
 
-    public void toMainMenu (View view) {
-        Intent toMainMenu = new Intent(getApplicationContext(), Main_Menu.class);
-        startActivity(toMainMenu);
+    public void menuItemClicked (View view) {
+        switch (view.getId()) {
+            case (1): {
+
+            }
+        }
     }
 }
-
