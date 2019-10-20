@@ -74,7 +74,7 @@
                     android:onClick="toMainMenu"
                     android:paddingLeft="20sp"
                     android:text="Start"
-                    android:textColor="#4CAF50"
+                    android:textColor="@color/colorTitleText"
                     android:textSize="40sp" />
 
             </LinearLayout>
