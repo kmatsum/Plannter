@@ -11,7 +11,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".Main_Menu"></activity>
         <activity android:name=".Plant_Date_Screen" />
-        <activity android:name=".StartMenu">
+        <activity android:name=".Start_Menu">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
