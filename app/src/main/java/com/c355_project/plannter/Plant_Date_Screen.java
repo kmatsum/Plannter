@@ -28,7 +28,6 @@ public class Plant_Date_Screen extends AppCompatActivity {
         setContentView(R.layout.activity_plant_date_ui);
 
         calendarView = findViewById(R.id.calendarView);
-        txtCropHarvest = findViewById(R.id.txtCropHarvest);
         rbtnHarvest = findViewById(R.id.rbtnHarvest);
 
         calendarView.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
@@ -45,40 +44,65 @@ public class Plant_Date_Screen extends AppCompatActivity {
                 {
                     if (monthAndDay >= 719 & monthAndDay <=913)
                     {
-                        if (monthAndDay >= 719 & monthAndDay < 726)
+                        if (monthAndDay < 726)
                         {
                             txtCropHarvest.setText("");
                             txtCropHarvest.setText("You can harvest.....\n Tomatoes \n Peppers \n Cucumbers \n Squash");
                         }
-                        if ((monthAndDay >= 726 & monthAndDay <=731) || (monthAndDay >= 81))
+                        if (monthAndDay >= 726 & monthAndDay <=731)
                         {
                             txtCropHarvest.setText("");
                             txtCropHarvest.setText("You can harvest..... \n Tomatoes \n Peppers \n Cucumbers \n Okra \n Squash \n Chard");
                         }
-                        if (monthAndDay >= 82 & monthAndDay <=89)
+                        if (monthAndDay == 81)
+                        {
+                            txtCropHarvest.setText("");
+                            txtCropHarvest.setText("You can harvest..... \n Tomatoes \n Peppers \n Cucumbers \n Okra \n Squash \n Chard");
+                        }
+                        if (monthAndDay >= 82 & monthAndDay < 89)
                         {
                             txtCropHarvest.setText("");
                             txtCropHarvest.setText("You can harvest..... \n Tomatoes \n Peppers \n Cabbage \n Cucumber \n Okra \n Squash \n Chard \n Beets \n Green Beans - Bush \n Radish or Turnip");
                         }
-                        if (monthAndDay >= 82 & monthAndDay <=830)
+                        if (monthAndDay == 89)
                         {
-                            txtCropHarvest.setText("You can harvest..... \nCabbage");
+                            txtCropHarvest.setText("");
+                            txtCropHarvest.setText("You can harvest..... \n Tomatoes \n Peppers \n Melons \n Potatoes \n Sweet Corn \n Cabbage \n Cucumber \n Okra \n Squash \n Chard \n Peas \n Beets \n Green Beans - Bush \n Radish or Turnip");
                         }
-                        if (monthAndDay >= 719 & monthAndDay <=816)
+                        if (monthAndDay >= 810 & monthAndDay < 816)
                         {
-                            txtCropHarvest.setText("You can harvest..... \n Cucumbers");
+                            txtCropHarvest.setText("");
+                            txtCropHarvest.setText("You can harvest..... \n Tomatoes \n Peppers \n Melons \n Potatoes \n Sweet Corn \n Cabbage \n Cucumber \n Okra \n Squash \n Chard \n Peas \n Beets \n Green Beans - Bush \n Radish or Turnip");
                         }
-                        if (monthAndDay >= 726 & monthAndDay <=830)
+                        if (monthAndDay >= 816 & monthAndDay < 823)
                         {
-                            txtCropHarvest.setText("Okra");
+                            txtCropHarvest.setText("");
+                            txtCropHarvest.setText("You can harvest..... \n Tomatoes \n Peppers \n Melons \n Potatoes \n Sweet Corn \n Cabbage \n Cucumber \n Okra \n Pumpkins \n Chard \n Peas \n Beets \n Broccoli \n Green Beans - Bush \n Radish or Turnip \n Lettuce - Leaf");
                         }
-                        if (monthAndDay >= 816 & monthAndDay <=830)
+                        if (monthAndDay >= 823 & monthAndDay < 830)
                         {
-                            txtCropHarvest.setText("Pumpkins");
+                            txtCropHarvest.setText("");
+                            txtCropHarvest.setText("You can harvest..... \n Tomatoes \n Peppers \n Melons \n Potatoes \n Sweet Corn \n Cabbage \n Okra \n Pumpkins \n Carrots \n Cauliflower \n Chard \n Peas \n Beets \n Broccoli \n Radish or Turnip \n Lettuce - Leaf \n Spinach");
                         }
-                        if (monthAndDay >= 719 & monthAndDay <=89)
+                        if (monthAndDay == 830)
                         {
-                            txtCropHarvest.setText("Tomatoes \n Peppers");
+                            txtCropHarvest.setText("");
+                            txtCropHarvest.setText("You can harvest..... \n Tomatoes \n Melons \n Sweet Corn \n Cabbage \n Okra \n Pumpkins \n Carrots \n Cauliflower \n Chard \n Peas \n Broccoli \n Radish or Turnip \n Lettuce - Leaf \n Spinach");
+                        }
+                        if (monthAndDay == 91 || monthAndDay == 92 || monthAndDay == 93 || monthAndDay == 94 || monthAndDay == 95)
+                        {
+                            txtCropHarvest.setText("");
+                            txtCropHarvest.setText("You can harvest..... \n Tomatoes \n Melons \n Sweet Corn \n Cabbage \n Okra \n Pumpkins \n Carrots \n Cauliflower \n Chard \n Peas \n Broccoli \n Radish or Turnip \n Lettuce - Leaf \n Spinach");
+                        }
+                        if (monthAndDay == 96 || monthAndDay == 97 || monthAndDay == 98 || monthAndDay == 99 || monthAndDay == 910 || monthAndDay == 911 || monthAndDay == 912)
+                        {
+                            txtCropHarvest.setText("");
+                            txtCropHarvest.setText("You can harvest..... \n Carrots \n Cauliflower \n Chard \n Broccoli \n Lettuce - Leaf \n Spinach");
+                        }
+                        if(monthAndDay == 913)
+                        {
+                            txtCropHarvest.setText("");
+                            txtCropHarvest.setText("You can Harvest..... \n Chard \n Broccoli \n Spinach");
                         }
                     }
                     else
