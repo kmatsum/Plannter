@@ -18,9 +18,16 @@ import android.widget.Toast;
 
 public class Plant_Date_Screen extends AppCompatActivity {
 
+    //Variables
     CalendarView calendarView;
     TextView txtCropHarvest;
     RadioButton rbtnHarvest;
+    String Month;
+    String Day;
+    String Year;
+    String concatMonthAndDay;
+    int monthAndDay;
+    Intent openPlantHarvestScreen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,94 +36,83 @@ public class Plant_Date_Screen extends AppCompatActivity {
 
         calendarView = findViewById(R.id.calendarView);
         rbtnHarvest = findViewById(R.id.rbtnHarvest);
+        txtCropHarvest = findViewById(R.id.txtCropHarvest);
+        openPlantHarvestScreen = new Intent(getApplicationContext(), Plant_Harvest_Screen.class);
 
         calendarView.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-
         calendarView.setOnDateChangeListener(new OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView calendarView, int year, int month, int day) {
 
-                String Month = String.valueOf(month + 1);
-                String Day = String.valueOf(day);
-                String concatMonthAndDay = Month + Day;
-                int monthAndDay = Integer.parseInt(concatMonthAndDay);
+                //Concat both month and day so comparison is easier and code is cleaner
+                Month = String.valueOf(month + 1);
+                Day = String.valueOf(day);
+                Year = String.valueOf(year);
+                concatMonthAndDay = Month + Day;
+                monthAndDay = Integer.parseInt(concatMonthAndDay);
+
+                //If radio button is checked, check to see date range to determine what can be harvested
                 if (rbtnHarvest.isChecked())
                 {
-                    if (monthAndDay >= 719 & monthAndDay <=913)
-                    {
-                        if (monthAndDay < 726)
+                        if (monthAndDay >= 719 & monthAndDay < 726)
                         {
-                            txtCropHarvest.setText("");
-                            txtCropHarvest.setText("You can harvest.....\n Tomatoes \n Peppers \n Cucumbers \n Squash");
+                            putExtra(openPlantHarvestScreen,"7/19-7/25","You can harvest.....\n Tomatoes \n Peppers \n Cucumbers \n Squash");
                         }
-                        if (monthAndDay >= 726 & monthAndDay <=731)
+                        else if (monthAndDay >= 726 & monthAndDay <=731)
                         {
-                            txtCropHarvest.setText("");
-                            txtCropHarvest.setText("You can harvest..... \n Tomatoes \n Peppers \n Cucumbers \n Okra \n Squash \n Chard");
+                            putExtra(openPlantHarvestScreen,"7/26-7/30","You can harvest..... \n Tomatoes \n Peppers \n Cucumbers \n Okra \n Squash \n Chard");
                         }
-                        if (monthAndDay == 81)
+                        else if (monthAndDay == 81)
                         {
-                            txtCropHarvest.setText("");
-                            txtCropHarvest.setText("You can harvest..... \n Tomatoes \n Peppers \n Cucumbers \n Okra \n Squash \n Chard");
+                            putExtra(openPlantHarvestScreen,"8/1","You can harvest..... \n Tomatoes \n Peppers \n Cucumbers \n Okra \n Squash \n Chard");
                         }
-                        if (monthAndDay >= 82 & monthAndDay < 89)
+                        else if (monthAndDay >= 82 & monthAndDay < 89)
                         {
-                            txtCropHarvest.setText("");
-                            txtCropHarvest.setText("You can harvest..... \n Tomatoes \n Peppers \n Cabbage \n Cucumber \n Okra \n Squash \n Chard \n Beets \n Green Beans - Bush \n Radish or Turnip");
+                            putExtra(openPlantHarvestScreen,"8/2-8/8","You can harvest..... \n Tomatoes \n Peppers \n Cabbage \n Cucumber \n Okra \n Squash \n Chard \n Beets \n Green Beans - Bush \n Radish or Turnip");
                         }
-                        if (monthAndDay == 89)
+                        else if (monthAndDay == 89)
                         {
-                            txtCropHarvest.setText("");
-                            txtCropHarvest.setText("You can harvest..... \n Tomatoes \n Peppers \n Melons \n Potatoes \n Sweet Corn \n Cabbage \n Cucumber \n Okra \n Squash \n Chard \n Peas \n Beets \n Green Beans - Bush \n Radish or Turnip");
+                            putExtra(openPlantHarvestScreen,"8/9","You can harvest..... \n Tomatoes \n Peppers \n Melons \n Potatoes \n Sweet Corn \n Cabbage \n Cucumber \n Okra \n Squash \n Chard \n Peas \n Beets \n Green Beans - Bush \n Radish or Turnip");
                         }
-                        if (monthAndDay >= 810 & monthAndDay < 816)
+                        else if (monthAndDay >= 810 & monthAndDay < 816)
                         {
-                            txtCropHarvest.setText("");
-                            txtCropHarvest.setText("You can harvest..... \n Tomatoes \n Peppers \n Melons \n Potatoes \n Sweet Corn \n Cabbage \n Cucumber \n Okra \n Squash \n Chard \n Peas \n Beets \n Green Beans - Bush \n Radish or Turnip");
+                            putExtra(openPlantHarvestScreen,"8/10-8/15","You can harvest..... \n Tomatoes \n Peppers \n Melons \n Potatoes \n Sweet Corn \n Cabbage \n Cucumber \n Okra \n Squash \n Chard \n Peas \n Beets \n Green Beans - Bush \n Radish or Turnip");
                         }
-                        if (monthAndDay >= 816 & monthAndDay < 823)
+                        else if (monthAndDay >= 816 & monthAndDay < 823)
                         {
-                            txtCropHarvest.setText("");
-                            txtCropHarvest.setText("You can harvest..... \n Tomatoes \n Peppers \n Melons \n Potatoes \n Sweet Corn \n Cabbage \n Cucumber \n Okra \n Pumpkins \n Chard \n Peas \n Beets \n Broccoli \n Green Beans - Bush \n Radish or Turnip \n Lettuce - Leaf");
+                            putExtra(openPlantHarvestScreen,"8/16-8/22","You can harvest..... \n Tomatoes \n Peppers \n Melons \n Potatoes \n Sweet Corn \n Cabbage \n Cucumber \n Okra \n Pumpkins \n Chard \n Peas \n Beets \n Broccoli \n Green Beans - Bush \n Radish or Turnip \n Lettuce - Leaf");
                         }
-                        if (monthAndDay >= 823 & monthAndDay < 830)
+                        else if (monthAndDay >= 823 & monthAndDay < 830)
                         {
-                            txtCropHarvest.setText("");
-                            txtCropHarvest.setText("You can harvest..... \n Tomatoes \n Peppers \n Melons \n Potatoes \n Sweet Corn \n Cabbage \n Okra \n Pumpkins \n Carrots \n Cauliflower \n Chard \n Peas \n Beets \n Broccoli \n Radish or Turnip \n Lettuce - Leaf \n Spinach");
+                            putExtra(openPlantHarvestScreen,"8/23-8/29","You can harvest..... \n Tomatoes \n Peppers \n Melons \n Potatoes \n Sweet Corn \n Cabbage \n Okra \n Pumpkins \n Carrots \n Cauliflower \n Chard \n Peas \n Beets \n Broccoli \n Radish or Turnip \n Lettuce - Leaf \n Spinach");
                         }
-                        if (monthAndDay == 830)
+                        else if (monthAndDay == 830)
                         {
-                            txtCropHarvest.setText("");
-                            txtCropHarvest.setText("You can harvest..... \n Tomatoes \n Melons \n Sweet Corn \n Cabbage \n Okra \n Pumpkins \n Carrots \n Cauliflower \n Chard \n Peas \n Broccoli \n Radish or Turnip \n Lettuce - Leaf \n Spinach");
+                            putExtra(openPlantHarvestScreen,"8/30","You can harvest..... \n Tomatoes \n Melons \n Sweet Corn \n Cabbage \n Okra \n Pumpkins \n Carrots \n Cauliflower \n Chard \n Peas \n Broccoli \n Radish or Turnip \n Lettuce - Leaf \n Spinach");
                         }
-                        if (monthAndDay == 91 || monthAndDay == 92 || monthAndDay == 93 || monthAndDay == 94 || monthAndDay == 95)
+                        else if (monthAndDay == 91 || monthAndDay == 92 || monthAndDay == 93 || monthAndDay == 94 || monthAndDay == 95)
                         {
-                            txtCropHarvest.setText("");
-                            txtCropHarvest.setText("You can harvest..... \n Tomatoes \n Melons \n Sweet Corn \n Cabbage \n Okra \n Pumpkins \n Carrots \n Cauliflower \n Chard \n Peas \n Broccoli \n Radish or Turnip \n Lettuce - Leaf \n Spinach");
+                            putExtra(openPlantHarvestScreen,"9/1-9/5","You can harvest..... \n Tomatoes \n Melons \n Sweet Corn \n Cabbage \n Okra \n Pumpkins \n Carrots \n Cauliflower \n Chard \n Peas \n Broccoli \n Radish or Turnip \n Lettuce - Leaf \n Spinach");
                         }
-                        if (monthAndDay == 96 || monthAndDay == 97 || monthAndDay == 98 || monthAndDay == 99 || monthAndDay == 910 || monthAndDay == 911 || monthAndDay == 912)
+                        else if (monthAndDay == 96 || monthAndDay == 97 || monthAndDay == 98 || monthAndDay == 99 || monthAndDay == 910 || monthAndDay == 911 || monthAndDay == 912)
                         {
-                            txtCropHarvest.setText("");
-                            txtCropHarvest.setText("You can harvest..... \n Carrots \n Cauliflower \n Chard \n Broccoli \n Lettuce - Leaf \n Spinach");
+                            putExtra(openPlantHarvestScreen,"9/6-9/12","You can harvest..... \n Carrots \n Cauliflower \n Chard \n Broccoli \n Lettuce - Leaf \n Spinach");
                         }
-                        if(monthAndDay == 913)
+                        else if(monthAndDay == 913)
                         {
-                            txtCropHarvest.setText("");
-                            txtCropHarvest.setText("You can Harvest..... \n Chard \n Broccoli \n Spinach");
+                            putExtra(openPlantHarvestScreen,"9/13","You can Harvest..... \n Chard \n Broccoli \n Spinach");
                         }
-                    }
-                    else
-                    {
-                        MakeToast("No Plants are able to be harvested at this time");
-                    }
+                        else
+                        {
+                            MakeToast("No Plants are able to be harvested at this time");
+                        }
 
                 }
             }
         });
     }
 
-
-
+    //Methods
     public void onClick(View view) {
         switch (view.getId()) {
             case (R.id.btnBack): {
@@ -125,7 +121,10 @@ public class Plant_Date_Screen extends AppCompatActivity {
             } break;
 
             case (R.id.btnNext): {
-
+                putExtra(openPlantHarvestScreen,"Month", Month);
+                putExtra(openPlantHarvestScreen,"Day", Day);
+                putExtra(openPlantHarvestScreen,"Year", Year);
+                startActivity(openPlantHarvestScreen);
             } break;
 
             default: {
@@ -137,5 +136,9 @@ public class Plant_Date_Screen extends AppCompatActivity {
     public void MakeToast(String Message)
     {
         Toast.makeText(this, Message, Toast.LENGTH_SHORT).show();
+    }
+    public void putExtra(Intent intent, String name, String value)
+    {
+        intent.putExtra(name, value);
     }
 }

@@ -9,4 +9,6 @@
     <string name="plant_crop">Plant Crop</string>
     <string name="plant_date">Plant By Date</string>
     <string name="crop_info">Crop Info</string>
+    <string name="btn_Back">Back</string>
+    <string name="you_can_plant_harvest_the_following_crops_on">You can Plant/Harvest the following crops on</string>
 </resources>
