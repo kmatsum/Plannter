@@ -36,9 +36,12 @@ public class Main_Menu extends AppCompatActivity {
             //Used for handling exceptions on if the given ViewID and the expected ViewID does not match
             default: {
                 //Toast Error Information
-                Toast.makeText(this, "[ERROR] Menu request did not function correctly, try again!", Toast.LENGTH_SHORT).show();
+                MakeToast("[ERROR] Menu request did not function correctly, try again!");
             }
         }
     }
-
+    public void MakeToast(String Message)
+    {
+        Toast.makeText(this, Message, Toast.LENGTH_SHORT).show();
+    }
 }
