@@ -1,10 +1,11 @@
 package com.c355_project.plannter;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+
 
 public class Start_Menu extends AppCompatActivity {
     @Override
@@ -13,11 +14,20 @@ public class Start_Menu extends AppCompatActivity {
         setContentView(R.layout.activity_start_menu);
     }
 
+
+
+//CLICK METHOD =====================================================================================
     public void toMainMenu (View view) {
         Intent toMainMenu = new Intent(getApplicationContext(), Main_Menu.class);
         startActivity(toMainMenu);
     }
 }
+
+
+
+//METHODS ==========================================================================================
+
+
 
 //How to insert values into the db during runtime
 //===============================================
