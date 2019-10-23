@@ -30,7 +30,8 @@ public class Main_Menu extends AppCompatActivity {
 
             case (R.id.btnPlantInfo): {
                 //Put the intent code needed for PlantInfo Screen Here
-                Intent openPlantInfo;
+                Intent openPlantInfo = new Intent(getApplicationContext(), Plant_Info.class);
+                startActivity(openPlantInfo);
             } break;
 
             //Used for handling exceptions on if the given ViewID and the expected ViewID does not match
