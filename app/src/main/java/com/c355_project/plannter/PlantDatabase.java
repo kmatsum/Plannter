@@ -23,7 +23,22 @@ public abstract class PlantDatabase extends RoomDatabase {
         } else {
             instance = Room.databaseBuilder(context.getApplicationContext(),
                     PlantDatabase.class, DB_NAME).fallbackToDestructiveMigration().build();
-            instance.plantDao().insertPlant(new Plant("Broccoli"));
+            String seedCompany = "General";
+            instance.plantDao().insertPlant(new Plant("Onion - Sets", seedCompany,
+                    6, 4, 6, 52,
+                    "General guidelines for Onion - sets."));
+            instance.plantDao().insertPlant(new Plant("Peas", seedCompany,
+                    5, 3, 4, 52,
+                    "General guidelines for Peas."));
+            instance.plantDao().insertPlant(new Plant("Spinach", seedCompany,
+                    5, -1, 3, 52,
+                    "General guidelines for Spinach."));
+            instance.plantDao().insertPlant(new Plant("Cabbage", seedCompany,
+                    4, 4, 4, 9,
+                    "General guidelines for Cabbage."));
+            instance.plantDao().insertPlant(new Plant("Cauliflower", seedCompany,
+                    4, 6, 4, 9,
+                    "General guidelines for Cauliflower."));
             return instance;
         }
     }
