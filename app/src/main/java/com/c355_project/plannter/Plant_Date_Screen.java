@@ -107,7 +107,7 @@ public class Plant_Date_Screen extends AppCompatActivity {
 
 
 
-    //Methods
+//CLICK METHOD =====================================================================================
     public void onClick(View view) {
         switch (view.getId()) {
             case (R.id.btnBack): {
@@ -130,7 +130,7 @@ public class Plant_Date_Screen extends AppCompatActivity {
 
 
 
-//Methods
+//METHODS ==========================================================================================
     public void makeToast(String Message) {
         Toast.makeText(this, Message, Toast.LENGTH_SHORT).show();
     }

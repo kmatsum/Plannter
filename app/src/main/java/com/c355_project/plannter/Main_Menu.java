@@ -15,7 +15,8 @@ public class Main_Menu extends AppCompatActivity {
     }
 
 
-//Methods
+
+//CLICK METHOD =====================================================================================
     public void menuItemClicked (View view) {
         switch (view.getId()) {
             case (R.id.btnPlantByDate): {
@@ -42,6 +43,9 @@ public class Main_Menu extends AppCompatActivity {
         }
     }
 
+
+
+//METHODS ==========================================================================================
     public void makeToast(String Message) {
         Toast.makeText(this, Message, Toast.LENGTH_SHORT).show();
     }

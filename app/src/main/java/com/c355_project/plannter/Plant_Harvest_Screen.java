@@ -98,7 +98,7 @@ public class Plant_Harvest_Screen extends AppCompatActivity {
 
 
 
-//Methods
+//METHODS ==========================================================================================
     public void makeToast(String Message) {
         Toast.makeText(this, Message, Toast.LENGTH_SHORT).show();
     }

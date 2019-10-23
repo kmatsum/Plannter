@@ -16,11 +16,18 @@ public class Start_Menu extends AppCompatActivity {
 
 
 
+//CLICK METHOD =====================================================================================
     public void toMainMenu (View view) {
         Intent toMainMenu = new Intent(getApplicationContext(), Main_Menu.class);
         startActivity(toMainMenu);
     }
 }
+
+
+
+//METHODS ==========================================================================================
+
+
 
 //How to insert values into the db during runtime
 //===============================================
