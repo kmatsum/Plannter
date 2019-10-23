@@ -17,7 +17,5 @@ public class Plant_Info extends AppCompatActivity {
         String[] PlaceHolderSpinnerDropdown = {"Carrots", "Beets"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String> (this, R.layout.spinner_item, PlaceHolderSpinnerDropdown);
         spnrSelectPlant.setAdapter(adapter);
-
-
     }
 }
