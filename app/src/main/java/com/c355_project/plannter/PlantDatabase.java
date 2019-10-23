@@ -26,10 +26,27 @@ public abstract class PlantDatabase extends RoomDatabase {
             return databaseInstance;
         } else {
             //Set the instance of the database, but since it does not exist, it will create a new file
-            databaseInstance = Room.databaseBuilder(context.getApplicationContext(), PlantDatabase.class, DB_NAME).fallbackToDestructiveMigration().build();
-
+            databaseInstance = Room.databaseBuilder(context.getApplicationContext(),
+                    PlantDatabase.class, DB_NAME).fallbackToDestructiveMigration().build();
+            
+            String seedCompany = "General";
             //Populate the Database
-            databaseInstance.plantDao().insertPlant(new Plant("Broccoli"));
+            databaseInstance.plantDao().insertPlant(new Plant("Onion - Sets", seedCompany,
+                    6, 4, 6, 52,
+                    "General guidelines for Onion - sets."));
+            databaseInstance.plantDao().insertPlant(new Plant("Peas", seedCompany,
+                    5, 3, 4, 52,
+                    "General guidelines for Peas."));
+            databaseInstance.plantDao().insertPlant(new Plant("Spinach", seedCompany,
+                    5, -1, 3, 52,
+                    "General guidelines for Spinach."));
+            databaseInstance.plantDao().insertPlant(new Plant("Cabbage", seedCompany,
+                    4, 4, 4, 9,
+                    "General guidelines for Cabbage."));
+            databaseInstance.plantDao().insertPlant(new Plant("Cauliflower", seedCompany,
+                    4, 6, 4, 9,
+                    "General guidelines for Cauliflower."));
+          
             return databaseInstance;
         }
     }
