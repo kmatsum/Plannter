@@ -1,6 +1,8 @@
 package com.c355_project.plannter;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -33,6 +35,10 @@ public class Main_Menu extends AppCompatActivity {
                 //Put the intent code needed for PlantInfo Screen Here
                 Intent openPlantInfo = new Intent(getApplicationContext(), Plant_Info.class);
                 startActivity(openPlantInfo);
+            } break;
+
+            case (R.id.imgSettings): {
+
             } break;
 
             //Used for handling exceptions on if the given ViewID and the expected ViewID does not match
