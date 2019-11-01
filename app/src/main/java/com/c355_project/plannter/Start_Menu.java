@@ -18,7 +18,7 @@ public class Start_Menu extends AppCompatActivity {
 
 //CLICK METHOD =====================================================================================
     public void toMainMenu (View view) {
-        Intent toMainMenu = new Intent(getApplicationContext(), Main_Menu.class);
+        Intent toMainMenu = new Intent(getApplicationContext(), Main_Window.class);
         startActivity(toMainMenu);
     }
 }

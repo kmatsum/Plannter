@@ -12,7 +12,7 @@
       
         <activity android:name=".Plant_Info"></activity>
         <activity android:name=".Plant_Harvest_Screen"></activity>
-        <activity android:name=".Main_Menu" />
+        <activity android:name=".Main_Window" />
         <activity android:name=".Plant_Date_Screen" />
         <activity android:name=".Start_Menu">
             <intent-filter>
