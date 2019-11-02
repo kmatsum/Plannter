@@ -78,7 +78,6 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
 
 //LISTENER METHODS =================================================================================
     public void onClick(View view) {
-        Main_Window Main_Window = (Main_Window) getActivity();
         switch (view.getId()) {
             case (R.id.btnBack): {
                 Main_Window.changeFragment("MainMenu");
