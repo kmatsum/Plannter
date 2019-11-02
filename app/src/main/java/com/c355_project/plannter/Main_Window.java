@@ -8,16 +8,32 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class Main_Window extends AppCompatActivity {
+    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
     //Fragments
     Frag_mainMenu Frag_mainMenu;
     Frag_plantInfo Frag_plantInfo;
     Frag_plantDate Frag_plantDate;
 
-    //Plant Database
+    //LastFrostDate
+    Date lastSpringFrostDate;
+    Date lastFallFrostDate;
+
+    {
+        try {
+            lastSpringFrostDate = dateFormat.parse("04/29/2019");
+            lastFallFrostDate = dateFormat.parse("10/08/2019");
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
 
     //Plant List
     List<Plant> PlantList;
@@ -37,7 +53,7 @@ public class Main_Window extends AppCompatActivity {
             @Override
             public void run() {
                     //Get plants
-                    List<Plant> PlantList = PlantDatabase.getInstance(getApplicationContext()).plantDao().getAll();
+                    PlantList = PlantDatabase.getInstance(getApplicationContext()).plantDao().getAll();
 
                     //[DEBUG] Print all the plant names
                     System.out.println("------------------------------------");
