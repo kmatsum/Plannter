@@ -53,7 +53,7 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener {
     public void onClick (View view) {
         switch (view.getId()) {
             case (R.id.btnBack): {
-
+                Main_Window.changeFragment("mainMenu");
             } break;
 
             case (R.id.btnNext): {
