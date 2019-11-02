@@ -14,6 +14,12 @@ import com.google.android.gms.ads.AdView;
 
 public class Frag_mainMenu extends Fragment implements View.OnClickListener {
 
+    //Main_Window Activity Instantiation
+    Main_Window Main_Window;
+
+
+
+    //LIFECYCLE METHODS ================================================================================
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -26,7 +32,7 @@ public class Frag_mainMenu extends Fragment implements View.OnClickListener {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        Main_Window = (Main_Window) getActivity();
 
         //Set all OnClickListeners needed for this View
         view.findViewById(R.id.btnPlantByDate).setOnClickListener(this);
@@ -42,6 +48,7 @@ public class Frag_mainMenu extends Fragment implements View.OnClickListener {
 
 
 
+//onClick METHOD ===================================================================================
     @Override
     public void onClick (View view) {
         Main_Window Main_Window = (Main_Window) getActivity();
@@ -73,6 +80,8 @@ public class Frag_mainMenu extends Fragment implements View.OnClickListener {
             }
         }
     }
+
+
 
 //METHODS ==========================================================================================
     public void makeToast(String Message) {

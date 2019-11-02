@@ -27,7 +27,7 @@ public class Plant_Harvest_Screen extends AppCompatActivity {
 
         txtDisplayDate = findViewById(R.id.txtDisplayDate);
         txtDisplayCrops = findViewById(R.id.txtDisplayCrops);
-        btnBack = findViewById(R.id.btnGoBack);
+        btnBack = findViewById(R.id.btnBackToDate);
         Day = getIntent().getStringExtra("Day");
         Month = getIntent().getStringExtra("Month");
         Year = getIntent().getStringExtra("Year");

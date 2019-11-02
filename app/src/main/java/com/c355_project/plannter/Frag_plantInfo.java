@@ -13,6 +13,10 @@ import com.google.android.gms.ads.AdView;
 
 
 public class Frag_plantInfo extends Fragment implements View.OnClickListener {
+    //Main_Window Activity Instantiation
+    Main_Window Main_Window;
+
+
 
     @Nullable
     @Override
@@ -26,6 +30,8 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Main_Window = (Main_Window) getActivity();
+
         //Set all OnClickListeners needed for this View
         view.findViewById(R.id.btnBack).setOnClickListener(this);
 
@@ -39,7 +45,6 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener {
 
 //onClick Method ===================================================================================
     public void onClick (View view) {
-        Main_Window Main_Window = (Main_Window) getActivity();
         switch (view.getId()) {
             case (R.id.btnBack): {
                 System.out.println("=============================================================");
