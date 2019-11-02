@@ -7,17 +7,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
 
+
 public class Frag_plantInfo extends Fragment implements View.OnClickListener {
+//VARIABLES ========================================================================================
+
     //Main_Window Activity Instantiation
     Main_Window Main_Window;
 
 
 
+//LIFECYCLE METHODS ================================================================================
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -43,7 +46,7 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener {
 
 
 
-//onClick Method ===================================================================================
+//LISTENER METHODS =================================================================================
     public void onClick (View view) {
         switch (view.getId()) {
             case (R.id.btnBack): {
@@ -64,6 +67,8 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener {
             }
         }
     }
+
+
 
 //METHODS ==========================================================================================
     public void makeToast(String Message) {

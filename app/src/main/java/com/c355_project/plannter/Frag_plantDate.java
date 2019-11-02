@@ -1,14 +1,11 @@
 package com.c355_project.plannter;
 
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -17,20 +14,21 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import java.util.List;
 
-import java.util.List;
 
 
-public class Frag_plantDate extends Fragment implements View.OnClickListener {
+public class Frag_plantDate extends Fragment implements View.OnClickListener, CalendarView.OnDateChangeListener {
 //VARIABLES ========================================================================================
+
     //Main_Window Activity Instantiation
     Main_Window Main_Window;
 
-    //Variables
+    //View Variables
     CalendarView calendarView;
     TextView txtCropHarvest;
     RadioButton rbtnHarvest, rbtnPlant;
     String Month, Day, Year, concatMonthAndDay;
     int monthAndDay;
+
     //Plant Database List
     List<Plant> PlantDatabase;
 
@@ -73,21 +71,12 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener {
         rbtnHarvest = view.findViewById(R.id.rbtnHarvest);
         txtCropHarvest = view.findViewById(R.id.txtCropHarvest);
         calendarView.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(@NonNull CalendarView calendarView, int year, int month, int day) {
-
-                //Concat both month and day so comparison is easier and code is cleaner
-                Month = String.valueOf(month + 1);
-                Day = String.valueOf(day);
-                Year = String.valueOf(year);
-                concatMonthAndDay = Month + Day;
-                monthAndDay = Integer.parseInt(concatMonthAndDay);
-            }
-        });
+        calendarView.setOnDateChangeListener(this);
     }
 
-    //onClick Method ===================================================================================
+
+
+//LISTENER METHODS =================================================================================
     public void onClick(View view) {
         Main_Window Main_Window = (Main_Window) getActivity();
         switch (view.getId()) {
@@ -118,6 +107,18 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener {
             }
         }
     }
+
+    @Override
+    public void onSelectedDayChange(@NonNull CalendarView calendarView, int year, int month, int day) {
+        //Concat both month and day so comparison is easier and code is cleaner
+        Month = String.valueOf(month + 1);
+        Day = String.valueOf(day);
+        Year = String.valueOf(year);
+        concatMonthAndDay = Month + Day;
+        monthAndDay = Integer.parseInt(concatMonthAndDay);
+    }
+
+
 
 //METHODS ==========================================================================================
     public void makeToast(String Message) {

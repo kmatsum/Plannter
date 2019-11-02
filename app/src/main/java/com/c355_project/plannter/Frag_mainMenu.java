@@ -7,19 +7,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
 
+
 public class Frag_mainMenu extends Fragment implements View.OnClickListener {
+//VARIABLES ========================================================================================
 
     //Main_Window Activity Instantiation
     Main_Window Main_Window;
 
 
 
-    //LIFECYCLE METHODS ================================================================================
+//LIFECYCLE METHODS ================================================================================
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -48,7 +49,7 @@ public class Frag_mainMenu extends Fragment implements View.OnClickListener {
 
 
 
-//onClick METHOD ===================================================================================
+//LISTENER METHODS =================================================================================
     @Override
     public void onClick (View view) {
         Main_Window Main_Window = (Main_Window) getActivity();
