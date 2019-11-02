@@ -28,6 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="250dp"
                 android:layout_weight="1"
+                android:cropToPadding="false"
                 app:srcCompat="@drawable/startmenu_background_plant" />
 
             <LinearLayout

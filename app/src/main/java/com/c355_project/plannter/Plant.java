@@ -27,6 +27,7 @@ public class Plant{
                         A value of 52 means indoor seeding is not required,
                         or the crop is not recommended for Fall.
     notes:              Optional place to add notes regarding plant
+    fileID:             ID of the corresponding picture.
 
     ============================================================================================= */
 
@@ -42,13 +43,14 @@ public class Plant{
     private int faHarvestRange;
     private int faSeedIndoorDate;
     private String notes;
+    private int fileID;
 
     //CONSTRUCTOR ==================================================================================
 
-
     public Plant(String plantName, String seedCompany, int firstPlantDate,
                  int weeksToHarvest, int spHarvestRange, int spSeedIndoorDate,
-                 int lastPlantDate, int faHarvestRange, int faSeedIndoorDate, String notes) {
+                 int lastPlantDate, int faHarvestRange, int faSeedIndoorDate, String notes,
+                 int fileID) {
         this.plantName = plantName;
         this.seedCompany = seedCompany;
         this.firstPlantDate = firstPlantDate;
@@ -59,6 +61,7 @@ public class Plant{
         this.faHarvestRange = faHarvestRange;
         this.faSeedIndoorDate = faSeedIndoorDate;
         this.notes = notes;
+        this.fileID = fileID;
     }
 
     //GETS & SETS ==================================================================================
@@ -148,5 +151,13 @@ public class Plant{
 
     public String getNotes() {
         return notes;
+    }
+
+    public int getFileID() {
+        return fileID;
+    }
+
+    public void setFileID(int fileID) {
+        this.fileID = fileID;
     }
 }
