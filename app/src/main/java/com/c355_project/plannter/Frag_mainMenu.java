@@ -8,6 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 
 public class Frag_mainMenu extends Fragment implements View.OnClickListener {
 
@@ -36,6 +39,11 @@ public class Frag_mainMenu extends Fragment implements View.OnClickListener {
         view.findViewById(R.id.btnPlantCrop).setOnClickListener(this);
         view.findViewById(R.id.btnPlantInfo).setOnClickListener(this);
         view.findViewById(R.id.imgSettings).setOnClickListener(this);
+
+        //Adds banner ad to UI
+        AdView adView = view.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
+        adView.loadAd(adRequest);
     }
 
 
