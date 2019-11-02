@@ -37,7 +37,7 @@ public class Main_Window extends AppCompatActivity {
             @Override
             public void run() {
                     //Get plants
-                    List<Plant> PlantList = PlantDatabase.getInstance(getApplicationContext()).plantDao().getAll();
+                    PlantList = PlantDatabase.getInstance(getApplicationContext()).plantDao().getAll();
 
                     //[DEBUG] Print all the plant names
                     System.out.println("------------------------------------");

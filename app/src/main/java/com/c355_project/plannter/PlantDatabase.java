@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase;
 import java.io.File;
 
 
-@Database(entities = Plant.class, exportSchema = false, version = 3)
+@Database(entities = Plant.class, exportSchema = false, version = 5)
 
 public abstract class PlantDatabase extends RoomDatabase {
     //Method that Returns the information for the Database Instance
@@ -34,93 +34,114 @@ public abstract class PlantDatabase extends RoomDatabase {
             databaseInstance.plantDao().insertPlant(new Plant("Beets", seedCompany,
                     4, 6, 4, 52,
                     12,4,52,
-                    "General guidelines for Beets."));
+                    "General guidelines for Beets.",
+                    R.drawable.beets));
             databaseInstance.plantDao().insertPlant(new Plant("Broccoli", seedCompany,
                     3, 8, 4, 8,
                     12,5,17,
                     "General guidelines for Broccoli." +
-                            "\nProtect from head during Fall crop."));
+                            "\nProtect from head during Fall crop.",
+                    R.drawable.broccoli));
             databaseInstance.plantDao().insertPlant(new Plant("Cabbage", seedCompany,
                     5, 8, 4, 10,
                     14,5,19,
                     "General guidelines for Cabbage." +
-                            "\nProtect from head during Fall crop."));
+                            "\nProtect from head during Fall crop.",
+                    R.drawable.cabbage));
             databaseInstance.plantDao().insertPlant(new Plant("Carrots", seedCompany,
                     2, 10, 4, 52,
                     13,3,52,
                     "General guidelines for Carrots." +
-                            "\nProtect from head during Fall crop."));
+                            "\nProtect from head during Fall crop.",
+                    R.drawable.carrot));
             databaseInstance.plantDao().insertPlant(new Plant("Cauliflower", seedCompany,
                     5, 10, 4, 10,
                     13,3,18,
                     "General guidelines for Cauliflower." +
-                            "\nProtect from head during Fall crop."));
+                            "\nProtect from head during Fall crop.",
+                    R.drawable.cauliflower));
             databaseInstance.plantDao().insertPlant(new Plant("Chard", seedCompany,
                     2, 6, 4, 52,
                     13,8,52,
-                    "General guidelines for Chard."));
+                    "General guidelines for Chard.",
+                    R.drawable.chard));
             databaseInstance.plantDao().insertPlant(new Plant("Cucumbers", seedCompany,
                     -3, 6, 5, 1,
                     14,5,52,
-                    "General guidelines for Cucumbers."));
+                    "General guidelines for Cucumbers.",
+                    R.drawable.cucumber));
             databaseInstance.plantDao().insertPlant(new Plant("Green Beans - Bush", seedCompany,
                     -2, 6, 3, 52,
                     12,3,52,
-                    "General guidelines for Green Beans - Bush."));
+                    "General guidelines for Green Beans - Bush.",
+                    R.drawable.greenbeans));
             databaseInstance.plantDao().insertPlant(new Plant("Lettuce - Leaf", seedCompany,
                     3, 5, 4, 6,
                     9,4,52,
-                    "General guidelines for Lettuce - Leaf."));
+                    "General guidelines for Lettuce - Leaf.",
+                    R.drawable.lettuce));
             databaseInstance.plantDao().insertPlant(new Plant("Melons", seedCompany,
                     -3, 10, 3, 1,
                     15,3,52,
-                    "General guidelines for Melons."));
+                    "General guidelines for Melons.",
+                    R.drawable.melon));
             databaseInstance.plantDao().insertPlant(new Plant("Okra", seedCompany,
                     -5, 7, 4, -1,
                     14,6,52,
-                    "General guidelines for Okra."));
+                    "General guidelines for Okra.",
+                    R.drawable.okra));
             databaseInstance.plantDao().insertPlant(new Plant("Onion - Sets", seedCompany,
                     7, 10, 6, 52,
                     52,52,52,
                     "General guidelines for Onion - sets." +
-                            "\nNot recommended for Fall crop."));
+                            "\nNot recommended for Fall crop.",
+                    R.drawable.onion));
             databaseInstance.plantDao().insertPlant(new Plant("Peas", seedCompany,
                     6, 8, 4, 52,
                     13,4,52,
                     "General guidelines for Peas." +
-                            "\nProtect from head during Fall crop."));
+                            "\nProtect from head during Fall crop.",
+                    R.drawable.peas));
             databaseInstance.plantDao().insertPlant(new Plant("Peppers", seedCompany,
                     -4, 8, 4, 4,
                     16,7,19,
-                    "General guidelines for Peppers."));
+                    "General guidelines for Peppers.",
+                    R.drawable.peppers));
             databaseInstance.plantDao().insertPlant(new Plant("Potatoes", seedCompany,
                     4, 10, 4, 52,
                     15,4,52,
-                    "General guidelines for Potatoes."));
+                    "General guidelines for Potatoes.",
+                    R.drawable.potato));
             databaseInstance.plantDao().insertPlant(new Plant("Pumpkins", seedCompany,
                     -5, 10, 3, -2,
                     14,3,52,
-                    "General guidelines for Pumpkins."));
+                    "General guidelines for Pumpkins.",
+                    R.drawable.pumpkins));
             databaseInstance.plantDao().insertPlant(new Plant("Radish/Turnip", seedCompany,
                     5, 4, 3, 52,
                     10,5,52,
-                    "General guidelines for Radish/Turnip."));
+                    "General guidelines for Radish/Turnip.",
+                    R.drawable.radish));
             databaseInstance.plantDao().insertPlant(new Plant("Spinach", seedCompany,
                     6, 5, 3, 52,
                     8,4,52,
-                    "General guidelines for Spinach."));
+                    "General guidelines for Spinach.",
+                    R.drawable.spinach));
             databaseInstance.plantDao().insertPlant(new Plant("Squash - Summer", seedCompany,
                     -3, 6, 4, 1,
                     14,4,52,
-                    "General guidelines for Squash - Summer."));
+                    "General guidelines for Squash - Summer.",
+                    R.drawable.squash));
             databaseInstance.plantDao().insertPlant(new Plant("Sweet Corn", seedCompany,
                     -2, 10, 3, 52,
                     15,3,52,
-                    "General guidelines for Sweet Corn."));
+                    "General guidelines for Sweet Corn.",
+                    R.drawable.corn));
             databaseInstance.plantDao().insertPlant(new Plant("Tomatoes", seedCompany,
                     -4, 9, 4, 4,
                     17,7,20,
-                    "General guidelines for Tomatoes."));
+                    "General guidelines for Tomatoes.",
+                    R.drawable.tomato));
             return databaseInstance;
         }
     }
