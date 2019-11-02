@@ -6,6 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import java.util.List;
 
 
@@ -30,6 +34,11 @@ public class Frag_plantHarvest extends Fragment implements View.OnClickListener 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+//        //Adds banner ad to UI
+//        AdView adView = view.findViewById(R.id.adView);
+//        AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
+//        adView.loadAd(adRequest);
 
         //Set the Main_Window Variable to the current activity object
         Main_Window = (Main_Window) getActivity();

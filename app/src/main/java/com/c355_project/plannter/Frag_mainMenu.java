@@ -41,10 +41,10 @@ public class Frag_mainMenu extends Fragment implements View.OnClickListener {
         view.findViewById(R.id.btnPlantInfo).setOnClickListener(this);
         view.findViewById(R.id.imgSettings).setOnClickListener(this);
 
-        //Adds banner ad to UI
-        AdView adView = view.findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
-        adView.loadAd(adRequest);
+//        //Adds banner ad to UI
+//        AdView adView = view.findViewById(R.id.adView);
+//        AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
+//        adView.loadAd(adRequest);
     }
 
 
