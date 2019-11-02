@@ -111,7 +111,7 @@ public class Plant_Date_Screen extends AppCompatActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case (R.id.btnBack): {
-                Intent openMainMenu = new Intent(getApplicationContext(), Main_Menu.class);
+                Intent openMainMenu = new Intent(getApplicationContext(), Main_Window.class);
                 startActivity(openMainMenu);
             } break;
 
