@@ -12,6 +12,9 @@ import java.util.List;
 
 public class Frag_plantDate extends Fragment implements View.OnClickListener {
 //VARIABLES ========================================================================================
+    //Main_Window Activity Instantiation
+    Main_Window Main_Window;
+
     //Plant Database List
     List<Plant> PlantDatabase;
 
@@ -28,7 +31,7 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Main_Window Main_Window = (Main_Window) getActivity();
+        Main_Window = (Main_Window) getActivity();
 
         PlantDatabase = Main_Window.getPlantList();
 
@@ -48,14 +51,13 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener {
 
 //onClick METHOD ===================================================================================
     public void onClick (View view) {
-        Main_Window Main_Window = (Main_Window) getActivity();
         switch (view.getId()) {
             case (R.id.btnBack): {
 
             } break;
 
             case (R.id.btnNext): {
-
+                Main_Window.changeFragment("PlantHarvest");
             } break;
 
             //Used for handling exceptions on if the given ViewID and the expected ViewID does not match

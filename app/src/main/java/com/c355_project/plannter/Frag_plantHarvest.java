@@ -26,8 +26,7 @@ public class Frag_plantHarvest extends Fragment implements View.OnClickListener 
 
 //LIFECYCLE METHODS ================================================================================
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_plant_harvest, container, false);
     }
@@ -48,16 +47,17 @@ public class Frag_plantHarvest extends Fragment implements View.OnClickListener 
             System.out.println(PlantDatabase.get(i).getPlantName());
         }
         System.out.println("------------------------------------");
+
+        view.findViewById(R.id.btnBackToDate).setOnClickListener(this);
     }
 
 
 
 //onClick METHOD ===================================================================================
     public void onClick (View view) {
-        Main_Window Main_Window = (Main_Window) getActivity();
         switch (view.getId()) {
-            case (R.id.btnBack): {
-
+            case (R.id.btnBackToDate): {
+                Main_Window.changeFragment("PlantDate");
             } break;
 
             //Used for handling exceptions on if the given ViewID and the expected ViewID does not match
