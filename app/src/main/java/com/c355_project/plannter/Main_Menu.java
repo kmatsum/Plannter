@@ -16,6 +16,7 @@ public class Main_Menu extends AppCompatActivity {
 
 
 
+//CLICK METHOD =====================================================================================
     public void menuItemClicked (View view) {
         switch (view.getId()) {
             case (R.id.btnPlantByDate): {
@@ -37,12 +38,15 @@ public class Main_Menu extends AppCompatActivity {
             //Used for handling exceptions on if the given ViewID and the expected ViewID does not match
             default: {
                 //Toast Error Information
-                MakeToast("[ERROR] Menu request did not function correctly, try again!");
+                makeToast("[ERROR] Menu request did not function correctly, try again!");
             }
         }
     }
-    public void MakeToast(String Message)
-    {
+
+
+
+//METHODS ==========================================================================================
+    public void makeToast(String Message) {
         Toast.makeText(this, Message, Toast.LENGTH_SHORT).show();
     }
 }

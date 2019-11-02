@@ -18,10 +18,7 @@ public class Plant_Date_Screen extends AppCompatActivity {
     CalendarView calendarView;
     TextView txtCropHarvest;
     RadioButton rbtnHarvest;
-    String Month;
-    String Day;
-    String Year;
-    String concatMonthAndDay;
+    String Month, Day, Year, concatMonthAndDay;
     int monthAndDay;
     Intent openPlantHarvestScreen;
 
@@ -100,7 +97,7 @@ public class Plant_Date_Screen extends AppCompatActivity {
                         }
                         else
                         {
-                            MakeToast("No Plants are able to be harvested at this time");
+                            makeToast("No Plants are able to be harvested at this time");
                         }
 
                 }
@@ -108,7 +105,9 @@ public class Plant_Date_Screen extends AppCompatActivity {
         });
     }
 
-    //Methods
+
+
+//CLICK METHOD =====================================================================================
     public void onClick(View view) {
         switch (view.getId()) {
             case (R.id.btnBack): {
@@ -124,17 +123,19 @@ public class Plant_Date_Screen extends AppCompatActivity {
             } break;
 
             default: {
-                MakeToast("[ERROR] Menu request did not function correctly, try again!");
+                makeToast("[ERROR] Menu request did not function correctly, try again!");
             } break;
         }
     }
 
-    public void MakeToast(String Message)
-    {
+
+
+//METHODS ==========================================================================================
+    public void makeToast(String Message) {
         Toast.makeText(this, Message, Toast.LENGTH_SHORT).show();
     }
-    public void putExtra(Intent intent, String name, String value)
-    {
+
+    public void putExtra(Intent intent, String name, String value) {
         intent.putExtra(name, value);
     }
 }

@@ -5,15 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class Plant_Harvest_Screen extends AppCompatActivity {
 
@@ -29,7 +23,7 @@ public class Plant_Harvest_Screen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_plant__harvest__screen);
+        setContentView(R.layout.activity_plant_harvest_screen);
 
         txtDisplayDate = findViewById(R.id.txtDisplayDate);
         txtDisplayCrops = findViewById(R.id.txtDisplayCrops);
@@ -91,7 +85,7 @@ public class Plant_Harvest_Screen extends AppCompatActivity {
         }
         else
         {
-            MakeToast("No Plants are able to be harvested at this time");
+            makeToast("No Plants are able to be harvested at this time");
         }
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,9 +96,10 @@ public class Plant_Harvest_Screen extends AppCompatActivity {
         });
     }
 
-    //Methods
-    public void MakeToast(String Message)
-    {
+
+
+//METHODS ==========================================================================================
+    public void makeToast(String Message) {
         Toast.makeText(this, Message, Toast.LENGTH_SHORT).show();
     }
 }
