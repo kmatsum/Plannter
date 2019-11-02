@@ -34,8 +34,8 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
     String[] plantNames;
 
     //GUI Elements
-    TextView txtCropName;
     ImageView imageView;
+    TextView txtWeeksToHarvest;
 
     //Main_Window Activity Instantiation
     Main_Window Main_Window;
@@ -59,8 +59,8 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
         Main_Window = (Main_Window) getActivity();
         plantList = Main_Window.getPlantList();
       
-        txtCropName = view.findViewById(R.id.txtCropName);
         imageView = view.findViewById(R.id.imageView);
+        txtWeeksToHarvest = view.findViewById(R.id.txtWeeksToHarvest);
 
         //Set all OnClickListeners needed for this View
         view.findViewById(R.id.btnBack).setOnClickListener(this);
@@ -84,7 +84,7 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
 
 
 
-//LISTENER METHODS =================================================================================
+    //LISTENER METHODS =================================================================================
     public void onClick (View view) {
         switch (view.getId()) {
             case (R.id.btnBack): {
@@ -109,9 +109,9 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         Plant plant = plantList.get(position);
-        txtCropName.setText(plant.getPlantName());
         Drawable plantImage = ResourcesCompat.getDrawable(getResources(), plant.getFileID(), null);
         imageView.setImageDrawable(plantImage);
+        txtWeeksToHarvest.setText(Integer.toString(plant.getWeeksToHarvest()));
     }
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
