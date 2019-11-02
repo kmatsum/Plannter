@@ -118,4 +118,20 @@ public class Main_Window extends AppCompatActivity {
     public void setPlantList(List<Plant> xPlantList) {
         PlantList = xPlantList;
     }
+
+    public Date getLastSpringFrostDate() {
+        return lastSpringFrostDate;
+    }
+
+    public void setLastSpringFrostDate(Date lastSpringFrostDate) {
+        this.lastSpringFrostDate = lastSpringFrostDate;
+    }
+
+    public Date getLastFallFrostDate() {
+        return lastFallFrostDate;
+    }
+
+    public void setLastFallFrostDate(Date lastFallFrostDate) {
+        this.lastFallFrostDate = lastFallFrostDate;
+    }
 }
