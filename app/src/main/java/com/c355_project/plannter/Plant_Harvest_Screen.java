@@ -90,8 +90,8 @@ public class Plant_Harvest_Screen extends AppCompatActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent goBack = new Intent(getApplicationContext(), Plant_Date_Screen.class);
-                startActivity(goBack);
+                //Intent goBack = new Intent(getApplicationContext(), Plant_Date_Screen.class);
+                //startActivity(goBack);
             }
         });
     }
