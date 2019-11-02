@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 public class Main_Window extends AppCompatActivity {
+//VARIABLES ========================================================================================
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
     //Fragments
@@ -38,6 +39,9 @@ public class Main_Window extends AppCompatActivity {
     //Plant List
     List<Plant> PlantList;
 
+
+
+//Lifecycle Methods ================================================================================
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,8 +108,6 @@ public class Main_Window extends AppCompatActivity {
     public List<Plant> getPlantList() {
         return PlantList;
     }
-
-
 
     public void setPlantList(List<Plant> xPlantList) {
         PlantList = xPlantList;

@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 public class Frag_mainMenu extends Fragment implements View.OnClickListener {
 
+//LIFECYCLE METHODS ================================================================================
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -34,6 +35,7 @@ public class Frag_mainMenu extends Fragment implements View.OnClickListener {
 
 
 
+//onClick METHOD ===================================================================================
     @Override
     public void onClick (View view) {
         Main_Window Main_Window = (Main_Window) getActivity();
@@ -65,6 +67,8 @@ public class Frag_mainMenu extends Fragment implements View.OnClickListener {
             }
         }
     }
+
+
 
 //METHODS ==========================================================================================
     public void makeToast(String Message) {

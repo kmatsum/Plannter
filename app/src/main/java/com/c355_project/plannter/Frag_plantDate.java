@@ -11,8 +11,13 @@ import java.util.List;
 
 
 public class Frag_plantDate extends Fragment implements View.OnClickListener {
+//VARIABLES ========================================================================================
+    //Plant Database List
     List<Plant> PlantDatabase;
 
+
+
+//LIFECYCLE METHODS ================================================================================
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -41,7 +46,7 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener {
 
 
 
-//onClick Method ===================================================================================
+//onClick METHOD ===================================================================================
     public void onClick (View view) {
         Main_Window Main_Window = (Main_Window) getActivity();
         switch (view.getId()) {
@@ -63,6 +68,8 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener {
             }
         }
     }
+
+
 
 //METHODS ==========================================================================================
     public void makeToast(String Message) {
