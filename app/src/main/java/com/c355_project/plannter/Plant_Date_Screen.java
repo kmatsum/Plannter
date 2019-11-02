@@ -17,7 +17,7 @@ public class Plant_Date_Screen extends AppCompatActivity {
     //Variables
     CalendarView calendarView;
     TextView txtCropHarvest;
-    RadioButton rbtnHarvest;
+    RadioButton rbtnHarvest, rbtnPlant;
     String Month, Day, Year, concatMonthAndDay;
     int monthAndDay;
     Intent openPlantHarvestScreen;
