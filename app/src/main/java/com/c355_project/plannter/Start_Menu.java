@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import com.google.android.gms.ads.MobileAds;
+
 
 
 
@@ -12,6 +14,7 @@ public class Start_Menu extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_menu);
+        MobileAds.initialize(this);
     }
 
 

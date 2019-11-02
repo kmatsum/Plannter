@@ -13,11 +13,17 @@ import android.widget.CalendarView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import java.util.List;
 
 import java.util.List;
 
 
 public class Frag_plantDate extends Fragment implements View.OnClickListener {
+//VARIABLES ========================================================================================
+    //Main_Window Activity Instantiation
+    Main_Window Main_Window;
 
     //Variables
     CalendarView calendarView;
@@ -25,8 +31,12 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener {
     RadioButton rbtnHarvest, rbtnPlant;
     String Month, Day, Year, concatMonthAndDay;
     int monthAndDay;
-    List<Plant> plantDB;
+    //Plant Database List
+    List<Plant> PlantDatabase;
 
+
+
+//LIFECYCLE METHODS ================================================================================
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -37,18 +47,27 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Main_Window = (Main_Window) getActivity();
 
-//        Main_Window main_window = (Main_Window) getActivity();
-//        plantDB = main_window.getPlantList();
-//        System.out.println("------------------------------------");
-//        for (int i = 0; i < plantDB.size(); i++) {
-//            System.out.println(plantDB.get(i).getPlantName());
-//        }
-//        System.out.println("------------------------------------");
+        PlantDatabase = Main_Window.getPlantList();
+
+        //[DEBUG] Print all the plant names
+        System.out.println("------------------------------------");
+        for (int i = 0; i < PlantDatabase.size(); i++){
+            System.out.println(PlantDatabase.get(i).getPlantName());
+        }
+        System.out.println("------------------------------------");
+
 
         //Set all OnClickListeners needed for this View
         view.findViewById(R.id.btnBack).setOnClickListener(this);
         view.findViewById(R.id.btnNext).setOnClickListener(this);
+      
+        //Adds banner ad to UI
+        AdView adView = view.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
+        adView.loadAd(adRequest);
+      
         rbtnHarvest = view.findViewById(R.id.rbtnHarvest);
         calendarView = view.findViewById(R.id.calendarView);
         rbtnHarvest = view.findViewById(R.id.rbtnHarvest);
@@ -100,7 +119,7 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener {
         }
     }
 
-    //METHODS ==========================================================================================
+//METHODS ==========================================================================================
     public void makeToast(String Message) {
         Toast.makeText(getActivity(), Message, Toast.LENGTH_SHORT).show();
     }

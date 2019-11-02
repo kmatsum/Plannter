@@ -8,36 +8,58 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class Main_Window extends AppCompatActivity {
+//VARIABLES ========================================================================================
+    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
     //Fragments
     Frag_mainMenu Frag_mainMenu;
     Frag_plantInfo Frag_plantInfo;
     Frag_plantDate Frag_plantDate;
+    Frag_plantHarvest Frag_plantHarvest;
 
-    //Plant Database
+    //LastFrostDate
+    Date lastSpringFrostDate;
+    Date lastFallFrostDate;
+
+    {
+        try {
+            lastSpringFrostDate = dateFormat.parse("04/29/2019");
+            lastFallFrostDate = dateFormat.parse("10/08/2019");
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
 
     //Plant List
     List<Plant> PlantList;
 
+
+
+//Lifecycle Methods ================================================================================
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_window);
 
         //Fragment Instantiation
-        Frag_mainMenu   = new Frag_mainMenu();
-        Frag_plantInfo  = new Frag_plantInfo();
-        Frag_plantDate  = new Frag_plantDate();
+        Frag_mainMenu       = new Frag_mainMenu();
+        Frag_plantInfo      = new Frag_plantInfo();
+        Frag_plantDate      = new Frag_plantDate();
+        Frag_plantHarvest   = new Frag_plantHarvest();
 
 
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
                     //Get plants
-                    List<Plant> PlantList = PlantDatabase.getInstance(getApplicationContext()).plantDao().getAll();
+                    PlantList = PlantDatabase.getInstance(getApplicationContext()).plantDao().getAll();
 
                     //[DEBUG] Print all the plant names
                     System.out.println("------------------------------------");
@@ -70,6 +92,10 @@ public class Main_Window extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainFragmentWindow, Frag_plantDate).commit();
             } break;
 
+            case "PlantHarvest": {
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainFragmentWindow, Frag_plantHarvest).commit();
+            } break;
+
             default: {
                 //Toast Error Information
                 makeToast("[ERROR] Menu parameter passed was not found, returning to main menu...");
@@ -88,8 +114,6 @@ public class Main_Window extends AppCompatActivity {
     public List<Plant> getPlantList() {
         return PlantList;
     }
-
-
 
     public void setPlantList(List<Plant> xPlantList) {
         PlantList = xPlantList;
