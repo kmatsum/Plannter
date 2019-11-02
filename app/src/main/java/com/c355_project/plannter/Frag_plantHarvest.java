@@ -8,8 +8,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.text.SimpleDateFormat;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import java.util.List;
 
 
@@ -42,6 +43,11 @@ TextView txtDisplayDate;
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+//        //Adds banner ad to UI
+//        AdView adView = view.findViewById(R.id.adView);
+//        AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
+//        adView.loadAd(adRequest);
 
         //Set the Main_Window Variable to the current activity object
         Main_Window = (Main_Window) getActivity();

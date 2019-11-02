@@ -9,6 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center"
         android:orientation="vertical"
         tools:layout_editor_absoluteX="142dp"
         tools:layout_editor_absoluteY="192dp">
@@ -20,9 +21,9 @@
             android:layout_weight="0"
             android:background="#00FFFFFF"
             android:fontFamily="@font/finger_paint"
-            android:textColor="@color/colorTitleText"
             android:text="@string/you_can_plant_harvest_the_following_crops_on"
             android:textAlignment="center"
+            android:textColor="@color/colorTitleText"
             android:textSize="36sp"
             android:textStyle="bold" />
 
@@ -62,6 +63,16 @@
                 android:textAlignment="center"
                 android:textColor="@color/colorTitleText"
                 android:textSize="25sp" />
+
         </LinearLayout>
+
+<!--        <com.google.android.gms.ads.AdView-->
+<!--            android:id="@+id/adView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_alignParentBottom="true"-->
+<!--            android:layout_centerHorizontal="true"-->
+<!--            app:adSize="BANNER"-->
+<!--            app:adUnitId="ca-app-pub-3940256099942544/6300978111"></com.google.android.gms.ads.AdView>-->
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
