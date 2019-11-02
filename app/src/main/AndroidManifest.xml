@@ -13,7 +13,6 @@
         <activity android:name=".Plant_Info"></activity>
         <activity android:name=".Plant_Harvest_Screen"></activity>
         <activity android:name=".Main_Window" />
-        <activity android:name=".Plant_Date_Screen" />
         <activity android:name=".Start_Menu">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,6 +24,10 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-7390442478171234~3196765949"/>
     </application>
 
 </manifest>

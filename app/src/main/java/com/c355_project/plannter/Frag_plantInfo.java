@@ -20,14 +20,16 @@ import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class Frag_plantInfo extends Fragment implements View.OnClickListener, Spinner.OnItemSelectedListener {
-
-    Main_Window Main_Window;
+  
+//VARIABLES ========================================================================================
     List<Plant> plantList;
     String[] plantNames;
 
@@ -35,6 +37,12 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
     TextView txtCropName;
     ImageView imageView;
 
+    //Main_Window Activity Instantiation
+    Main_Window Main_Window;
+
+
+
+//LIFECYCLE METHODS ================================================================================
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -47,8 +55,10 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+      
         Main_Window = (Main_Window) getActivity();
         plantList = Main_Window.getPlantList();
+      
         txtCropName = view.findViewById(R.id.txtCropName);
         imageView = view.findViewById(R.id.imageView);
 
@@ -65,13 +75,17 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
         ArrayAdapter<String> adapter = new ArrayAdapter<String> (getActivity(), R.layout.spinner_item, plantNames);
         spnrSelectPlant.setAdapter(adapter);
         spnrSelectPlant.setOnItemSelectedListener(this);
+
+        //Adds banner ad to UI
+        AdView adView = view.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
+        adView.loadAd(adRequest);
     }
 
 
 
-//onClick Method ===================================================================================
+//LISTENER METHODS =================================================================================
     public void onClick (View view) {
-        Main_Window Main_Window = (Main_Window) getActivity();
         switch (view.getId()) {
             case (R.id.btnBack): {
                 System.out.println("=============================================================");

@@ -27,7 +27,7 @@ public class Plant_Harvest_Screen extends AppCompatActivity {
 
         txtDisplayDate = findViewById(R.id.txtDisplayDate);
         txtDisplayCrops = findViewById(R.id.txtDisplayCrops);
-        btnBack = findViewById(R.id.btnGoBack);
+        btnBack = findViewById(R.id.btnBackToDate);
         Day = getIntent().getStringExtra("Day");
         Month = getIntent().getStringExtra("Month");
         Year = getIntent().getStringExtra("Year");
@@ -90,8 +90,8 @@ public class Plant_Harvest_Screen extends AppCompatActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent goBack = new Intent(getApplicationContext(), Plant_Date_Screen.class);
-                startActivity(goBack);
+                //Intent goBack = new Intent(getApplicationContext(), Plant_Date_Screen.class);
+                //startActivity(goBack);
             }
         });
     }
