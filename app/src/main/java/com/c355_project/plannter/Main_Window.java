@@ -41,6 +41,10 @@ public class Main_Window extends AppCompatActivity {
     List<Plant> PlantList;
 
 
+    //PlantHarvest
+    Date userInputDate;
+
+
 
 //Lifecycle Methods ================================================================================
     @Override
@@ -133,5 +137,13 @@ public class Main_Window extends AppCompatActivity {
 
     public void setLastFallFrostDate(Date lastFallFrostDate) {
         this.lastFallFrostDate = lastFallFrostDate;
+    }
+
+    public Date getUserInputDate() {
+        return userInputDate;
+    }
+
+    public void setUserInputDate(Date userInputDate) {
+        this.userInputDate = userInputDate;
     }
 }
