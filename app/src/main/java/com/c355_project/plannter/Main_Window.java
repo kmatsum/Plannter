@@ -19,10 +19,11 @@ public class Main_Window extends AppCompatActivity {
 
     //Fragments
     Frag_mainMenu Frag_mainMenu;
+    Frag_settings Frag_settings;
     Frag_plantInfo Frag_plantInfo;
     Frag_plantDate Frag_plantDate;
     Frag_plantHarvest Frag_plantHarvest;
-    Frag_settings Frag_settings;
+    Frag_plantByPlant Frag_plantByPlant;
 
     //LastFrostDate
     Date lastSpringFrostDate;
@@ -42,6 +43,10 @@ public class Main_Window extends AppCompatActivity {
     List<Plant> PlantList;
 
 
+    //PlantHarvest
+    Date userInputDate;
+
+
 
 //Lifecycle Methods ================================================================================
     @Override
@@ -51,11 +56,11 @@ public class Main_Window extends AppCompatActivity {
 
         //Fragment Instantiation
         Frag_mainMenu       = new Frag_mainMenu();
+        Frag_settings       = new Frag_settings();
         Frag_plantInfo      = new Frag_plantInfo();
         Frag_plantDate      = new Frag_plantDate();
         Frag_plantHarvest   = new Frag_plantHarvest();
-        Frag_settings       = new Frag_settings();
-
+        Frag_plantByPlant   = new Frag_plantByPlant();
 
         AsyncTask.execute(new Runnable() {
             @Override
@@ -86,12 +91,16 @@ public class Main_Window extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainFragmentWindow, Frag_mainMenu).commit();
             } break;
 
-            case "PlantInfo": {
-                getSupportFragmentManager().beginTransaction().replace(R.id.mainFragmentWindow, Frag_plantInfo).commit();
-            } break;
-
             case "PlantDate": {
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainFragmentWindow, Frag_plantDate).commit();
+            } break;
+
+            case "PlantByPlant": {
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainFragmentWindow, Frag_plantByPlant).commit();
+            } break;
+
+            case "PlantInfo": {
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainFragmentWindow, Frag_plantInfo).commit();
             } break;
 
             case "PlantHarvest": {
@@ -139,5 +148,13 @@ public class Main_Window extends AppCompatActivity {
 
     public void setLastFallFrostDate(Date lastFallFrostDate) {
         this.lastFallFrostDate = lastFallFrostDate;
+    }
+
+    public Date getUserInputDate() {
+        return userInputDate;
+    }
+
+    public void setUserInputDate(Date userInputDate) {
+        this.userInputDate = userInputDate;
     }
 }

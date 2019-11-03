@@ -5,17 +5,26 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
-
+import java.text.SimpleDateFormat;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-
 import java.util.List;
 
 
 
 public class Frag_plantHarvest extends Fragment implements View.OnClickListener {
 //VARIABLES ========================================================================================
+TextView txtDisplayDate;
+    TextView txtDisplayCrops;
+    String Day;
+    String Month;
+    String Year;
+    Button btnBack;
+    SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+
     //Main_Window Activity Instantiation
     Main_Window Main_Window;
 
@@ -54,8 +63,72 @@ public class Frag_plantHarvest extends Fragment implements View.OnClickListener 
         System.out.println("------------------------------------");
 
         view.findViewById(R.id.btnBackToDate).setOnClickListener(this);
-    }
 
+        txtDisplayDate = view.findViewById(R.id.txtDisplayDate);
+        txtDisplayCrops = view.findViewById(R.id.txtDisplayCrops);
+        btnBack = view.findViewById(R.id.btnBackToDate);
+        txtDisplayDate.setText(sdf.format(Main_Window.getUserInputDate()));
+//
+//        if (monthAndDay >= 719 & monthAndDay < 726)
+//        {
+//            txtDisplayCrops.setText(getIntent().getStringExtra("7/19-7/25"));
+//        }
+//        else if (monthAndDay >= 726 & monthAndDay <=731)
+//        {
+//            txtDisplayCrops.setText(getIntent().getStringExtra("7/26-7/30"));
+//        }
+//        else if (monthAndDay == 81)
+//        {
+//            txtDisplayCrops.setText(getIntent().getStringExtra("8/1"));
+//        }
+//        else if (monthAndDay >= 82 & monthAndDay < 89)
+//        {
+//            txtDisplayCrops.setText(getIntent().getStringExtra("8/2-8/8"));
+//        }
+//        else if (monthAndDay == 89)
+//        {
+//            txtDisplayCrops.setText(getIntent().getStringExtra("8/9"));
+//        }
+//        else if (monthAndDay >= 810 & monthAndDay < 816)
+//        {
+//            txtDisplayCrops.setText(getIntent().getStringExtra("8/10-8/15"));
+//        }
+//        else if (monthAndDay >= 816 & monthAndDay < 823)
+//        {
+//            txtDisplayCrops.setText(getIntent().getStringExtra("8/16-8/22"));
+//        }
+//        else if (monthAndDay >= 823 & monthAndDay < 830)
+//        {
+//            txtDisplayCrops.setText(getIntent().getStringExtra("8/23-8/29"));
+//        }
+//        else if (monthAndDay == 830)
+//        {
+//            txtDisplayCrops.setText(getIntent().getStringExtra("8/30"));
+//        }
+//        else if (monthAndDay == 91 || monthAndDay == 92 || monthAndDay == 93 || monthAndDay == 94 || monthAndDay == 95)
+//        {
+//            txtDisplayCrops.setText(getIntent().getStringExtra("9/1-9/5"));
+//        }
+//        else if (monthAndDay == 96 || monthAndDay == 97 || monthAndDay == 98 || monthAndDay == 99 || monthAndDay == 910 || monthAndDay == 911 || monthAndDay == 912)
+//        {
+//            txtDisplayCrops.setText(getIntent().getStringExtra("9/6-9/12"));
+//        }
+//        else if(monthAndDay == 913)
+//        {
+//            txtDisplayCrops.setText(getIntent().getStringExtra("9/13"));
+//        }
+//        else
+//        {
+//            makeToast("No Plants are able to be harvested at this time");
+//        }
+//        btnBack.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //Intent goBack = new Intent(getApplicationContext(), Plant_Date_Screen.class);
+//                //startActivity(goBack);
+//            }
+//        });
+    }
 
 
 //LISTENER METHODS =================================================================================

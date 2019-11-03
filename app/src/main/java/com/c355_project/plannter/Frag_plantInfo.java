@@ -34,8 +34,13 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
     String[] plantNames;
 
     //GUI Elements
+    Spinner spnrSelectPlant;
     ImageView imageView;
+    TextView txtSeedIndoors;
     TextView txtWeeksToHarvest;
+    TextView txtSeasons;
+    TextView txtSeedDistance;
+    TextView txtMethod;
 
     //Main_Window Activity Instantiation
     Main_Window Main_Window;
@@ -61,12 +66,18 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
       
         imageView = view.findViewById(R.id.imageView);
         txtWeeksToHarvest = view.findViewById(R.id.txtWeeksToHarvest);
+        txtSeedIndoors = view.findViewById(R.id.txtSeedIndoors);
+        txtSeasons = view.findViewById(R.id.txtSeasons);
+        txtSeedDistance = view.findViewById(R.id.txtSeedDistance);
+        txtMethod = view.findViewById(R.id.txtMethod);
 
         //Set all OnClickListeners needed for this View
         view.findViewById(R.id.btnBack).setOnClickListener(this);
+        view.findViewById(R.id.btnNext).setOnClickListener(this);
+        view.findViewById(R.id.btnPrevious).setOnClickListener(this);
 
         //Set the spinner adapter and contents
-        Spinner spnrSelectPlant = view.findViewById(R.id.spnrSelectPlant);
+        spnrSelectPlant = view.findViewById(R.id.spnrSelectPlant);
         plantNames = new String[plantList.size()];
         for (int i = 0; i < plantList.size(); i++){
             plantNames[i] = plantList.get(i).getPlantName();
@@ -94,6 +105,16 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
 
                 Main_Window.changeFragment("MainMenu");
             } break;
+            case (R.id.btnPrevious): {
+                int position = spnrSelectPlant.getSelectedItemPosition();
+                if (position > 0)
+                    spnrSelectPlant.setSelection(spnrSelectPlant.getSelectedItemPosition() - 1);
+            } break;
+            case (R.id.btnNext): {
+                int position = spnrSelectPlant.getSelectedItemPosition();
+                if (position < spnrSelectPlant.getAdapter().getCount() - 1)
+                    spnrSelectPlant.setSelection(spnrSelectPlant.getSelectedItemPosition() + 1);
+            } break;
 
             //Used for handling exceptions on if the given ViewID and the expected ViewID does not match
             default: {
@@ -111,7 +132,26 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
         Plant plant = plantList.get(position);
         Drawable plantImage = ResourcesCompat.getDrawable(getResources(), plant.getFileID(), null);
         imageView.setImageDrawable(plantImage);
+        if (plant.getFirstPlantDate() < 26) //26 represents half of 52 weeks in the year
+            txtSeasons.setText("Spring");
+        if (plant.getLastPlantDate() < 26)
+            if (txtSeasons.getText().equals("---"))
+                txtSeasons.setText("Fall");
+            else
+                txtSeasons.append(",\nFall");
+        if (plant.getSeedIndoorDate() == 52)
+            txtSeedIndoors.setText("No");
+        else
+            txtSeedIndoors.setText("Yes");
         txtWeeksToHarvest.setText(Integer.toString(plant.getWeeksToHarvest()));
+        txtSeedDistance.setText(Integer.toString(plant.getDistBetweenPlants()));
+        if (plant.isRaisedHills())
+            txtMethod.setText("Raised Hills");
+        else if (plant.isRaisedRows())
+            txtMethod.setText("Raised Rows");
+        else
+            txtMethod.setText("Flat");
+
     }
     @Override
     public void onNothingSelected(AdapterView<?> parent) {

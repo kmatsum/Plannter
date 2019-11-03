@@ -3,6 +3,9 @@ package com.c355_project.plannter;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+
+import android.os.SystemClock;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +15,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 
@@ -24,10 +32,12 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
 
     //View Variables
     CalendarView calendarView;
+    Calendar today;
     TextView txtCropHarvest;
     RadioButton rbtnHarvest, rbtnPlant;
-    String Month, Day, Year, concatMonthAndDay;
-    int monthAndDay;
+    String Month, Day, Year, Concat;
+    SimpleDateFormat  simpleDateFormat;
+    Date selectedDate;
 
     //Plant Database List
     List<Plant> PlantDatabase;
@@ -68,17 +78,18 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
       
         rbtnHarvest = view.findViewById(R.id.rbtnHarvest);
         calendarView = view.findViewById(R.id.calendarView);
-        rbtnHarvest = view.findViewById(R.id.rbtnHarvest);
+        rbtnPlant = view.findViewById(R.id.rbtnPlant);
         txtCropHarvest = view.findViewById(R.id.txtCropHarvest);
         calendarView.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         calendarView.setOnDateChangeListener(this);
+        simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        today = Calendar.getInstance();
     }
 
 
 
 //LISTENER METHODS =================================================================================
     public void onClick(View view) {
-        Main_Window Main_Window = (Main_Window) getActivity();
         switch (view.getId()) {
             case (R.id.btnBack): {
                 Main_Window.changeFragment("MainMenu");
@@ -88,12 +99,13 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
             case (R.id.btnNext): {
                 if (rbtnHarvest.isChecked()) {
                     btnChecker(rbtnHarvest);
+                    Main_Window.changeFragment("PlantHarvest");
                 }
-                if (rbtnPlant.isChecked()) {
+                else if (rbtnPlant.isChecked()) {
                     btnChecker(rbtnPlant);
-                } else {
-                    makeToast("No Radio button is selected, please select one to move forward");
                 }
+                else
+                    makeToast("No Radio button is selected, please select a radio button");
             }
             break;
 
@@ -114,19 +126,33 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
         Month = String.valueOf(month + 1);
         Day = String.valueOf(day);
         Year = String.valueOf(year);
-        concatMonthAndDay = Month + Day;
-        monthAndDay = Integer.parseInt(concatMonthAndDay);
+        Concat = Month + "/" + Day + "/" + Year;
+
+        {
+            try {
+                selectedDate = simpleDateFormat.parse(Concat);
+                Main_Window.setUserInputDate(selectedDate);
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
 
 
 //METHODS ==========================================================================================
     public void makeToast(String Message) {
-        Toast.makeText(getActivity(), Message, Toast.LENGTH_SHORT).show();
+        Toast toast = Toast.makeText(getActivity(), Message, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL,0,0);
+        toast.show();
     }
 
     public void btnChecker(RadioButton rbtn) {
-//        if (rbtn == rbtnHarvest & rbtn.isChecked()) {
+       if (rbtn == rbtnHarvest & rbtn.isChecked()) {
+           String date = simpleDateFormat.format(selectedDate);
+           int intdate = Integer.parseInt(date);
 //            if (monthAndDay >= 719 & monthAndDay < 726) {
 //                putExtra(openPlantHarvestScreen, "7/19-7/25", "You can harvest.....\n Tomatoes \n Peppers \n Cucumbers \n Squash");
 //            } else if (monthAndDay >= 726 & monthAndDay <= 731) {
@@ -154,11 +180,13 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
 //            } else {
 //                makeToast("No Plants are able to be harvested at this time");
 //            }
-//        }
+           if(selectedDate == null)
+           {
+               selectedDate = Calendar.getInstance().getTime();
+               Main_Window.setUserInputDate(selectedDate);
+           }
+        }
         if (rbtn == rbtnPlant & rbtnPlant.isChecked()) {
-
-        } else {
-            makeToast("No radio button is selected");
         }
     }
 }
