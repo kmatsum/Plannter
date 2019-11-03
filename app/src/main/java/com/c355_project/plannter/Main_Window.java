@@ -19,6 +19,7 @@ public class Main_Window extends AppCompatActivity {
 
     //Fragments
     Frag_mainMenu Frag_mainMenu;
+    Frag_settings Frag_settings;
     Frag_plantInfo Frag_plantInfo;
     Frag_plantDate Frag_plantDate;
     Frag_plantHarvest Frag_plantHarvest;
@@ -55,11 +56,11 @@ public class Main_Window extends AppCompatActivity {
 
         //Fragment Instantiation
         Frag_mainMenu       = new Frag_mainMenu();
+        Frag_settings       = new Frag_settings();
         Frag_plantInfo      = new Frag_plantInfo();
         Frag_plantDate      = new Frag_plantDate();
         Frag_plantHarvest   = new Frag_plantHarvest();
         Frag_plantByPlant   = new Frag_plantByPlant();
-
 
         AsyncTask.execute(new Runnable() {
             @Override
@@ -104,6 +105,10 @@ public class Main_Window extends AppCompatActivity {
 
             case "PlantHarvest": {
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainFragmentWindow, Frag_plantHarvest).commit();
+            } break;
+
+            case "Settings": {
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainFragmentWindow, Frag_settings).commit();
             } break;
 
             default: {

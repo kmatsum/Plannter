@@ -66,7 +66,7 @@ public class Frag_mainMenu extends Fragment implements View.OnClickListener {
             } break;
 
             case (R.id.imgSettings): {
-
+                Main_Window.changeFragment("Settings");
             } break;
 
             //Used for handling exceptions on if the given ViewID and the expected ViewID does not match
