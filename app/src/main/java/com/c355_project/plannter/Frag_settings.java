@@ -1,25 +1,30 @@
 package com.c355_project.plannter;
 
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
-
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
+
+
 public class Frag_settings extends Fragment implements View.OnClickListener {
+//VARIABLES ========================================================================================
+    //Main_Window Activity Instantiation
     Main_Window Main_Window;
+
+    //Website String
     String website = "https://morningchores.com/frost-dates/";
 
+
+
+//VARIABLES ========================================================================================
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_settings, container, false);
     }
@@ -52,8 +57,18 @@ public class Frag_settings extends Fragment implements View.OnClickListener {
             }
         }
     }
+
+
+
+//LISTENER METHODS =================================================================================
+
+
+
+
 //METHODS ==========================================================================================
-        public void makeToast(String Message) {
-            Toast.makeText(getActivity(), Message, Toast.LENGTH_SHORT).show();
-        }
+    public void makeToast(String Message) {
+        Toast toast = Toast.makeText(getActivity(), Message, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL,0,0);
+        toast.show();
+    }
 }

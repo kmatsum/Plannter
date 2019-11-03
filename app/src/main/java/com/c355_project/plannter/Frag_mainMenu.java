@@ -3,6 +3,7 @@ package com.c355_project.plannter;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,6 @@ import com.google.android.gms.ads.AdView;
 
 public class Frag_mainMenu extends Fragment implements View.OnClickListener {
 //VARIABLES ========================================================================================
-
     //Main_Window Activity Instantiation
     Main_Window Main_Window;
 
@@ -84,6 +84,8 @@ public class Frag_mainMenu extends Fragment implements View.OnClickListener {
 
 //METHODS ==========================================================================================
     public void makeToast(String Message) {
-        Toast.makeText(getActivity(), Message, Toast.LENGTH_SHORT).show();
+        Toast toast = Toast.makeText(getActivity(), Message, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL,0,0);
+        toast.show();
     }
 }

@@ -8,8 +8,8 @@ import com.google.android.gms.ads.MobileAds;
 
 
 
-
 public class Start_Menu extends AppCompatActivity {
+//LIFECYCLE METHODS ================================================================================
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

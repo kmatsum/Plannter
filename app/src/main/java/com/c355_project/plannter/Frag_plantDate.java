@@ -26,7 +26,6 @@ import java.util.List;
 
 public class Frag_plantDate extends Fragment implements View.OnClickListener, CalendarView.OnDateChangeListener {
 //VARIABLES ========================================================================================
-
     //Main_Window Activity Instantiation
     Main_Window Main_Window;
 
@@ -151,8 +150,6 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
 
     public void btnChecker(RadioButton rbtn) {
        if (rbtn == rbtnHarvest & rbtn.isChecked()) {
-           String date = simpleDateFormat.format(selectedDate);
-           int intdate = Integer.parseInt(date);
 //            if (monthAndDay >= 719 & monthAndDay < 726) {
 //                putExtra(openPlantHarvestScreen, "7/19-7/25", "You can harvest.....\n Tomatoes \n Peppers \n Cucumbers \n Squash");
 //            } else if (monthAndDay >= 726 & monthAndDay <= 731) {

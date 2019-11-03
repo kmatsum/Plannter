@@ -10,7 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".Plant_Harvest_Screen"></activity>
         <activity android:name=".Main_Window" />
         <activity android:name=".Start_Menu">
             <intent-filter>

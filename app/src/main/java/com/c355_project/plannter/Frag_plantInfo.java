@@ -4,12 +4,12 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.os.Bundle;
-
 import androidx.annotation.FontRes;
 import androidx.annotation.Nullable;
 import androidx.annotation.XmlRes;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,28 +22,27 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-
 import java.util.ArrayList;
 import java.util.List;
 
 
+
 public class Frag_plantInfo extends Fragment implements View.OnClickListener, Spinner.OnItemSelectedListener {
-  
 //VARIABLES ========================================================================================
+    //Main_Window Activity Instantiation
+    Main_Window Main_Window;
+
     List<Plant> plantList;
     String[] plantNames;
 
     //GUI Elements
-    Spinner spnrSelectPlant;
-    ImageView imageView;
-    TextView txtSeedIndoors;
-    TextView txtWeeksToHarvest;
-    TextView txtSeasons;
-    TextView txtSeedDistance;
-    TextView txtMethod;
-
-    //Main_Window Activity Instantiation
-    Main_Window Main_Window;
+    Spinner     spnrSelectPlant;
+    ImageView   imageView;
+    TextView    txtSeedIndoors,
+                txtWeeksToHarvest,
+                txtSeasons,
+                txtSeedDistance,
+                txtMethod;
 
 
 
@@ -95,7 +94,7 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
 
 
 
-    //LISTENER METHODS =================================================================================
+//LISTENER METHODS =================================================================================
     public void onClick (View view) {
         switch (view.getId()) {
             case (R.id.btnBack): {
@@ -132,33 +131,48 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
         Plant plant = plantList.get(position);
         Drawable plantImage = ResourcesCompat.getDrawable(getResources(), plant.getFileID(), null);
         imageView.setImageDrawable(plantImage);
-        if (plant.getFirstPlantDate() < 26) //26 represents half of 52 weeks in the year
+
+        if (plant.getFirstPlantDate() < 26) { //26 represents half of 52 weeks in the year
             txtSeasons.setText("Spring");
-        if (plant.getLastPlantDate() < 26)
-            if (txtSeasons.getText().equals("---"))
+        }
+
+        if (plant.getLastPlantDate() < 26) {
+            if (txtSeasons.getText().equals("---")) {
                 txtSeasons.setText("Fall");
-            else
+            } else {
                 txtSeasons.append(",\nFall");
-        if (plant.getSeedIndoorDate() == 52)
+            }
+        }
+
+        if (plant.getSeedIndoorDate() == 52) {
             txtSeedIndoors.setText("No");
-        else
+        } else {
             txtSeedIndoors.setText("Yes");
+        }
+
         txtWeeksToHarvest.setText(Integer.toString(plant.getWeeksToHarvest()));
         txtSeedDistance.setText(Integer.toString(plant.getDistBetweenPlants()));
-        if (plant.isRaisedHills())
-            txtMethod.setText("Raised Hills");
-        else if (plant.isRaisedRows())
-            txtMethod.setText("Raised Rows");
-        else
-            txtMethod.setText("Flat");
 
+        if (plant.isRaisedHills()) {
+            txtMethod.setText("Raised Hills");
+        } else if (plant.isRaisedRows()) {
+            txtMethod.setText("Raised Rows");
+        } else {
+            txtMethod.setText("Flat");
+        }
     }
+
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
+
     }
+
+
 
 //METHODS ==========================================================================================
     public void makeToast(String Message) {
-        Toast.makeText(getActivity(), Message, Toast.LENGTH_SHORT).show();
+        Toast toast = Toast.makeText(getActivity(), Message, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL,0,0);
+        toast.show();
     }
 }

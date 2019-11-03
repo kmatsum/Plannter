@@ -3,8 +3,10 @@ package com.c355_project.plannter;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+
+
 @Entity()
-public class Plant{
+public class Plant {
 
     /* VARIABLE DESCRIPTIONS =======================================================================
 
@@ -42,8 +44,9 @@ public class Plant{
     private boolean raisedHills;
     private int distBetweenPlants;
 
-    //CONSTRUCTOR ==================================================================================
 
+
+//CONSTRUCTOR ======================================================================================
     public Plant(String plantName, String seedCompany, int firstPlantDate,
                  int weeksToHarvest, int harvestRange, int seedIndoorDate,
                  int lastPlantDate, String notes,
@@ -62,7 +65,9 @@ public class Plant{
         this.distBetweenPlants = distBetweenPlants;
     }
 
-    //GETS & SETS ==================================================================================
+
+
+//GETS & SETS ======================================================================================
     public void setId(int id) {
         this.id = id;
     }

@@ -2,6 +2,7 @@ package com.c355_project.plannter;
 
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,15 +10,15 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import java.util.List;
 
 
 
 public class Frag_plantHarvest extends Fragment implements View.OnClickListener {
 //VARIABLES ========================================================================================
-TextView txtDisplayDate;
+    TextView txtDisplayDate;
     TextView txtDisplayCrops;
     String Day;
     String Month;
@@ -131,6 +132,7 @@ TextView txtDisplayDate;
     }
 
 
+
 //LISTENER METHODS =================================================================================
     public void onClick (View view) {
         switch (view.getId()) {
@@ -153,6 +155,8 @@ TextView txtDisplayDate;
 
 //METHODS ==========================================================================================
     public void makeToast(String Message) {
-        Toast.makeText(getActivity(), Message, Toast.LENGTH_SHORT).show();
+        Toast toast = Toast.makeText(getActivity(), Message, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL,0,0);
+        toast.show();
     }
 }

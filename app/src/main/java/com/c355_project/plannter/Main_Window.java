@@ -1,20 +1,20 @@
 package com.c355_project.plannter;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.View;
+import android.view.Gravity;
 import android.widget.Toast;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+
+
 public class Main_Window extends AppCompatActivity {
 //VARIABLES ========================================================================================
+    //Date Formatter
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
     //Fragments
@@ -121,8 +121,11 @@ public class Main_Window extends AppCompatActivity {
     }
 
     public void makeToast(String Message) {
-        Toast.makeText(this, Message, Toast.LENGTH_SHORT).show();
+        Toast toast = Toast.makeText(this, Message, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL,0,0);
+        toast.show();
     }
+
 
 
 //GET AND SET METHODS ==============================================================================

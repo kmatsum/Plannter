@@ -1,17 +1,15 @@
 package com.c355_project.plannter;
 
-
-
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -20,10 +18,15 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 
+
 public class Frag_plantByPlant extends Fragment implements View.OnClickListener, Spinner.OnItemSelectedListener {
 //VARIABLES ========================================================================================
+    //Main_Window Activity Instantiation
+    Main_Window Main_Window;
+
+    //Plant Object List
     List<Plant> plantList;
-    String[] plantNames;
+    String[]    plantNames;
 
     //GUI Elements
     ImageView   imageView;
@@ -34,9 +37,6 @@ public class Frag_plantByPlant extends Fragment implements View.OnClickListener,
                 txtHarvestStart,
                 txtHarvestEnd;
     Spinner     spnrSelectPlant;
-
-    //Main_Window Activity Instantiation
-    Main_Window Main_Window;
 
     //Date Format
     SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
@@ -131,8 +131,6 @@ public class Frag_plantByPlant extends Fragment implements View.OnClickListener,
         }
     }
 
-
-
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         Plant selectedPlant = plantList.get(position);
@@ -147,6 +145,8 @@ public class Frag_plantByPlant extends Fragment implements View.OnClickListener,
 
 //METHODS ==========================================================================================
     public void makeToast(String Message) {
-        Toast.makeText(getActivity(), Message, Toast.LENGTH_SHORT).show();
+        Toast toast = Toast.makeText(getActivity(), Message, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL,0,0);
+        toast.show();
     }
 }
