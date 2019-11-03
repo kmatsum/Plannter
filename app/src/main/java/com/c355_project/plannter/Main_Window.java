@@ -22,6 +22,7 @@ public class Main_Window extends AppCompatActivity {
     Frag_plantInfo Frag_plantInfo;
     Frag_plantDate Frag_plantDate;
     Frag_plantHarvest Frag_plantHarvest;
+    Frag_plantByPlant Frag_plantByPlant;
 
     //LastFrostDate
     Date lastSpringFrostDate;
@@ -57,6 +58,7 @@ public class Main_Window extends AppCompatActivity {
         Frag_plantInfo      = new Frag_plantInfo();
         Frag_plantDate      = new Frag_plantDate();
         Frag_plantHarvest   = new Frag_plantHarvest();
+        Frag_plantByPlant   = new Frag_plantByPlant();
 
 
         AsyncTask.execute(new Runnable() {
@@ -88,12 +90,16 @@ public class Main_Window extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainFragmentWindow, Frag_mainMenu).commit();
             } break;
 
-            case "PlantInfo": {
-                getSupportFragmentManager().beginTransaction().replace(R.id.mainFragmentWindow, Frag_plantInfo).commit();
-            } break;
-
             case "PlantDate": {
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainFragmentWindow, Frag_plantDate).commit();
+            } break;
+
+            case "PlantByPlant": {
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainFragmentWindow, Frag_plantByPlant).commit();
+            } break;
+
+            case "PlantInfo": {
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainFragmentWindow, Frag_plantInfo).commit();
             } break;
 
             case "PlantHarvest": {

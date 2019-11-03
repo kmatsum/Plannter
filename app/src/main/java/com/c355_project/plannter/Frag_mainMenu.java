@@ -52,15 +52,13 @@ public class Frag_mainMenu extends Fragment implements View.OnClickListener {
 //LISTENER METHODS =================================================================================
     @Override
     public void onClick (View view) {
-        Main_Window Main_Window = (Main_Window) getActivity();
-
         switch (view.getId()) {
             case (R.id.btnPlantByDate): {
                 Main_Window.changeFragment("PlantDate");
             } break;
 
             case (R.id.btnPlantCrop): {
-
+                Main_Window.changeFragment("PlantByPlant");
             } break;
 
             case (R.id.btnPlantInfo): {
