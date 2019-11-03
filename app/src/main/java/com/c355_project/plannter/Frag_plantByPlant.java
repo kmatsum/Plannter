@@ -98,8 +98,8 @@ public class Frag_plantByPlant extends Fragment implements View.OnClickListener,
     @Override
     public void onClick (View view) {
         switch (view.getId()) {
-            case (R.id.btnPlantByDate): {
-                Main_Window.changeFragment("PlantDate");
+            case (R.id.btnBack): {
+                Main_Window.changeFragment("MainMenu");
             }
             break;
 
