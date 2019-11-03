@@ -3,4 +3,198 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Frag_settings"/>
+    tools:context=".Frag_settings"
+    android:background="@color/colorPrimary">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/btnFrostDateIntent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#00FFFFFF"
+                    android:fontFamily="@font/finger_paint"
+                    android:text="Get Local Spring And Fall Frost Dates"
+                    android:textColor="@color/colorTitleText"
+                    android:textSize="20sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/springFrostDateLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/finger_paint"
+                        android:text="Last Spring Frost Date: "
+                        android:textColor="@color/colorTitleText" />
+
+                    <EditText
+                        android:id="@+id/springFrostDateMonth"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/finger_paint"
+                        android:hint="MM" />
+
+                    <TextView
+                        android:id="@+id/textView8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/finger_paint"
+                        android:text="/"
+                        android:textColor="@color/colorTitleText" />
+
+                    <EditText
+                        android:id="@+id/springFrostDateDay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/finger_paint"
+                        android:hint="DD" />
+
+                    <TextView
+                        android:id="@+id/textView6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/finger_paint"
+                        android:text="/"
+                        android:textColor="@color/colorTitleText" />
+
+                    <EditText
+                        android:id="@+id/springFrostDateYear"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/finger_paint"
+                        android:hint="YYYY" />
+
+                    <Button
+                        android:id="@+id/btnUpdateSpring"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:fontFamily="@font/finger_paint"
+                        android:text="Update"
+                        android:textColor="@color/colorTitleText" />
+                </LinearLayout>
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/fallFrostDateLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/finger_paint"
+                        android:text="First Fall Frost Date:     "
+                        android:textColor="@color/colorTitleText" />
+
+                    <EditText
+                        android:id="@+id/fallFrostDateMonth"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/finger_paint"
+                        android:hint="MM" />
+
+                    <TextView
+                        android:id="@+id/textView14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/finger_paint"
+                        android:text="/"
+                        android:textColor="@color/colorTitleText" />
+
+                    <EditText
+                        android:id="@+id/fallFrostDateDay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/finger_paint"
+                        android:hint="DD" />
+
+                    <TextView
+                        android:id="@+id/textView12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/finger_paint"
+                        android:text="/"
+                        android:textColor="@color/colorTitleText" />
+
+                    <EditText
+                        android:id="@+id/fallFrostDateYear"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/finger_paint"
+                        android:hint="YYYY" />
+
+                    <Button
+                        android:id="@+id/btnUpdateFall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:fontFamily="@font/finger_paint"
+                        android:text="Update"
+                        android:textColor="@color/colorTitleText" />
+                </LinearLayout>
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </TableLayout>
+
+        <TextView
+            android:id="@+id/txtSPACER"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="100" />
+
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:background="#00FFFFFF"
+            android:text="@string/back"
+            android:textColor="@color/colorTitleText" />
+
+    </LinearLayout>
+
+</FrameLayout>
