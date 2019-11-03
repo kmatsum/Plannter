@@ -33,7 +33,7 @@ public class Frag_plantByPlant extends Fragment implements View.OnClickListener,
                 txtPlantEnd,
                 txtHarvestStart,
                 txtHarvestEnd;
-    Button      btnBack;
+    Spinner     spnrSelectPlant;
 
     //Main_Window Activity Instantiation
     Main_Window Main_Window;
@@ -59,6 +59,8 @@ public class Frag_plantByPlant extends Fragment implements View.OnClickListener,
 
         //Set all OnClickListeners needed for this View
         view.findViewById(R.id.btnBack).setOnClickListener(this);
+        view.findViewById(R.id.btnNext).setOnClickListener(this);
+        view.findViewById(R.id.btnPrevious).setOnClickListener(this);
 
         //Set all the view
         imageView = view.findViewById(R.id.imageView);
@@ -70,8 +72,9 @@ public class Frag_plantByPlant extends Fragment implements View.OnClickListener,
         txtHarvestStart = view.findViewById(R.id.txtHarvestStart);
         txtHarvestEnd = view.findViewById(R.id.txtHarvestEnd);
 
+        spnrSelectPlant = view.findViewById(R.id.spnrSelectPlant);
+
         //Set the spinner adapter and contents
-        Spinner spnrSelectPlant = view.findViewById(R.id.spnrSelectPlant);
         plantNames = new String[plantList.size()];
         for (int i = 0; i < plantList.size(); i++){
             plantNames[i] = plantList.get(i).getPlantName();
@@ -100,8 +103,22 @@ public class Frag_plantByPlant extends Fragment implements View.OnClickListener,
         switch (view.getId()) {
             case (R.id.btnBack): {
                 Main_Window.changeFragment("MainMenu");
-            }
-            break;
+            } break;
+
+            case (R.id.btnNext): {
+                int position = spnrSelectPlant.getSelectedItemPosition();
+                if (position < spnrSelectPlant.getAdapter().getCount() - 1) {
+                    spnrSelectPlant.setSelection(spnrSelectPlant.getSelectedItemPosition() + 1);
+                }
+            } break;
+
+            case (R.id.btnPrevious): {
+                int position = spnrSelectPlant.getSelectedItemPosition();
+                if (position > 0) {
+                    spnrSelectPlant.setSelection(spnrSelectPlant.getSelectedItemPosition() - 1);
+
+                }
+            } break;
 
             //Used for handling exceptions on if the given ViewID and the expected ViewID does not match
             default: {
