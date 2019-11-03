@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -32,6 +33,7 @@ public class Frag_plantByPlant extends Fragment implements View.OnClickListener,
                 txtPlantEnd,
                 txtHarvestStart,
                 txtHarvestEnd;
+    Button      btnBack;
 
     //Main_Window Activity Instantiation
     Main_Window Main_Window;
@@ -56,6 +58,9 @@ public class Frag_plantByPlant extends Fragment implements View.OnClickListener,
         plantList = Main_Window.getPlantList();
 
         //Set all OnClickListeners needed for this View
+        view.findViewById(R.id.btnBack).setOnClickListener(this);
+
+        //Set all the view
         imageView = view.findViewById(R.id.imageView);
         txtSpringFrost = view.findViewById(R.id.txtSpringFrost);
         txtFallFrost = view.findViewById(R.id.txtFallFrost);
@@ -64,10 +69,6 @@ public class Frag_plantByPlant extends Fragment implements View.OnClickListener,
         txtPlantEnd = view.findViewById(R.id.txtPlantEnd);
         txtHarvestStart = view.findViewById(R.id.txtHarvestStart);
         txtHarvestEnd = view.findViewById(R.id.txtHarvestEnd);
-
-        //Set some default text
-        txtSpringFrost.setText(dateFormat.format(Main_Window.getLastSpringFrostDate()));
-        txtFallFrost.setText(dateFormat.format(Main_Window.getLastFallFrostDate()));
 
         //Set the spinner adapter and contents
         Spinner spnrSelectPlant = view.findViewById(R.id.spnrSelectPlant);
@@ -84,6 +85,11 @@ public class Frag_plantByPlant extends Fragment implements View.OnClickListener,
 //        AdView adView = view.findViewById(R.id.adView);
 //        AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
 //        adView.loadAd(adRequest);
+
+
+        //Set some default text
+        txtSpringFrost.setText(dateFormat.format(Main_Window.getLastSpringFrostDate()));
+        txtFallFrost.setText(dateFormat.format(Main_Window.getLastFallFrostDate()));
     }
 
 
