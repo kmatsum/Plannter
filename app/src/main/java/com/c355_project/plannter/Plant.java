@@ -12,22 +12,18 @@ public class Plant{
     plantName:          Name of plant.
     seedCompany:        Seed company, preloaded plants will have value "General".
     firstPlantDate:     # of weeks BEFORE Avg Last Spring Frost that the plant should be planted.
-                        A value of 52 means the crop is not recommended for Spring.
+                        A value greater than 25 means it is not recommended for Spring.
     weeksToHarvest:     # of weeks between planted date and first expected harvest date.
-    spHarvestRange:     # of weeks the plant may be ready to harvest after weeksToHarvest.
-                        A value of 52 means the crop is not recommended for Spring.
-    spSeedIndoorDate:   # of weeks BEFORE Avg Last Spring Frost that the plant should be seeded indoors
-                        A value of 52 means indoor seeding is not required,
-                        or the crop is not recommended for Spring.
-    lastPlantDate:      # of weeks BEFORE Avg First Fall Frost that the plant should be planted
-                        A value of 52 means the crop is not recommended for Fall.
-    faHarvestRange:     # of weeks the plant may be ready to harvest after faWeeksToHarvest
-                        A value of 52 means the crop is not recommended for Fall.
-    faSeedIndoorDate:   # of weeks BEFORE Avg First Fall Frost that the plant should be seeded indoors
-                        A value of 52 means indoor seeding is not required,
-                        or the crop is not recommended for Fall.
+    harvestRange:       # of weeks the plant may be ready to harvest after weeksToHarvest.
+    seedIndoorDate:     # of weeks BEFORE Avg Last Spring Frost that the plant should be seeded indoors.
+                        A value of 52 means indoor seeding is not required.
+    lastPlantDate:      # of weeks BEFORE Avg First Fall Frost that the plant should be planted.
+                        A value greater than 25 means it is not recommended for Fall.
     notes:              Optional place to add notes regarding plant
     fileID:             ID of the corresponding picture.
+    raisedRows:         Boolean to determine if plant should be planted in raised rows.
+    raisedHills:        Boolean to determine if plant should be planted in raised hills.
+    distBetweenPlants:  Integer to represent inches between planted hills/rows.
 
     ============================================================================================= */
 
@@ -37,31 +33,33 @@ public class Plant{
     private String seedCompany;
     private int firstPlantDate;
     private int weeksToHarvest;
-    private int spHarvestRange;
-    private int spSeedIndoorDate;
+    private int harvestRange;
+    private int seedIndoorDate;
     private int lastPlantDate;
-    private int faHarvestRange;
-    private int faSeedIndoorDate;
     private String notes;
     private int fileID;
+    private boolean raisedRows;
+    private boolean raisedHills;
+    private int distBetweenPlants;
 
     //CONSTRUCTOR ==================================================================================
 
     public Plant(String plantName, String seedCompany, int firstPlantDate,
-                 int weeksToHarvest, int spHarvestRange, int spSeedIndoorDate,
-                 int lastPlantDate, int faHarvestRange, int faSeedIndoorDate, String notes,
-                 int fileID) {
+                 int weeksToHarvest, int harvestRange, int seedIndoorDate,
+                 int lastPlantDate, String notes,
+                 int fileID, boolean raisedRows, boolean raisedHills, int distBetweenPlants) {
         this.plantName = plantName;
         this.seedCompany = seedCompany;
         this.firstPlantDate = firstPlantDate;
         this.weeksToHarvest = weeksToHarvest;
-        this.spHarvestRange = spHarvestRange;
-        this.spSeedIndoorDate = spSeedIndoorDate;
+        this.harvestRange = harvestRange;
+        this.seedIndoorDate = seedIndoorDate;
         this.lastPlantDate = lastPlantDate;
-        this.faHarvestRange = faHarvestRange;
-        this.faSeedIndoorDate = faSeedIndoorDate;
         this.notes = notes;
         this.fileID = fileID;
+        this.raisedRows = raisedRows;
+        this.raisedHills = raisedHills;
+        this.distBetweenPlants = distBetweenPlants;
     }
 
     //GETS & SETS ==================================================================================
@@ -105,20 +103,20 @@ public class Plant{
         return weeksToHarvest;
     }
 
-    public void setSpHarvestRange(int spHarvestRange) {
-        this.spHarvestRange = spHarvestRange;
+    public void setHarvestRange(int harvestRange) {
+        this.harvestRange = harvestRange;
     }
 
-    public int getSpHarvestRange() {
-        return spHarvestRange;
+    public int getHarvestRange() {
+        return harvestRange;
     }
 
-    public void setSpSeedIndoorDate(int spSeedIndoorDate) {
-        this.spSeedIndoorDate = spSeedIndoorDate;
+    public void setSeedIndoorDate(int seedIndoorDate) {
+        this.seedIndoorDate = seedIndoorDate;
     }
 
-    public int getSpSeedIndoorDate() {
-        return spSeedIndoorDate;
+    public int getSeedIndoorDate() {
+        return seedIndoorDate;
     }
 
     public void setLastPlantDate(int lastPlantDate) {
@@ -127,22 +125,6 @@ public class Plant{
 
     public int getLastPlantDate() {
         return lastPlantDate;
-    }
-
-    public void setFaHarvestRange(int faHarvestRange) {
-        this.faHarvestRange = faHarvestRange;
-    }
-
-    public int getFaHarvestRange() {
-        return faHarvestRange;
-    }
-
-    public void setFaSeedIndoorDate(int faSeedIndoorDate) {
-        this.faSeedIndoorDate = faSeedIndoorDate;
-    }
-
-    public int getFaSeedIndoorDate() {
-        return faSeedIndoorDate;
     }
 
     public void setNotes(String notes) {
@@ -159,5 +141,29 @@ public class Plant{
 
     public void setFileID(int fileID) {
         this.fileID = fileID;
+    }
+
+    public boolean isRaisedRows() {
+        return raisedRows;
+    }
+
+    public void setRaisedRows(boolean raisedRows) {
+        this.raisedRows = raisedRows;
+    }
+
+    public boolean isRaisedHills() {
+        return raisedHills;
+    }
+
+    public void setRaisedHills(boolean raisedHills) {
+        this.raisedHills = raisedHills;
+    }
+
+    public int getDistBetweenPlants() {
+        return distBetweenPlants;
+    }
+
+    public void setDistBetweenPlants(int distBetweenPlants) {
+        this.distBetweenPlants = distBetweenPlants;
     }
 }
