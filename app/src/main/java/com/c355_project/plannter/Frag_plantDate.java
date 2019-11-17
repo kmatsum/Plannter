@@ -158,7 +158,7 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
         Date fallFrost;
         Date springFrost;
 
-        fallFrost = Main_Window.getLastFallFrostDate();
+        fallFrost = Main_Window.getFirstFallFrostDate();
         if (rbtn == rbtnHarvest & rbtn.isChecked()) {
            //Get frost date from DB and check ranges
            if((fallFrost.getTime() - selectedDate.getTime()) >= 83 || (fallFrost.getTime() - selectedDate.getTime()) <= 76) {
