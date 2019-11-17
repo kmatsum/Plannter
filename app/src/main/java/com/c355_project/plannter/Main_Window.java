@@ -27,7 +27,7 @@ public class Main_Window extends AppCompatActivity {
 
     //LastFrostDate
     PlantDate lastSpringFrostDate;
-    PlantDate lastFallFrostDate;
+    PlantDate firstFallFrostDate;
 
     //Plant List
     List<Plant> PlantList;
@@ -59,7 +59,7 @@ public class Main_Window extends AppCompatActivity {
                     PlantList = PlantDatabase.getInstance(getApplicationContext()).plantDao().getAllPlants();
                     //Get plant dates
                     lastSpringFrostDate = PlantDatabase.getInstance(getApplicationContext()).plantDao().getSpringFrostDate();
-                    lastFallFrostDate = PlantDatabase.getInstance(getApplicationContext()).plantDao().getFallFrostDate();
+                    firstFallFrostDate = PlantDatabase.getInstance(getApplicationContext()).plantDao().getFallFrostDate();
 
                 //[DEBUG] Print all the plant names
                     System.out.println("------------------------------------");
@@ -71,7 +71,7 @@ public class Main_Window extends AppCompatActivity {
                     //[DEBUG] Print all the plant dates
                     System.out.println("------------------------------------");
                     System.out.println(lastSpringFrostDate.getDate().toString());
-                    System.out.println(lastFallFrostDate.getDate().toString());
+                    System.out.println(firstFallFrostDate.getDate().toString());
                     System.out.println("------------------------------------");
 
             }
@@ -137,27 +137,27 @@ public class Main_Window extends AppCompatActivity {
         return PlantList;
     }
 
-//    public void setPlantList(List<Plant> xPlantList) {
-//        PlantList = xPlantList;
-//    }
+    public void setPlantList(List<Plant> xPlantList) {
+        PlantList = xPlantList;
+    }
 
     public Date getLastSpringFrostDate() {
-        lastSpringFrostDate = PlantDatabase.getInstance(getApplicationContext()).plantDao().getSpringFrostDate();
         return lastSpringFrostDate.getDate();
     }
 
-//    public void setLastSpringFrostDate(Date lastSpringFrostDate) {
-//        this.lastSpringFrostDate = lastSpringFrostDate;
-//    }
-
-    public Date getLastFallFrostDate() {
-        lastFallFrostDate = PlantDatabase.getInstance(getApplicationContext()).plantDao().getFallFrostDate();
-        return lastFallFrostDate.getDate();
+    public void setLastSpringFrostDate(Date xLastSpringFrostDate) {
+        this.lastSpringFrostDate.setDate(xLastSpringFrostDate);
+        PlantDatabase.getInstance(getApplicationContext()).plantDao().updatePlant(lastSpringFrostDate);
     }
 
-//    public void setLastFallFrostDate(Date lastFallFrostDate) {
-//        this.lastFallFrostDate = lastFallFrostDate;
-//    }
+    public Date getFirstFallFrostDate() {
+        return firstFallFrostDate.getDate();
+    }
+
+    public void setFirstFallFrostDate(Date xFirstFallFrostDate) {
+        this.firstFallFrostDate.setDate(xFirstFallFrostDate);
+        PlantDatabase.getInstance(getApplicationContext()).plantDao().updatePlant(firstFallFrostDate);
+    }
 
     public Date getUserInputDate() {
         return userInputDate;

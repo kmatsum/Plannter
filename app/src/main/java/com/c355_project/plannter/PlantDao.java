@@ -13,8 +13,8 @@ public interface PlantDao {
     void insertPlantDate(PlantDate plantDate);
     @Insert
     void insertPlant(Plant plant);
-//    @Update
-//    void updatePlant(Plant plant);
+    @Update
+    void updatePlant(PlantDate plantDate);
 //    @Delete
 //    void deletePlant(Plant plant);
     @Query("SELECT * FROM Plant")
