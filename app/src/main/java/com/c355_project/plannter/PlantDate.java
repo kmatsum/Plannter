@@ -94,6 +94,19 @@ public class PlantDate {
         }
         return date;
     }
+
+    // Function to set the object's date with a Date object
+    public void setDate(Date date) {
+        SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
+        SimpleDateFormat dayFormat = new SimpleDateFormat("dd");
+        SimpleDateFormat monthFormat = new SimpleDateFormat("MM");
+        int xYear = Integer.parseInt(yearFormat.format(date));
+        int xDay = Integer.parseInt(dayFormat.format(date));
+        int xMonth = Integer.parseInt(monthFormat.format(date));
+        this.year = xYear;
+        this.day = xDay;
+        this.month = xMonth;
+    }
 }
 
 
