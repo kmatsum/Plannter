@@ -70,13 +70,13 @@ public class Frag_settings extends Fragment implements View.OnClickListener {
                 dateFormat.setLenient(false);
                 try {
                     Date springDate = dateFormat.parse(springInputDate);
+                    //Updates The Database With The User Inputted Spring Frost Date Values
+                    Main_Window.setLastSpringFrostDate(springDate);
                 }
                 //If Date Is Invalid, Toast The User To Input A Valid Date
                 catch (ParseException e) {
                     makeToast("Please Enter A Valid Date");
                 }
-
-                //Updates The Database With The User Inputted Spring Frost Date Values
 
             } break;
 
@@ -91,6 +91,8 @@ public class Frag_settings extends Fragment implements View.OnClickListener {
                 dateFormat.setLenient(false);
                 try {
                     Date fallDate = dateFormat.parse(fallInputDate);
+                    //Updates The Database With The User Inputted Fall Frost Date Values
+                    Main_Window.setFirstFallFrostDate(fallDate);
                 }
                 //If Date Is Invalid, Toast The User To Input A Valid Date
                 catch (ParseException e) {
@@ -98,7 +100,6 @@ public class Frag_settings extends Fragment implements View.OnClickListener {
                 }
 
 
-                //Updates The Database With The User Inputted Spring Frost Date Values
 
             } break;
 
