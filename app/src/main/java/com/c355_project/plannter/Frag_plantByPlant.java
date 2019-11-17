@@ -92,7 +92,7 @@ public class Frag_plantByPlant extends Fragment implements View.OnClickListener,
 
         //Set some default text
         txtSpringFrost.setText(dateFormat.format(Main_Window.getLastSpringFrostDate()));
-        txtFallFrost.setText(dateFormat.format(Main_Window.getLastFallFrostDate()));
+        txtFallFrost.setText(dateFormat.format(Main_Window.getFirstFallFrostDate()));
     }
 
 

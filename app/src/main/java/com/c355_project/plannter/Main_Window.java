@@ -7,6 +7,7 @@ import android.view.Gravity;
 import android.widget.Toast;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -14,34 +15,27 @@ import java.util.List;
 
 public class Main_Window extends AppCompatActivity {
 //VARIABLES ========================================================================================
+
+    String harvestableCrops;
+
     //Date Formatter
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
     //Fragments
     Frag_mainMenu Frag_mainMenu;
     Frag_settings Frag_settings;
+    Frag_settingsAddPlants Frag_settingsAddPlants;
     Frag_plantInfo Frag_plantInfo;
     Frag_plantDate Frag_plantDate;
     Frag_plantHarvest Frag_plantHarvest;
     Frag_plantByPlant Frag_plantByPlant;
 
     //LastFrostDate
-    Date lastSpringFrostDate;
-    Date lastFallFrostDate;
-
-    {
-        try {
-            lastSpringFrostDate = dateFormat.parse("04/29/2019");
-            lastFallFrostDate = dateFormat.parse("10/08/2019");
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-    }
+    PlantDate lastSpringFrostDate;
+    PlantDate firstFallFrostDate;
 
     //Plant List
     List<Plant> PlantList;
-
 
     //PlantHarvest
     Date userInputDate;
@@ -57,6 +51,7 @@ public class Main_Window extends AppCompatActivity {
         //Fragment Instantiation
         Frag_mainMenu       = new Frag_mainMenu();
         Frag_settings       = new Frag_settings();
+        Frag_settingsAddPlants = new Frag_settingsAddPlants();
         Frag_plantInfo      = new Frag_plantInfo();
         Frag_plantDate      = new Frag_plantDate();
         Frag_plantHarvest   = new Frag_plantHarvest();
@@ -66,13 +61,22 @@ public class Main_Window extends AppCompatActivity {
             @Override
             public void run() {
                     //Get plants
-                    PlantList = PlantDatabase.getInstance(getApplicationContext()).plantDao().getAll();
+                    PlantList = PlantDatabase.getInstance(getApplicationContext()).plantDao().getAllPlants();
+                    //Get plant dates
+                    lastSpringFrostDate = PlantDatabase.getInstance(getApplicationContext()).plantDao().getSpringFrostDate();
+                    firstFallFrostDate = PlantDatabase.getInstance(getApplicationContext()).plantDao().getFallFrostDate();
 
-                    //[DEBUG] Print all the plant names
+                //[DEBUG] Print all the plant names
                     System.out.println("------------------------------------");
                     for (int i = 0; i < PlantList.size(); i++){
                         System.out.println(PlantList.get(i).getPlantName());
                     }
+                    System.out.println("------------------------------------");
+
+                    //[DEBUG] Print all the plant dates
+                    System.out.println("------------------------------------");
+                    System.out.println(lastSpringFrostDate.getDate().toString());
+                    System.out.println(firstFallFrostDate.getDate().toString());
                     System.out.println("------------------------------------");
 
             }
@@ -111,6 +115,10 @@ public class Main_Window extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainFragmentWindow, Frag_settings).commit();
             } break;
 
+            case "SettingsAddPlants": {
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainFragmentWindow, Frag_settingsAddPlants).commit();
+            } break;
+
             default: {
                 //Toast Error Information
                 makeToast("[ERROR] Menu parameter passed was not found, returning to main menu...");
@@ -130,6 +138,7 @@ public class Main_Window extends AppCompatActivity {
 
 //GET AND SET METHODS ==============================================================================
     public List<Plant> getPlantList() {
+        PlantList = PlantDatabase.getInstance(getApplicationContext()).plantDao().getAllPlants();
         return PlantList;
     }
 
@@ -138,19 +147,21 @@ public class Main_Window extends AppCompatActivity {
     }
 
     public Date getLastSpringFrostDate() {
-        return lastSpringFrostDate;
+        return lastSpringFrostDate.getDate();
     }
 
-    public void setLastSpringFrostDate(Date lastSpringFrostDate) {
-        this.lastSpringFrostDate = lastSpringFrostDate;
+    public void setLastSpringFrostDate(Date xLastSpringFrostDate) {
+        this.lastSpringFrostDate.setDate(xLastSpringFrostDate);
+        PlantDatabase.getInstance(getApplicationContext()).plantDao().updatePlant(lastSpringFrostDate);
     }
 
-    public Date getLastFallFrostDate() {
-        return lastFallFrostDate;
+    public Date getFirstFallFrostDate() {
+        return firstFallFrostDate.getDate();
     }
 
-    public void setLastFallFrostDate(Date lastFallFrostDate) {
-        this.lastFallFrostDate = lastFallFrostDate;
+    public void setFirstFallFrostDate(Date xFirstFallFrostDate) {
+        this.firstFallFrostDate.setDate(xFirstFallFrostDate);
+        PlantDatabase.getInstance(getApplicationContext()).plantDao().updatePlant(firstFallFrostDate);
     }
 
     public Date getUserInputDate() {
@@ -160,4 +171,14 @@ public class Main_Window extends AppCompatActivity {
     public void setUserInputDate(Date userInputDate) {
         this.userInputDate = userInputDate;
     }
+
+    public String getHarvestableCrops() {
+        return harvestableCrops;
+    }
+
+    public void setHarvestableCrops(String harvestableCrops) {
+        this.harvestableCrops = harvestableCrops;
+    }
 }
+
+
