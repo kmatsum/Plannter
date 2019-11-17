@@ -74,6 +74,7 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
         view.findViewById(R.id.btnBack).setOnClickListener(this);
         view.findViewById(R.id.btnNext).setOnClickListener(this);
         view.findViewById(R.id.btnPrevious).setOnClickListener(this);
+        view.findViewById(R.id.imgSettingsAddPlants).setOnClickListener(this);
 
         //Set the spinner adapter and contents
         spnrSelectPlant = view.findViewById(R.id.spnrSelectPlant);
@@ -96,33 +97,35 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
 
 //LISTENER METHODS =================================================================================
     public void onClick (View view) {
-        switch (view.getId()) {
-            case (R.id.btnBack): {
-                System.out.println("=============================================================");
-                System.out.println("SWITCH THE FRAGMENT TO MAINMENU");
-                System.out.println("=============================================================");
+        Integer id = view.getId();
+        if (id == R.id.btnBack) {
+            System.out.println("=============================================================");
+            System.out.println("SWITCH THE FRAGMENT TO MAINMENU");
+            System.out.println("=============================================================");
 
-                Main_Window.changeFragment("MainMenu");
-            } break;
-            case (R.id.btnPrevious): {
-                int position = spnrSelectPlant.getSelectedItemPosition();
-                if (position > 0)
-                    spnrSelectPlant.setSelection(spnrSelectPlant.getSelectedItemPosition() - 1);
-            } break;
-            case (R.id.btnNext): {
-                int position = spnrSelectPlant.getSelectedItemPosition();
-                if (position < spnrSelectPlant.getAdapter().getCount() - 1)
-                    spnrSelectPlant.setSelection(spnrSelectPlant.getSelectedItemPosition() + 1);
-            } break;
+            Main_Window.changeFragment("MainMenu");
+        } else if (id == R.id.imgSettingsAddPlants) {
+            System.out.println("=============================================================");
+            System.out.println("SWITCH THE FRAGMENT TO SETTINGSADDPLANTS");
+            System.out.println("=============================================================");
+            Main_Window.changeFragment("SettingsAddPlants");
+        } else if (id == R.id.btnPrevious || id == R.id.arrowPrevious) {
+            int position = spnrSelectPlant.getSelectedItemPosition();
+            if (position > 0)
+                spnrSelectPlant.setSelection(spnrSelectPlant.getSelectedItemPosition() - 1);
+        } else if (id == R.id.btnNext || id == R.id.arrowNext) {
+            int position = spnrSelectPlant.getSelectedItemPosition();
+            if (position < spnrSelectPlant.getAdapter().getCount() - 1)
+                spnrSelectPlant.setSelection(spnrSelectPlant.getSelectedItemPosition() + 1);
+        }
 
-            //Used for handling exceptions on if the given ViewID and the expected ViewID does not match
-            default: {
-                //Toast Error Information
-                makeToast("[ERROR] Menu parameter passed was not found, returning to main menu...");
-                System.out.println("[ERROR] Menu parameter passed was not found, returning to main menu...\n");
+        //Used for handling exceptions on if the given ViewID and the expected ViewID does not match
+        else {
+            //Toast Error Information
+            makeToast("[ERROR] Menu parameter passed was not found, returning to main menu...");
+            System.out.println("[ERROR] Menu parameter passed was not found, returning to main menu...\n");
 
-                Main_Window.changeFragment("MainMenu");
-            }
+            Main_Window.changeFragment("MainMenu");
         }
     }
 
