@@ -138,12 +138,15 @@ public class Main_Window extends AppCompatActivity {
 
 //GET AND SET METHODS ==============================================================================
     public List<Plant> getPlantList() {
-        PlantList = PlantDatabase.getInstance(getApplicationContext()).plantDao().getAllPlants();
         return PlantList;
     }
 
     public void setPlantList(List<Plant> xPlantList) {
         PlantList = xPlantList;
+        /*TODO
+        Here we will use a PLANT object parameter, then have the DATABASE INSTANCE insert that plant
+        object. Then we will update the PLANTLIST with the whole database.
+         */
     }
 
     public Date getLastSpringFrostDate() {
@@ -152,6 +155,7 @@ public class Main_Window extends AppCompatActivity {
 
     public void setLastSpringFrostDate(Date xLastSpringFrostDate) {
         this.lastSpringFrostDate.setDate(xLastSpringFrostDate);
+        //TODO: ADD THREAD
         PlantDatabase.getInstance(getApplicationContext()).plantDao().updatePlant(lastSpringFrostDate);
     }
 
@@ -161,6 +165,7 @@ public class Main_Window extends AppCompatActivity {
 
     public void setFirstFallFrostDate(Date xFirstFallFrostDate) {
         this.firstFallFrostDate.setDate(xFirstFallFrostDate);
+        //TODO: ADD THREAD
         PlantDatabase.getInstance(getApplicationContext()).plantDao().updatePlant(firstFallFrostDate);
     }
 
