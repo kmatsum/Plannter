@@ -37,8 +37,6 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
     String Month, Day, Year, Concat;
     SimpleDateFormat  simpleDateFormat;
     Date selectedDate;
-    Date fallFrost;
-    Date springFrost;
 
     //Plant Database List
     List<Plant> PlantDatabase;
@@ -157,13 +155,11 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
     }
 
     public void btnChecker(RadioButton rbtn) {
-        try {
-            fallFrost = simpleDateFormat.parse("10/09/2019");
-        }
-        catch(ParseException e) {
-            e.printStackTrace();
-        }
-       if (rbtn == rbtnHarvest & rbtn.isChecked()) {
+        Date fallFrost;
+        Date springFrost;
+
+        fallFrost = Main_Window.getLastFallFrostDate();
+        if (rbtn == rbtnHarvest & rbtn.isChecked()) {
            //Get frost date from DB and check ranges
            if((fallFrost.getTime() - selectedDate.getTime()) >= 83 || (fallFrost.getTime() - selectedDate.getTime()) <= 76) {
                Main_Window.setHarvestableCrops("You can harvest.....\n Tomatoes \n Peppers \n Cucumbers \n Squash"); }
@@ -196,4 +192,9 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
         }
     }
 }
+/*TODO
+USer date selected cannot be before today
+Radio button group - more than one radio button cannot be checked
+Loop through to calculate what plants can be harvested when -> Weeks to Harvest  times 7
+ */
 
