@@ -18,7 +18,7 @@ public class Main_Window extends AppCompatActivity {
     String harvestableCrops;
 
     //Date Formatter
-    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+    SimpleDateFormat dateFormat = new SimpleDateFormat("MM/DD/yyyy");
 
     //Fragments
     Frag_mainMenu           Frag_mainMenu;
