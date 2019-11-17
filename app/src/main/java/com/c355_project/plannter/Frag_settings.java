@@ -11,19 +11,24 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
 
 public class Frag_settings extends Fragment implements View.OnClickListener {
-//VARIABLES ========================================================================================
+    //VARIABLES ========================================================================================
     //Main_Window Activity Instantiation
     Main_Window Main_Window;
 
     //Website String
     String website = "https://morningchores.com/frost-dates/";
 
-//VARIABLES ========================================================================================
+    //Simple Date Format
+    SimpleDateFormat dateFormat = new SimpleDateFormat("MM/DD/YYYY");
+
+    //VARIABLES ========================================================================================
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -60,12 +65,16 @@ public class Frag_settings extends Fragment implements View.OnClickListener {
                 EditText txtSpringDay = view.findViewById(R.id.springFrostDateDay);
                 EditText txtSpringYear = view.findViewById(R.id.springFrostDateYear);
 
-                //Stores The User Input As Integers
-                int springMonth = Integer.parseInt(txtSpringMonth.getText().toString());
-                int springDay = Integer.parseInt(txtSpringDay.getText().toString());
-                int springYear = Integer.parseInt(txtSpringYear.getText().toString());
-
                 //User Input Validation
+                String springInputDate = (txtSpringMonth.getText().toString() + "/" + txtSpringDay.getText().toString() + "/" + txtSpringYear.getText().toString());
+                dateFormat.setLenient(false);
+                try {
+                    Date springDate = dateFormat.parse(springInputDate);
+                }
+                //If Date Is Invalid, Toast The User To Input A Valid Date
+                catch (ParseException e) {
+                    makeToast("Please Enter A Valid Date");
+                }
 
                 //Updates The Database With The User Inputted Spring Frost Date Values
 
@@ -77,12 +86,17 @@ public class Frag_settings extends Fragment implements View.OnClickListener {
                 EditText txtFallDay = view.findViewById(R.id.fallFrostDateDay);
                 EditText txtFallYear = view.findViewById(R.id.fallFrostDateYear);
 
-                //Stores The User Input As Integers
-                int fallMonth = Integer.parseInt(txtFallMonth.getText().toString());
-                int fallDay = Integer.parseInt(txtFallDay.getText().toString());
-                int fallYear = Integer.parseInt(txtFallYear.getText().toString());
-
                 //User Input Validation
+                String fallInputDate = (txtFallMonth.getText().toString() + "/" + txtFallDay.getText().toString() + "/" + txtFallYear.getText().toString());
+                dateFormat.setLenient(false);
+                try {
+                    Date fallDate = dateFormat.parse(fallInputDate);
+                }
+                //If Date Is Invalid, Toast The User To Input A Valid Date
+                catch (ParseException e) {
+                    makeToast("Please Enter A Valid Date");
+                }
+
 
                 //Updates The Database With The User Inputted Spring Frost Date Values
 
@@ -106,7 +120,7 @@ public class Frag_settings extends Fragment implements View.OnClickListener {
 
 
 
-//METHODS ==========================================================================================
+    //METHODS ==========================================================================================
     public void makeToast(String Message) {
         Toast toast = Toast.makeText(getActivity(), Message, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL,0,0);
