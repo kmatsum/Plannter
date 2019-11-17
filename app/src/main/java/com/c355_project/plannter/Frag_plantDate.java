@@ -13,8 +13,8 @@ import android.widget.CalendarView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
+//import com.google.android.gms.ads.AdRequest;
+//import com.google.android.gms.ads.AdView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -96,7 +96,17 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
             break;
 
             case (R.id.btnNext): {
-                if (rbtnHarvest.isChecked()) {
+                if(rbtnHarvest.isChecked() && rbtnPlant.isChecked())
+                {
+                    rbtnPlant.setChecked(false);
+                    rbtnHarvest.setChecked(false);
+                    Main_Window.changeFragment("PlantDate");
+                }
+                if(!rbtnHarvest.isChecked() && !rbtnPlant.isChecked())
+                {
+                    makeToast("Please select a radio button to harvest");
+                }
+                else if (rbtnHarvest.isChecked()) {
                     btnChecker(rbtnHarvest);
                     Main_Window.changeFragment("PlantHarvest");
                 }
@@ -183,7 +193,7 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
                Main_Window.setUserInputDate(selectedDate);
            }
         }
-        if (rbtn == rbtnPlant & rbtnPlant.isChecked()) {
+        if (rbtn == rbtnPlant & rbtn.isChecked()) {
         }
     }
 }
