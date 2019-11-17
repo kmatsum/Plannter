@@ -8,8 +8,11 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.Calendar;
+import java.util.Date;
 
 
 public class Frag_settings extends Fragment implements View.OnClickListener {
@@ -20,7 +23,10 @@ public class Frag_settings extends Fragment implements View.OnClickListener {
     //Website String
     String website = "https://morningchores.com/frost-dates/";
 
-
+    //Spring Frost Date
+        Date SpringFrost;
+    //Fall Frost Date
+        Date FallFrost;
 
 //VARIABLES ========================================================================================
     @Override
@@ -37,6 +43,8 @@ public class Frag_settings extends Fragment implements View.OnClickListener {
         //Attaches onClickListener to Buttons
         view.findViewById(R.id.btnFrostDateIntent).setOnClickListener(this);
         view.findViewById(R.id.btnBack).setOnClickListener(this);
+        view.findViewById(R.id.btnUpdateSpring).setOnClickListener(this);
+        view.findViewById(R.id.btnUpdateFall).setOnClickListener(this);
     }
 
     @Override
@@ -49,6 +57,34 @@ public class Frag_settings extends Fragment implements View.OnClickListener {
 
             case (R.id.btnBack): {
                 Main_Window.changeFragment("MainMenu");
+            } break;
+
+            case (R.id.btnUpdateSpring): {
+                //Creates References To The User Input Boxes
+                EditText txtSpringMonth = view.findViewById(R.id.springFrostDateMonth);
+                EditText txtSpringDay = view.findViewById(R.id.springFrostDateDay);
+                EditText txtSpringYear = view.findViewById(R.id.springFrostDateYear);
+
+                //Stores The User Input as Integers
+                int springMonth = Integer.parseInt(txtSpringMonth.getText().toString());
+                int springDay = Integer.parseInt(txtSpringDay.getText().toString());
+                int springYear = Integer.parseInt(txtSpringYear.getText().toString());
+
+                //Merges The 3 Integers Into A Single Calender Object
+                Calendar springFrostDate = Calendar.getInstance();
+                springFrostDate.set(Calendar.DATE, springDay);
+                springFrostDate.set(Calendar.MONTH, springMonth);
+                springFrostDate.set(Calendar.YEAR, springYear);
+                springFrostDate.set(Calendar.HOUR, 0);
+                springFrostDate.set(Calendar.MINUTE, 0);
+                springFrostDate.set(Calendar.SECOND, 0);
+
+                //Updates The Database With The User Inputted Spring Frost Date
+                
+            } break;
+
+            case (R.id.btnUpdateFall): {
+
             } break;
 
             //Used for handling exceptions on if the given ViewID and the expected ViewID does not match
