@@ -7,7 +7,6 @@ import android.view.Gravity;
 import android.widget.Toast;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -22,13 +21,13 @@ public class Main_Window extends AppCompatActivity {
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
     //Fragments
-    Frag_mainMenu Frag_mainMenu;
-    Frag_settings Frag_settings;
-    Frag_settingsAddPlants Frag_settingsAddPlants;
-    Frag_plantInfo Frag_plantInfo;
-    Frag_plantDate Frag_plantDate;
-    Frag_plantHarvest Frag_plantHarvest;
-    Frag_plantByPlant Frag_plantByPlant;
+    Frag_mainMenu           Frag_mainMenu;
+    Frag_settings           Frag_settings;
+    Frag_settingsAddPlants  Frag_settingsAddPlants;
+    Frag_plantInfo          Frag_plantInfo;
+    Frag_plantDate          Frag_plantDate;
+    Frag_plantHarvest       Frag_plantHarvest;
+    Frag_plantByPlant       Frag_plantByPlant;
 
     //LastFrostDate
     PlantDate lastSpringFrostDate;
