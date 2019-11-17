@@ -10,11 +10,19 @@ import java.util.List;
 @Dao
 public interface PlantDao {
     @Insert
+    void insertPlantDate(PlantDate plantDate);
+    @Insert
     void insertPlant(Plant plant);
-    @Update
-    void updatePlant(Plant plant);
-    @Delete
-    void deletePlant(Plant plant);
+//    @Update
+//    void updatePlant(Plant plant);
+//    @Delete
+//    void deletePlant(Plant plant);
     @Query("SELECT * FROM Plant")
-    List<Plant> getAll();
+    List<Plant> getAllPlants();
+    @Query("SELECT * FROM PlantDate")
+    List<PlantDate> getAllPlantDates();
+    @Query("SELECT * FROM PlantDate WHERE title = 'springFrostDate'")
+    PlantDate getSpringFrostDate();
+    @Query("SELECT * FROM PlantDate WHERE title = 'fallFrostDate'")
+    PlantDate getFallFrostDate();
 }
