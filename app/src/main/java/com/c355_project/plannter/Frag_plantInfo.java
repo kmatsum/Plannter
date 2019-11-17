@@ -74,6 +74,7 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
         view.findViewById(R.id.btnBack).setOnClickListener(this);
         view.findViewById(R.id.btnNext).setOnClickListener(this);
         view.findViewById(R.id.btnPrevious).setOnClickListener(this);
+        view.findViewById(R.id.imgSettingsAddPlants).setOnClickListener(this);
 
         //Set the spinner adapter and contents
         spnrSelectPlant = view.findViewById(R.id.spnrSelectPlant);
@@ -103,6 +104,11 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
             System.out.println("=============================================================");
 
             Main_Window.changeFragment("MainMenu");
+        } else if (id == R.id.imgSettingsAddPlants) {
+            System.out.println("=============================================================");
+            System.out.println("SWITCH THE FRAGMENT TO SETTINGSADDPLANTS");
+            System.out.println("=============================================================");
+            Main_Window.changeFragment("SettingsAddPlants");
         } else if (id == R.id.btnPrevious || id == R.id.arrowPrevious) {
             int position = spnrSelectPlant.getSelectedItemPosition();
             if (position > 0)
