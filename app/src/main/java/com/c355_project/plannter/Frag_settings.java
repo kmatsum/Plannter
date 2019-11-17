@@ -23,11 +23,6 @@ public class Frag_settings extends Fragment implements View.OnClickListener {
     //Website String
     String website = "https://morningchores.com/frost-dates/";
 
-    //Spring Frost Date
-        Date SpringFrost;
-    //Fall Frost Date
-        Date FallFrost;
-
 //VARIABLES ========================================================================================
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -65,25 +60,31 @@ public class Frag_settings extends Fragment implements View.OnClickListener {
                 EditText txtSpringDay = view.findViewById(R.id.springFrostDateDay);
                 EditText txtSpringYear = view.findViewById(R.id.springFrostDateYear);
 
-                //Stores The User Input as Integers
+                //Stores The User Input As Integers
                 int springMonth = Integer.parseInt(txtSpringMonth.getText().toString());
                 int springDay = Integer.parseInt(txtSpringDay.getText().toString());
                 int springYear = Integer.parseInt(txtSpringYear.getText().toString());
 
-                //Merges The 3 Integers Into A Single Calender Object
-                Calendar springFrostDate = Calendar.getInstance();
-                springFrostDate.set(Calendar.DATE, springDay);
-                springFrostDate.set(Calendar.MONTH, springMonth);
-                springFrostDate.set(Calendar.YEAR, springYear);
-                springFrostDate.set(Calendar.HOUR, 0);
-                springFrostDate.set(Calendar.MINUTE, 0);
-                springFrostDate.set(Calendar.SECOND, 0);
+                //User Input Validation
 
-                //Updates The Database With The User Inputted Spring Frost Date
-                
+                //Updates The Database With The User Inputted Spring Frost Date Values
+
             } break;
 
             case (R.id.btnUpdateFall): {
+                //Creates References To The User Input Boxes
+                EditText txtFallMonth = view.findViewById(R.id.fallFrostDateMonth);
+                EditText txtFallDay = view.findViewById(R.id.fallFrostDateDay);
+                EditText txtFallYear = view.findViewById(R.id.fallFrostDateYear);
+
+                //Stores The User Input As Integers
+                int fallMonth = Integer.parseInt(txtFallMonth.getText().toString());
+                int fallDay = Integer.parseInt(txtFallDay.getText().toString());
+                int fallYear = Integer.parseInt(txtFallYear.getText().toString());
+
+                //User Input Validation
+
+                //Updates The Database With The User Inputted Spring Frost Date Values
 
             } break;
 
