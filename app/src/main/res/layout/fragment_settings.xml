@@ -57,7 +57,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="@font/finger_paint"
-                        android:hint="MM" />
+                        android:hint="MM"
+                        android:maxLength="2" />
 
                     <TextView
                         android:id="@+id/textView8"
@@ -74,7 +75,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="@font/finger_paint"
-                        android:hint="DD" />
+                        android:hint="DD"
+                        android:maxLength="2" />
 
                     <TextView
                         android:id="@+id/textView6"
@@ -90,7 +92,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/finger_paint"
-                        android:hint="YYYY" />
+                        android:hint="YYYY"
+                        android:maxLength="4" />
 
                     <Button
                         android:id="@+id/btnUpdateSpring"
@@ -128,7 +131,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="@font/finger_paint"
-                        android:hint="MM" />
+                        android:hint="MM"
+                        android:maxLength="2" />
 
                     <TextView
                         android:id="@+id/textView14"
@@ -145,7 +149,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="@font/finger_paint"
-                        android:hint="DD" />
+                        android:hint="DD"
+                        android:maxLength="2" />
 
                     <TextView
                         android:id="@+id/textView12"
@@ -161,7 +166,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/finger_paint"
-                        android:hint="YYYY" />
+                        android:hint="YYYY"
+                        android:maxLength="4" />
 
                     <Button
                         android:id="@+id/btnUpdateFall"
