@@ -14,6 +14,9 @@ import java.util.List;
 
 public class Main_Window extends AppCompatActivity {
 //VARIABLES ========================================================================================
+
+    String harvestableCrops;
+
     //Date Formatter
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -166,4 +169,14 @@ public class Main_Window extends AppCompatActivity {
     public void setUserInputDate(Date userInputDate) {
         this.userInputDate = userInputDate;
     }
+
+    public String getHarvestableCrops() {
+        return harvestableCrops;
+    }
+
+    public void setHarvestableCrops(String harvestableCrops) {
+        this.harvestableCrops = harvestableCrops;
+    }
 }
+
+
