@@ -7,7 +7,6 @@ import android.view.Gravity;
 import android.widget.Toast;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -22,13 +21,13 @@ public class Main_Window extends AppCompatActivity {
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
     //Fragments
-    Frag_mainMenu Frag_mainMenu;
-    Frag_settings Frag_settings;
-    Frag_settingsAddPlants Frag_settingsAddPlants;
-    Frag_plantInfo Frag_plantInfo;
-    Frag_plantDate Frag_plantDate;
-    Frag_plantHarvest Frag_plantHarvest;
-    Frag_plantByPlant Frag_plantByPlant;
+    Frag_mainMenu           Frag_mainMenu;
+    Frag_settings           Frag_settings;
+    Frag_settingsAddPlants  Frag_settingsAddPlants;
+    Frag_plantInfo          Frag_plantInfo;
+    Frag_plantDate          Frag_plantDate;
+    Frag_plantHarvest       Frag_plantHarvest;
+    Frag_plantByPlant       Frag_plantByPlant;
 
     //LastFrostDate
     PlantDate lastSpringFrostDate;
@@ -49,13 +48,13 @@ public class Main_Window extends AppCompatActivity {
         setContentView(R.layout.activity_main_window);
 
         //Fragment Instantiation
-        Frag_mainMenu       = new Frag_mainMenu();
-        Frag_settings       = new Frag_settings();
-        Frag_settingsAddPlants = new Frag_settingsAddPlants();
-        Frag_plantInfo      = new Frag_plantInfo();
-        Frag_plantDate      = new Frag_plantDate();
-        Frag_plantHarvest   = new Frag_plantHarvest();
-        Frag_plantByPlant   = new Frag_plantByPlant();
+        Frag_mainMenu           = new Frag_mainMenu();
+        Frag_settings           = new Frag_settings();
+        Frag_settingsAddPlants  = new Frag_settingsAddPlants();
+        Frag_plantInfo          = new Frag_plantInfo();
+        Frag_plantDate          = new Frag_plantDate();
+        Frag_plantHarvest       = new Frag_plantHarvest();
+        Frag_plantByPlant       = new Frag_plantByPlant();
 
         AsyncTask.execute(new Runnable() {
             @Override
@@ -155,8 +154,20 @@ public class Main_Window extends AppCompatActivity {
 
     public void setLastSpringFrostDate(Date xLastSpringFrostDate) {
         this.lastSpringFrostDate.setDate(xLastSpringFrostDate);
-        //TODO: ADD THREAD
-        PlantDatabase.getInstance(getApplicationContext()).plantDao().updatePlant(lastSpringFrostDate);
+
+        //Open Thread to update the Database
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                //Set the database using the Date object parameter
+                PlantDatabase.getInstance(getApplicationContext()).plantDao().updatePlant(lastSpringFrostDate);
+
+                //[DEBUG] Print all the plant dates
+                System.out.println("------------------------------------");
+                System.out.println(lastSpringFrostDate.getDate().toString());
+                System.out.println("------------------------------------");
+            }
+        });
     }
 
     public Date getFirstFallFrostDate() {
@@ -165,8 +176,20 @@ public class Main_Window extends AppCompatActivity {
 
     public void setFirstFallFrostDate(Date xFirstFallFrostDate) {
         this.firstFallFrostDate.setDate(xFirstFallFrostDate);
-        //TODO: ADD THREAD
-        PlantDatabase.getInstance(getApplicationContext()).plantDao().updatePlant(firstFallFrostDate);
+
+        //Open Thread to update the Database
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                //Set the database using the Date object parameter
+                PlantDatabase.getInstance(getApplicationContext()).plantDao().updatePlant(firstFallFrostDate);
+
+                //[DEBUG] Print all the plant dates
+                System.out.println("------------------------------------");
+                System.out.println(firstFallFrostDate.getDate().toString());
+                System.out.println("------------------------------------");
+            }
+        });
     }
 
     public Date getUserInputDate() {
