@@ -70,7 +70,7 @@ public class Frag_plantHarvest extends Fragment implements View.OnClickListener 
         btnBack = view.findViewById(R.id.btnBackToDate);
         txtDisplayDate.setText(sdf.format(Main_Window.getUserInputDate()));
 
-        txtDisplayCrops.setText(Main_Window.getHarvestableCrops());
+        //txtDisplayCrops.setText(Main_Window.getHarvestableCrops());
     }
 
 
