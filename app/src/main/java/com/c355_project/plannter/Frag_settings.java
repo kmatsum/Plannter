@@ -25,9 +25,6 @@ public class Frag_settings extends Fragment implements View.OnClickListener {
     //Website String
     String website = "https://morningchores.com/frost-dates/";
 
-    //Simple Date Format
-    SimpleDateFormat dateFormat = new SimpleDateFormat("MM/DD/YYYY");
-
     //VARIABLES ========================================================================================
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -61,46 +58,46 @@ public class Frag_settings extends Fragment implements View.OnClickListener {
 
             case (R.id.btnUpdateSpring): {
                 //Creates References To The User Input Boxes
-                EditText txtSpringMonth = view.findViewById(R.id.springFrostDateMonth);
-                EditText txtSpringDay = view.findViewById(R.id.springFrostDateDay);
-                EditText txtSpringYear = view.findViewById(R.id.springFrostDateYear);
+                EditText txtSpringMonth = Main_Window.findViewById(R.id.springFrostDateMonth);
+                EditText txtSpringDay = Main_Window.findViewById(R.id.springFrostDateDay);
+                EditText txtSpringYear = Main_Window.findViewById(R.id.springFrostDateYear);
 
                 //User Input Validation
                 String springInputDate = (txtSpringMonth.getText().toString() + "/" + txtSpringDay.getText().toString() + "/" + txtSpringYear.getText().toString());
-                dateFormat.setLenient(false);
+                Main_Window.dateFormat.setLenient(false);
                 try {
-                    Date springDate = dateFormat.parse(springInputDate);
+                    Date springDate = Main_Window.dateFormat.parse(springInputDate);
                     //Updates The Database With The User Inputted Spring Frost Date Values
                     Main_Window.setLastSpringFrostDate(springDate);
+                    makeToast("Last Spring Frost Date Successfully Updated!");
                 }
                 //If Date Is Invalid, Toast The User To Input A Valid Date
                 catch (ParseException e) {
                     makeToast("Please Enter A Valid Date");
+                    e.printStackTrace();
                 }
-
             } break;
 
             case (R.id.btnUpdateFall): {
                 //Creates References To The User Input Boxes
-                EditText txtFallMonth = view.findViewById(R.id.fallFrostDateMonth);
-                EditText txtFallDay = view.findViewById(R.id.fallFrostDateDay);
-                EditText txtFallYear = view.findViewById(R.id.fallFrostDateYear);
+                EditText txtFallMonth = Main_Window.findViewById(R.id.fallFrostDateMonth);
+                EditText txtFallDay = Main_Window.findViewById(R.id.fallFrostDateDay);
+                EditText txtFallYear = Main_Window.findViewById(R.id.fallFrostDateYear);
 
                 //User Input Validation
                 String fallInputDate = (txtFallMonth.getText().toString() + "/" + txtFallDay.getText().toString() + "/" + txtFallYear.getText().toString());
-                dateFormat.setLenient(false);
+                Main_Window.dateFormat.setLenient(false);
                 try {
-                    Date fallDate = dateFormat.parse(fallInputDate);
+                    Date fallDate = Main_Window.dateFormat.parse(fallInputDate);
                     //Updates The Database With The User Inputted Fall Frost Date Values
                     Main_Window.setFirstFallFrostDate(fallDate);
+                    makeToast("First Fall Frost Date Successfully Updated!");
                 }
                 //If Date Is Invalid, Toast The User To Input A Valid Date
                 catch (ParseException e) {
                     makeToast("Please Enter A Valid Date");
+                    e.printStackTrace();
                 }
-
-
-
             } break;
 
             //Used for handling exceptions on if the given ViewID and the expected ViewID does not match
@@ -117,7 +114,6 @@ public class Frag_settings extends Fragment implements View.OnClickListener {
 
 
 //LISTENER METHODS =================================================================================
-
 
 
 
