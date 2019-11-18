@@ -96,6 +96,7 @@ public class Frag_settings extends Fragment implements View.OnClickListener {
                 //If Date Is Invalid, Toast The User To Input A Valid Date
                 catch (ParseException e) {
                     makeToast("Please Enter A Valid Date");
+                    e.printStackTrace();
                 }
             } break;
 
@@ -115,7 +116,7 @@ public class Frag_settings extends Fragment implements View.OnClickListener {
 //LISTENER METHODS =================================================================================
 
 
-    
+
     //METHODS ==========================================================================================
     public void makeToast(String Message) {
         Toast toast = Toast.makeText(getActivity(), Message, Toast.LENGTH_SHORT);

@@ -17,7 +17,7 @@ public class Main_Window extends AppCompatActivity {
 
     int weeks;
     //Date Formatter
-    SimpleDateFormat dateFormat = new SimpleDateFormat("MM/DD/yyyy");
+    SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 
     //Fragments
     Frag_mainMenu           Frag_mainMenu;
