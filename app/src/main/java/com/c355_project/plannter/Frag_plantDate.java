@@ -142,7 +142,7 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
         if(selectedDate.compareTo(Calendar.getInstance().getTime()) < 0)
         {
             btnNext.setEnabled(false);
-            makeToast("PLease choose a day that is today or later!!!");
+            makeToast("Please choose a day that is today or later!!!");
         }
         else
         {

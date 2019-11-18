@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey;
 
 
 @Entity()
-public class Plant {
+public class    Plant {
 
     /* VARIABLE DESCRIPTIONS =======================================================================
 

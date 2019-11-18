@@ -15,7 +15,6 @@ import java.util.List;
 public class Main_Window extends AppCompatActivity {
 //VARIABLES ========================================================================================
 
-    int weeks;
     //Date Formatter
     SimpleDateFormat dateFormat = new SimpleDateFormat("MM/DD/yyyy");
 
@@ -61,7 +60,7 @@ public class Main_Window extends AppCompatActivity {
             public void run() {
                     //Get plants
                     PlantList = PlantDatabase.getInstance(getApplicationContext()).plantDao().getAllPlants();
-                    harvestableCrops = PlantDatabase.getInstance(getApplicationContext()).plantDao().getPlantName(getWeeksTilHarvest());
+                    //harvestableCrops = PlantDatabase.getInstance(getApplicationContext()).plantDao().getPlantName(getWeeksTilHarvest());
                     //Get plant dates
                     lastSpringFrostDate = PlantDatabase.getInstance(getApplicationContext()).plantDao().getSpringFrostDate();
                     firstFallFrostDate = PlantDatabase.getInstance(getApplicationContext()).plantDao().getFallFrostDate();
@@ -201,14 +200,6 @@ public class Main_Window extends AppCompatActivity {
         this.userInputDate = userInputDate;
     }
 
-    public int getWeeksTilHarvest() {
-        return weeks;
-    }
-
-    public void setWeeksTilHarvest(int weeksTilHarvest) {
-        weeks = weeksTilHarvest;
-
-    }
 }
 
 
