@@ -61,9 +61,9 @@ public class Frag_settings extends Fragment implements View.OnClickListener {
 
             case (R.id.btnUpdateSpring): {
                 //Creates References To The User Input Boxes
-                EditText txtSpringMonth = view.findViewById(R.id.springFrostDateMonth);
-                EditText txtSpringDay = view.findViewById(R.id.springFrostDateDay);
-                EditText txtSpringYear = view.findViewById(R.id.springFrostDateYear);
+                EditText txtSpringMonth = Main_Window.findViewById(R.id.springFrostDateMonth);
+                EditText txtSpringDay = Main_Window.findViewById(R.id.springFrostDateDay);
+                EditText txtSpringYear = Main_Window.findViewById(R.id.springFrostDateYear);
 
                 //User Input Validation
                 String springInputDate = (txtSpringMonth.getText().toString() + "/" + txtSpringDay.getText().toString() + "/" + txtSpringYear.getText().toString());
@@ -77,14 +77,13 @@ public class Frag_settings extends Fragment implements View.OnClickListener {
                 catch (ParseException e) {
                     makeToast("Please Enter A Valid Date");
                 }
-
             } break;
 
             case (R.id.btnUpdateFall): {
                 //Creates References To The User Input Boxes
-                EditText txtFallMonth = view.findViewById(R.id.fallFrostDateMonth);
-                EditText txtFallDay = view.findViewById(R.id.fallFrostDateDay);
-                EditText txtFallYear = view.findViewById(R.id.fallFrostDateYear);
+                EditText txtFallMonth = Main_Window.findViewById(R.id.fallFrostDateMonth);
+                EditText txtFallDay = Main_Window.findViewById(R.id.fallFrostDateDay);
+                EditText txtFallYear = Main_Window.findViewById(R.id.fallFrostDateYear);
 
                 //User Input Validation
                 String fallInputDate = (txtFallMonth.getText().toString() + "/" + txtFallDay.getText().toString() + "/" + txtFallYear.getText().toString());
@@ -98,9 +97,6 @@ public class Frag_settings extends Fragment implements View.OnClickListener {
                 catch (ParseException e) {
                     makeToast("Please Enter A Valid Date");
                 }
-
-
-
             } break;
 
             //Used for handling exceptions on if the given ViewID and the expected ViewID does not match
