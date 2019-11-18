@@ -25,9 +25,6 @@ public class Frag_settings extends Fragment implements View.OnClickListener {
     //Website String
     String website = "https://morningchores.com/frost-dates/";
 
-    //Simple Date Format
-    SimpleDateFormat dateFormat = new SimpleDateFormat("MM/DD/YYYY");
-
     //VARIABLES ========================================================================================
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -67,15 +64,17 @@ public class Frag_settings extends Fragment implements View.OnClickListener {
 
                 //User Input Validation
                 String springInputDate = (txtSpringMonth.getText().toString() + "/" + txtSpringDay.getText().toString() + "/" + txtSpringYear.getText().toString());
-                dateFormat.setLenient(false);
+                Main_Window.dateFormat.setLenient(false);
                 try {
-                    Date springDate = dateFormat.parse(springInputDate);
+                    Date springDate = Main_Window.dateFormat.parse(springInputDate);
                     //Updates The Database With The User Inputted Spring Frost Date Values
                     Main_Window.setLastSpringFrostDate(springDate);
+                    makeToast("Last Spring Frost Date Successfully Updated!");
                 }
                 //If Date Is Invalid, Toast The User To Input A Valid Date
                 catch (ParseException e) {
                     makeToast("Please Enter A Valid Date");
+                    e.printStackTrace();
                 }
             } break;
 
@@ -87,11 +86,12 @@ public class Frag_settings extends Fragment implements View.OnClickListener {
 
                 //User Input Validation
                 String fallInputDate = (txtFallMonth.getText().toString() + "/" + txtFallDay.getText().toString() + "/" + txtFallYear.getText().toString());
-                dateFormat.setLenient(false);
+                Main_Window.dateFormat.setLenient(false);
                 try {
-                    Date fallDate = dateFormat.parse(fallInputDate);
+                    Date fallDate = Main_Window.dateFormat.parse(fallInputDate);
                     //Updates The Database With The User Inputted Fall Frost Date Values
                     Main_Window.setFirstFallFrostDate(fallDate);
+                    makeToast("First Fall Frost Date Successfully Updated!");
                 }
                 //If Date Is Invalid, Toast The User To Input A Valid Date
                 catch (ParseException e) {
