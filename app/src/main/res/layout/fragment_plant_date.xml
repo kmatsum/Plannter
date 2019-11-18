@@ -19,28 +19,28 @@
             tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="0dp">
 
-            <LinearLayout
+            <RadioGroup
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="0"
                 android:orientation="horizontal">
 
                 <RadioButton
                     android:id="@+id/rbtnPlant"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/plant" />
 
                 <RadioButton
                     android:id="@+id/rbtnHarvest"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/harvest" />
-
-            </LinearLayout>
+            </RadioGroup>
 
             <CalendarView
                 android:id="@+id/calendarView"
@@ -91,18 +91,18 @@
                     android:textSize="25sp" />
             </LinearLayout>
 
-<!--            <com.google.android.gms.ads.AdView-->
-<!--                android:id="@+id/adView"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_alignParentBottom="true"-->
-<!--                android:layout_centerHorizontal="true"-->
-<!--                android:layout_gravity="center"-->
-<!--                app:adSize="BANNER"-->
-<!--                app:adUnitId="ca-app-pub-3940256099942544/6300978111"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"></com.google.android.gms.ads.AdView>-->
+            <!--            <com.google.android.gms.ads.AdView-->
+            <!--                android:id="@+id/adView"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_alignParentBottom="true"-->
+            <!--                android:layout_centerHorizontal="true"-->
+            <!--                android:layout_gravity="center"-->
+            <!--                app:adSize="BANNER"-->
+            <!--                app:adUnitId="ca-app-pub-3940256099942544/6300978111"-->
+            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"></com.google.android.gms.ads.AdView>-->
 
         </LinearLayout>
 

@@ -25,4 +25,6 @@ public interface PlantDao {
     PlantDate getSpringFrostDate();
     @Query("SELECT * FROM PlantDate WHERE title = 'fallFrostDate'")
     PlantDate getFallFrostDate();
+    @Query(("SELECT plantName from Plant"))
+    List<Plant> getPlantName(int weeks);
 }
