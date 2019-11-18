@@ -115,8 +115,7 @@ public class Frag_settings extends Fragment implements View.OnClickListener {
 //LISTENER METHODS =================================================================================
 
 
-
-
+    
     //METHODS ==========================================================================================
     public void makeToast(String Message) {
         Toast toast = Toast.makeText(getActivity(), Message, Toast.LENGTH_SHORT);
