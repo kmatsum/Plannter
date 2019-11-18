@@ -9,6 +9,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -30,13 +31,14 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
     Main_Window Main_Window;
 
     //View Variables
-    CalendarView calendarView;
+    CalendarView calendarViewInLayout;
     Calendar today;
     TextView txtCropHarvest;
     RadioButton rbtnHarvest, rbtnPlant;
     String Month, Day, Year, Concat;
     SimpleDateFormat  simpleDateFormat;
     Date selectedDate;
+    Button btnNext;
 
     //Plant Database List
     List<Plant> PlantDatabase;
@@ -76,13 +78,14 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
 //        adView.loadAd(adRequest);
       
         rbtnHarvest = view.findViewById(R.id.rbtnHarvest);
-        calendarView = view.findViewById(R.id.calendarView);
+        calendarViewInLayout = view.findViewById(R.id.calendarView);
         rbtnPlant = view.findViewById(R.id.rbtnPlant);
         txtCropHarvest = view.findViewById(R.id.txtCropHarvest);
-        calendarView.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-        calendarView.setOnDateChangeListener(this);
+        calendarViewInLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        calendarViewInLayout.setOnDateChangeListener(this);
         simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
         today = Calendar.getInstance();
+        btnNext = view.findViewById(R.id.btnNext);
     }
 
 
@@ -96,13 +99,7 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
             break;
 
             case (R.id.btnNext): {
-                if(rbtnHarvest.isChecked() && rbtnPlant.isChecked())
-                {
-                    rbtnHarvest.setChecked(false);
-                    rbtnPlant.setChecked(false);
-                    makeToast("Please only select one radio button");
-                }
-                else if (rbtnHarvest.isChecked()) {
+                if (rbtnHarvest.isChecked()) {
                     btnChecker(rbtnHarvest);
                     Main_Window.changeFragment("PlantHarvest");
                 }
@@ -142,6 +139,15 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
                 e.printStackTrace();
             }
         }
+        if(selectedDate.compareTo(Calendar.getInstance().getTime()) < 0)
+        {
+            btnNext.setEnabled(false);
+            makeToast("PLease choose a day that is today or later!!!");
+        }
+        else
+        {
+            btnNext.setEnabled(true);
+        }
 
     }
 
@@ -161,40 +167,39 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
         fallFrost = Main_Window.getFirstFallFrostDate();
         if (rbtn == rbtnHarvest & rbtn.isChecked()) {
            //Get frost date from DB and check ranges
-           if((fallFrost.getTime() - selectedDate.getTime()) >= 83 || (fallFrost.getTime() - selectedDate.getTime()) <= 76) {
-               Main_Window.setHarvestableCrops("You can harvest.....\n Tomatoes \n Peppers \n Cucumbers \n Squash"); }
-           else if ((fallFrost.getTime() - selectedDate.getTime()) >= 75 || (fallFrost.getTime() - selectedDate.getTime()) <= 68) {
-                Main_Window.setHarvestableCrops("You can harvest..... \n Tomatoes \n Peppers \n Cucumbers \n Okra \n Squash \n Chard"); }
-           else if ((fallFrost.getTime() - selectedDate.getTime()) >= 67 || (fallFrost.getTime() - selectedDate.getTime()) <= 60) {
-                Main_Window.setHarvestableCrops("You can harvest..... \n Tomatoes \n Peppers \n Cabbage \n Cucumber \n Okra \n Squash \n Chard \n Beets \n Green Beans - Bush \n Radish or Turnip");}
-           else if ((fallFrost.getTime() - selectedDate.getTime()) >= 59 || (fallFrost.getTime() - selectedDate.getTime()) <= 52) {
-                Main_Window.setHarvestableCrops("You can harvest..... \n Tomatoes \n Peppers \n Melons \n Potatoes \n Sweet Corn \n Cabbage \n Cucumber \n Okra \n Squash \n Chard \n Peas \n Beets \n Green Beans - Bush \n Radish or Turnip");}
-           else if ((fallFrost.getTime() - selectedDate.getTime()) >= 51 || (fallFrost.getTime() - selectedDate.getTime()) <= 44) {
-                Main_Window.setHarvestableCrops("You can harvest..... \n Tomatoes \n Peppers \n Melons \n Potatoes \n Sweet Corn \n Cabbage \n Cucumber \n Okra \n Pumpkins \n Chard \n Peas \n Beets \n Broccoli \n Green Beans - Bush \n Radish or Turnip \n Lettuce - Leaf");}
-           else if ((fallFrost.getTime() - selectedDate.getTime()) >= 43 || (fallFrost.getTime() - selectedDate.getTime()) <= 36) {
-                Main_Window.setHarvestableCrops("You can harvest..... \n Tomatoes \n Peppers \n Melons \n Potatoes \n Sweet Corn \n Cabbage \n Okra \n Pumpkins \n Carrots \n Cauliflower \n Chard \n Peas \n Beets \n Broccoli \n Radish or Turnip \n Lettuce - Leaf \n Spinach");}
-           else if ((fallFrost.getTime() - selectedDate.getTime()) >= 35 || (fallFrost.getTime() - selectedDate.getTime()) <= 28) {
-                Main_Window.setHarvestableCrops("You can harvest..... \n Tomatoes \n Melons \n Sweet Corn \n Cabbage \n Okra \n Pumpkins \n Carrots \n Cauliflower \n Chard \n Peas \n Broccoli \n Radish or Turnip \n Lettuce - Leaf \n Spinach");}
-           else if ((fallFrost.getTime() - selectedDate.getTime()) >= 27 || (fallFrost.getTime() - selectedDate.getTime()) <= 20) {
-                Main_Window.setHarvestableCrops("You can harvest..... \n Carrots \n Cauliflower \n Chard \n Broccoli \n Lettuce - Leaf \n Spinach");}
-           else if ((fallFrost.getTime() - selectedDate.getTime()) >= 27 || (fallFrost.getTime() - selectedDate.getTime()) <= 20) {
-                Main_Window.setHarvestableCrops("You can Harvest..... \n Chard \n Broccoli \n Spinach");}
-           else {
-                makeToast("No Plants are able to be harvested at this time");
-            }
+//           if((fallFrost.getTime() - selectedDate.getTime()) >= 83 || (fallFrost.getTime() - selectedDate.getTime()) <= 76) {
+//               Main_Window.setHarvestableCrops("You can harvest.....\n Tomatoes \n Peppers \n Cucumbers \n Squash"); }
+//           else if ((fallFrost.getTime() - selectedDate.getTime()) >= 75 || (fallFrost.getTime() - selectedDate.getTime()) <= 68) {
+//                Main_Window.setHarvestableCrops("You can harvest..... \n Tomatoes \n Peppers \n Cucumbers \n Okra \n Squash \n Chard"); }
+//           else if ((fallFrost.getTime() - selectedDate.getTime()) >= 67 || (fallFrost.getTime() - selectedDate.getTime()) <= 60) {
+//                Main_Window.setHarvestableCrops("You can harvest..... \n Tomatoes \n Peppers \n Cabbage \n Cucumber \n Okra \n Squash \n Chard \n Beets \n Green Beans - Bush \n Radish or Turnip");}
+//           else if ((fallFrost.getTime() - selectedDate.getTime()) >= 59 || (fallFrost.getTime() - selectedDate.getTime()) <= 52) {
+//                Main_Window.setHarvestableCrops("You can harvest..... \n Tomatoes \n Peppers \n Melons \n Potatoes \n Sweet Corn \n Cabbage \n Cucumber \n Okra \n Squash \n Chard \n Peas \n Beets \n Green Beans - Bush \n Radish or Turnip");}
+//           else if ((fallFrost.getTime() - selectedDate.getTime()) >= 51 || (fallFrost.getTime() - selectedDate.getTime()) <= 44) {
+//                Main_Window.setHarvestableCrops("You can harvest..... \n Tomatoes \n Peppers \n Melons \n Potatoes \n Sweet Corn \n Cabbage \n Cucumber \n Okra \n Pumpkins \n Chard \n Peas \n Beets \n Broccoli \n Green Beans - Bush \n Radish or Turnip \n Lettuce - Leaf");}
+//           else if ((fallFrost.getTime() - selectedDate.getTime()) >= 43 || (fallFrost.getTime() - selectedDate.getTime()) <= 36) {
+//                Main_Window.setHarvestableCrops("You can harvest..... \n Tomatoes \n Peppers \n Melons \n Potatoes \n Sweet Corn \n Cabbage \n Okra \n Pumpkins \n Carrots \n Cauliflower \n Chard \n Peas \n Beets \n Broccoli \n Radish or Turnip \n Lettuce - Leaf \n Spinach");}
+//           else if ((fallFrost.getTime() - selectedDate.getTime()) >= 35 || (fallFrost.getTime() - selectedDate.getTime()) <= 28) {
+//                Main_Window.setHarvestableCrops("You can harvest..... \n Tomatoes \n Melons \n Sweet Corn \n Cabbage \n Okra \n Pumpkins \n Carrots \n Cauliflower \n Chard \n Peas \n Broccoli \n Radish or Turnip \n Lettuce - Leaf \n Spinach");}
+//           else if ((fallFrost.getTime() - selectedDate.getTime()) >= 27 || (fallFrost.getTime() - selectedDate.getTime()) <= 20) {
+//                Main_Window.setHarvestableCrops("You can harvest..... \n Carrots \n Cauliflower \n Chard \n Broccoli \n Lettuce - Leaf \n Spinach");}
+//           else if ((fallFrost.getTime() - selectedDate.getTime()) >= 27 || (fallFrost.getTime() - selectedDate.getTime()) <= 20) {
+//                Main_Window.setHarvestableCrops("You can Harvest..... \n Chard \n Broccoli \n Spinach");}
+//           else {
+//                makeToast("No Plants are able to be harvested at this time");
+//            }
            if(selectedDate == null)
            {
                selectedDate = Calendar.getInstance().getTime();
                Main_Window.setUserInputDate(selectedDate);
            }
+
         }
         if (rbtn == rbtnPlant & rbtnPlant.isChecked()) {
         }
     }
 }
 /*TODO
-USer date selected cannot be before today
-Radio button group - more than one radio button cannot be checked
 Loop through to calculate what plants can be harvested when -> Weeks to Harvest  times 7
  */
 
