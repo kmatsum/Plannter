@@ -10,22 +10,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 
+
 public class Frag_settings extends Fragment implements View.OnClickListener {
-    //VARIABLES ========================================================================================
+//VARIABLES ========================================================================================
     //Main_Window Activity Instantiation
     Main_Window Main_Window;
 
     //Website String
     String website = "https://morningchores.com/frost-dates/";
 
-    //VARIABLES ========================================================================================
+//LIFECYCLE METHODS ================================================================================
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -117,7 +115,7 @@ public class Frag_settings extends Fragment implements View.OnClickListener {
 
 
 
-    //METHODS ==========================================================================================
+//METHODS ==========================================================================================
     public void makeToast(String Message) {
         Toast toast = Toast.makeText(getActivity(), Message, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL,0,0);
