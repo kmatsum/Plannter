@@ -5,6 +5,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.widget.Toast;
+
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -64,6 +66,19 @@ public class Main_Window extends AppCompatActivity {
                     //Get plant dates
                     lastSpringFrostDate = PlantDatabase.getInstance(getApplicationContext()).plantDao().getSpringFrostDate();
                     firstFallFrostDate = PlantDatabase.getInstance(getApplicationContext()).plantDao().getFallFrostDate();
+
+                    // Delete the database and recreate it if any of the following are null
+                    if (PlantList == null || lastSpringFrostDate == null || firstFallFrostDate == null){
+                        String DatabaseFilePath = "./data/data/com.c355_project.plannter/databases/", DB_NAME = "plant_db";
+                        File db = new File(DatabaseFilePath + DB_NAME);
+                        db.delete();
+                        //Get plants
+                        PlantList = PlantDatabase.getInstance(getApplicationContext()).plantDao().getAllPlants();
+                        //harvestableCrops = PlantDatabase.getInstance(getApplicationContext()).plantDao().getPlantName(getWeeksTilHarvest());
+                        //Get plant dates
+                        lastSpringFrostDate = PlantDatabase.getInstance(getApplicationContext()).plantDao().getSpringFrostDate();
+                        firstFallFrostDate = PlantDatabase.getInstance(getApplicationContext()).plantDao().getFallFrostDate();
+                    }
 
                 //[DEBUG] Print all the plant names
                     System.out.println("------------------------------------");
