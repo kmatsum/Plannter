@@ -19,28 +19,10 @@
             tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="0dp">
 
-            <RadioGroup
+            <Spinner
+                android:id="@+id/spnPlants"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/rbtnPlant"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/plant" />
-
-                <RadioButton
-                    android:id="@+id/rbtnHarvest"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/harvest" />
-            </RadioGroup>
+                android:layout_height="wrap_content" />
 
             <CalendarView
                 android:id="@+id/calendarView"
