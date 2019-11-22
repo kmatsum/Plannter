@@ -155,8 +155,8 @@ public class Frag_settingsAddPlants extends Fragment implements View.OnClickList
                     makeToast("Please enter seed distance!");
                     txtSeedDistance.requestFocus();
                     return;
-                } else if (Integer.parseInt(txtSeedDistance.getText().toString()) > 51){
-                    makeToast("Seed distance must be less than 52 weeks!");
+                } else if (Integer.parseInt(txtSeedDistance.getText().toString()) > 48){
+                    makeToast("Seed distance must be less than 49 inches (4 feet)!");
                     txtSeedDistance.requestFocus();
                     return;
                 }
@@ -165,7 +165,12 @@ public class Frag_settingsAddPlants extends Fragment implements View.OnClickList
                     makeToast("Please enter seed depth!");
                     txtSeedDepth.requestFocus();
                     return;
+                } else if (Integer.parseInt(txtSeedDepth.getText().toString()) > 48){
+                    makeToast("Seed depth must be less than 49 inches (4 feet)!");
+                    txtSeedDepth.requestFocus();
+                    return;
                 }
+
             } break;
 
             //Used for handling exceptions on if the given ViewID and the expected ViewID does not match
