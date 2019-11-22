@@ -15,6 +15,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 
@@ -27,6 +29,8 @@ public class Frag_plantByPlant extends Fragment implements View.OnClickListener,
     //Plant Object List
     List<Plant> plantList;
     String[]    plantNames;
+    Date        FallFrostDate,
+                SpringFrostDate;
 
     //GUI Elements
     ImageView   imageView;
@@ -56,6 +60,8 @@ public class Frag_plantByPlant extends Fragment implements View.OnClickListener,
 
         Main_Window = (Main_Window) getActivity();
         plantList = Main_Window.getPlantList();
+        FallFrostDate = Main_Window.getFirstFallFrostDate();
+        SpringFrostDate = Main_Window.getLastSpringFrostDate();
 
         //Set all OnClickListeners needed for this View
         view.findViewById(R.id.btnBack).setOnClickListener(this);
@@ -93,7 +99,9 @@ public class Frag_plantByPlant extends Fragment implements View.OnClickListener,
         //Set some default text
         txtSpringFrost.setText(dateFormat.format(Main_Window.getLastSpringFrostDate()));
         txtFallFrost.setText(dateFormat.format(Main_Window.getFirstFallFrostDate()));
-    }
+
+        displayResults(spnrSelectPlant.getSelectedItemPosition());
+        }
 
 
 
@@ -116,7 +124,6 @@ public class Frag_plantByPlant extends Fragment implements View.OnClickListener,
                 int position = spnrSelectPlant.getSelectedItemPosition();
                 if (position > 0) {
                     spnrSelectPlant.setSelection(spnrSelectPlant.getSelectedItemPosition() - 1);
-
                 }
             } break;
 
@@ -136,6 +143,8 @@ public class Frag_plantByPlant extends Fragment implements View.OnClickListener,
         Plant selectedPlant = plantList.get(position);
         Drawable plantImage = ResourcesCompat.getDrawable(getResources(), selectedPlant.getFileID(), null);
         imageView.setImageDrawable(plantImage);
+
+        displayResults(position);
     }
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
@@ -148,5 +157,45 @@ public class Frag_plantByPlant extends Fragment implements View.OnClickListener,
         Toast toast = Toast.makeText(getActivity(), Message, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL,0,0);
         toast.show();
+    }
+
+    public Date calculatePlantDate(int distanceFromFrostDate, Date xFrostDate) {
+        //Create the resulting date variable and provide it a default date value
+        Date resultingDate;
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(xFrostDate);
+        c.add( Calendar.WEEK_OF_YEAR, -(distanceFromFrostDate) );
+
+        resultingDate = c.getTime();
+
+        return resultingDate;
+    }
+
+    public Date calculateHarvestDate(int xdistanceFromPlanting, Date xPlantDate) {
+        //Create the resulting date variable and provide it a default date value
+        Date resultingDate;
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(xPlantDate);
+        c.add( Calendar.WEEK_OF_YEAR, xdistanceFromPlanting );
+
+        resultingDate = c.getTime();
+
+        return resultingDate;
+    }
+
+    public void displayResults (int position) {
+        //Instantiate a temp currentPlant object for first-calculation use
+        Plant currentPlant = plantList.get(position);
+
+        //Show first Plant Dates
+        Date tempFirstPlant = calculatePlantDate(currentPlant.getFirstPlantDate(), SpringFrostDate);
+        txtPlantStart.setText(dateFormat.format(tempFirstPlant));
+        Date tempLastPlant = calculatePlantDate(currentPlant.getLastPlantDate(), FallFrostDate);
+        txtPlantEnd.setText(dateFormat.format(tempLastPlant));
+
+        txtHarvestStart.setText(dateFormat.format(calculateHarvestDate(currentPlant.getWeeksToHarvest(),tempFirstPlant)));
+        txtHarvestEnd.setText(dateFormat.format(calculateHarvestDate(( currentPlant.getWeeksToHarvest() + currentPlant.getHarvestRange() ),tempLastPlant)));
     }
 }
