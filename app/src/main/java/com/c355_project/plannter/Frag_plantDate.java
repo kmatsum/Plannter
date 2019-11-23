@@ -9,9 +9,12 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 //import com.google.android.gms.ads.AdRequest;
@@ -19,6 +22,7 @@ import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -26,26 +30,26 @@ import java.util.List;
 
 
 public class Frag_plantDate extends Fragment implements View.OnClickListener, CalendarView.OnDateChangeListener {
-//VARIABLES ========================================================================================
+    //VARIABLES ========================================================================================
     //Main_Window Activity Instantiation
     Main_Window Main_Window;
 
     //View Variables
     CalendarView calendarViewInLayout;
-    Calendar today;
+    Calendar today, lastPlantDate, firstPlantDate, harvestRangeMin, harvestRangeMax;
     TextView txtCropHarvest;
-    RadioButton rbtnHarvest, rbtnPlant;
     String Month, Day, Year, Concat;
-    SimpleDateFormat  simpleDateFormat;
+    SimpleDateFormat simpleDateFormat;
     Date selectedDate;
     Button btnNext;
+    Spinner spnPlants;
 
     //Plant Database List
     List<Plant> PlantDatabase;
+    List<String> PlantNames;
+    ArrayAdapter<String> adapter;
 
-
-
-//LIFECYCLE METHODS ================================================================================
+    //LIFECYCLE METHODS ================================================================================
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -59,10 +63,11 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
         Main_Window = (Main_Window) getActivity();
 
         PlantDatabase = Main_Window.getPlantList();
+        PlantNames = new ArrayList<>();
 
         //[DEBUG] Print all the plant names
         System.out.println("------------------------------------");
-        for (int i = 0; i < PlantDatabase.size(); i++){
+        for (int i = 0; i < PlantDatabase.size(); i++) {
             System.out.println(PlantDatabase.get(i).getPlantName());
         }
         System.out.println("------------------------------------");
@@ -71,26 +76,46 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
         //Set all OnClickListeners needed for this View
         view.findViewById(R.id.btnBack).setOnClickListener(this);
         view.findViewById(R.id.btnNext).setOnClickListener(this);
-      
+
 //        //Adds banner ad to UI
 //        AdView adView = view.findViewById(R.id.adView);
 //        AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
 //        adView.loadAd(adRequest);
-      
-        rbtnHarvest = view.findViewById(R.id.rbtnHarvest);
+
         calendarViewInLayout = view.findViewById(R.id.calendarView);
-        rbtnPlant = view.findViewById(R.id.rbtnPlant);
         txtCropHarvest = view.findViewById(R.id.txtCropHarvest);
         calendarViewInLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         calendarViewInLayout.setOnDateChangeListener(this);
         simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
         today = Calendar.getInstance();
+        harvestRangeMin = Calendar.getInstance();
+        harvestRangeMax = Calendar.getInstance();
         btnNext = view.findViewById(R.id.btnNext);
+        adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, PlantNames);
+        for (int i = 0; i < PlantDatabase.size(); i++) {
+
+            PlantNames.add(PlantDatabase.get(i).getPlantName());
+        }
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnPlants = view.findViewById(R.id.spnPlants);
+        spnPlants.setAdapter(adapter);
+
+        spnPlants.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    calendarViewInLayout.setMinDate(calulateFirstPlantDate(i));
+                    calendarViewInLayout.setMaxDate(calulateLastPlantDate(i));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 
 
-
-//LISTENER METHODS =================================================================================
+    //LISTENER METHODS =================================================================================
     public void onClick(View view) {
         switch (view.getId()) {
             case (R.id.btnBack): {
@@ -99,15 +124,8 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
             break;
 
             case (R.id.btnNext): {
-                if (rbtnHarvest.isChecked()) {
-                    btnChecker(rbtnHarvest);
-                    Main_Window.changeFragment("PlantHarvest");
-                }
-                else if (rbtnPlant.isChecked()) {
-                    btnChecker(rbtnPlant);
-                }
-                else
-                    makeToast("No Radio button is selected, please select a radio button");
+                txtCropHarvest.setText("Selected Date: " + Main_Window.getUserInputDate() + "\n" + "Expect to Harvest Between: " + harvestRangeMin.getTime() + "-" + harvestRangeMax.getTime());
+
             }
             break;
 
@@ -125,48 +143,36 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
     @Override
     public void onSelectedDayChange(@NonNull CalendarView calendarView, int year, int month, int day) {
         //Concat both month and day so comparison is easier and code is cleaner
-        Month = String.valueOf(month + 1);
-        Day = String.valueOf(day);
-        Year = String.valueOf(year);
-        Concat = Month + "/" + Day + "/" + Year;
+//        Month = String.valueOf(month + 1);
+//        Day = String.valueOf(day);
+//        Year = String.valueOf(year);
+        Concat = month + "/" + day + "/" + year;
 
+        System.out.println(Concat);
         {
             try {
                 selectedDate = simpleDateFormat.parse(Concat);
                 Main_Window.setUserInputDate(selectedDate);
+                harvestRangeMin.setTime(selectedDate);
+                harvestRangeMin.add(Calendar.DAY_OF_MONTH , (PlantDatabase.get(spnPlants.getSelectedItemPosition()).getWeeksToHarvest() * 7));
+                harvestRangeMax.setTime(harvestRangeMin.getTime());
+                harvestRangeMax.add(Calendar.DAY_OF_MONTH, (PlantDatabase.get(spnPlants.getSelectedItemPosition()).getHarvestRange() * 7));
 
             } catch (ParseException e) {
                 e.printStackTrace();
             }
         }
-        if(selectedDate.compareTo(Calendar.getInstance().getTime()) < 0)
-        {
-            btnNext.setEnabled(false);
-            makeToast("Please choose a day that is today or later!!!");
-        }
-        else
-        {
-            btnNext.setEnabled(true);
-        }
-
     }
 
 
-
-//METHODS ==========================================================================================
+    //METHODS ==========================================================================================
     public void makeToast(String Message) {
         Toast toast = Toast.makeText(getActivity(), Message, Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL,0,0);
+        toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 0);
         toast.show();
     }
 
-    public void btnChecker(RadioButton rbtn) {
-        Date fallFrost;
-        Date springFrost;
-
-        fallFrost = Main_Window.getFirstFallFrostDate();
-        if (rbtn == rbtnHarvest & rbtn.isChecked()) {
-           //Get frost date from DB and check ranges
+    //Get frost date from DB and check ranges
 //           if((fallFrost.getTime() - selectedDate.getTime()) >= 83 || (fallFrost.getTime() - selectedDate.getTime()) <= 76) {
 //               Main_Window.setHarvestableCrops("You can harvest.....\n Tomatoes \n Peppers \n Cucumbers \n Squash"); }
 //           else if ((fallFrost.getTime() - selectedDate.getTime()) >= 75 || (fallFrost.getTime() - selectedDate.getTime()) <= 68) {
@@ -188,18 +194,25 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
 //           else {
 //                makeToast("No Plants are able to be harvested at this time");
 //            }
-           if(selectedDate == null)
-           {
-               selectedDate = Calendar.getInstance().getTime();
-               Main_Window.setUserInputDate(selectedDate);
-           }
-
-        }
-        if (rbtn == rbtnPlant & rbtnPlant.isChecked()) {
-        }
+    public long calulateLastPlantDate(int spnPosition)
+    {
+        int daysAfterLastPlant = PlantDatabase.get(spnPosition).getLastPlantDate() * 7;
+        lastPlantDate = Calendar.getInstance();
+        lastPlantDate.setTime(Main_Window.getFirstFallFrostDate());
+        lastPlantDate.add(Calendar.DAY_OF_MONTH, -daysAfterLastPlant);
+        Date lpd = lastPlantDate.getTime();
+        return lpd.getTime();
+    }
+    public long calulateFirstPlantDate(int spnPosition)
+    {
+        int daysBeforelastSpringFrost = PlantDatabase.get(spnPosition).getFirstPlantDate() * 7;
+        firstPlantDate = Calendar.getInstance();
+        firstPlantDate.setTime(Main_Window.getLastSpringFrostDate());
+        firstPlantDate.add(Calendar.DAY_OF_MONTH, -daysBeforelastSpringFrost);
+        Date lpd = firstPlantDate.getTime();
+        return lpd.getTime();
     }
 }
 /*TODO
 Loop through to calculate what plants can be harvested when -> Weeks to Harvest  times 7
  */
-
