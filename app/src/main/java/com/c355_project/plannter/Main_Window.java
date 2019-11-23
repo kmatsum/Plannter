@@ -5,7 +5,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.widget.Toast;
-
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,8 +25,7 @@ public class Main_Window extends AppCompatActivity {
     Frag_settingsAddPlants  Frag_settingsAddPlants;
     Frag_plantInfo          Frag_plantInfo;
     Frag_plantDate          Frag_plantDate;
-    Frag_plantHarvest       Frag_plantHarvest;
-    Frag_plantByPlant       Frag_plantByPlant;
+    Frag_dateByPlant Frag_dateByPlant;
 
     //LastFrostDate
     PlantDate lastSpringFrostDate;
@@ -54,8 +52,7 @@ public class Main_Window extends AppCompatActivity {
         Frag_settingsAddPlants  = new Frag_settingsAddPlants();
         Frag_plantInfo          = new Frag_plantInfo();
         Frag_plantDate          = new Frag_plantDate();
-        Frag_plantHarvest       = new Frag_plantHarvest();
-        Frag_plantByPlant       = new Frag_plantByPlant();
+        Frag_dateByPlant = new Frag_dateByPlant();
 
         AsyncTask.execute(new Runnable() {
             @Override
@@ -114,17 +111,12 @@ public class Main_Window extends AppCompatActivity {
             } break;
 
             case "PlantByPlant": {
-                getSupportFragmentManager().beginTransaction().replace(R.id.mainFragmentWindow, Frag_plantByPlant).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainFragmentWindow, Frag_dateByPlant).commit();
             } break;
 
             case "PlantInfo": {
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainFragmentWindow, Frag_plantInfo).commit();
             } break;
-
-            case "PlantHarvest": {
-                getSupportFragmentManager().beginTransaction().replace(R.id.mainFragmentWindow, Frag_plantHarvest).commit();
-            } break;
-
             case "Settings": {
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainFragmentWindow, Frag_settings).commit();
             } break;
