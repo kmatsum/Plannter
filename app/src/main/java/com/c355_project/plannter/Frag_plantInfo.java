@@ -135,6 +135,11 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
         Drawable plantImage = ResourcesCompat.getDrawable(getResources(), plant.getFileID(), null);
         imageView.setImageDrawable(plantImage);
 
+        /*TODO
+        - add all of the plant attributes to the plant into screen, similar to what is in
+        settings_add_plants
+         */
+
         if (plant.getFirstPlantDate() < 26) { //26 represents half of 52 weeks in the year
             txtSeasons.setText("Spring");
         }

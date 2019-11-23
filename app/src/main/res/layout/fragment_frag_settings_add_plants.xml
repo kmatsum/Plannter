@@ -6,9 +6,541 @@
     tools:context=".Frag_settingsAddPlants">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:background="@color/colorPrimary"
+        tools:context=".Plant_Info">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="10"
+                android:fontFamily="@font/finger_paint"
+                android:text="Add A New Plant"
+                android:textAlignment="center"
+                android:textColor="@color/colorTitleText"
+                android:textSize="40sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="90"
+                android:background="@color/colorPrimaryLight"
+                android:orientation="horizontal">
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:background="@color/colorAccentBrown">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TableLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="5dp">
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_margin="5dp">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="50"
+                                    android:fontFamily="@font/finger_paint"
+                                    android:text="General"
+                                    android:textAlignment="center"
+                                    android:textColor="@color/colorTitleText"
+                                    android:textSize="20sp"
+                                    android:textStyle="bold" />
+                            </TableRow>
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_margin="5dp"
+                                    android:layout_weight="40"
+                                    android:fontFamily="@font/finger_paint"
+                                    android:gravity="center|right"
+                                    android:text="Plant Name"
+                                    android:textColor="@color/colorTitleText"
+                                    android:textSize="13sp"
+                                    android:textStyle="bold" />
+
+                                <EditText
+                                    android:id="@+id/txtName"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="60"
+                                    android:ems="10"
+                                    android:gravity="center_vertical"
+                                    android:hint="name of plant"
+                                    android:inputType="textCapSentences|textMultiLine"
+                                    android:lines="1"
+                                    android:maxLength="100"
+                                    android:maxLines="1"
+                                    android:scrollHorizontally="false" />
+
+                            </TableRow>
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_margin="5dp"
+                                    android:layout_weight="40"
+                                    android:fontFamily="@font/finger_paint"
+                                    android:gravity="center|right"
+                                    android:text="Seed Company"
+                                    android:textColor="@color/colorTitleText"
+                                    android:textSize="13sp"
+                                    android:textStyle="bold" />
+
+                                <EditText
+                                    android:id="@+id/txtSeedCompany"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="60"
+                                    android:ems="10"
+                                    android:gravity="center_vertical"
+                                    android:hint="seed company (optional)"
+                                    android:inputType="textCapSentences|textMultiLine"
+                                    android:lines="1"
+                                    android:maxLength="100"
+                                    android:maxLines="1"
+                                    android:scrollHorizontally="false" />
+
+                            </TableRow>
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_margin="5dp">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="50"
+                                    android:fontFamily="@font/finger_paint"
+                                    android:text="Planting Dates"
+                                    android:textAlignment="center"
+                                    android:textColor="@color/colorTitleText"
+                                    android:textSize="20sp"
+                                    android:textStyle="bold" />
+                            </TableRow>
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_margin="5dp"
+                                    android:layout_weight="40"
+                                    android:fontFamily="@font/finger_paint"
+                                    android:gravity="center|right"
+                                    android:text="Seasons"
+                                    android:textColor="@color/colorTitleText"
+                                    android:textSize="13sp"
+                                    android:textStyle="bold" />
+
+                                <CheckBox
+                                    android:id="@+id/cbSpring"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="30"
+                                    android:buttonTint="@color/colorTitleText"
+                                    android:checked="true"
+                                    android:text="Spring"
+                                    android:textColor="@color/colorTitleText" />
+
+                                <CheckBox
+                                    android:id="@+id/cbFall"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="30"
+                                    android:buttonTint="@color/colorTitleText"
+                                    android:checked="true"
+                                    android:text="Fall"
+                                    android:textColor="@color/colorTitleText" />
+
+                            </TableRow>
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_margin="5dp"
+                                    android:layout_weight="40"
+                                    android:fontFamily="@font/finger_paint"
+                                    android:gravity="center|right"
+                                    android:text="First Plant Date"
+                                    android:textColor="@color/colorTitleText"
+                                    android:textSize="13sp"
+                                    android:textStyle="bold" />
+
+                                <EditText
+                                    android:id="@+id/txtFirstPlantDate"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="60"
+                                    android:ems="10"
+                                    android:hint="weeks before spring frost"
+                                    android:inputType="number" />
+                            </TableRow>
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_margin="5dp"
+                                    android:layout_weight="40"
+                                    android:fontFamily="@font/finger_paint"
+                                    android:gravity="center|right"
+                                    android:text="Weeks To Harvest"
+                                    android:textColor="@color/colorTitleText"
+                                    android:textSize="13sp"
+                                    android:textStyle="bold" />
+
+                                <EditText
+                                    android:id="@+id/txtWeeksToHarvest"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="60"
+                                    android:ems="10"
+                                    android:hint="weeks until harvest"
+                                    android:inputType="number" />
+                            </TableRow>
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_margin="5dp"
+                                    android:layout_weight="40"
+                                    android:fontFamily="@font/finger_paint"
+                                    android:gravity="center|right"
+                                    android:text="Harvest Range"
+                                    android:textColor="@color/colorTitleText"
+                                    android:textSize="13sp"
+                                    android:textStyle="bold" />
+
+                                <EditText
+                                    android:id="@+id/txtHarvestRange"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="60"
+                                    android:ems="10"
+                                    android:hint="harvest range"
+                                    android:inputType="number" />
+                            </TableRow>
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_margin="5dp"
+                                    android:layout_weight="40"
+                                    android:fontFamily="@font/finger_paint"
+                                    android:gravity="center|right"
+                                    android:text="Last Plant Date"
+                                    android:textColor="@color/colorTitleText"
+                                    android:textSize="13sp"
+                                    android:textStyle="bold" />
+
+                                <EditText
+                                    android:id="@+id/txtLastPlantDate"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="60"
+                                    android:ems="10"
+                                    android:hint="weeks before fall frost"
+                                    android:inputType="number" />
+                            </TableRow>
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_margin="5dp"
+                                    android:layout_weight="30"
+                                    android:fontFamily="@font/finger_paint"
+                                    android:gravity="center|right"
+                                    android:text="Seed Indoors"
+                                    android:textColor="@color/colorTitleText"
+                                    android:textSize="13sp"
+                                    android:textStyle="bold" />
+
+                                <ToggleButton
+                                    android:id="@+id/toggleButton"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="5dp"
+                                    android:layout_weight="20"
+                                    android:background="@color/colorTitleText"
+                                    android:checked="false"
+                                    android:onClick="onClick"
+                                    android:text="ToggleButton"
+                                    android:textOff="No"
+                                    android:textOn="Yes" />
+
+                                <EditText
+                                    android:id="@+id/txtSeedIndoors"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="50"
+                                    android:ems="10"
+                                    android:hint="weeks before frost"
+                                    android:inputType="number"
+                                    android:visibility="invisible" />
+                            </TableRow>
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="50"
+                                    android:fontFamily="@font/finger_paint"
+                                    android:text="Planting Layout"
+                                    android:textAlignment="center"
+                                    android:textColor="@color/colorTitleText"
+                                    android:textSize="20sp"
+                                    android:textStyle="bold" />
+                            </TableRow>
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_margin="5dp"
+                                    android:layout_weight="40"
+                                    android:fontFamily="@font/finger_paint"
+                                    android:gravity="center|right"
+                                    android:text="Seed Distance (in)"
+                                    android:textColor="@color/colorTitleText"
+                                    android:textStyle="bold" />
+
+                                <EditText
+                                    android:id="@+id/txtSeedDistance"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="60"
+                                    android:ems="10"
+                                    android:hint="distance between seeds"
+                                    android:inputType="number" />
+
+                            </TableRow>
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_margin="5dp"
+                                    android:layout_weight="40"
+                                    android:fontFamily="@font/finger_paint"
+                                    android:gravity="center|right"
+                                    android:text="Seed Depth (in)"
+                                    android:textColor="@color/colorTitleText"
+                                    android:textStyle="bold" />
+
+                                <EditText
+                                    android:id="@+id/txtSeedDepth"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="60"
+                                    android:ems="10"
+                                    android:hint="depth to plant seeds"
+                                    android:inputType="number" />
+
+                            </TableRow>
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_margin="5dp"
+                                    android:layout_weight="25"
+                                    android:fontFamily="@font/finger_paint"
+                                    android:gravity="center|right"
+                                    android:text="Method"
+                                    android:textColor="@color/colorTitleText"
+                                    android:textStyle="bold" />
+
+                                <RadioGroup
+                                    android:id="@+id/rgMethod"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="75"
+                                    android:gravity="left"
+                                    android:orientation="horizontal">
+
+                                    <RadioButton
+                                        android:id="@+id/rbFlat"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:buttonTint="@color/colorTitleText"
+                                        android:checked="true"
+                                        android:text="Flat"
+                                        android:textColor="@color/colorTitleText" />
+
+                                    <RadioButton
+                                        android:id="@+id/rbRaisedRows"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:buttonTint="@color/colorTitleText"
+                                        android:text="Raised Rows"
+                                        android:textColor="@color/colorTitleText" />
+
+                                    <RadioButton
+                                        android:id="@+id/rbRaisedHills"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:buttonTint="@color/colorTitleText"
+                                        android:text="Raised Hills"
+                                        android:textColor="@color/colorTitleText" />
+
+                                </RadioGroup>
+
+                            </TableRow>
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="100"
+                                    android:fontFamily="@font/finger_paint"
+                                    android:text="Notes"
+                                    android:textAlignment="center"
+                                    android:textColor="@color/colorTitleText"
+                                    android:textSize="20sp"
+                                    android:textStyle="bold" />
+                            </TableRow>
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <EditText
+                                    android:id="@+id/txtNotes"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="100"
+                                    android:ems="10"
+                                    android:hint="notes (optional)"
+                                    android:inputType="textCapSentences|textMultiLine"
+                                    android:lines="3"
+                                    android:maxLength="1000"
+                                    android:maxLines="3"
+                                    android:scrollHorizontally="false"
+                                    android:textAlignment="center" />
+
+                            </TableRow>
+                        </TableLayout>
+                    </LinearLayout>
+                </ScrollView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnBack"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:background="#00FFFFFF"
+                    android:fontFamily="@font/finger_paint"
+                    android:gravity="bottom|center"
+                    android:paddingLeft="5sp"
+                    android:text="@string/back"
+                    android:textColor="@color/colorTitleText"
+                    android:textSize="40sp" />
+
+                <Button
+                    android:id="@+id/btnSave"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:background="#00FFFFFF"
+                    android:fontFamily="@font/finger_paint"
+                    android:gravity="bottom|center"
+                    android:paddingLeft="5sp"
+                    android:text="@string/save"
+                    android:textColor="@color/colorTitleText"
+                    android:textSize="40sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

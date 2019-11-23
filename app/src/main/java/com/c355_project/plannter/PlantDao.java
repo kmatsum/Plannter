@@ -17,7 +17,7 @@ public interface PlantDao {
     void updatePlant(PlantDate plantDate);
 //    @Delete
 //    void deletePlant(Plant plant);
-    @Query("SELECT * FROM Plant")
+    @Query("SELECT * FROM Plant ORDER BY PlantName")
     List<Plant> getAllPlants();
     @Query("SELECT * FROM PlantDate")
     List<PlantDate> getAllPlantDates();
