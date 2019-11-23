@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +35,9 @@ public class Frag_settingsAddPlants extends Fragment implements View.OnClickList
             cbFall;
     ToggleButton toggleButton;
     RadioGroup rgMethod;
+    RadioButton rbFlat,
+            rbRaisedHills,
+            rbRaisedRows;
 
     public Frag_settingsAddPlants() {
         // Required empty public constructor
@@ -72,6 +76,9 @@ public class Frag_settingsAddPlants extends Fragment implements View.OnClickList
         cbSpring = view.findViewById(R.id.cbSpring);
         toggleButton = view.findViewById(R.id.toggleButton);
         rgMethod = view.findViewById(R.id.rgMethod);
+        rbFlat = view.findViewById(R.id.rbFlat);
+        rbRaisedHills = view.findViewById(R.id.rbRaisedHills);
+        rbRaisedRows = view.findViewById(R.id.rbRaisedRows);
 
     }
 
@@ -149,6 +156,8 @@ public class Frag_settingsAddPlants extends Fragment implements View.OnClickList
                     makeToast("Please toggle off seed indoors or enter the number of weeks!");
                     txtSeedIndoors.requestFocus();
                     return;
+                } else if (!toggleButton.isChecked()){
+                    txtSeedIndoors.setText("52");
                 }
 
                 if (txtSeedDistance.getText().toString().matches("")){
@@ -170,6 +179,26 @@ public class Frag_settingsAddPlants extends Fragment implements View.OnClickList
                     txtSeedDepth.requestFocus();
                     return;
                 }
+
+                // TEMP OBJECT CREATION ============================================================
+                Plant tempPlant = new Plant(txtName.getText().toString().trim(), txtSeedCompany.getText().toString().trim(),
+                        Integer.parseInt(txtFirstPlantDate.getText().toString().trim()),
+                        Integer.parseInt(txtWeeksToHarvest.getText().toString().trim()),
+                        Integer.parseInt(txtHarvestRange.getText().toString().trim()),
+                        Integer.parseInt(txtSeedIndoors.getText().toString().trim()),
+                        Integer.parseInt(txtLastPlantDate.getText().toString().trim()),txtNotes.getText().toString().trim(),
+                        R.drawable.plant, rbFlat.isChecked(),
+                        rbRaisedHills.isChecked() && !rbRaisedRows.isChecked(),
+                        Integer.parseInt(txtSeedDistance.getText().toString().trim()));
+
+                // INSERT NEW PLANT ================================================================
+                Main_Window.insertPlant(tempPlant);
+                makeToast("Plant " + txtName.getText().toString().trim() + " has been added!");
+
+                // Return
+                Main_Window.changeFragment("PlantInfo");
+
+                resetGUI();
 
             } break;
 
@@ -194,5 +223,23 @@ public class Frag_settingsAddPlants extends Fragment implements View.OnClickList
         Toast toast = Toast.makeText(getActivity(), Message, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL,0,0);
         toast.show();
+    }
+
+    public void resetGUI(){
+        txtName.setText("");
+        txtSeedCompany.setText("");
+        cbSpring.setChecked(true);
+        cbFall.setChecked(true);
+        txtFirstPlantDate.setText("");
+        txtWeeksToHarvest.setText("");
+        txtHarvestRange.setText("");
+        txtLastPlantDate.setText("");
+        txtSeedIndoors.setVisibility(View.INVISIBLE);
+        txtSeedIndoors.setText("52");
+        toggleButton.setChecked(false);
+        txtSeedDistance.setText("");
+        txtSeedDepth.setText("");
+        rbFlat.setChecked(true);
+        txtNotes.setText("");
     }
 }

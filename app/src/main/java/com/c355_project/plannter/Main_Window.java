@@ -155,12 +155,17 @@ public class Main_Window extends AppCompatActivity {
         return PlantList;
     }
 
-    public void setPlantList(List<Plant> xPlantList) {
-        PlantList = xPlantList;
+    public void insertPlant(final Plant xPlant) {
         /*TODO
         Here we will use a PLANT object parameter, then have the DATABASE INSTANCE insert that plant
         object. Then we will update the PLANTLIST with the whole database.
          */
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                PlantDatabase.getInstance(getApplicationContext()).plantDao().insertPlant(xPlant);
+                PlantList = PlantDatabase.getInstance(getApplicationContext()).plantDao().getAllPlants();
+            }});
     }
 
     public Date getLastSpringFrostDate() {
