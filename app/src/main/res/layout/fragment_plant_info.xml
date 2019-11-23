@@ -256,6 +256,190 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="50"
                                     android:fontFamily="@font/finger_paint"
+                                    android:text="General"
+                                    android:textAlignment="center"
+                                    android:textColor="@color/colorTitleText"
+                                    android:textSize="20sp"
+                                    android:textStyle="bold" />
+                            </TableRow>
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="33">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_margin="5dp"
+                                    android:layout_weight="50"
+                                    android:fontFamily="@font/finger_paint"
+                                    android:gravity="center|right"
+                                    android:text="Seed Company"
+                                    android:textColor="@color/colorTitleText"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/txtSeedCompany"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="50"
+                                    android:fontFamily="sans-serif"
+                                    android:text="---"
+                                    android:textAlignment="center"
+                                    android:textColor="@color/colorTitleText"
+                                    android:textSize="18sp" />
+                            </TableRow>
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_margin="5dp">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="50"
+                                    android:fontFamily="@font/finger_paint"
+                                    android:text="Planting Dates"
+                                    android:textAlignment="center"
+                                    android:textColor="@color/colorTitleText"
+                                    android:textSize="20sp"
+                                    android:textStyle="bold" />
+                            </TableRow>
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="33">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_margin="5dp"
+                                    android:layout_weight="50"
+                                    android:fontFamily="@font/finger_paint"
+                                    android:gravity="center|right"
+                                    android:text="First Plant Date"
+                                    android:textColor="@color/colorTitleText"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/txtFirstPlantDate"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="50"
+                                    android:fontFamily="sans-serif"
+                                    android:text="---"
+                                    android:textAlignment="center"
+                                    android:textColor="@color/colorTitleText"
+                                    android:textSize="18sp" />
+                            </TableRow>
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="33">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_margin="5dp"
+                                    android:layout_weight="50"
+                                    android:fontFamily="@font/finger_paint"
+                                    android:gravity="center|right"
+                                    android:text="Last Plant Date"
+                                    android:textColor="@color/colorTitleText"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/txtLastPlantDate"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="50"
+                                    android:fontFamily="sans-serif"
+                                    android:text="---"
+                                    android:textAlignment="center"
+                                    android:textColor="@color/colorTitleText"
+                                    android:textSize="18sp" />
+                            </TableRow>
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="33">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_margin="5dp"
+                                    android:layout_weight="50"
+                                    android:fontFamily="@font/finger_paint"
+                                    android:gravity="center|right"
+                                    android:text="Seed Indoors Date"
+                                    android:textColor="@color/colorTitleText"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/txtSeedIndoorsDate"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="50"
+                                    android:fontFamily="sans-serif"
+                                    android:text="---"
+                                    android:textAlignment="center"
+                                    android:textColor="@color/colorTitleText"
+                                    android:textSize="18sp" />
+                            </TableRow>
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="33">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_margin="5dp"
+                                    android:layout_weight="50"
+                                    android:fontFamily="@font/finger_paint"
+                                    android:gravity="center|right"
+                                    android:text="Harvest Range"
+                                    android:textColor="@color/colorTitleText"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/txtHarvestRange"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="50"
+                                    android:fontFamily="sans-serif"
+                                    android:text="---"
+                                    android:textAlignment="center"
+                                    android:textColor="@color/colorTitleText"
+                                    android:textSize="18sp" />
+                            </TableRow>
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_margin="5dp">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="50"
+                                    android:fontFamily="@font/finger_paint"
                                     android:text="Planting Layout"
                                     android:textAlignment="center"
                                     android:textColor="@color/colorTitleText"

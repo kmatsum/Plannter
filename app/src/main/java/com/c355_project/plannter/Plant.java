@@ -26,6 +26,7 @@ public class    Plant {
     raisedRows:         Boolean to determine if plant should be planted in raised rows.
     raisedHills:        Boolean to determine if plant should be planted in raised hills.
     distBetweenPlants:  Integer to represent inches between planted hills/rows.
+    seedDepth:          Double to represent inches below surface to plant seed.
 
     ============================================================================================= */
 
@@ -43,14 +44,14 @@ public class    Plant {
     private boolean raisedRows;
     private boolean raisedHills;
     private int distBetweenPlants;
-
+    private double seedDepth;
 
 
 //CONSTRUCTOR ======================================================================================
-    public Plant(String plantName, String seedCompany, int firstPlantDate,
-                 int weeksToHarvest, int harvestRange, int seedIndoorDate,
-                 int lastPlantDate, String notes,
-                 int fileID, boolean raisedRows, boolean raisedHills, int distBetweenPlants) {
+    public Plant(String plantName, String seedCompany, int firstPlantDate, int weeksToHarvest,
+                 int harvestRange, int seedIndoorDate, int lastPlantDate, String notes,
+                 int fileID, boolean raisedRows, boolean raisedHills, int distBetweenPlants,
+                 double seedDepth) {
         this.plantName = plantName;
         this.seedCompany = seedCompany;
         this.firstPlantDate = firstPlantDate;
@@ -63,6 +64,7 @@ public class    Plant {
         this.raisedRows = raisedRows;
         this.raisedHills = raisedHills;
         this.distBetweenPlants = distBetweenPlants;
+        this.seedDepth = seedDepth;
     }
 
 
@@ -170,5 +172,13 @@ public class    Plant {
 
     public void setDistBetweenPlants(int distBetweenPlants) {
         this.distBetweenPlants = distBetweenPlants;
+    }
+
+    public double getSeedDepth() {
+        return seedDepth;
+    }
+
+    public void setSeedDepth(double seedDepth) {
+        this.seedDepth = seedDepth;
     }
 }
