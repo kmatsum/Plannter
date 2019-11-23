@@ -51,6 +51,10 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
                 txtSeedDepth,
                 txtNotes;
 
+/*TODO
+    - Fix the incorrect pictures when new plants are added
+    - Add the ability for users to delete plants
+ */
 
 //LIFECYCLE METHODS ================================================================================
     @Nullable
