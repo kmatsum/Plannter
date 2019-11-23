@@ -42,9 +42,19 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
                 txtWeeksToHarvest,
                 txtSeasons,
                 txtSeedDistance,
-                txtMethod;
+                txtMethod,
+                txtSeedCompany,
+                txtFirstPlantDate,
+                txtHarvestRange,
+                txtLastPlantDate,
+                txtSeedIndoorsDate,
+                txtSeedDepth,
+                txtNotes;
 
-
+/*TODO
+    - Fix the incorrect pictures when new plants are added
+    - Add the ability for users to delete plants
+ */
 
 //LIFECYCLE METHODS ================================================================================
     @Nullable
@@ -62,12 +72,20 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
       
         Main_Window = (Main_Window) getActivity();
         plantList = Main_Window.getPlantList();
-      
-        imageView = view.findViewById(R.id.imageView);
+
+        //Find GUI elements
+        txtSeedCompany = view.findViewById(R.id.txtSeedCompany);
+        txtFirstPlantDate = view.findViewById(R.id.txtFirstPlantDate);
         txtWeeksToHarvest = view.findViewById(R.id.txtWeeksToHarvest);
+        txtHarvestRange = view.findViewById(R.id.txtHarvestRange);
+        txtLastPlantDate = view.findViewById(R.id.txtLastPlantDate);
         txtSeedIndoors = view.findViewById(R.id.txtSeedIndoors);
-        txtSeasons = view.findViewById(R.id.txtSeasons);
         txtSeedDistance = view.findViewById(R.id.txtSeedDistance);
+        txtSeedDepth = view.findViewById(R.id.txtSeedDepth);
+        txtNotes = view.findViewById(R.id.txtNotes);
+        imageView = view.findViewById(R.id.imageView);
+        txtSeedIndoorsDate = view.findViewById(R.id.txtSeedIndoorsDate);
+        txtSeasons = view.findViewById(R.id.txtSeasons);
         txtMethod = view.findViewById(R.id.txtMethod);
 
         //Set all OnClickListeners needed for this View
@@ -135,11 +153,7 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
         Drawable plantImage = ResourcesCompat.getDrawable(getResources(), plant.getFileID(), null);
         imageView.setImageDrawable(plantImage);
 
-        /*TODO
-        - add all of the plant attributes to the plant into screen, similar to what is in
-        settings_add_plants
-         */
-
+        // TOP BOX =================================================================================
         if (plant.getFirstPlantDate() < 26) { //26 represents half of 52 weeks in the year
             txtSeasons.setText("Spring");
         }
@@ -159,14 +173,36 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
         }
 
         txtWeeksToHarvest.setText(Integer.toString(plant.getWeeksToHarvest()));
-        txtSeedDistance.setText(Integer.toString(plant.getDistBetweenPlants()));
 
+        // GENERAL =================================================================================
+        txtSeedCompany.setText(plant.getSeedCompany());
+
+        // PLANTING DATES ==========================================================================
+        txtFirstPlantDate.setText(Integer.toString(plant.getFirstPlantDate()));
+        txtLastPlantDate.setText(Integer.toString(plant.getLastPlantDate()));
+        if (plant.getSeedIndoorDate() == 52) {
+            txtSeedIndoorsDate.setText("N/A");
+        } else {
+            txtSeedIndoorsDate.setText(Integer.toString(plant.getSeedIndoorDate()));
+        }
+        txtHarvestRange.setText(Integer.toString(plant.getHarvestRange()));
+
+        // PLANTING LAYOUT =========================================================================
+        txtSeedDistance.setText(Integer.toString(plant.getDistBetweenPlants()));
+        txtSeedDepth.setText(Double.toString(plant.getSeedDepth()));
         if (plant.isRaisedHills()) {
             txtMethod.setText("Raised Hills");
         } else if (plant.isRaisedRows()) {
             txtMethod.setText("Raised Rows");
         } else {
             txtMethod.setText("Flat");
+        }
+
+        // NOTES ===================================================================================
+        if (plant.getNotes().matches("")){
+            txtNotes.setText("No notes.");
+        } else {
+            txtNotes.setText(plant.getNotes());
         }
     }
 

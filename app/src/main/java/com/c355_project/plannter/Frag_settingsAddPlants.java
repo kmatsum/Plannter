@@ -48,7 +48,7 @@ public class Frag_settingsAddPlants extends Fragment implements View.OnClickList
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_frag_settings_add_plants, container, false);
+        return inflater.inflate(R.layout.fragment_settings_add_plants, container, false);
     }
 
     @Override
@@ -189,7 +189,8 @@ public class Frag_settingsAddPlants extends Fragment implements View.OnClickList
                         Integer.parseInt(txtLastPlantDate.getText().toString().trim()),txtNotes.getText().toString().trim(),
                         R.drawable.plant, rbFlat.isChecked(),
                         rbRaisedHills.isChecked() && !rbRaisedRows.isChecked(),
-                        Integer.parseInt(txtSeedDistance.getText().toString().trim()));
+                        Integer.parseInt(txtSeedDistance.getText().toString().trim()),
+                        Double.parseDouble(txtSeedDepth.getText().toString().trim()));
 
                 // INSERT NEW PLANT ================================================================
                 Main_Window.insertPlant(tempPlant);
