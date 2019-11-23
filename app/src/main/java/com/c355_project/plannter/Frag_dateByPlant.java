@@ -21,7 +21,7 @@ import java.util.List;
 
 
 
-public class Frag_plantByPlant extends Fragment implements View.OnClickListener, Spinner.OnItemSelectedListener {
+public class Frag_dateByPlant extends Fragment implements View.OnClickListener, Spinner.OnItemSelectedListener {
 //VARIABLES ========================================================================================
     //Main_Window Activity Instantiation
     Main_Window Main_Window;
@@ -51,25 +51,28 @@ public class Frag_plantByPlant extends Fragment implements View.OnClickListener,
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_plant_by_plant, container, false);
+        return inflater.inflate(R.layout.fragment_date_by_plant, container, false);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //Provide values for variables needed to be set on activity start
         Main_Window = (Main_Window) getActivity();
         plantList = Main_Window.getPlantList();
-        FallFrostDate = Main_Window.getFirstFallFrostDate();
         SpringFrostDate = Main_Window.getLastSpringFrostDate();
+        FallFrostDate = Main_Window.getFirstFallFrostDate();
 
         //Set all OnClickListeners needed for this View
         view.findViewById(R.id.btnBack).setOnClickListener(this);
         view.findViewById(R.id.btnNext).setOnClickListener(this);
         view.findViewById(R.id.btnPrevious).setOnClickListener(this);
 
-        //Set all the view
+        //Set the required Widget variables to their respective views
         imageView = view.findViewById(R.id.imageView);
+        spnrSelectPlant = view.findViewById(R.id.spnrSelectPlant);
+
         txtSpringFrost = view.findViewById(R.id.txtSpringFrost);
         txtFallFrost = view.findViewById(R.id.txtFallFrost);
 
@@ -78,16 +81,17 @@ public class Frag_plantByPlant extends Fragment implements View.OnClickListener,
         txtHarvestStart = view.findViewById(R.id.txtHarvestStart);
         txtHarvestEnd = view.findViewById(R.id.txtHarvestEnd);
 
-        spnrSelectPlant = view.findViewById(R.id.spnrSelectPlant);
-
-        //Set the spinner adapter and contents
+        //Fill the spinner ArrayAdaptet contents
         plantNames = new String[plantList.size()];
         for (int i = 0; i < plantList.size(); i++){
             plantNames[i] = plantList.get(i).getPlantName();
         }
 
+        //Attach the ArrayAdapter to the spinner, using our custom Spinner Layout
         ArrayAdapter<String> adapter = new ArrayAdapter<String> (getActivity(), R.layout.spinner_item, plantNames);
         spnrSelectPlant.setAdapter(adapter);
+
+        //Attach a listener to the Spinner
         spnrSelectPlant.setOnItemSelectedListener(this);
 
 //        //Adds banner ad to UI
@@ -96,10 +100,11 @@ public class Frag_plantByPlant extends Fragment implements View.OnClickListener,
 //        adView.loadAd(adRequest);
 
 
-        //Set some default text
-        txtSpringFrost.setText(dateFormat.format(Main_Window.getLastSpringFrostDate()));
-        txtFallFrost.setText(dateFormat.format(Main_Window.getFirstFallFrostDate()));
+        //Display the stored Fall and Frost Dates
+        txtSpringFrost.setText(dateFormat.format(SpringFrostDate));
+        txtFallFrost.setText(dateFormat.format(FallFrostDate));
 
+        //Call the displayResults method providing the current spinner position
         displayResults(spnrSelectPlant.getSelectedItemPosition());
         }
 
@@ -144,6 +149,7 @@ public class Frag_plantByPlant extends Fragment implements View.OnClickListener,
         Drawable plantImage = ResourcesCompat.getDrawable(getResources(), selectedPlant.getFileID(), null);
         imageView.setImageDrawable(plantImage);
 
+        //Call the displayResults method providing the spinner position
         displayResults(position);
     }
     @Override
@@ -163,10 +169,14 @@ public class Frag_plantByPlant extends Fragment implements View.OnClickListener,
         //Create the resulting date variable and provide it a default date value
         Date resultingDate;
 
+        //Create a Calendar Object, then cast the Date object into the calendar object.
         Calendar c = Calendar.getInstance();
         c.setTime(xFrostDate);
+
+        //(Subtract) Add the number of weeks from the set date to get a resulting calendar date
         c.add( Calendar.WEEK_OF_YEAR, -(distanceFromFrostDate) );
 
+        //Cast the Calendar Date to a Date to return
         resultingDate = c.getTime();
 
         return resultingDate;
@@ -176,10 +186,14 @@ public class Frag_plantByPlant extends Fragment implements View.OnClickListener,
         //Create the resulting date variable and provide it a default date value
         Date resultingDate;
 
+        //Create a Calendar Object, then cast the Date object into the calendar object.
         Calendar c = Calendar.getInstance();
         c.setTime(xPlantDate);
+
+        //(Subtract) Add the number of weeks from the set date to get a resulting calendar date
         c.add( Calendar.WEEK_OF_YEAR, xdistanceFromPlanting );
 
+        //Cast the Calendar Date to a Date to return
         resultingDate = c.getTime();
 
         return resultingDate;
@@ -189,12 +203,15 @@ public class Frag_plantByPlant extends Fragment implements View.OnClickListener,
         //Instantiate a temp currentPlant object for first-calculation use
         Plant currentPlant = plantList.get(position);
 
-        //Show first Plant Dates
+        //Set the TextView text of the Planting dates
         Date tempFirstPlant = calculatePlantDate(currentPlant.getFirstPlantDate(), SpringFrostDate);
-        txtPlantStart.setText(dateFormat.format(tempFirstPlant));
         Date tempLastPlant = calculatePlantDate(currentPlant.getLastPlantDate(), FallFrostDate);
+
+        //Set the TextView text of the Planting dates
+        txtPlantStart.setText(dateFormat.format(tempFirstPlant));
         txtPlantEnd.setText(dateFormat.format(tempLastPlant));
 
+        //Set the TextView text of the Harvest dates
         txtHarvestStart.setText(dateFormat.format(calculateHarvestDate(currentPlant.getWeeksToHarvest(),tempFirstPlant)));
         txtHarvestEnd.setText(dateFormat.format(calculateHarvestDate(( currentPlant.getWeeksToHarvest() + currentPlant.getHarvestRange() ),tempLastPlant)));
     }
