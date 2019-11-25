@@ -104,6 +104,8 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                     calendarViewInLayout.setMinDate(calculateFirstPlantDate(i));
                     calendarViewInLayout.setMaxDate(calculateLastPlantDate(i));
+                    //Sets The Calendar Focus To The First Possible Plant Date
+                    calendarViewInLayout.setDate(calculateFirstPlantDate(i));
             }
 
             @Override
@@ -156,9 +158,6 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
                 harvestRangeMin.add(Calendar.DAY_OF_MONTH , (PlantDatabase.get(spnPlants.getSelectedItemPosition()).getWeeksToHarvest() * 7));
                 harvestRangeMax.setTime(harvestRangeMin.getTime());
                 harvestRangeMax.add(Calendar.DAY_OF_MONTH, (PlantDatabase.get(spnPlants.getSelectedItemPosition()).getHarvestRange() * 7));
-                //Sets Calendar Focus To First Possible Plant Day
-                
-
             } catch (ParseException e) {
                 e.printStackTrace();
             }

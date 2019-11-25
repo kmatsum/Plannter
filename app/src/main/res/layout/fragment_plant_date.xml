@@ -69,7 +69,7 @@
                     android:layout_weight="1"
                     android:background="#00FFFFFF"
                     android:fontFamily="@font/finger_paint"
-                    android:text="@string/next"
+                    android:text="Calculate"
                     android:textAlignment="center"
                     android:textColor="@color/colorTitleText"
                     android:textSize="25sp" />
