@@ -38,7 +38,9 @@
                 <TextView
                     android:id="@+id/txtCropHarvest"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/finger_paint"
+                    android:textColor="@color/colorTitleText" />
             </LinearLayout>
 
             <LinearLayout
