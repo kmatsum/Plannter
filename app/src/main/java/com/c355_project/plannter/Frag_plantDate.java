@@ -91,20 +91,21 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
         harvestRangeMin = Calendar.getInstance();
         harvestRangeMax = Calendar.getInstance();
         btnNext = view.findViewById(R.id.btnNext);
-        adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, PlantNames);
+        adapter = new ArrayAdapter<>(getActivity(), R.layout.spinner_item, PlantNames);
         for (int i = 0; i < PlantDatabase.size(); i++) {
 
             PlantNames.add(PlantDatabase.get(i).getPlantName());
         }
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnPlants = view.findViewById(R.id.spnPlants);
         spnPlants.setAdapter(adapter);
 
         spnPlants.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                    calendarViewInLayout.setMinDate(calulateFirstPlantDate(i));
-                    calendarViewInLayout.setMaxDate(calulateLastPlantDate(i));
+                    calendarViewInLayout.setMinDate(calculateFirstPlantDate(i));
+                    calendarViewInLayout.setMaxDate(calculateLastPlantDate(i));
+                    //Sets The Calendar Focus To The First Possible Plant Date
+                    calendarViewInLayout.setDate(calculateFirstPlantDate(i));
             }
 
             @Override
@@ -157,7 +158,6 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
                 harvestRangeMin.add(Calendar.DAY_OF_MONTH , (PlantDatabase.get(spnPlants.getSelectedItemPosition()).getWeeksToHarvest() * 7));
                 harvestRangeMax.setTime(harvestRangeMin.getTime());
                 harvestRangeMax.add(Calendar.DAY_OF_MONTH, (PlantDatabase.get(spnPlants.getSelectedItemPosition()).getHarvestRange() * 7));
-
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -194,7 +194,7 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
 //           else {
 //                makeToast("No Plants are able to be harvested at this time");
 //            }
-    public long calulateLastPlantDate(int spnPosition)
+    public long calculateLastPlantDate(int spnPosition)
     {
         int daysAfterLastPlant = PlantDatabase.get(spnPosition).getLastPlantDate() * 7;
         lastPlantDate = Calendar.getInstance();
@@ -203,7 +203,7 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
         Date lpd = lastPlantDate.getTime();
         return lpd.getTime();
     }
-    public long calulateFirstPlantDate(int spnPosition)
+    public long calculateFirstPlantDate(int spnPosition)
     {
         int daysBeforelastSpringFrost = PlantDatabase.get(spnPosition).getFirstPlantDate() * 7;
         firstPlantDate = Calendar.getInstance();
