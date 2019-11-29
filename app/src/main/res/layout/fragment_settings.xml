@@ -13,13 +13,15 @@
 
         <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp">
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
 
 
+                android:layout_margin="5dp"
                 android:gravity="center">
 
                 <Button
@@ -28,14 +30,15 @@
                     android:layout_height="wrap_content"
                     android:background="#00FFFFFF"
                     android:fontFamily="@font/finger_paint"
-                    android:text="Get Local Spring And Fall Frost Dates"
+                    android:text="Find Local Spring And Fall Frost Dates"
                     android:textColor="@color/colorTitleText"
                     android:textSize="20sp" />
             </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_margin="5dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -109,7 +112,8 @@
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_margin="5dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -183,23 +187,36 @@
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </TableLayout>
+                android:layout_height="wrap_content"
 
-        <TextView
-            android:id="@+id/txtSPACER"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="100" />
+
+                android:layout_margin="5dp"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/btnResetDB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#00FFFFFF"
+                    android:fontFamily="@font/finger_paint"
+                    android:text="Reset Plant Database To Default"
+                    android:textColor="@color/colorTitleText"
+                    android:textSize="20sp" />
+            </TableRow>
+
+        </TableLayout>
 
         <Button
             android:id="@+id/btnBack"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
+            android:layout_height="match_parent"
             android:background="#00FFFFFF"
+            android:fontFamily="@font/finger_paint"
+            android:gravity="bottom|center"
+            android:paddingLeft="5sp"
             android:text="@string/back"
-            android:textColor="@color/colorTitleText" />
+            android:textColor="@color/colorTitleText"
+            android:textSize="40sp" />
 
     </LinearLayout>
 

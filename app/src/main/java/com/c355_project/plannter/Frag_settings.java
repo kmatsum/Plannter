@@ -40,6 +40,7 @@ public class Frag_settings extends Fragment implements View.OnClickListener {
         view.findViewById(R.id.btnBack).setOnClickListener(this);
         view.findViewById(R.id.btnUpdateSpring).setOnClickListener(this);
         view.findViewById(R.id.btnUpdateFall).setOnClickListener(this);
+        view.findViewById(R.id.btnResetDB).setOnClickListener(this);
     }
 
     @Override
@@ -96,6 +97,11 @@ public class Frag_settings extends Fragment implements View.OnClickListener {
                     makeToast("Please Enter A Valid Date");
                     e.printStackTrace();
                 }
+            } break;
+
+            case (R.id.btnResetDB): {
+                Main_Window.resetPlantDB();
+                makeToast("Plant database restored to default!");
             } break;
 
             //Used for handling exceptions on if the given ViewID and the expected ViewID does not match
