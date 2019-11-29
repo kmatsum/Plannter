@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.XmlRes;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
+
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,12 +18,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -53,7 +52,6 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
 
 /*TODO
     - Fix the incorrect pictures when new plants are added
-    - Add the ability for users to delete plants
  */
 
 //LIFECYCLE METHODS ================================================================================
@@ -92,6 +90,7 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
         view.findViewById(R.id.btnBack).setOnClickListener(this);
         view.findViewById(R.id.btnNext).setOnClickListener(this);
         view.findViewById(R.id.btnPrevious).setOnClickListener(this);
+        view.findViewById(R.id.btnDelete).setOnClickListener(this);
         view.findViewById(R.id.imgSettingsAddPlants).setOnClickListener(this);
 
         //Set the spinner adapter and contents
@@ -135,6 +134,18 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
             int position = spnrSelectPlant.getSelectedItemPosition();
             if (position < spnrSelectPlant.getAdapter().getCount() - 1)
                 spnrSelectPlant.setSelection(spnrSelectPlant.getSelectedItemPosition() + 1);
+        } else if (id == R.id.btnDelete) {
+            if (spnrSelectPlant.getAdapter().getCount() == 1){
+                makeToast("You must have at least 1 plant.");
+                return;
+            }
+            int position = spnrSelectPlant.getSelectedItemPosition();
+            Plant plant = plantList.get(position);
+            String name = plant.getPlantName();
+            Main_Window.deletePlant(plant);
+            plantList = Main_Window.getPlantList();
+            Main_Window.changeFragment("MainMenu");
+            makeToast("Plant " + name + " deleted.");
         }
 
         //Used for handling exceptions on if the given ViewID and the expected ViewID does not match

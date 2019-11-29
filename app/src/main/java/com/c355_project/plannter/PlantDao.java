@@ -15,8 +15,8 @@ public interface PlantDao {
     void insertPlant(Plant plant);
     @Update
     void updatePlant(PlantDate plantDate);
-//    @Delete
-//    void deletePlant(Plant plant);
+    @Delete
+    void deletePlant(Plant plant);
     @Query("SELECT * FROM Plant ORDER BY PlantName")
     List<Plant> getAllPlants();
     @Query("SELECT * FROM PlantDate")

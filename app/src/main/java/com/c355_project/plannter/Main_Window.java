@@ -160,6 +160,15 @@ public class Main_Window extends AppCompatActivity {
             }});
     }
 
+    public void deletePlant(final Plant xPlant){
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                PlantDatabase.getInstance(getApplicationContext()).plantDao().deletePlant(xPlant);
+                PlantList = PlantDatabase.getInstance(getApplicationContext()).plantDao().getAllPlants();
+            }});
+    }
+
     public Date getLastSpringFrostDate() {
         return lastSpringFrostDate.getDate();
     }
