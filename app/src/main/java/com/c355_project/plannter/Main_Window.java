@@ -140,6 +140,22 @@ public class Main_Window extends AppCompatActivity {
         toast.show();
     }
 
+    public void resetPlantDB(){
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                String DatabaseFilePath = "./data/data/com.c355_project.plannter/databases/", DB_NAME = "plant_db";
+                File db = new File(DatabaseFilePath + DB_NAME);
+                db.delete();
+                //Get plants
+                PlantList = PlantDatabase.getInstance(getApplicationContext()).plantDao().getAllPlants();
+                //Get plant dates
+                lastSpringFrostDate = PlantDatabase.getInstance(getApplicationContext()).plantDao().getSpringFrostDate();
+                firstFallFrostDate = PlantDatabase.getInstance(getApplicationContext()).plantDao().getFallFrostDate();
+            }
+        });
+    }
+
 
 
 //GET AND SET METHODS ==============================================================================
