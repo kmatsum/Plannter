@@ -82,13 +82,16 @@ public class Frag_settingsAddPlants extends Fragment implements View.OnClickList
 
     }
 
+//LISTENER METHODS =================================================================================
     @Override
     public void onClick(View view) {
+        //Determines how to respond to the click
         switch (view.getId()) {
             case (R.id.btnBack): {
                 Main_Window.changeFragment("PlantInfo");
             } break;
 
+            //Toggle the seed indoors textbox
             case (R.id.toggleButton): {
                 if (toggleButton.isChecked()){
                     txtSeedIndoors.setVisibility(View.VISIBLE);
@@ -214,9 +217,6 @@ public class Frag_settingsAddPlants extends Fragment implements View.OnClickList
         }
     }
 
-//LISTENER METHODS =================================================================================
-
-
 
 
 //METHODS ==========================================================================================
@@ -227,6 +227,7 @@ public class Frag_settingsAddPlants extends Fragment implements View.OnClickList
     }
 
     public void resetGUI(){
+        //Resets the GUI to blank input
         txtName.setText("");
         txtSeedCompany.setText("");
         cbSpring.setChecked(true);
