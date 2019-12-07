@@ -145,10 +145,6 @@ public class Frag_dateByPlant extends Fragment implements View.OnClickListener, 
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        Plant selectedPlant = plantList.get(position);
-        Drawable plantImage = ResourcesCompat.getDrawable(getResources(), selectedPlant.getFileID(), null);
-        imageView.setImageDrawable(plantImage);
-
         //Call the displayResults method providing the spinner position
         displayResults(position);
     }
@@ -203,6 +199,9 @@ public class Frag_dateByPlant extends Fragment implements View.OnClickListener, 
         //Instantiate a temp currentPlant object for first-calculation use
         Plant currentPlant = plantList.get(position);
 
+        //Set the drawing resource image from the selected Plant
+        Drawable plantImage = ResourcesCompat.getDrawable(getResources(), currentPlant.getFileID(), null);
+
         //Set the TextView text of the Planting dates
         Date tempFirstPlant = calculatePlantDate(currentPlant.getFirstPlantDate(), SpringFrostDate);
         Date tempLastPlant = calculatePlantDate(currentPlant.getLastPlantDate(), FallFrostDate);
@@ -210,6 +209,9 @@ public class Frag_dateByPlant extends Fragment implements View.OnClickListener, 
         //Set the TextView text of the Planting dates
         txtPlantStart.setText(dateFormat.format(tempFirstPlant));
         txtPlantEnd.setText(dateFormat.format(tempLastPlant));
+
+        //Set the imageView to the plant image
+        imageView.setImageDrawable(plantImage);
 
         //Set the TextView text of the Harvest dates
         txtHarvestStart.setText(dateFormat.format(calculateHarvestDate(currentPlant.getWeeksToHarvest(),tempFirstPlant)));
