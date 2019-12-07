@@ -74,6 +74,10 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
         //Set all OnClickListeners needed for this View
         view.findViewById(R.id.btnBack).setOnClickListener(this);
         view.findViewById(R.id.btnCalculate).setOnClickListener(this);
+        view.findViewById(R.id.btnNext).setOnClickListener(this);
+        view.findViewById(R.id.btnPrevious).setOnClickListener(this);
+        view.findViewById(R.id.arrowNext).setOnClickListener(this);
+        view.findViewById(R.id.arrowPrevious).setOnClickListener(this);
 
 //        //Adds banner ad to UI
 //        AdView adView = view.findViewById(R.id.adView);
@@ -116,33 +120,47 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
 
     //LISTENER METHODS =================================================================================
     public void onClick(View view) {
-        switch (view.getId()) {
-            case (R.id.btnBack): {
-                Main_Window.changeFragment("MainMenu");
-            }
-            break;
+        Integer id = view.getId();
 
-            case (R.id.btnCalculate): {
-                if(selectedDate == null)
-                {
-                    Date minPlantDate = new Date(calendarViewInLayout.getMinDate());
-                    selectedDate = minPlantDate;
-                    setHarvestRanges();
-                }
-                else
-                    setHarvestRanges();
-                txtCropHarvest.setText("Selected Date: " + simpleDateFormat.format(selectedDate) + "\n" + "Expect to Harvest Between: " + simpleDateFormat.format(harvestRangeMin.getTime()) + "-" + simpleDateFormat.format(harvestRangeMax.getTime()));
-            }
-            break;
+        //Go back to main menu
+        if (id == R.id.btnBack) {
+            Main_Window.changeFragment("MainMenu");
+        }
 
-            //Used for handling exceptions on if the given ViewID and the expected ViewID does not match
-            default: {
-                //Toast Error Information
-                makeToast("[ERROR] Menu parameter passed was not found, returning to main menu...");
-                System.out.println("[ERROR] Menu parameter passed was not found, returning to main menu...\n");
+        //Go back in spinner plant list. Do nothing if position is already the first item.
+        else if (id == R.id.btnPrevious || id == R.id.arrowPrevious) {
+            int position = spnPlants.getSelectedItemPosition();
+            if (position > 0)
+                spnPlants.setSelection(spnPlants.getSelectedItemPosition() - 1);
+        }
 
-                Main_Window.changeFragment("MainMenu");
+        //Go forward in spinner plant list. Do nothing if position is already the last item.
+        else if (id == R.id.btnNext || id == R.id.arrowNext) {
+            int position = spnPlants.getSelectedItemPosition();
+            if (position < spnPlants.getAdapter().getCount() - 1)
+                spnPlants.setSelection(spnPlants.getSelectedItemPosition() + 1);
+        }
+
+        else if (id == R.id.btnCalculate){
+            if(selectedDate == null)
+            {
+                Date minPlantDate = new Date(calendarViewInLayout.getMinDate());
+                selectedDate = minPlantDate;
+                setHarvestRanges();
             }
+            else
+                setHarvestRanges();
+            txtCropHarvest.setText("Selected Date: " + simpleDateFormat.format(selectedDate) + "\n" + "Expect to Harvest Between: " + simpleDateFormat.format(harvestRangeMin.getTime()) + "-" + simpleDateFormat.format(harvestRangeMax.getTime()));
+
+        }
+
+        //Used for handling exceptions on if the given ViewID and the expected ViewID does not match
+        else {
+            //Toast Error Information
+            makeToast("[ERROR] Menu parameter passed was not found, returning to main menu...");
+            System.out.println("[ERROR] Menu parameter passed was not found, returning to main menu...\n");
+
+            Main_Window.changeFragment("MainMenu");
         }
     }
     @Override

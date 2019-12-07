@@ -66,7 +66,9 @@ public class Frag_dateByPlant extends Fragment implements View.OnClickListener, 
 
         //Set all OnClickListeners needed for this View
         view.findViewById(R.id.btnBack).setOnClickListener(this);
-        view.findViewById(R.id.btnCalculate).setOnClickListener(this);
+        view.findViewById(R.id.btnNext).setOnClickListener(this);
+        view.findViewById(R.id.arrowPrevious).setOnClickListener(this);
+        view.findViewById(R.id.arrowNext).setOnClickListener(this);
         view.findViewById(R.id.btnPrevious).setOnClickListener(this);
 
         //Set the required Widget variables to their respective views
@@ -113,33 +115,34 @@ public class Frag_dateByPlant extends Fragment implements View.OnClickListener, 
 //LISTENER METHODS =================================================================================
     @Override
     public void onClick (View view) {
-        switch (view.getId()) {
-            case (R.id.btnBack): {
-                Main_Window.changeFragment("MainMenu");
-            } break;
+        Integer id = view.getId();
 
-            case (R.id.btnCalculate): {
-                int position = spnrSelectPlant.getSelectedItemPosition();
-                if (position < spnrSelectPlant.getAdapter().getCount() - 1) {
-                    spnrSelectPlant.setSelection(spnrSelectPlant.getSelectedItemPosition() + 1);
-                }
-            } break;
+        //Go back to main menu
+        if (id == R.id.btnBack) {
+            Main_Window.changeFragment("MainMenu");
+        }
 
-            case (R.id.btnPrevious): {
-                int position = spnrSelectPlant.getSelectedItemPosition();
-                if (position > 0) {
-                    spnrSelectPlant.setSelection(spnrSelectPlant.getSelectedItemPosition() - 1);
-                }
-            } break;
+        //Go back in spinner plant list. Do nothing if position is already the first item.
+        else if (id == R.id.btnPrevious || id == R.id.arrowPrevious) {
+            int position = spnrSelectPlant.getSelectedItemPosition();
+            if (position > 0)
+                spnrSelectPlant.setSelection(spnrSelectPlant.getSelectedItemPosition() - 1);
+        }
 
-            //Used for handling exceptions on if the given ViewID and the expected ViewID does not match
-            default: {
-                //Toast Error Information
-                makeToast("[ERROR] Menu parameter passed was not found, returning to main menu...");
-                System.out.println("[ERROR] Menu parameter passed was not found, returning to main menu...\n");
+        //Go forward in spinner plant list. Do nothing if position is already the last item.
+        else if (id == R.id.btnNext || id == R.id.arrowNext) {
+            int position = spnrSelectPlant.getSelectedItemPosition();
+            if (position < spnrSelectPlant.getAdapter().getCount() - 1)
+                spnrSelectPlant.setSelection(spnrSelectPlant.getSelectedItemPosition() + 1);
+        }
 
-                Main_Window.changeFragment("MainMenu");
-            }
+        //Used for handling exceptions on if the given ViewID and the expected ViewID does not match
+        else {
+            //Toast Error Information
+            makeToast("[ERROR] Menu parameter passed was not found, returning to main menu...");
+            System.out.println("[ERROR] Menu parameter passed was not found, returning to main menu...\n");
+
+            Main_Window.changeFragment("MainMenu");
         }
     }
 
