@@ -38,7 +38,7 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
     CalendarView calendarViewInLayout;
     Calendar today, lastPlantDate, firstPlantDate, harvestRangeMin, harvestRangeMax;
     TextView txtCropHarvest;
-    String Month, Day, Year, Concat;
+    String Concat;
     SimpleDateFormat simpleDateFormat;
     Date selectedDate;
     Button btnNext;
@@ -105,12 +105,11 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
                     calendarViewInLayout.setMinDate(calculateFirstPlantDate(i));
                     calendarViewInLayout.setMaxDate(calculateLastPlantDate(i));
                     //Sets The Calendar Focus To The First Possible Plant Date
-                    calendarViewInLayout.setDate(calculateFirstPlantDate(i));
+                    //calendarViewInLayout.setDate(calendarViewInLayout.getMinDate());
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-
             }
         });
     }
@@ -125,7 +124,7 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
             break;
 
             case (R.id.btnNext): {
-                txtCropHarvest.setText("Selected Date: " + Main_Window.getUserInputDate() + "\n" + "Expect to Harvest Between: " + harvestRangeMin.getTime() + "-" + harvestRangeMax.getTime());
+                txtCropHarvest.setText("Selected Date: " + simpleDateFormat.format(selectedDate) + "\n" + "Expect to Harvest Between: " + simpleDateFormat.format(harvestRangeMin.getTime()) + "-" + simpleDateFormat.format(harvestRangeMax.getTime()));
 
             }
             break;
@@ -140,13 +139,9 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
             }
         }
     }
-
     @Override
     public void onSelectedDayChange(@NonNull CalendarView calendarView, int year, int month, int day) {
         //Concat both month and day so comparison is easier and code is cleaner
-//        Month = String.valueOf(month + 1);
-//        Day = String.valueOf(day);
-//        Year = String.valueOf(year);
         Concat = month + "/" + day + "/" + year;
 
         System.out.println(Concat);
@@ -154,11 +149,7 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
             try {
                 selectedDate = simpleDateFormat.parse(Concat);
                 Main_Window.setUserInputDate(selectedDate);
-                harvestRangeMin.setTime(selectedDate);
-                harvestRangeMin.add(Calendar.DAY_OF_MONTH , (PlantDatabase.get(spnPlants.getSelectedItemPosition()).getWeeksToHarvest() * 7));
-                harvestRangeMax.setTime(harvestRangeMin.getTime());
-                harvestRangeMax.add(Calendar.DAY_OF_MONTH, (PlantDatabase.get(spnPlants.getSelectedItemPosition()).getHarvestRange() * 7));
-            } catch (ParseException e) {
+ } catch (ParseException e) {
                 e.printStackTrace();
             }
         }
@@ -172,28 +163,6 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
         toast.show();
     }
 
-    //Get frost date from DB and check ranges
-//           if((fallFrost.getTime() - selectedDate.getTime()) >= 83 || (fallFrost.getTime() - selectedDate.getTime()) <= 76) {
-//               Main_Window.setHarvestableCrops("You can harvest.....\n Tomatoes \n Peppers \n Cucumbers \n Squash"); }
-//           else if ((fallFrost.getTime() - selectedDate.getTime()) >= 75 || (fallFrost.getTime() - selectedDate.getTime()) <= 68) {
-//                Main_Window.setHarvestableCrops("You can harvest..... \n Tomatoes \n Peppers \n Cucumbers \n Okra \n Squash \n Chard"); }
-//           else if ((fallFrost.getTime() - selectedDate.getTime()) >= 67 || (fallFrost.getTime() - selectedDate.getTime()) <= 60) {
-//                Main_Window.setHarvestableCrops("You can harvest..... \n Tomatoes \n Peppers \n Cabbage \n Cucumber \n Okra \n Squash \n Chard \n Beets \n Green Beans - Bush \n Radish or Turnip");}
-//           else if ((fallFrost.getTime() - selectedDate.getTime()) >= 59 || (fallFrost.getTime() - selectedDate.getTime()) <= 52) {
-//                Main_Window.setHarvestableCrops("You can harvest..... \n Tomatoes \n Peppers \n Melons \n Potatoes \n Sweet Corn \n Cabbage \n Cucumber \n Okra \n Squash \n Chard \n Peas \n Beets \n Green Beans - Bush \n Radish or Turnip");}
-//           else if ((fallFrost.getTime() - selectedDate.getTime()) >= 51 || (fallFrost.getTime() - selectedDate.getTime()) <= 44) {
-//                Main_Window.setHarvestableCrops("You can harvest..... \n Tomatoes \n Peppers \n Melons \n Potatoes \n Sweet Corn \n Cabbage \n Cucumber \n Okra \n Pumpkins \n Chard \n Peas \n Beets \n Broccoli \n Green Beans - Bush \n Radish or Turnip \n Lettuce - Leaf");}
-//           else if ((fallFrost.getTime() - selectedDate.getTime()) >= 43 || (fallFrost.getTime() - selectedDate.getTime()) <= 36) {
-//                Main_Window.setHarvestableCrops("You can harvest..... \n Tomatoes \n Peppers \n Melons \n Potatoes \n Sweet Corn \n Cabbage \n Okra \n Pumpkins \n Carrots \n Cauliflower \n Chard \n Peas \n Beets \n Broccoli \n Radish or Turnip \n Lettuce - Leaf \n Spinach");}
-//           else if ((fallFrost.getTime() - selectedDate.getTime()) >= 35 || (fallFrost.getTime() - selectedDate.getTime()) <= 28) {
-//                Main_Window.setHarvestableCrops("You can harvest..... \n Tomatoes \n Melons \n Sweet Corn \n Cabbage \n Okra \n Pumpkins \n Carrots \n Cauliflower \n Chard \n Peas \n Broccoli \n Radish or Turnip \n Lettuce - Leaf \n Spinach");}
-//           else if ((fallFrost.getTime() - selectedDate.getTime()) >= 27 || (fallFrost.getTime() - selectedDate.getTime()) <= 20) {
-//                Main_Window.setHarvestableCrops("You can harvest..... \n Carrots \n Cauliflower \n Chard \n Broccoli \n Lettuce - Leaf \n Spinach");}
-//           else if ((fallFrost.getTime() - selectedDate.getTime()) >= 27 || (fallFrost.getTime() - selectedDate.getTime()) <= 20) {
-//                Main_Window.setHarvestableCrops("You can Harvest..... \n Chard \n Broccoli \n Spinach");}
-//           else {
-//                makeToast("No Plants are able to be harvested at this time");
-//            }
     public long calculateLastPlantDate(int spnPosition)
     {
         int daysAfterLastPlant = PlantDatabase.get(spnPosition).getLastPlantDate() * 7;
@@ -213,6 +182,3 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
         return lpd.getTime();
     }
 }
-/*TODO
-Loop through to calculate what plants can be harvested when -> Weeks to Harvest  times 7
- */
