@@ -105,10 +105,12 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
         spnPlants.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    calendarViewInLayout.setMinDate(0);
                     calendarViewInLayout.setMinDate(calculateFirstPlantDate(i));
+                    calendarViewInLayout.setMaxDate(0);
                     calendarViewInLayout.setMaxDate(calculateLastPlantDate(i));
                     //Sets The Calendar Focus To The First Possible Plant Date
-                    calendarViewInLayout.setDate(calendarViewInLayout.getMinDate());
+                    calendarViewInLayout.setDate(calendarViewInLayout.getMinDate(), true, true);
             }
 
             @Override
