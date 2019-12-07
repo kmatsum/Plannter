@@ -66,7 +66,7 @@ public class Frag_dateByPlant extends Fragment implements View.OnClickListener, 
 
         //Set all OnClickListeners needed for this View
         view.findViewById(R.id.btnBack).setOnClickListener(this);
-        view.findViewById(R.id.btnNext).setOnClickListener(this);
+        view.findViewById(R.id.btnCalculate).setOnClickListener(this);
         view.findViewById(R.id.btnPrevious).setOnClickListener(this);
 
         //Set the required Widget variables to their respective views
@@ -118,7 +118,7 @@ public class Frag_dateByPlant extends Fragment implements View.OnClickListener, 
                 Main_Window.changeFragment("MainMenu");
             } break;
 
-            case (R.id.btnNext): {
+            case (R.id.btnCalculate): {
                 int position = spnrSelectPlant.getSelectedItemPosition();
                 if (position < spnrSelectPlant.getAdapter().getCount() - 1) {
                     spnrSelectPlant.setSelection(spnrSelectPlant.getSelectedItemPosition() + 1);

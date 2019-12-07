@@ -4,7 +4,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import android.os.SystemClock;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +12,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
-import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -75,7 +73,7 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
 
         //Set all OnClickListeners needed for this View
         view.findViewById(R.id.btnBack).setOnClickListener(this);
-        view.findViewById(R.id.btnNext).setOnClickListener(this);
+        view.findViewById(R.id.btnCalculate).setOnClickListener(this);
 
 //        //Adds banner ad to UI
 //        AdView adView = view.findViewById(R.id.adView);
@@ -90,7 +88,7 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
         today = Calendar.getInstance();
         harvestRangeMin = Calendar.getInstance();
         harvestRangeMax = Calendar.getInstance();
-        btnNext = view.findViewById(R.id.btnNext);
+        btnNext = view.findViewById(R.id.btnCalculate);
         adapter = new ArrayAdapter<>(getActivity(), R.layout.spinner_item, PlantNames);
         for (int i = 0; i < PlantDatabase.size(); i++) {
 
@@ -98,6 +96,7 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
         }
         spnPlants = view.findViewById(R.id.spnPlants);
         spnPlants.setAdapter(adapter);
+        spnPlants.setSelected(false);
 
         spnPlants.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -105,7 +104,7 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
                     calendarViewInLayout.setMinDate(calculateFirstPlantDate(i));
                     calendarViewInLayout.setMaxDate(calculateLastPlantDate(i));
                     //Sets The Calendar Focus To The First Possible Plant Date
-                    //calendarViewInLayout.setDate(calendarViewInLayout.getMinDate());
+                    calendarViewInLayout.setDate(calendarViewInLayout.getMinDate());
             }
 
             @Override
@@ -123,7 +122,15 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
             }
             break;
 
-            case (R.id.btnNext): {
+            case (R.id.btnCalculate): {
+                if(selectedDate == null)
+                {
+                    Date minPlantDate = new Date(calendarViewInLayout.getMinDate());
+                    selectedDate = minPlantDate;
+                    setHarvestRanges();
+                }
+                else
+                    setHarvestRanges();
                 txtCropHarvest.setText("Selected Date: " + simpleDateFormat.format(selectedDate) + "\n" + "Expect to Harvest Between: " + simpleDateFormat.format(harvestRangeMin.getTime()) + "-" + simpleDateFormat.format(harvestRangeMax.getTime()));
             }
             break;
@@ -141,7 +148,7 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
     @Override
     public void onSelectedDayChange(@NonNull CalendarView calendarView, int year, int month, int day) {
         //Concat both month and day so comparison is easier and code is cleaner
-        Concat = month + "/" + day + "/" + year;
+        Concat = (month + 1) + "/" + day + "/" + year;
 
         System.out.println(Concat);
         {
@@ -179,5 +186,12 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
         firstPlantDate.add(Calendar.DAY_OF_MONTH, -daysBeforelastSpringFrost);
         Date lpd = firstPlantDate.getTime();
         return lpd.getTime();
+    }
+    public void setHarvestRanges()
+    {
+        harvestRangeMin.setTime(selectedDate);
+        harvestRangeMin.add(Calendar.DAY_OF_MONTH, PlantDatabase.get(spnPlants.getSelectedItemPosition()).getWeeksToHarvest() * 7);
+        harvestRangeMax.setTime(harvestRangeMin.getTime());
+        harvestRangeMax.add(Calendar.DAY_OF_MONTH, PlantDatabase.get(spnPlants.getSelectedItemPosition()).getHarvestRange() * 7);
     }
 }
