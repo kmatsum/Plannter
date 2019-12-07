@@ -103,25 +103,49 @@ public class Main_Window extends AppCompatActivity {
     public void changeFragment(String menuFragment) {
         switch (menuFragment) {
             case "MainMenu": {
+                System.out.println("=============================================================");
+                System.out.println("SWITCH THE FRAGMENT TO MAINMENU");
+                System.out.println("=============================================================");
+
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainFragmentWindow, Frag_mainMenu).commit();
             } break;
 
             case "PlantDate": {
+                System.out.println("=============================================================");
+                System.out.println("SWITCH THE FRAGMENT TO PLANTDATE");
+                System.out.println("=============================================================");
+
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainFragmentWindow, Frag_plantDate).commit();
             } break;
 
-            case "PlantByPlant": {
+            case "DateByPlant": {
+                System.out.println("=============================================================");
+                System.out.println("SWITCH THE FRAGMENT TO DATEBYPLANT");
+                System.out.println("=============================================================");
+
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainFragmentWindow, Frag_dateByPlant).commit();
             } break;
 
             case "PlantInfo": {
+                System.out.println("=============================================================");
+                System.out.println("SWITCH THE FRAGMENT TO PLANTINFO");
+                System.out.println("=============================================================");
+
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainFragmentWindow, Frag_plantInfo).commit();
             } break;
             case "Settings": {
+                System.out.println("=============================================================");
+                System.out.println("SWITCH THE FRAGMENT TO SETTINGS");
+                System.out.println("=============================================================");
+
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainFragmentWindow, Frag_settings).commit();
             } break;
 
             case "SettingsAddPlants": {
+                System.out.println("=============================================================");
+                System.out.println("SWITCH THE FRAGMENT TO SETTINGSADDPLANTS");
+                System.out.println("=============================================================");
+
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainFragmentWindow, Frag_settingsAddPlants).commit();
             } break;
 

@@ -1,12 +1,8 @@
 package com.c355_project.plannter;
 
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.os.Bundle;
-import androidx.annotation.FontRes;
 import androidx.annotation.Nullable;
-import androidx.annotation.XmlRes;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
@@ -20,9 +16,9 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 import java.util.List;
+//import com.google.android.gms.ads.AdRequest;
+//import com.google.android.gms.ads.AdView;
 
 
 
@@ -88,6 +84,8 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
         view.findViewById(R.id.btnPrevious).setOnClickListener(this);
         view.findViewById(R.id.btnDelete).setOnClickListener(this);
         view.findViewById(R.id.imgSettingsAddPlants).setOnClickListener(this);
+        view.findViewById(R.id.arrowNext).setOnClickListener(this);
+        view.findViewById(R.id.arrowPrevious).setOnClickListener(this);
 
         //Set the spinner adapter and contents
         spnrSelectPlant = view.findViewById(R.id.spnrSelectPlant);
@@ -111,26 +109,33 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
 //LISTENER METHODS =================================================================================
     public void onClick (View view) {
         Integer id = view.getId();
-        if (id == R.id.btnBack) {
-            System.out.println("=============================================================");
-            System.out.println("SWITCH THE FRAGMENT TO MAINMENU");
-            System.out.println("=============================================================");
 
+        //Go back to main menu
+        if (id == R.id.btnBack) {
             Main_Window.changeFragment("MainMenu");
-        } else if (id == R.id.imgSettingsAddPlants) {
-            System.out.println("=============================================================");
-            System.out.println("SWITCH THE FRAGMENT TO SETTINGSADDPLANTS");
-            System.out.println("=============================================================");
+        }
+
+        //Go to fragment that adds plants
+        else if (id == R.id.imgSettingsAddPlants) {
             Main_Window.changeFragment("SettingsAddPlants");
-        } else if (id == R.id.btnPrevious || id == R.id.arrowPrevious) {
+        }
+
+        //Go back in spinner plant list. Do nothing if position is already the first item.
+        else if (id == R.id.btnPrevious || id == R.id.arrowPrevious) {
             int position = spnrSelectPlant.getSelectedItemPosition();
             if (position > 0)
                 spnrSelectPlant.setSelection(spnrSelectPlant.getSelectedItemPosition() - 1);
-        } else if (id == R.id.btnNext || id == R.id.arrowNext) {
+        }
+
+        //Go forward in spinner plant list. Do nothing if position is already the last item.
+        else if (id == R.id.btnNext || id == R.id.arrowNext) {
             int position = spnrSelectPlant.getSelectedItemPosition();
             if (position < spnrSelectPlant.getAdapter().getCount() - 1)
                 spnrSelectPlant.setSelection(spnrSelectPlant.getSelectedItemPosition() + 1);
-        } else if (id == R.id.btnDelete) {
+        }
+
+        //Delete selected plant. Alert user if only 1 plant is left (and prevent deletion).
+        else if (id == R.id.btnDelete) {
             if (spnrSelectPlant.getAdapter().getCount() == 1){
                 makeToast("You must have at least 1 plant.");
                 return;
@@ -156,7 +161,7 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        //Create variables needed for operation
+        //Get selected plant, set all attributes
         Plant plant = plantList.get(position);
         Drawable plantImage = ResourcesCompat.getDrawable(getResources(), plant.getFileID(), null);
         imageView.setImageDrawable(plantImage);
