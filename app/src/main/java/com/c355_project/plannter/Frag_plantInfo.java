@@ -1,12 +1,9 @@
 package com.c355_project.plannter;
 
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.os.Bundle;
-import androidx.annotation.FontRes;
+
 import androidx.annotation.Nullable;
-import androidx.annotation.XmlRes;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
@@ -20,8 +17,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
+
 import java.util.List;
 
 
@@ -84,7 +80,7 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
 
         //Set all OnClickListeners needed for this View
         view.findViewById(R.id.btnBack).setOnClickListener(this);
-        view.findViewById(R.id.btnNext).setOnClickListener(this);
+        view.findViewById(R.id.btnCalculate).setOnClickListener(this);
         view.findViewById(R.id.btnPrevious).setOnClickListener(this);
         view.findViewById(R.id.btnDelete).setOnClickListener(this);
         view.findViewById(R.id.imgSettingsAddPlants).setOnClickListener(this);
@@ -126,7 +122,7 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
             int position = spnrSelectPlant.getSelectedItemPosition();
             if (position > 0)
                 spnrSelectPlant.setSelection(spnrSelectPlant.getSelectedItemPosition() - 1);
-        } else if (id == R.id.btnNext || id == R.id.arrowNext) {
+        } else if (id == R.id.btnCalculate || id == R.id.arrowNext) {
             int position = spnrSelectPlant.getSelectedItemPosition();
             if (position < spnrSelectPlant.getAdapter().getCount() - 1)
                 spnrSelectPlant.setSelection(spnrSelectPlant.getSelectedItemPosition() + 1);
