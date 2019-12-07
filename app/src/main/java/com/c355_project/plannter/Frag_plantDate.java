@@ -125,7 +125,6 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
 
             case (R.id.btnNext): {
                 txtCropHarvest.setText("Selected Date: " + simpleDateFormat.format(selectedDate) + "\n" + "Expect to Harvest Between: " + simpleDateFormat.format(harvestRangeMin.getTime()) + "-" + simpleDateFormat.format(harvestRangeMax.getTime()));
-
             }
             break;
 
@@ -149,7 +148,7 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
             try {
                 selectedDate = simpleDateFormat.parse(Concat);
                 Main_Window.setUserInputDate(selectedDate);
- } catch (ParseException e) {
+            } catch (ParseException e) {
                 e.printStackTrace();
             }
         }
