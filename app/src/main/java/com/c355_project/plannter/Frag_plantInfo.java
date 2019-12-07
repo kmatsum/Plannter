@@ -161,7 +161,6 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
         //Get selected plant, set all attributes
         Plant plant = plantList.get(position);
         Drawable plantImage = ResourcesCompat.getDrawable(getResources(), plant.getFileID(), null);
