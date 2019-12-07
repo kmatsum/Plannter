@@ -79,7 +79,7 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
 
         //Set all OnClickListeners needed for this View
         view.findViewById(R.id.btnBack).setOnClickListener(this);
-        view.findViewById(R.id.btnCalculate).setOnClickListener(this);
+        view.findViewById(R.id.btnNext).setOnClickListener(this);
         view.findViewById(R.id.btnPrevious).setOnClickListener(this);
         view.findViewById(R.id.btnDelete).setOnClickListener(this);
         view.findViewById(R.id.imgSettingsAddPlants).setOnClickListener(this);
