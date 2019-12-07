@@ -58,7 +58,7 @@ public class Frag_mainMenu extends Fragment implements View.OnClickListener {
             } break;
 
             case (R.id.btnPlantCrop): {
-                Main_Window.changeFragment("PlantByPlant");
+                Main_Window.changeFragment("DateByPlant");
             } break;
 
             case (R.id.btnPlantInfo): {

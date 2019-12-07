@@ -112,17 +112,11 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
 
         //Go back to main menu
         if (id == R.id.btnBack) {
-            System.out.println("=============================================================");
-            System.out.println("SWITCH THE FRAGMENT TO MAINMENU");
-            System.out.println("=============================================================");
             Main_Window.changeFragment("MainMenu");
         }
 
         //Go to fragment that adds plants
         else if (id == R.id.imgSettingsAddPlants) {
-            System.out.println("=============================================================");
-            System.out.println("SWITCH THE FRAGMENT TO SETTINGSADDPLANTS");
-            System.out.println("=============================================================");
             Main_Window.changeFragment("SettingsAddPlants");
         }
 
