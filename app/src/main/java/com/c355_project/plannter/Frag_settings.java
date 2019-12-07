@@ -43,8 +43,11 @@ public class Frag_settings extends Fragment implements View.OnClickListener {
         view.findViewById(R.id.btnResetDB).setOnClickListener(this);
     }
 
+
+//LISTENER METHODS =================================================================================
     @Override
     public void onClick(View view) {
+        //Determines how to respond to the click
         switch (view.getId()) {
             case (R.id.btnFrostDateIntent): {
                 Intent mIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(website));
@@ -114,12 +117,6 @@ public class Frag_settings extends Fragment implements View.OnClickListener {
             }
         }
     }
-
-
-
-//LISTENER METHODS =================================================================================
-
-
 
 //METHODS ==========================================================================================
     public void makeToast(String Message) {
