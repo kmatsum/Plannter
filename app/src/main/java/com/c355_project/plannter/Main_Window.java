@@ -1,6 +1,9 @@
 package com.c355_project.plannter;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -8,6 +11,7 @@ import android.widget.Toast;
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -27,9 +31,13 @@ public class Main_Window extends AppCompatActivity {
     Frag_plantDate          Frag_plantDate;
     Frag_dateByPlant Frag_dateByPlant;
 
+    //Shared Preferences
+    SharedPreferences pref;
+    SharedPreferences.Editor editor;
+
     //LastFrostDate
-    PlantDate lastSpringFrostDate;
-    PlantDate firstFallFrostDate;
+    String lastSpringFrostDate;
+    String firstFallFrostDate;
 
     //Plant List
     List<Plant> PlantList;
@@ -54,15 +62,18 @@ public class Main_Window extends AppCompatActivity {
         Frag_plantDate          = new Frag_plantDate();
         Frag_dateByPlant = new Frag_dateByPlant();
 
+        //Get/Set Default Fall and Spring Plant Date Shared Preferences
+        int year = Calendar.getInstance().get(Calendar.YEAR);
+        pref = getSharedPreferences("PREF", Context.MODE_PRIVATE);
+        lastSpringFrostDate = pref.getString("Spring", "04/30/" + year);
+        firstFallFrostDate = pref.getString("Fall", "10/09/" + year);
+
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
                     //Get plants
                     PlantList = PlantDatabase.getInstance(getApplicationContext()).plantDao().getAllPlants();
                     //harvestableCrops = PlantDatabase.getInstance(getApplicationContext()).plantDao().getPlantName(getWeeksTilHarvest());
-                    //Get plant dates
-                    lastSpringFrostDate = PlantDatabase.getInstance(getApplicationContext()).plantDao().getSpringFrostDate();
-                    firstFallFrostDate = PlantDatabase.getInstance(getApplicationContext()).plantDao().getFallFrostDate();
 
                     // Delete the database and recreate it if any of the following are null
                     if (PlantList == null || lastSpringFrostDate == null || firstFallFrostDate == null){
@@ -72,9 +83,6 @@ public class Main_Window extends AppCompatActivity {
                         //Get plants
                         PlantList = PlantDatabase.getInstance(getApplicationContext()).plantDao().getAllPlants();
                         //harvestableCrops = PlantDatabase.getInstance(getApplicationContext()).plantDao().getPlantName(getWeeksTilHarvest());
-                        //Get plant dates
-                        lastSpringFrostDate = PlantDatabase.getInstance(getApplicationContext()).plantDao().getSpringFrostDate();
-                        firstFallFrostDate = PlantDatabase.getInstance(getApplicationContext()).plantDao().getFallFrostDate();
                     }
 
                 //[DEBUG] Print all the plant names
@@ -86,8 +94,8 @@ public class Main_Window extends AppCompatActivity {
 
                     //[DEBUG] Print all the plant dates
                     System.out.println("------------------------------------");
-                    System.out.println(lastSpringFrostDate.getDate().toString());
-                    System.out.println(firstFallFrostDate.getDate().toString());
+                    System.out.println(lastSpringFrostDate);
+                    System.out.println(firstFallFrostDate);
                     System.out.println("------------------------------------");
 
             }
@@ -173,13 +181,25 @@ public class Main_Window extends AppCompatActivity {
                 db.delete();
                 //Get plants
                 PlantList = PlantDatabase.getInstance(getApplicationContext()).plantDao().getAllPlants();
-                //Get plant dates
-                lastSpringFrostDate = PlantDatabase.getInstance(getApplicationContext()).plantDao().getSpringFrostDate();
-                firstFallFrostDate = PlantDatabase.getInstance(getApplicationContext()).plantDao().getFallFrostDate();
             }
         });
     }
 
+    // Helper method to convert passed String in MM/dd/yyyy format to Date
+    public Date parseDateString(String xDate){
+        Date date = null;
+        try {
+            date = dateFormat.parse(xDate);
+        } catch (ParseException e){
+            e.printStackTrace();
+            try {
+                date = dateFormat.parse("01/01/2020");
+            } catch (ParseException e2){
+                e2.printStackTrace();
+            }
+        }
+        return date;
+    }
 
 
 //GET AND SET METHODS ==============================================================================
@@ -210,47 +230,29 @@ public class Main_Window extends AppCompatActivity {
     }
 
     public Date getLastSpringFrostDate() {
-        return lastSpringFrostDate.getDate();
+        return parseDateString(lastSpringFrostDate);
     }
 
     public void setLastSpringFrostDate(Date xLastSpringFrostDate) {
-        this.lastSpringFrostDate.setDate(xLastSpringFrostDate);
-
-        //Open Thread to update the Database
-        AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
-                //Set the database using the Date object parameter
-                PlantDatabase.getInstance(getApplicationContext()).plantDao().updatePlant(lastSpringFrostDate);
-
-                //[DEBUG] Print all the plant dates
-                System.out.println("------------------------------------");
-                System.out.println(lastSpringFrostDate.getDate().toString());
-                System.out.println("------------------------------------");
-            }
-        });
+        // Save to local variable
+        this.lastSpringFrostDate = dateFormat.format(xLastSpringFrostDate);
+        // Save to shared preferences
+        editor = pref.edit();
+        editor.putString("Spring", lastSpringFrostDate);
+        editor.apply();
     }
 
     public Date getFirstFallFrostDate() {
-        return firstFallFrostDate.getDate();
+        return parseDateString(firstFallFrostDate);
     }
 
     public void setFirstFallFrostDate(Date xFirstFallFrostDate) {
-        this.firstFallFrostDate.setDate(xFirstFallFrostDate);
-
-        //Open Thread to update the Database
-        AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
-                //Set the database using the Date object parameter
-                PlantDatabase.getInstance(getApplicationContext()).plantDao().updatePlant(firstFallFrostDate);
-
-                //[DEBUG] Print all the plant dates
-                System.out.println("------------------------------------");
-                System.out.println(firstFallFrostDate.getDate().toString());
-                System.out.println("------------------------------------");
-            }
-        });
+        // Save to local variable
+        this.firstFallFrostDate = dateFormat.format(xFirstFallFrostDate);
+        // Save to shared preferences
+        editor = pref.edit();
+        editor.putString("Fall", firstFallFrostDate);
+        editor.apply();
     }
 
     public Date getUserInputDate() {
