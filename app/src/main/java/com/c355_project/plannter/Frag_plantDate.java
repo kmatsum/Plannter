@@ -18,6 +18,9 @@ import android.widget.Toast;
 //import com.google.android.gms.ads.AdRequest;
 //import com.google.android.gms.ads.AdView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -79,10 +82,10 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
         view.findViewById(R.id.arrowNext).setOnClickListener(this);
         view.findViewById(R.id.arrowPrevious).setOnClickListener(this);
 
-//        //Adds banner ad to UI
-//        AdView adView = view.findViewById(R.id.adView);
-//        AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
-//        adView.loadAd(adRequest);
+        //Adds banner ad to UI
+        AdView adView = view.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
+        adView.loadAd(adRequest);
 
         calendarViewInLayout = view.findViewById(R.id.calendarView);
         txtCropHarvest = view.findViewById(R.id.txtCropHarvest);
