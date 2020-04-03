@@ -5,10 +5,9 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import java.io.File;
-import java.util.Calendar;
 
 
-@Database(entities = {Plant.class, PlantDate.class}, exportSchema = false, version = 10)
+@Database(entities = {Plant.class}, exportSchema = false, version = 11)
 
 public abstract class PlantDatabase extends RoomDatabase {
     //Method that Returns the information for the Database Instance
@@ -29,13 +28,6 @@ public abstract class PlantDatabase extends RoomDatabase {
             //Set the instance of the database, but since it does not exist, it will create a new file
             databaseInstance = Room.databaseBuilder(context.getApplicationContext(),
                     PlantDatabase.class, DB_NAME).fallbackToDestructiveMigration().build();
-
-            //Insert default plant dates ===========================================================
-            int year = Calendar.getInstance().get(Calendar.YEAR);
-            //last spring frost date
-            databaseInstance.plantDao().insertPlantDate(new PlantDate(year, 4,30, "springFrostDate"));
-            //first fall frost date
-            databaseInstance.plantDao().insertPlantDate(new PlantDate(year, 10, 9, "fallFrostDate"));
 
             //Insert default plants ================================================================
             
