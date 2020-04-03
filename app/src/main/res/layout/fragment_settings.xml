@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Frag_settings"
     android:background="@color/colorPrimary">
 
@@ -206,10 +207,16 @@
 
         </TableLayout>
 
+        <TextView
+            android:id="@+id/txtSpacer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="10" />
+
         <Button
             android:id="@+id/btnBack"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="#00FFFFFF"
             android:fontFamily="@font/finger_paint"
             android:gravity="bottom|center"
@@ -217,6 +224,17 @@
             android:text="@string/back"
             android:textColor="@color/colorTitleText"
             android:textSize="40sp" />
+
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            app:adSize="BANNER"
+            app:adUnitId="ca-app-pub-7390442478171234/7374031718"></com.google.android.gms.ads.AdView>
+
 
     </LinearLayout>
 

@@ -14,6 +14,10 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -96,10 +100,10 @@ public class Frag_dateByPlant extends Fragment implements View.OnClickListener, 
         //Attach a listener to the Spinner
         spnrSelectPlant.setOnItemSelectedListener(this);
 
-//        //Adds banner ad to UI
-//        AdView adView = view.findViewById(R.id.adView);
-//        AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
-//        adView.loadAd(adRequest);
+        //Adds banner ad to UI
+        AdView adView = view.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
+        adView.loadAd(adRequest);
 
 
         //Display the stored Fall and Frost Dates
