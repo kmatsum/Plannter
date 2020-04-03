@@ -207,10 +207,16 @@
 
         </TableLayout>
 
+        <TextView
+            android:id="@+id/txtSpacer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="10" />
+
         <Button
             android:id="@+id/btnBack"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="#00FFFFFF"
             android:fontFamily="@font/finger_paint"
             android:gravity="bottom|center"
