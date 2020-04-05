@@ -20,6 +20,10 @@ import java.util.List;
 public class Main_Window extends AppCompatActivity {
 //VARIABLES ========================================================================================
 
+    // Location to store all files
+    public static String ROOT_STORAGE_LOCATION;
+    public static String PLANT_PHOTO_STORAGE_LOCATION;
+
     //Date Formatter
     SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 
@@ -43,6 +47,10 @@ public class Main_Window extends AppCompatActivity {
     List<Plant> PlantList;
     List<Plant> harvestableCrops;
 
+    //Tracking Variables
+    long id; //temp variable to store plant id
+    boolean isInsertPlantAsyncTaskRunning = false; // variable to keep track of AsyncTask
+
     //PlantHarvest
     Date userInputDate;
 
@@ -62,6 +70,16 @@ public class Main_Window extends AppCompatActivity {
         Frag_plantDate          = new Frag_plantDate();
         Frag_dateByPlant = new Frag_dateByPlant();
 
+        // Set internal location to store all files, adding a subfolder called "media"
+        File ext_folder = this.getFilesDir();
+        File storage_loc = new File(ext_folder, "media");
+        storage_loc.mkdir();
+        ROOT_STORAGE_LOCATION =  storage_loc.getAbsolutePath() + "/";
+        // Set plant photo storage within root storage location
+        File photo_loc = new File(storage_loc, "plant_photos");
+        photo_loc.mkdir();
+        PLANT_PHOTO_STORAGE_LOCATION = photo_loc.getAbsolutePath() + "/";
+
         //Get/Set Default Fall and Spring Plant Date Shared Preferences
         int year = Calendar.getInstance().get(Calendar.YEAR);
         pref = getSharedPreferences("PREF", Context.MODE_PRIVATE);
@@ -77,7 +95,7 @@ public class Main_Window extends AppCompatActivity {
 
                     // Delete the database and recreate it if any of the following are null
                     if (PlantList == null || lastSpringFrostDate == null || firstFallFrostDate == null){
-                        String DatabaseFilePath = "./data/data/com.c355_project.plannter/databases/", DB_NAME = "plant_db";
+                        String DatabaseFilePath = "./data/data/" + R.class.getPackage().getName() + "/databases/", DB_NAME = "plant_db";
                         File db = new File(DatabaseFilePath + DB_NAME);
                         db.delete();
                         //Get plants
@@ -176,7 +194,7 @@ public class Main_Window extends AppCompatActivity {
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
-                String DatabaseFilePath = "./data/data/com.c355_project.plannter/databases/", DB_NAME = "plant_db";
+                String DatabaseFilePath = "./data/data/" + R.class.getPackage().getName() + "/databases/", DB_NAME = "plant_db";
                 File db = new File(DatabaseFilePath + DB_NAME);
                 db.delete();
                 //Get plants
@@ -207,15 +225,38 @@ public class Main_Window extends AppCompatActivity {
         return PlantList;
     }
 
-    public void insertPlant(final Plant xPlant) {
-        /*TODO
-        Here we will use a PLANT object parameter, then have the DATABASE INSTANCE insert that plant
-        object. Then we will update the PLANTLIST with the whole database.
-         */
+    public long insertPlant(final Plant xPlant) {
+        // Insert the Plant
+        isInsertPlantAsyncTaskRunning = true;
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
-                PlantDatabase.getInstance(getApplicationContext()).plantDao().insertPlant(xPlant);
+                id = PlantDatabase.getInstance(getApplicationContext()).plantDao().insertPlant(xPlant);
+                isInsertPlantAsyncTaskRunning = false;
+                PlantList = PlantDatabase.getInstance(getApplicationContext()).plantDao().getAllPlants();
+            }});
+
+        // Wait until plant is fully inserted before returning id
+        while(isInsertPlantAsyncTaskRunning){
+            try {
+                Thread.sleep(50);
+                System.out.println("waiting.........");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        //Update User
+        makeToast("Plant " + xPlant.getPlantName() + " has been added!");
+
+        return id;
+    }
+
+    public void updatePlant(final Plant xPlant){
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                PlantDatabase.getInstance(getApplicationContext()).plantDao().updatePlant(xPlant);
                 PlantList = PlantDatabase.getInstance(getApplicationContext()).plantDao().getAllPlants();
             }});
     }
