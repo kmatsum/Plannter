@@ -3,8 +3,8 @@ package com.c355_project.plannter;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
+
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +15,10 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.File;
 import java.util.List;
+
 //import com.google.android.gms.ads.AdRequest;
 //import com.google.android.gms.ads.AdView;
 
@@ -143,6 +146,16 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
             Plant plant = plantList.get(position);
             String name = plant.getPlantName();
             Main_Window.deletePlant(plant);
+            // Delete its corresponding photo folder from internal storage
+            // Internal files must be deleted first before directory can be deleted
+            File folder = new File(Main_Window.PLANT_PHOTO_STORAGE_LOCATION + "/" + plant.getId());
+            String[] files = folder.list();
+            for(String s: files){
+                File currentFile = new File(folder.getPath(),s);
+                currentFile.delete();
+            }
+            folder.delete();
+            //Update plant list
             plantList = Main_Window.getPlantList();
             Main_Window.changeFragment("MainMenu");
             makeToast("Plant " + name + " deleted.");
@@ -162,7 +175,7 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         //Get selected plant, set all attributes
         Plant plant = plantList.get(position);
-        Drawable plantImage = ResourcesCompat.getDrawable(getResources(), plant.getFileID(), null);
+        Drawable plantImage = Drawable.createFromPath(plant.getPhotoPath());
         imageView.setImageDrawable(plantImage);
 
         // TOP BOX =================================================================================
