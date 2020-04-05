@@ -10,6 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import java.text.ParseException;
 import java.util.Date;
 
@@ -41,6 +45,11 @@ public class Frag_settings extends Fragment implements View.OnClickListener {
         view.findViewById(R.id.btnUpdateSpring).setOnClickListener(this);
         view.findViewById(R.id.btnUpdateFall).setOnClickListener(this);
         view.findViewById(R.id.btnResetDB).setOnClickListener(this);
+
+        //Adds banner ad to UI
+        AdView adView = view.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
+        adView.loadAd(adRequest);
     }
 
 
