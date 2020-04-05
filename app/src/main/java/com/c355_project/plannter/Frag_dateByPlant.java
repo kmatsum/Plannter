@@ -203,7 +203,7 @@ public class Frag_dateByPlant extends Fragment implements View.OnClickListener, 
         Plant currentPlant = plantList.get(position);
 
         //Set the drawing resource image from the selected Plant
-        Drawable plantImage = ResourcesCompat.getDrawable(getResources(), currentPlant.getFileID(), null);
+        Drawable plantImage = Drawable.createFromPath(currentPlant.getPhotoPath());
 
         //Set the TextView text of the Planting dates
         Date tempFirstPlant = calculatePlantDate(currentPlant.getFirstPlantDate(), SpringFrostDate);
