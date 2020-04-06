@@ -1,8 +1,13 @@
 package com.c355_project.plannter;
 
 
+import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.Gravity;
@@ -15,6 +20,10 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 
 public class Frag_settingsAddPlants extends Fragment implements View.OnClickListener {
@@ -38,6 +47,9 @@ public class Frag_settingsAddPlants extends Fragment implements View.OnClickList
     RadioButton rbFlat,
             rbRaisedHills,
             rbRaisedRows;
+    private static final int CAMERA_REQUEST = 1888;
+    Bitmap photo = null;
+    Plant tempPlant = null;
 
     public Frag_settingsAddPlants() {
         // Required empty public constructor
@@ -58,6 +70,8 @@ public class Frag_settingsAddPlants extends Fragment implements View.OnClickList
 
         //Attaches onClickListener to Buttons
         view.findViewById(R.id.btnBack).setOnClickListener(this);
+        view.findViewById(R.id.btnTakePicture).setOnClickListener(this);
+        view.findViewById(R.id.btnDownloadImage).setOnClickListener(this);
         view.findViewById(R.id.btnSave).setOnClickListener(this);
         view.findViewById(R.id.toggleButton).setOnClickListener(this);
 
@@ -90,6 +104,18 @@ public class Frag_settingsAddPlants extends Fragment implements View.OnClickList
             case (R.id.btnBack): {
                 Main_Window.changeFragment("PlantInfo");
             } break;
+
+            //Take Picture
+            case (R.id.btnTakePicture):{
+                // Send Intent to camera, response handled below in onActivityResult method
+                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(cameraIntent, CAMERA_REQUEST);
+            }
+
+            //Download Image
+            case (R.id.btnDownloadImage):{
+                /* ToDo: Write code to download image from internet*/
+            }
 
             //Toggle the seed indoors textbox
             case (R.id.toggleButton): {
@@ -184,20 +210,43 @@ public class Frag_settingsAddPlants extends Fragment implements View.OnClickList
                 }
 
                 // TEMP OBJECT CREATION ============================================================
-                Plant tempPlant = new Plant(txtName.getText().toString().trim(), txtSeedCompany.getText().toString().trim(),
+                tempPlant = new Plant(txtName.getText().toString().trim(), txtSeedCompany.getText().toString().trim(),
                         Integer.parseInt(txtFirstPlantDate.getText().toString().trim()),
                         Integer.parseInt(txtWeeksToHarvest.getText().toString().trim()),
                         Integer.parseInt(txtHarvestRange.getText().toString().trim()),
                         Integer.parseInt(txtSeedIndoors.getText().toString().trim()),
                         Integer.parseInt(txtLastPlantDate.getText().toString().trim()),txtNotes.getText().toString().trim(),
-                        R.drawable.plant, rbFlat.isChecked(),
+                        "", rbFlat.isChecked(),
                         rbRaisedHills.isChecked() && !rbRaisedRows.isChecked(),
                         Integer.parseInt(txtSeedDistance.getText().toString().trim()),
                         Double.parseDouble(txtSeedDepth.getText().toString().trim()));
 
                 // INSERT NEW PLANT ================================================================
-                Main_Window.insertPlant(tempPlant);
-                makeToast("Plant " + txtName.getText().toString().trim() + " has been added!");
+                long id = Main_Window.insertPlant(tempPlant);
+
+                // SAVE PHOTO ======================================================================
+                //Create directory in which to store photo
+                File f = new File(Main_Window.PLANT_PHOTO_STORAGE_LOCATION, String.valueOf(id));
+                f.mkdir();
+                String filePath = f.getAbsoluteFile() + "/photo.jpeg";
+
+                //Save default photo if user didn't take their own
+                if (photo == null) {
+                    photo = ((BitmapDrawable) ResourcesCompat.getDrawable(Main_Window.getResources(), R.drawable.plant, null)).getBitmap();
+                }
+
+                // Export photo in storage location
+                try (FileOutputStream out = new FileOutputStream(filePath)) {
+                    photo.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                // UPDATE CORRECT PLANT WITH PICTURE ===============================================
+                tempPlant.setPhotoPath(filePath);
+                tempPlant.setId((int)id);
+                Main_Window.updatePlant(tempPlant);
+                photo = null;
 
                 // Return
                 Main_Window.changeFragment("PlantInfo");
@@ -243,5 +292,17 @@ public class Frag_settingsAddPlants extends Fragment implements View.OnClickList
         txtSeedDepth.setText("");
         rbFlat.setChecked(true);
         txtNotes.setText("");
+    }
+
+    // Method to respond to intent sent to camera when imgCamera clicked
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        // Check requestCode and resultCode
+        if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK)
+        {
+            // Unpack photo from intent
+            photo = (Bitmap) data.getExtras().get("data");
+        }
     }
 }

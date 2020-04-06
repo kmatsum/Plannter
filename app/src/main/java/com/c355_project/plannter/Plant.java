@@ -22,7 +22,7 @@ public class    Plant {
     lastPlantDate:      # of weeks BEFORE Avg First Fall Frost that the plant should be planted.
                         A value greater than 25 means it is not recommended for Fall.
     notes:              Optional place to add notes regarding plant
-    fileID:             ID of the corresponding picture.
+    photoPath:          Filepath to the corresponding picture.
     raisedRows:         Boolean to determine if plant should be planted in raised rows.
     raisedHills:        Boolean to determine if plant should be planted in raised hills.
     distBetweenPlants:  Integer to represent inches between planted hills/rows.
@@ -40,7 +40,7 @@ public class    Plant {
     private int seedIndoorDate;
     private int lastPlantDate;
     private String notes;
-    private int fileID;
+    private String photoPath;
     private boolean raisedRows;
     private boolean raisedHills;
     private int distBetweenPlants;
@@ -50,7 +50,7 @@ public class    Plant {
 //CONSTRUCTOR ======================================================================================
     public Plant(String plantName, String seedCompany, int firstPlantDate, int weeksToHarvest,
                  int harvestRange, int seedIndoorDate, int lastPlantDate, String notes,
-                 int fileID, boolean raisedRows, boolean raisedHills, int distBetweenPlants,
+                 String photoPath, boolean raisedRows, boolean raisedHills, int distBetweenPlants,
                  double seedDepth) {
         this.plantName = plantName;
         this.seedCompany = seedCompany;
@@ -60,7 +60,7 @@ public class    Plant {
         this.seedIndoorDate = seedIndoorDate;
         this.lastPlantDate = lastPlantDate;
         this.notes = notes;
-        this.fileID = fileID;
+        this.photoPath = photoPath;
         this.raisedRows = raisedRows;
         this.raisedHills = raisedHills;
         this.distBetweenPlants = distBetweenPlants;
@@ -142,12 +142,12 @@ public class    Plant {
         return notes;
     }
 
-    public int getFileID() {
-        return fileID;
+    public String getPhotoPath() {
+        return photoPath;
     }
 
-    public void setFileID(int fileID) {
-        this.fileID = fileID;
+    public void setPhotoPath(String photoPath) {
+        this.photoPath = photoPath;
     }
 
     public boolean isRaisedRows() {
