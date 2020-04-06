@@ -2,8 +2,10 @@ package com.c355_project.plannter;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -23,6 +25,10 @@ public class Main_Window extends AppCompatActivity {
     // Location to store all files
     public static String ROOT_STORAGE_LOCATION;
     public static String PLANT_PHOTO_STORAGE_LOCATION;
+
+    // Permissions
+    String[] PERMISSIONS = {
+            Manifest.permission.READ_EXTERNAL_STORAGE};
 
     //Date Formatter
     SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
@@ -69,6 +75,16 @@ public class Main_Window extends AppCompatActivity {
         Frag_plantInfo          = new Frag_plantInfo();
         Frag_plantDate          = new Frag_plantDate();
         Frag_dateByPlant = new Frag_dateByPlant();
+
+        // PERMISSIONS =============================================================================
+        // Loop to request permissions if not already granted
+        for (String str : PERMISSIONS) {
+            if (this.checkSelfPermission(str) != PackageManager.PERMISSION_GRANTED) {
+                this.requestPermissions(PERMISSIONS, 1);
+                System.out.println("[DEBUG] Requesting permissions.");
+                return;
+            }
+        }
 
         // Set internal location to store all files, adding a subfolder called "media"
         File ext_folder = this.getFilesDir();
