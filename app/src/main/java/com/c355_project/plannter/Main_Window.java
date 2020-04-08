@@ -95,7 +95,7 @@ public class Main_Window extends AppCompatActivity {
 
                     // Delete the database and recreate it if any of the following are null
                     if (PlantList == null || lastSpringFrostDate == null || firstFallFrostDate == null){
-                        String DatabaseFilePath = "./data/data/" + R.class.getPackage().getName() + "/databases/", DB_NAME = "plant_db";
+                        String DatabaseFilePath = "./data/data/" + BuildConfig.APPLICATION_ID + "/databases/", DB_NAME = "plant_db";
                         File db = new File(DatabaseFilePath + DB_NAME);
                         db.delete();
                         //Get plants
@@ -199,7 +199,7 @@ public class Main_Window extends AppCompatActivity {
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
-                String DatabaseFilePath = "./data/data/" + R.class.getPackage().getName() + "/databases/", DB_NAME = "plant_db";
+                String DatabaseFilePath = "./data/data/" + BuildConfig.APPLICATION_ID + "/databases/", DB_NAME = "plant_db";
                 File db = new File(DatabaseFilePath + DB_NAME);
                 db.delete();
                 //Get plants

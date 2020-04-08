@@ -4,12 +4,16 @@ package com.c355_project.plannter;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
+import android.os.ParcelFileDescriptor;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,6 +52,7 @@ public class Frag_settingsAddPlants extends Fragment implements View.OnClickList
             rbRaisedHills,
             rbRaisedRows;
     private static final int CAMERA_REQUEST = 1888;
+    private static final int PICK_IMAGE = 1999;
     Bitmap photo = null;
     Plant tempPlant = null;
 
@@ -71,7 +76,7 @@ public class Frag_settingsAddPlants extends Fragment implements View.OnClickList
         //Attaches onClickListener to Buttons
         view.findViewById(R.id.btnBack).setOnClickListener(this);
         view.findViewById(R.id.btnTakePicture).setOnClickListener(this);
-        view.findViewById(R.id.btnDownloadImage).setOnClickListener(this);
+        view.findViewById(R.id.btnOpenGallery).setOnClickListener(this);
         view.findViewById(R.id.btnSave).setOnClickListener(this);
         view.findViewById(R.id.toggleButton).setOnClickListener(this);
 
@@ -110,12 +115,14 @@ public class Frag_settingsAddPlants extends Fragment implements View.OnClickList
                 // Send Intent to camera, response handled below in onActivityResult method
                 Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(cameraIntent, CAMERA_REQUEST);
-            }
+            } break;
 
             //Download Image
-            case (R.id.btnDownloadImage):{
-                /* ToDo: Write code to download image from internet*/
-            }
+            case (R.id.btnOpenGallery):{
+                Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(Intent.createChooser(galleryIntent, "Select Picture"), PICK_IMAGE);
+            } break;
 
             //Toggle the seed indoors textbox
             case (R.id.toggleButton): {
@@ -294,15 +301,44 @@ public class Frag_settingsAddPlants extends Fragment implements View.OnClickList
         txtNotes.setText("");
     }
 
-    // Method to respond to intent sent to camera when imgCamera clicked
+    // Method to respond to intents
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
+        // Respond to the camera intent
         // Check requestCode and resultCode
         if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK)
         {
-            // Unpack photo from intent
-            photo = (Bitmap) data.getExtras().get("data");
+            try {
+                // Unpack photo from intent
+                photo = (Bitmap) data.getExtras().get("data");
+                if (photo == null)
+                    throw new Exception("Photo is Null");
+            } catch (Exception e) {
+                //Display an error
+                makeToast("Error reading image.");
+                Log.e("CAMERA_REQUEST Intent", "Exception: ", e);
+            }
+        }
+
+        // Respond to the gallery intent
+        // Followed tutorial here: https://medium.com/@pednekarshashank33/android-10s-scoped-storage-image-picker-gallery-camera-d3dcca427bbf
+        // Check requestCode and resultCode
+        if (requestCode == PICK_IMAGE && resultCode == Activity.RESULT_OK) {
+            try {
+                // Unpack photo from intent
+                Uri selectedImageUri = data.getData();
+                ParcelFileDescriptor pfd = Main_Window.getContentResolver().openFileDescriptor(selectedImageUri, "r");
+                photo = BitmapFactory.decodeFileDescriptor(pfd.getFileDescriptor());
+                pfd.close();
+
+                if (photo == null)
+                    throw new Exception("Photo is Null");
+            } catch (Exception e) {
+                //Display an error
+                makeToast("Error reading selected image.");
+                Log.e("PICK_IMAGE Intent", "Exception: ", e);
+            }
         }
     }
 }

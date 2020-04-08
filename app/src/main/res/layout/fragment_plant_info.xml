@@ -112,7 +112,7 @@
                         android:layout_gravity="center"
                         android:layout_margin="5dp"
                         android:layout_weight="50"
-                        android:scaleType="fitXY"
+                        android:scaleType="fitCenter"
                         app:srcCompat="@drawable/startmenu_background_plant" />
 
                     <TableLayout

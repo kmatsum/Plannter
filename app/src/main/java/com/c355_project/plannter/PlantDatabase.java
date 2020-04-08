@@ -20,7 +20,7 @@ public abstract class PlantDatabase extends RoomDatabase {
     public static synchronized PlantDatabase getInstance (Context context) {
         //Define Variables
         PlantDatabase databaseInstance;
-        String DatabaseFilePath = "./data/data/" + R.class.getPackage().getName() + "/databases/", DB_NAME = "plant_db";
+        String DatabaseFilePath = "./data/data/" + BuildConfig.APPLICATION_ID + "/databases/", DB_NAME = "plant_db";
 
         //Instantiate a File Object with the File Path for the Database
         File file = new File (DatabaseFilePath + DB_NAME);
