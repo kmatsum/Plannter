@@ -322,6 +322,7 @@ public class Frag_settingsAddPlants extends Fragment implements View.OnClickList
         }
 
         // Respond to the gallery intent
+        // Followed tutorial here: https://medium.com/@pednekarshashank33/android-10s-scoped-storage-image-picker-gallery-camera-d3dcca427bbf
         // Check requestCode and resultCode
         if (requestCode == PICK_IMAGE && resultCode == Activity.RESULT_OK) {
             try {
