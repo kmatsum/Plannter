@@ -24,7 +24,7 @@ import java.util.List;
 
 
 
-public class Frag_dateByPlant extends Fragment implements View.OnClickListener, Spinner.OnItemSelectedListener {
+public class Frag_plantHistory extends Fragment implements View.OnClickListener, Spinner.OnItemSelectedListener {
 //VARIABLES ========================================================================================
     //Main_Window Activity Instantiation
     Main_Window Main_Window;
@@ -54,7 +54,7 @@ public class Frag_dateByPlant extends Fragment implements View.OnClickListener, 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_date_by_plant, container, false);
+        return inflater.inflate(R.layout.fragment_plant_history, container, false);
     }
 
     @Override

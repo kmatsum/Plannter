@@ -33,7 +33,7 @@ public class Main_Window extends AppCompatActivity {
     Frag_settingsAddPlants  Frag_settingsAddPlants;
     Frag_plantInfo          Frag_plantInfo;
     Frag_plantDate          Frag_plantDate;
-    Frag_dateByPlant Frag_dateByPlant;
+    Frag_plantHistory Frag_plantHistory;
 
     //Shared Preferences
     SharedPreferences pref;
@@ -68,7 +68,7 @@ public class Main_Window extends AppCompatActivity {
         Frag_settingsAddPlants  = new Frag_settingsAddPlants();
         Frag_plantInfo          = new Frag_plantInfo();
         Frag_plantDate          = new Frag_plantDate();
-        Frag_dateByPlant = new Frag_dateByPlant();
+        Frag_plantHistory       = new Frag_plantHistory();
 
         // Set internal location to store all files, adding a subfolder called "media"
         File ext_folder = this.getFilesDir();
@@ -149,7 +149,7 @@ public class Main_Window extends AppCompatActivity {
                 System.out.println("SWITCH THE FRAGMENT TO PLANTHISTORY");
                 System.out.println("=============================================================");
 
-                getSupportFragmentManager().beginTransaction().replace(R.id.mainFragmentWindow, Frag_dateByPlant).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainFragmentWindow, Frag_plantHistory).commit();
             } break;
 
             case "PlantInfo": {
