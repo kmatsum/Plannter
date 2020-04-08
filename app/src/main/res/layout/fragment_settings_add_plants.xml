@@ -165,14 +165,14 @@
                                     android:text="Take Picture" />
 
                                 <Button
-                                    android:id="@+id/btnDownloadImage"
+                                    android:id="@+id/btnOpenGallery"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:layout_margin="5dp"
                                     android:layout_weight="30"
                                     android:background="@color/colorTitleText"
-                                    android:text="Download Image" />
+                                    android:text="Open Gallery" />
 
                             </TableRow>
 
