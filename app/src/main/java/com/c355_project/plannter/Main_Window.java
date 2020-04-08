@@ -144,9 +144,9 @@ public class Main_Window extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainFragmentWindow, Frag_plantDate).commit();
             } break;
 
-            case "DateByPlant": {
+            case "PlantHistory": {
                 System.out.println("=============================================================");
-                System.out.println("SWITCH THE FRAGMENT TO DATEBYPLANT");
+                System.out.println("SWITCH THE FRAGMENT TO PLANTHISTORY");
                 System.out.println("=============================================================");
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainFragmentWindow, Frag_dateByPlant).commit();
@@ -190,7 +190,12 @@ public class Main_Window extends AppCompatActivity {
         toast.show();
     }
 
+    //Resets Database to Default and Resets frost dates in Shared preferences.
     public void resetPlantDB(){
+        //Resets Frost Dates
+        int year = Calendar.getInstance().get(Calendar.YEAR);
+        setFirstFallFrostDate(parseDateString("10/09/" + year));
+        setLastSpringFrostDate(parseDateString("04/30/" + year));
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
