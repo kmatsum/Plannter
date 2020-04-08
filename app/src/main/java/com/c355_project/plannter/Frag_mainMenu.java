@@ -38,7 +38,7 @@ public class Frag_mainMenu extends Fragment implements View.OnClickListener {
 
         //Set all OnClickListeners needed for this View
         view.findViewById(R.id.btnPlantByDate).setOnClickListener(this);
-        view.findViewById(R.id.btnPlantCrop).setOnClickListener(this);
+        view.findViewById(R.id.btnPlantHistory).setOnClickListener(this);
         view.findViewById(R.id.btnPlantInfo).setOnClickListener(this);
         view.findViewById(R.id.imgSettings).setOnClickListener(this);
 
@@ -59,8 +59,8 @@ public class Frag_mainMenu extends Fragment implements View.OnClickListener {
                 Main_Window.changeFragment("PlantDate");
             } break;
 
-            case (R.id.btnPlantCrop): {
-                Main_Window.changeFragment("DateByPlant");
+            case (R.id.btnPlantHistory): {
+                Main_Window.changeFragment("PlantHistory");
             } break;
 
             case (R.id.btnPlantInfo): {
