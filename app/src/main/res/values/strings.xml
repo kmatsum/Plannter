@@ -7,7 +7,7 @@
     <string name="plant">Plant</string>
     <string name="save">Save</string>
     <string name="harvest">Harvest</string>
-    <string name="plant_crop">Plant Crop</string>
+    <string name="plant_history">Plant Log</string>
     <string name="plant_date">Plant By Date</string>
     <string name="crop_info">Crop Info</string>
     <string name="btn_Back">Back</string>

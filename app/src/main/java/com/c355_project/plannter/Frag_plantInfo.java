@@ -17,6 +17,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import com.google.android.gms.ads.AdRequest;
@@ -29,8 +32,11 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
     //Main_Window Activity Instantiation
     Main_Window Main_Window;
 
+    //Plant Object List
     List<Plant> plantList;
-    String[] plantNames;
+    String[]    plantNames;
+    Date        FallFrostDate,
+                SpringFrostDate;
 
     //GUI Elements
     Spinner     spnrSelectPlant;
@@ -48,6 +54,9 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
                 txtSeedDepth,
                 txtNotes;
 
+    //Date Format
+    SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+
 //LIFECYCLE METHODS ================================================================================
     @Nullable
     @Override
@@ -64,6 +73,8 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
       
         Main_Window = (Main_Window) getActivity();
         plantList = Main_Window.getPlantList();
+        SpringFrostDate = Main_Window.getLastSpringFrostDate();
+        FallFrostDate = Main_Window.getFirstFallFrostDate();
 
         //Find GUI elements
         txtSeedCompany = view.findViewById(R.id.txtSeedCompany);
@@ -203,14 +214,15 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
         txtSeedCompany.setText(plant.getSeedCompany());
 
         // PLANTING DATES ==========================================================================
-        txtFirstPlantDate.setText(Integer.toString(plant.getFirstPlantDate()));
-        txtLastPlantDate.setText(Integer.toString(plant.getLastPlantDate()));
+
+        txtFirstPlantDate.setText(dateFormat.format(calculatePlantDate(plant.getFirstPlantDate(), SpringFrostDate)));
+        txtLastPlantDate.setText(dateFormat.format(calculatePlantDate(plant.getLastPlantDate(), FallFrostDate)));
         if (plant.getSeedIndoorDate() == 52) {
             txtSeedIndoorsDate.setText("N/A");
         } else {
             txtSeedIndoorsDate.setText(Integer.toString(plant.getSeedIndoorDate()));
         }
-        txtHarvestRange.setText(Integer.toString(plant.getHarvestRange()));
+        txtHarvestRange.setText(Integer.toString(plant.getHarvestRange())+" weeks");
 
         // PLANTING LAYOUT =========================================================================
         txtSeedDistance.setText(Integer.toString(plant.getDistBetweenPlants()));
@@ -243,5 +255,22 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
         Toast toast = Toast.makeText(getActivity(), Message, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL,0,0);
         toast.show();
+    }
+
+    public Date calculatePlantDate(int distanceFromFrostDate, Date xFrostDate) {
+        //Create the resulting date variable and provide it a default date value
+        Date resultingDate;
+
+        //Create a Calendar Object, then cast the Date object into the calendar object.
+        Calendar c = Calendar.getInstance();
+        c.setTime(xFrostDate);
+
+        //(Subtract) Add the number of weeks from the set date to get a resulting calendar date
+        c.add( Calendar.WEEK_OF_YEAR, -(distanceFromFrostDate) );
+
+        //Cast the Calendar Date to a Date to return
+        resultingDate = c.getTime();
+
+        return resultingDate;
     }
 }

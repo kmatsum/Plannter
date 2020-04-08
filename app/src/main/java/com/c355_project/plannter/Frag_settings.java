@@ -9,12 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
@@ -23,6 +25,17 @@ public class Frag_settings extends Fragment implements View.OnClickListener {
 //VARIABLES ========================================================================================
     //Main_Window Activity Instantiation
     Main_Window Main_Window;
+
+    //Frost Dates
+    Date    FallFrostDate,
+            SpringFrostDate;
+
+    //GUI Elements
+    TextView    txtSpringFrost,
+                txtFallFrost;
+
+    //Date Format
+    SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 
     //Website String
     String website = "https://morningchores.com/frost-dates/";
@@ -39,12 +52,21 @@ public class Frag_settings extends Fragment implements View.OnClickListener {
         super.onViewCreated(view, savedInstanceState);
         Main_Window = (Main_Window) getActivity();
 
+        txtSpringFrost = view.findViewById(R.id.txtCurrentSpringFrost);
+        txtFallFrost = view.findViewById(R.id.txtCurrentFallFrost);
+        SpringFrostDate = Main_Window.getLastSpringFrostDate();
+        FallFrostDate = Main_Window.getFirstFallFrostDate();
+
         //Attaches onClickListener to Buttons
         view.findViewById(R.id.btnFrostDateIntent).setOnClickListener(this);
         view.findViewById(R.id.btnBack).setOnClickListener(this);
         view.findViewById(R.id.btnUpdateSpring).setOnClickListener(this);
         view.findViewById(R.id.btnUpdateFall).setOnClickListener(this);
         view.findViewById(R.id.btnResetDB).setOnClickListener(this);
+
+        //Display the stored Spring and Fall Frost Dates
+        txtSpringFrost.setText(dateFormat.format(SpringFrostDate));
+        txtFallFrost.setText(dateFormat.format(FallFrostDate));
 
         //Adds banner ad to UI
         AdView adView = view.findViewById(R.id.adView);
@@ -87,6 +109,10 @@ public class Frag_settings extends Fragment implements View.OnClickListener {
                     makeToast("Please Enter A Valid Date");
                     e.printStackTrace();
                 }
+
+                //Update the Spring Frost Date on GUI
+                SpringFrostDate = Main_Window.getLastSpringFrostDate();
+                txtSpringFrost.setText(dateFormat.format(SpringFrostDate));
             } break;
 
             case (R.id.btnUpdateFall): {
@@ -109,11 +135,19 @@ public class Frag_settings extends Fragment implements View.OnClickListener {
                     makeToast("Please Enter A Valid Date");
                     e.printStackTrace();
                 }
+                //Update the Fall Frost Date on GUI
+                FallFrostDate = Main_Window.getFirstFallFrostDate();
+                txtFallFrost.setText(dateFormat.format(FallFrostDate));
             } break;
 
             case (R.id.btnResetDB): {
                 Main_Window.resetPlantDB();
                 makeToast("Plant database restored to default!");
+                //Update the stored Spring and Fall Frost Dates
+                SpringFrostDate = Main_Window.getLastSpringFrostDate();
+                FallFrostDate = Main_Window.getFirstFallFrostDate();
+                txtSpringFrost.setText(dateFormat.format(SpringFrostDate));
+                txtFallFrost.setText(dateFormat.format(FallFrostDate));
             } break;
 
             //Used for handling exceptions on if the given ViewID and the expected ViewID does not match
