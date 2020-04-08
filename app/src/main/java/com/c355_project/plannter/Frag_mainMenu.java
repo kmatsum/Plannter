@@ -1,6 +1,5 @@
 package com.c355_project.plannter;
 
-import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
