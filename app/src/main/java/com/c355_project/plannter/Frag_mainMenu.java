@@ -24,8 +24,7 @@ public class Frag_mainMenu extends Fragment implements View.OnClickListener {
     Main_Window Main_Window;
 
     // Permissions
-    String[] PERMISSIONS = {
-            Manifest.permission.READ_EXTERNAL_STORAGE};
+    String[] PERMISSIONS = {};
 
 //LIFECYCLE METHODS ================================================================================
     @Nullable
@@ -55,11 +54,13 @@ public class Frag_mainMenu extends Fragment implements View.OnClickListener {
 
         // PERMISSIONS =============================================================================
         // Loop to request permissions if not already granted
-        for (String str : PERMISSIONS) {
-            if (Main_Window.checkSelfPermission(str) != PackageManager.PERMISSION_GRANTED) {
-                this.requestPermissions(PERMISSIONS, 1);
-                System.out.println("[DEBUG] Requesting permissions.");
-                return;
+        if (PERMISSIONS != null) {
+            for (String str : PERMISSIONS) {
+                if (Main_Window.checkSelfPermission(str) != PackageManager.PERMISSION_GRANTED) {
+                    this.requestPermissions(PERMISSIONS, 1);
+                    System.out.println("[DEBUG] Requesting permissions.");
+                    return;
+                }
             }
         }
     }
