@@ -2,7 +2,6 @@ package com.c355_project.plannter;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import android.view.Gravity;
 import android.view.LayoutInflater;
