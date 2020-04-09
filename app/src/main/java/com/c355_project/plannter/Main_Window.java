@@ -2,6 +2,7 @@ package com.c355_project.plannter;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -14,7 +15,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
 
 
 public class Main_Window extends AppCompatActivity {
@@ -86,38 +86,8 @@ public class Main_Window extends AppCompatActivity {
         lastSpringFrostDate = pref.getString("Spring", "04/30/" + year);
         firstFallFrostDate = pref.getString("Fall", "10/09/" + year);
 
-        AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
-                    //Get plants
-                    PlantList = PlantDatabase.getInstance(getApplicationContext()).plantDao().getAllPlants();
-                    //harvestableCrops = PlantDatabase.getInstance(getApplicationContext()).plantDao().getPlantName(getWeeksTilHarvest());
-
-                    // Delete the database and recreate it if any of the following are null
-                    if (PlantList == null || lastSpringFrostDate == null || firstFallFrostDate == null){
-                        String DatabaseFilePath = "./data/data/" + BuildConfig.APPLICATION_ID + "/databases/", DB_NAME = "plant_db";
-                        File db = new File(DatabaseFilePath + DB_NAME);
-                        db.delete();
-                        //Get plants
-                        PlantList = PlantDatabase.getInstance(getApplicationContext()).plantDao().getAllPlants();
-                        //harvestableCrops = PlantDatabase.getInstance(getApplicationContext()).plantDao().getPlantName(getWeeksTilHarvest());
-                    }
-
-                //[DEBUG] Print all the plant names
-                    System.out.println("------------------------------------");
-                    for (int i = 0; i < PlantList.size(); i++){
-                        System.out.println(PlantList.get(i).getPlantName());
-                    }
-                    System.out.println("------------------------------------");
-
-                    //[DEBUG] Print all the plant dates
-                    System.out.println("------------------------------------");
-                    System.out.println(lastSpringFrostDate);
-                    System.out.println(firstFallFrostDate);
-                    System.out.println("------------------------------------");
-
-            }
-        });
+        // Update Local Plant List Variable
+        new ReadPlantListFromDatabase().execute();
 
         //Replace to first fragment
         changeFragment("MainMenu");
@@ -309,6 +279,69 @@ public class Main_Window extends AppCompatActivity {
         this.userInputDate = userInputDate;
     }
 
+//ASYNC TASK =======================================================================================
+    /*
+        An AsyncTask to update Main_Window's local PlantList variable from the database.
+        Creates the database file using default plant list if one doesn't exist.
+
+        This Async Task is its own class in order to utilize onPreExecute and onPostExecute to add
+        a loading box so the app will wait while updating plants.
+   */
+    public class ReadPlantListFromDatabase extends AsyncTask {
+
+        ProgressDialog progress;
+
+        public ReadPlantListFromDatabase() {
+            super();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            // Make User Wait
+            progress = new ProgressDialog(Main_Window.this);
+            progress.setTitle("Loading Default Plants");
+            progress.setMessage("Wait while loading...");
+            progress.setCancelable(false); // disable dismiss by tapping outside of the dialog
+            progress.show();
+        }
+
+        @Override
+        protected Object doInBackground(Object[] objects) {
+            //Get plants
+            PlantList = PlantDatabase.getInstance(Main_Window.this).plantDao().getAllPlants();
+
+            // Delete the database and recreate it if any of the following are null
+            if (PlantList == null || lastSpringFrostDate == null || firstFallFrostDate == null){
+                String DatabaseFilePath = "./data/data/" + BuildConfig.APPLICATION_ID + "/databases/", DB_NAME = "plant_db";
+                File db = new File(DatabaseFilePath + DB_NAME);
+                db.delete();
+                //Get plants
+                PlantList = PlantDatabase.getInstance(Main_Window.this).plantDao().getAllPlants();
+            }
+
+            //[DEBUG] Print all the plant names
+            System.out.println("------------------------------------");
+            for (int i = 0; i < PlantList.size(); i++){
+                System.out.println(PlantList.get(i).getPlantName());
+            }
+            System.out.println("------------------------------------");
+
+            //[DEBUG] Print all the plant dates
+            System.out.println("------------------------------------");
+            System.out.println(lastSpringFrostDate);
+            System.out.println(firstFallFrostDate);
+            System.out.println("------------------------------------");
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Object o) {
+            super.onPostExecute(o);
+            // Dismiss the dialog
+            progress.dismiss();
+        }
+    }
 }
 
 
