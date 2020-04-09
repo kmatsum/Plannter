@@ -20,20 +20,19 @@ public abstract class PlantDatabase extends RoomDatabase {
     public static synchronized PlantDatabase getInstance (Context context) {
         //Define Variables
         PlantDatabase databaseInstance;
-        String DatabaseFilePath = "./data/data/" + BuildConfig.APPLICATION_ID + "/databases/", DB_NAME = "plant_db";
 
         //Instantiate a File Object with the File Path for the Database
-        File file = new File (DatabaseFilePath + DB_NAME);
+        File file = new File (Main_Window.DATABASE_DIRECTORY, Main_Window.DB_NAME);
 
         //Check if the File Exists with the given FilePath
         if (file.exists()) {
             //Set the instance of the database to the Database file
-            databaseInstance = Room.databaseBuilder(context.getApplicationContext(), PlantDatabase.class, DB_NAME).fallbackToDestructiveMigration().build();
+            databaseInstance = Room.databaseBuilder(context.getApplicationContext(), PlantDatabase.class, Main_Window.DB_NAME).fallbackToDestructiveMigration().build();
             return databaseInstance;
         } else {
             //Set the instance of the database, but since it does not exist, it will create a new file
             databaseInstance = Room.databaseBuilder(context.getApplicationContext(),
-                    PlantDatabase.class, DB_NAME).fallbackToDestructiveMigration().build();
+                    PlantDatabase.class, Main_Window.DB_NAME).fallbackToDestructiveMigration().build();
 
             //Insert default plants ================================================================
 

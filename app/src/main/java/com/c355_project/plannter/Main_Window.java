@@ -23,6 +23,8 @@ public class Main_Window extends AppCompatActivity {
     // Location to store all files
     public static String ROOT_STORAGE_LOCATION;
     public static String PLANT_PHOTO_STORAGE_LOCATION;
+    public static String DATABASE_DIRECTORY = "./data/data/" + BuildConfig.APPLICATION_ID + "/databases/";
+    public static String DB_NAME = "plant_db";
 
     //Date Formatter
     SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
@@ -33,7 +35,7 @@ public class Main_Window extends AppCompatActivity {
     Frag_settingsAddPlants  Frag_settingsAddPlants;
     Frag_plantInfo          Frag_plantInfo;
     Frag_plantDate          Frag_plantDate;
-    Frag_plantHistory Frag_plantHistory;
+    Frag_plantHistory       Frag_plantHistory;
 
     //Shared Preferences
     SharedPreferences pref;
@@ -313,8 +315,7 @@ public class Main_Window extends AppCompatActivity {
 
             // Delete the database and recreate it if any of the following are null
             if (PlantList == null || lastSpringFrostDate == null || firstFallFrostDate == null){
-                String DatabaseFilePath = "./data/data/" + BuildConfig.APPLICATION_ID + "/databases/", DB_NAME = "plant_db";
-                File db = new File(DatabaseFilePath + DB_NAME);
+                File db = new File (Main_Window.DATABASE_DIRECTORY, Main_Window.DB_NAME);
                 db.delete();
                 //Get plants
                 PlantList = PlantDatabase.getInstance(Main_Window.this).plantDao().getAllPlants();
