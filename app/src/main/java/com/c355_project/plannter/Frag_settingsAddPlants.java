@@ -235,7 +235,7 @@ public class Frag_settingsAddPlants extends Fragment implements View.OnClickList
                 //Create directory in which to store photo
                 File f = new File(Main_Window.PLANT_PHOTO_STORAGE_LOCATION, String.valueOf(id));
                 f.mkdir();
-                String filePath = f.getAbsoluteFile() + "/photo.jpeg";
+                String filePath = f.getAbsoluteFile() + "/photo.png";
 
                 //Save default photo if user didn't take their own
                 if (photo == null) {
@@ -244,7 +244,7 @@ public class Frag_settingsAddPlants extends Fragment implements View.OnClickList
 
                 // Export photo in storage location
                 try (FileOutputStream out = new FileOutputStream(filePath)) {
-                    photo.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                    photo.compress(Bitmap.CompressFormat.PNG, 100, out);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
