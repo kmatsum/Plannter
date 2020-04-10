@@ -155,9 +155,11 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
             // Internal files must be deleted first before directory can be deleted
             File folder = new File(Main_Window.PLANT_PHOTO_STORAGE_LOCATION + "/" + plant.getId());
             String[] files = folder.list();
-            for(String s: files){
-                File currentFile = new File(folder.getPath(),s);
-                currentFile.delete();
+            if (files != null){
+                for(String s: files){
+                    File currentFile = new File(folder.getPath(),s);
+                    currentFile.delete();
+                }
             }
             folder.delete();
             //Update plant list
