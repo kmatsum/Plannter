@@ -171,8 +171,7 @@ public class Main_Window extends AppCompatActivity {
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
-                String DatabaseFilePath = "./data/data/" + BuildConfig.APPLICATION_ID + "/databases/", DB_NAME = "plant_db";
-                File db = new File(DatabaseFilePath + DB_NAME);
+                File db = new File (Main_Window.DATABASE_DIRECTORY, Main_Window.DB_NAME);
                 db.delete();
                 //Get plants
                 PlantList = PlantDatabase.getInstance(getApplicationContext()).plantDao().getAllPlants();
