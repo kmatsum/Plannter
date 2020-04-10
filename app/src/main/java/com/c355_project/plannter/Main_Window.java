@@ -312,26 +312,6 @@ public class Main_Window extends AppCompatActivity {
             //Get plants
             PlantList = PlantDatabase.getInstance(Main_Window.this).plantDao().getAllPlants();
 
-            // Delete the database and recreate it if any of the following are null
-            if (PlantList == null || lastSpringFrostDate == null || firstFallFrostDate == null){
-                File db = new File (Main_Window.DATABASE_DIRECTORY, Main_Window.DB_NAME);
-                db.delete();
-                //Get plants
-                PlantList = PlantDatabase.getInstance(Main_Window.this).plantDao().getAllPlants();
-            }
-
-            //[DEBUG] Print all the plant names
-            System.out.println("------------------------------------");
-            for (int i = 0; i < PlantList.size(); i++){
-                System.out.println(PlantList.get(i).getPlantName());
-            }
-            System.out.println("------------------------------------");
-
-            //[DEBUG] Print all the plant dates
-            System.out.println("------------------------------------");
-            System.out.println(lastSpringFrostDate);
-            System.out.println(firstFallFrostDate);
-            System.out.println("------------------------------------");
             return null;
         }
 
