@@ -199,7 +199,7 @@ public class Main_Window extends AppCompatActivity {
         finishes before moving on in the main thread (hence variable isAsyncTaskRunning).
      */
     public long editTransaction(String xTransactionType, Plant xPlant){
-        System.out.println("editTransaction() id PRE " + id);
+        System.out.println("--------------------------------------------------------------------------\r\neditTransaction() id PRE " + id);
 
         // Start Transaction
         new DatabaseTransaction(xTransactionType, xPlant).execute();
@@ -208,7 +208,7 @@ public class Main_Window extends AppCompatActivity {
         while(isAsyncTaskRunning){
             try {
                 Thread.sleep(50);
-                System.out.println("waiting.........");
+                System.out.println("editTransaction() AsyncTask Running Check: waiting.........");
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -276,29 +276,31 @@ public class Main_Window extends AppCompatActivity {
             transactionType = xTransactionType;
             plant = xPlant;
             progress = new ProgressDialog(Main_Window.this);
+            id = 0;
         }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            System.out.println("DatabaseTransaction.onPreExecute() Called");
             progress.setTitle("Loading Default Plants");
             progress.setMessage("Wait while loading...");
             progress.setCancelable(false); // disable dismiss by tapping outside of the dialog
             progress.show();
+            isAsyncTaskRunning = true;
         }
 
         @Override
         protected Object doInBackground(Object[] objects) {
             // Make User Wait
-            isAsyncTaskRunning = true;
+            System.out.println("DatabaseTransaction.doInBackground() Called");
+
 
             switch (transactionType){
 
                 case ("InsertPlant"): {
                     System.out.println("doInBackground() Inserting Plant");
-                    long tempPlantId = PlantDatabase.getInstance(getApplicationContext()).plantDao().insertPlant(plant);
-                    System.out.println("doInBackground() temp id " + tempPlantId);
-                    id = tempPlantId;
+                    id = PlantDatabase.getInstance(getApplicationContext()).plantDao().insertPlant(plant);
                     System.out.println("doInBackground() plant id " + id);
                 } break;
 
@@ -325,6 +327,7 @@ public class Main_Window extends AppCompatActivity {
         @Override
         protected void onPostExecute(Object o) {
             super.onPostExecute(o);
+            System.out.println("DatabaseTransaction.onPostExecute() Called");
             // Dismiss the dialog
             progress.dismiss();
         }
