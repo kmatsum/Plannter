@@ -88,8 +88,8 @@ public class Main_Window extends AppCompatActivity {
         lastSpringFrostDate = pref.getString("Spring", "04/30/" + year);
         firstFallFrostDate = pref.getString("Fall", "10/09/" + year);
 
-        // Update Local Plant List Variable
-        new ReadPlantListFromDatabase().execute();
+        // Update Local Plant List Variable forcing user to wait
+        new UpdatePlantListWithLoadingBox().execute();
 
         //Replace to first fragment
         changeFragment("MainMenu");
@@ -288,11 +288,11 @@ public class Main_Window extends AppCompatActivity {
         This Async Task is its own class in order to utilize onPreExecute and onPostExecute to add
         a loading box so the app will wait while updating plants.
    */
-    public class ReadPlantListFromDatabase extends AsyncTask {
+    public class UpdatePlantListWithLoadingBox extends AsyncTask {
 
         ProgressDialog progress;
 
-        public ReadPlantListFromDatabase() {
+        public UpdatePlantListWithLoadingBox() {
             super();
         }
 
