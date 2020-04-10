@@ -21,9 +21,6 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 public class Frag_settingsAddPlants extends Fragment implements View.OnClickListener {
 //VARIABLES ========================================================================================
@@ -211,6 +208,11 @@ public class Frag_settingsAddPlants extends Fragment implements View.OnClickList
                     return;
                 }
 
+                //Save default photo if user didn't take their own
+                if (photo == null) {
+                    photo = ((BitmapDrawable) ResourcesCompat.getDrawable(Main_Window.getResources(), R.drawable.plant, null)).getBitmap();
+                }
+
                 // TEMP OBJECT CREATION ============================================================
                 tempPlant = new Plant(txtName.getText().toString().trim(), txtSeedCompany.getText().toString().trim(),
                         Integer.parseInt(txtFirstPlantDate.getText().toString().trim()),
@@ -224,34 +226,7 @@ public class Frag_settingsAddPlants extends Fragment implements View.OnClickList
                         Double.parseDouble(txtSeedDepth.getText().toString().trim()));
 
                 // INSERT NEW PLANT ================================================================
-                long id = Main_Window.editTransaction("InsertPlant", tempPlant);
-
-                // SAVE PHOTO ======================================================================
-                //Create directory in which to store photo
-                File f = new File(Main_Window.PLANT_PHOTO_STORAGE_LOCATION, String.valueOf(id));
-                f.mkdir();
-                String filePath = f.getAbsoluteFile() + "/photo.png";
-
-                //Save default photo if user didn't take their own
-                if (photo == null) {
-                    photo = ((BitmapDrawable) ResourcesCompat.getDrawable(Main_Window.getResources(), R.drawable.plant, null)).getBitmap();
-                }
-
-                // Export photo in storage location
-                try (FileOutputStream out = new FileOutputStream(filePath)) {
-                    photo.compress(Bitmap.CompressFormat.PNG, 100, out);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                // UPDATE CORRECT PLANT WITH PICTURE ===============================================
-                tempPlant.setPhotoPath(filePath);
-                tempPlant.setId((int)id);
-                Main_Window.editTransaction("UpdatePlant", tempPlant);
-                photo = null;
-
-                // Return
-                Main_Window.changeFragment("PlantInfo");
+                Main_Window.editTransaction("InsertPlant", tempPlant);
 
                 resetGUI();
 
