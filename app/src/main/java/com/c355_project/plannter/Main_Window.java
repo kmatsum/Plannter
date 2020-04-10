@@ -1,7 +1,6 @@
 package com.c355_project.plannter;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -15,7 +14,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
 
 public class Main_Window extends AppCompatActivity {
 //VARIABLES ========================================================================================
@@ -47,16 +45,13 @@ public class Main_Window extends AppCompatActivity {
 
     //Plant List
     List<Plant> PlantList;
-    List<Plant> harvestableCrops;
 
     //Tracking Variables
     long id; //temp variable to store plant id
-    boolean isInsertPlantAsyncTaskRunning = false; // variable to keep track of AsyncTask
+    boolean isAsyncTaskRunning = false; //used in editTransaction to keep track of DatabaseTransaction AsyncTask
 
     //PlantHarvest
     Date userInputDate;
-
-
 
 //Lifecycle Methods ================================================================================
     @Override
@@ -88,8 +83,8 @@ public class Main_Window extends AppCompatActivity {
         lastSpringFrostDate = pref.getString("Spring", "04/30/" + year);
         firstFallFrostDate = pref.getString("Fall", "10/09/" + year);
 
-        // Update Local Plant List Variable forcing user to wait
-        new UpdatePlantListWithLoadingBox().execute();
+        // Update Local Plant List Variable
+        editTransaction("GetPlantList", null);
 
         //Replace to first fragment
         changeFragment("MainMenu");
@@ -168,15 +163,13 @@ public class Main_Window extends AppCompatActivity {
         int year = Calendar.getInstance().get(Calendar.YEAR);
         setFirstFallFrostDate(parseDateString("10/09/" + year));
         setLastSpringFrostDate(parseDateString("04/30/" + year));
-        AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
-                File db = new File (Main_Window.DATABASE_DIRECTORY, Main_Window.DB_NAME);
-                db.delete();
-                //Get plants
-                PlantList = PlantDatabase.getInstance(getApplicationContext()).plantDao().getAllPlants();
-            }
-        });
+
+        //Delete Database File
+        File db = new File (Main_Window.DATABASE_DIRECTORY, Main_Window.DB_NAME);
+        db.delete();
+
+        //Recreate database
+        editTransaction("GetPlantList", null);
     }
 
     // Helper method to convert passed String in MM/dd/yyyy format to Date
@@ -201,19 +194,18 @@ public class Main_Window extends AppCompatActivity {
         return PlantList;
     }
 
-    public long insertPlant(final Plant xPlant) {
-        // Insert the Plant
-        isInsertPlantAsyncTaskRunning = true;
-        AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
-                id = PlantDatabase.getInstance(getApplicationContext()).plantDao().insertPlant(xPlant);
-                isInsertPlantAsyncTaskRunning = false;
-                PlantList = PlantDatabase.getInstance(getApplicationContext()).plantDao().getAllPlants();
-            }});
+    /*
+        Method to call AsyncTask to interact with the database, but wait until the AsyncTask
+        finishes before moving on in the main thread (hence variable isAsyncTaskRunning).
+     */
+    public long editTransaction(String xTransactionType, Plant xPlant){
+        System.out.println("editTransaction() id PRE " + id);
 
-        // Wait until plant is fully inserted before returning id
-        while(isInsertPlantAsyncTaskRunning){
+        // Start Transaction
+        new DatabaseTransaction(xTransactionType, xPlant).execute();
+
+        // Wait until transaction is done
+        while(isAsyncTaskRunning){
             try {
                 Thread.sleep(50);
                 System.out.println("waiting.........");
@@ -223,27 +215,12 @@ public class Main_Window extends AppCompatActivity {
         }
 
         //Update User
-        makeToast("Plant " + xPlant.getPlantName() + " has been added!");
+        if (xPlant != null){
+            makeToast(xPlant.getPlantName() + " Transaction Complete");
+        }
 
+        System.out.println("editTransaction() id POST " + id);
         return id;
-    }
-
-    public void updatePlant(final Plant xPlant){
-        AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
-                PlantDatabase.getInstance(getApplicationContext()).plantDao().updatePlant(xPlant);
-                PlantList = PlantDatabase.getInstance(getApplicationContext()).plantDao().getAllPlants();
-            }});
-    }
-
-    public void deletePlant(final Plant xPlant){
-        AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
-                PlantDatabase.getInstance(getApplicationContext()).plantDao().deletePlant(xPlant);
-                PlantList = PlantDatabase.getInstance(getApplicationContext()).plantDao().getAllPlants();
-            }});
     }
 
     public Date getLastSpringFrostDate() {
@@ -288,19 +265,22 @@ public class Main_Window extends AppCompatActivity {
         This Async Task is its own class in order to utilize onPreExecute and onPostExecute to add
         a loading box so the app will wait while updating plants.
    */
-    public class UpdatePlantListWithLoadingBox extends AsyncTask {
+    public class DatabaseTransaction extends AsyncTask {
 
         ProgressDialog progress;
+        String transactionType;
+        Plant plant;
 
-        public UpdatePlantListWithLoadingBox() {
+        public DatabaseTransaction(String xTransactionType, Plant xPlant) {
             super();
+            transactionType = xTransactionType;
+            plant = xPlant;
+            progress = new ProgressDialog(Main_Window.this);
         }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            // Make User Wait
-            progress = new ProgressDialog(Main_Window.this);
             progress.setTitle("Loading Default Plants");
             progress.setMessage("Wait while loading...");
             progress.setCancelable(false); // disable dismiss by tapping outside of the dialog
@@ -309,8 +289,35 @@ public class Main_Window extends AppCompatActivity {
 
         @Override
         protected Object doInBackground(Object[] objects) {
+            // Make User Wait
+            isAsyncTaskRunning = true;
+
+            switch (transactionType){
+
+                case ("InsertPlant"): {
+                    System.out.println("doInBackground() Inserting Plant");
+                    long tempPlantId = PlantDatabase.getInstance(getApplicationContext()).plantDao().insertPlant(plant);
+                    System.out.println("doInBackground() temp id " + tempPlantId);
+                    id = tempPlantId;
+                    System.out.println("doInBackground() plant id " + id);
+                } break;
+
+                case ("UpdatePlant"): {
+                    PlantDatabase.getInstance(getApplicationContext()).plantDao().updatePlant(plant);
+                } break;
+
+                case ("DeletePlant"): {
+                    PlantDatabase.getInstance(getApplicationContext()).plantDao().deletePlant(plant);
+                } break;
+
+                case ("GetPlantList"): {
+                    System.out.println("doInBackground() Getting Plant Array List");
+                } break;
+            }
+
             //Get plants
             PlantList = PlantDatabase.getInstance(Main_Window.this).plantDao().getAllPlants();
+            isAsyncTaskRunning = false;
 
             return null;
         }

@@ -1,6 +1,5 @@
 package com.c355_project.plannter;
 
-
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -8,10 +7,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
-
 import android.os.ParcelFileDescriptor;
 import android.util.Log;
 import android.view.Gravity;
@@ -24,11 +21,9 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
 
 public class Frag_settingsAddPlants extends Fragment implements View.OnClickListener {
 //VARIABLES ========================================================================================
@@ -229,7 +224,7 @@ public class Frag_settingsAddPlants extends Fragment implements View.OnClickList
                         Double.parseDouble(txtSeedDepth.getText().toString().trim()));
 
                 // INSERT NEW PLANT ================================================================
-                long id = Main_Window.insertPlant(tempPlant);
+                long id = Main_Window.editTransaction("InsertPlant", tempPlant);
 
                 // SAVE PHOTO ======================================================================
                 //Create directory in which to store photo
@@ -252,7 +247,7 @@ public class Frag_settingsAddPlants extends Fragment implements View.OnClickList
                 // UPDATE CORRECT PLANT WITH PICTURE ===============================================
                 tempPlant.setPhotoPath(filePath);
                 tempPlant.setId((int)id);
-                Main_Window.updatePlant(tempPlant);
+                Main_Window.editTransaction("UpdatePlant", tempPlant);
                 photo = null;
 
                 // Return

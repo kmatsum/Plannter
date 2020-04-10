@@ -4,7 +4,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,17 +14,13 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-
-
 
 public class Frag_plantInfo extends Fragment implements View.OnClickListener, Spinner.OnItemSelectedListener {
 //VARIABLES ========================================================================================
@@ -155,8 +150,7 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
             }
             int position = spnrSelectPlant.getSelectedItemPosition();
             Plant plant = plantList.get(position);
-            String name = plant.getPlantName();
-            Main_Window.deletePlant(plant);
+            Main_Window.editTransaction("DeletePlant", plant);
             // Delete its corresponding photo folder from internal storage
             // Internal files must be deleted first before directory can be deleted
             File folder = new File(Main_Window.PLANT_PHOTO_STORAGE_LOCATION + "/" + plant.getId());
@@ -169,7 +163,6 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
             //Update plant list
             plantList = Main_Window.getPlantList();
             Main_Window.changeFragment("MainMenu");
-            makeToast("Plant " + name + " deleted.");
         }
 
         //Used for handling exceptions on if the given ViewID and the expected ViewID does not match
