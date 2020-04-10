@@ -11,15 +11,11 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-
 
 public class Frag_settings extends Fragment implements View.OnClickListener {
 //VARIABLES ========================================================================================
@@ -142,8 +138,7 @@ public class Frag_settings extends Fragment implements View.OnClickListener {
 
             case (R.id.btnResetDB): {
                 Main_Window.resetPlantDB();
-                makeToast("Plant database restored to default!");
-                //Update the stored Spring and Fall Frost Dates
+                //Update the class local Spring and Fall Frost Dates
                 SpringFrostDate = Main_Window.getLastSpringFrostDate();
                 FallFrostDate = Main_Window.getFirstFallFrostDate();
                 txtSpringFrost.setText(dateFormat.format(SpringFrostDate));
