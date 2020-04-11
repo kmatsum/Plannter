@@ -1,5 +1,8 @@
 package com.c355_project.plannter;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -34,14 +37,19 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
     Main_Window Main_Window;
 
     //View Variables
-    CalendarView calendarViewInLayout;
-    Calendar today, lastPlantDate, firstPlantDate, harvestRangeMin, harvestRangeMax;
-    TextView txtCropHarvest;
-    String Concat;
-    SimpleDateFormat simpleDateFormat;
-    Date selectedDate;
-    Button btnNext;
-    Spinner spnPlants;
+    CalendarView        calendarViewInLayout;
+    Calendar            today,
+                        lastPlantDate,
+                        firstPlantDate,
+                        harvestRangeMin,
+                        harvestRangeMax;
+    TextView            txtCropHarvest;
+    String              Concat,
+                        selectedPlantName;
+    SimpleDateFormat    simpleDateFormat;
+    Date                selectedDate;
+    Button              btnNext;
+    Spinner             spnPlants;
 
     //Plant Database List
     List<Plant> PlantDatabase;
@@ -80,6 +88,8 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
         view.findViewById(R.id.arrowNext).setOnClickListener(this);
         view.findViewById(R.id.arrowPrevious).setOnClickListener(this);
 
+        view.findViewById(R.id.btnAddLog).setOnClickListener(this);
+
         //Adds banner ad to UI
         AdView adView = view.findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
@@ -106,6 +116,8 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
         spnPlants.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    //Sets Selected Plant Name to the user chosen plant
+                    selectedPlantName = PlantDatabase.get(i).getPlantName();
                     calendarViewInLayout.setMinDate(0);
                     calendarViewInLayout.setMinDate(calculateFirstPlantDate(i));
                     calendarViewInLayout.setMaxDate(0);
@@ -155,6 +167,14 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
                 setHarvestRanges();
             txtCropHarvest.setText("Selected Date: " + simpleDateFormat.format(selectedDate) + "\n" + "Expect to Harvest Between: " + simpleDateFormat.format(harvestRangeMin.getTime()) + "-" + simpleDateFormat.format(harvestRangeMax.getTime()));
 
+        }
+
+        else if (id == R.id.btnAddLog) {
+            if(selectedDate == null) {
+                Date minPlantDate = new Date(calendarViewInLayout.getMinDate());
+                selectedDate = minPlantDate;
+            }
+            openConfirmationDialog(selectedPlantName ,simpleDateFormat.format(selectedDate), Main_Window);
         }
 
         //Used for handling exceptions on if the given ViewID and the expected ViewID does not match
@@ -214,5 +234,23 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
         harvestRangeMin.add(Calendar.DAY_OF_MONTH, PlantDatabase.get(spnPlants.getSelectedItemPosition()).getWeeksToHarvest() * 7);
         harvestRangeMax.setTime(harvestRangeMin.getTime());
         harvestRangeMax.add(Calendar.DAY_OF_MONTH, PlantDatabase.get(spnPlants.getSelectedItemPosition()).getHarvestRange() * 7);
+    }
+
+    protected void openConfirmationDialog(String potentialCropName, String potentialPlantDate, Context context) {
+        new AlertDialog.Builder(context)
+                .setTitle("Add Plant to Log?")
+                .setMessage("Are you sure you want to add: " + potentialCropName.toLowerCase() + " planted on " + potentialPlantDate + " to your plant log?")
+
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        //TODO: Add New Plant To Log
+                        makeToast("Plant Add Button Clicked");
+                    }
+                })
+
+                // A null listener allows the button to close the dialog and take no further action.
+                .setNegativeButton(android.R.string.no, null)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 }
