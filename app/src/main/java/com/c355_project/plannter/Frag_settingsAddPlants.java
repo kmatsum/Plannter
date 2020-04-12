@@ -7,6 +7,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+
+import androidx.activity.OnBackPressedCallback;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import android.os.ParcelFileDescriptor;
@@ -64,6 +66,14 @@ public class Frag_settingsAddPlants extends Fragment implements View.OnClickList
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Main_Window = (Main_Window) getActivity();
+
+        //Implements hardware back button to take user back to Plant Info
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Main_Window.changeFragment("PlantInfo");            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
 
         //Attaches onClickListener to Buttons
         view.findViewById(R.id.btnBack).setOnClickListener(this);

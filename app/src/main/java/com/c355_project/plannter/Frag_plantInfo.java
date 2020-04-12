@@ -2,6 +2,8 @@ package com.c355_project.plannter;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import android.view.Gravity;
@@ -70,6 +72,14 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
         plantList = Main_Window.getPlantList();
         SpringFrostDate = Main_Window.getLastSpringFrostDate();
         FallFrostDate = Main_Window.getFirstFallFrostDate();
+
+        //Implements hardware back button to take user back to the Main Menu
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Main_Window.changeFragment("MainMenu");            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
 
         //Find GUI elements
         txtSeedCompany = view.findViewById(R.id.txtSeedCompany);

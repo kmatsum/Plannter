@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
@@ -68,6 +70,14 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Main_Window = (Main_Window) getActivity();
+
+        //Implements hardware back button to take user back to the Main Menu
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Main_Window.changeFragment("MainMenu");            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
 
         PlantDatabase = Main_Window.getPlantList();
         PlantNames = new ArrayList<>();
