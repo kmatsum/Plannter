@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
@@ -69,6 +71,14 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
         super.onViewCreated(view, savedInstanceState);
         Main_Window = (Main_Window) getActivity();
 
+        //Implements hardware back button to take user back to the Main Menu
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Main_Window.changeFragment("MainMenu");            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+
         PlantDatabase = Main_Window.getPlantList();
         PlantNames = new ArrayList<>();
 
@@ -81,14 +91,11 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
 
 
         //Set all OnClickListeners needed for this View
-        view.findViewById(R.id.btnBack).setOnClickListener(this);
         view.findViewById(R.id.btnCalculate).setOnClickListener(this);
         view.findViewById(R.id.btnNext).setOnClickListener(this);
         view.findViewById(R.id.btnPrevious).setOnClickListener(this);
         view.findViewById(R.id.arrowNext).setOnClickListener(this);
         view.findViewById(R.id.arrowPrevious).setOnClickListener(this);
-
-        view.findViewById(R.id.btnAddLog).setOnClickListener(this);
 
         //Adds banner ad to UI
         AdView adView = view.findViewById(R.id.adView);
@@ -137,13 +144,8 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
     public void onClick(View view) {
         Integer id = view.getId();
 
-        //Go back to main menu
-        if (id == R.id.btnBack) {
-            Main_Window.changeFragment("MainMenu");
-        }
-
         //Go back in spinner plant list. Do nothing if position is already the first item.
-        else if (id == R.id.btnPrevious || id == R.id.arrowPrevious) {
+        if (id == R.id.btnPrevious || id == R.id.arrowPrevious) {
             int position = spnPlants.getSelectedItemPosition();
             if (position > 0)
                 spnPlants.setSelection(spnPlants.getSelectedItemPosition() - 1);

@@ -1,6 +1,8 @@
 package com.c355_project.plannter;
 
 import android.os.Bundle;
+
+import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.Fragment;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -41,9 +43,15 @@ public class Frag_plantHistory extends Fragment implements View.OnClickListener 
         //Provide values for variables needed to be set on activity start
         Main_Window = (Main_Window) getActivity();
 
+        //Implements hardware back button to take user back to the Main Menu
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Main_Window.changeFragment("MainMenu");            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
 
         //Set all OnClickListeners needed for this View
-
 
         //Set the required Widget variables to their respective views
 

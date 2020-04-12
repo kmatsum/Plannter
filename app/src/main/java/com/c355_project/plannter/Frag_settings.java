@@ -3,6 +3,8 @@ package com.c355_project.plannter;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+
+import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.Fragment;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -48,6 +50,15 @@ public class Frag_settings extends Fragment implements View.OnClickListener {
         super.onViewCreated(view, savedInstanceState);
         Main_Window = (Main_Window) getActivity();
 
+        //Implements hardware back button to take user back to the Main Menu
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Main_Window.changeFragment("MainMenu");            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+
+        //Find GUI Elements
         txtSpringFrost = view.findViewById(R.id.txtCurrentSpringFrost);
         txtFallFrost = view.findViewById(R.id.txtCurrentFallFrost);
         SpringFrostDate = Main_Window.getLastSpringFrostDate();
@@ -55,7 +66,6 @@ public class Frag_settings extends Fragment implements View.OnClickListener {
 
         //Attaches onClickListener to Buttons
         view.findViewById(R.id.btnFrostDateIntent).setOnClickListener(this);
-        view.findViewById(R.id.btnBack).setOnClickListener(this);
         view.findViewById(R.id.btnUpdateSpring).setOnClickListener(this);
         view.findViewById(R.id.btnUpdateFall).setOnClickListener(this);
         view.findViewById(R.id.btnResetDB).setOnClickListener(this);
@@ -79,10 +89,6 @@ public class Frag_settings extends Fragment implements View.OnClickListener {
             case (R.id.btnFrostDateIntent): {
                 Intent mIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(website));
                 startActivity(mIntent);
-            } break;
-
-            case (R.id.btnBack): {
-                Main_Window.changeFragment("MainMenu");
             } break;
 
             case (R.id.btnUpdateSpring): {

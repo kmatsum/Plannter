@@ -2,6 +2,8 @@ package com.c355_project.plannter;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import android.view.Gravity;
@@ -71,6 +73,14 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
         SpringFrostDate = Main_Window.getLastSpringFrostDate();
         FallFrostDate = Main_Window.getFirstFallFrostDate();
 
+        //Implements hardware back button to take user back to the Main Menu
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Main_Window.changeFragment("MainMenu");            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+
         //Find GUI elements
         txtSeedCompany = view.findViewById(R.id.txtSeedCompany);
         txtFirstPlantDate = view.findViewById(R.id.txtFirstPlantDate);
@@ -87,7 +97,6 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
         txtMethod = view.findViewById(R.id.txtMethod);
 
         //Set all OnClickListeners needed for this View
-        view.findViewById(R.id.btnBack).setOnClickListener(this);
         view.findViewById(R.id.btnNext).setOnClickListener(this);
         view.findViewById(R.id.btnPrevious).setOnClickListener(this);
         view.findViewById(R.id.btnDelete).setOnClickListener(this);
@@ -118,13 +127,8 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
     public void onClick (View view) {
         Integer id = view.getId();
 
-        //Go back to main menu
-        if (id == R.id.btnBack) {
-            Main_Window.changeFragment("MainMenu");
-        }
-
         //Go to fragment that adds plants
-        else if (id == R.id.imgSettingsAddPlants) {
+        if (id == R.id.imgSettingsAddPlants) {
             Main_Window.changeFragment("SettingsAddPlants");
         }
 
