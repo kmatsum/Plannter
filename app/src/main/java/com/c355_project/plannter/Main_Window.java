@@ -334,7 +334,14 @@ public class Main_Window extends AppCompatActivity {
             return null;
         }
 
-        @Override
+    @Override
+    protected void onCancelled() {
+        super.onCancelled();
+        // Dismiss the dialog
+        progress.dismiss();
+    }
+
+    @Override
         protected void onPostExecute(Object o) {
             super.onPostExecute(o);
             System.out.println("DatabaseTransaction.onPostExecute() Called");
