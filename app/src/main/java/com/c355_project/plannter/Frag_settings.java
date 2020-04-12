@@ -66,7 +66,6 @@ public class Frag_settings extends Fragment implements View.OnClickListener {
 
         //Attaches onClickListener to Buttons
         view.findViewById(R.id.btnFrostDateIntent).setOnClickListener(this);
-        view.findViewById(R.id.btnBack).setOnClickListener(this);
         view.findViewById(R.id.btnUpdateSpring).setOnClickListener(this);
         view.findViewById(R.id.btnUpdateFall).setOnClickListener(this);
         view.findViewById(R.id.btnResetDB).setOnClickListener(this);
@@ -90,10 +89,6 @@ public class Frag_settings extends Fragment implements View.OnClickListener {
             case (R.id.btnFrostDateIntent): {
                 Intent mIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(website));
                 startActivity(mIntent);
-            } break;
-
-            case (R.id.btnBack): {
-                Main_Window.changeFragment("MainMenu");
             } break;
 
             case (R.id.btnUpdateSpring): {

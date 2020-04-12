@@ -76,7 +76,6 @@ public class Frag_settingsAddPlants extends Fragment implements View.OnClickList
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
 
         //Attaches onClickListener to Buttons
-        view.findViewById(R.id.btnBack).setOnClickListener(this);
         view.findViewById(R.id.btnTakePicture).setOnClickListener(this);
         view.findViewById(R.id.btnOpenGallery).setOnClickListener(this);
         view.findViewById(R.id.btnSave).setOnClickListener(this);
@@ -108,10 +107,6 @@ public class Frag_settingsAddPlants extends Fragment implements View.OnClickList
     public void onClick(View view) {
         //Determines how to respond to the click
         switch (view.getId()) {
-            case (R.id.btnBack): {
-                Main_Window.changeFragment("PlantInfo");
-            } break;
-
             //Take Picture
             case (R.id.btnTakePicture):{
                 // Send Intent to camera, response handled below in onActivityResult method

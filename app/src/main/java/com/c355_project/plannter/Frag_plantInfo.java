@@ -97,7 +97,6 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
         txtMethod = view.findViewById(R.id.txtMethod);
 
         //Set all OnClickListeners needed for this View
-        view.findViewById(R.id.btnBack).setOnClickListener(this);
         view.findViewById(R.id.btnNext).setOnClickListener(this);
         view.findViewById(R.id.btnPrevious).setOnClickListener(this);
         view.findViewById(R.id.btnDelete).setOnClickListener(this);
@@ -128,13 +127,8 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
     public void onClick (View view) {
         Integer id = view.getId();
 
-        //Go back to main menu
-        if (id == R.id.btnBack) {
-            Main_Window.changeFragment("MainMenu");
-        }
-
         //Go to fragment that adds plants
-        else if (id == R.id.imgSettingsAddPlants) {
+        if (id == R.id.imgSettingsAddPlants) {
             Main_Window.changeFragment("SettingsAddPlants");
         }
 

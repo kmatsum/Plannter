@@ -91,14 +91,11 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
 
 
         //Set all OnClickListeners needed for this View
-        view.findViewById(R.id.btnBack).setOnClickListener(this);
         view.findViewById(R.id.btnCalculate).setOnClickListener(this);
         view.findViewById(R.id.btnNext).setOnClickListener(this);
         view.findViewById(R.id.btnPrevious).setOnClickListener(this);
         view.findViewById(R.id.arrowNext).setOnClickListener(this);
         view.findViewById(R.id.arrowPrevious).setOnClickListener(this);
-
-        view.findViewById(R.id.btnAddLog).setOnClickListener(this);
 
         //Adds banner ad to UI
         AdView adView = view.findViewById(R.id.adView);
@@ -147,13 +144,8 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
     public void onClick(View view) {
         Integer id = view.getId();
 
-        //Go back to main menu
-        if (id == R.id.btnBack) {
-            Main_Window.changeFragment("MainMenu");
-        }
-
         //Go back in spinner plant list. Do nothing if position is already the first item.
-        else if (id == R.id.btnPrevious || id == R.id.arrowPrevious) {
+        if (id == R.id.btnPrevious || id == R.id.arrowPrevious) {
             int position = spnPlants.getSelectedItemPosition();
             if (position > 0)
                 spnPlants.setSelection(spnPlants.getSelectedItemPosition() - 1);
