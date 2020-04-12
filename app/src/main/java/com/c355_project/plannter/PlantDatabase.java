@@ -13,7 +13,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 
-@Database(entities = {Plant.class}, exportSchema = false, version = 12)
+@Database(entities = {Plant.class}, exportSchema = false, version = 13)
 
 public abstract class PlantDatabase extends RoomDatabase {
     //Method that Returns the information for the Database Instance

@@ -10,7 +10,7 @@ public class    Plant {
 
     /* VARIABLE DESCRIPTIONS =======================================================================
 
-    id:                 Auto-generated primary key (starts at 1, increments by 1).
+    plantID:            Auto-generated primary key (starts at 1, increments by 1).
     plantName:          Name of plant.
     seedCompany:        Seed company, preloaded plants will have value "General".
     firstPlantDate:     # of weeks BEFORE Avg Last Spring Frost that the plant should be planted.
@@ -31,7 +31,7 @@ public class    Plant {
     ============================================================================================= */
 
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private int plantID;
     private String plantName;
     private String seedCompany;
     private int firstPlantDate;
@@ -70,12 +70,12 @@ public class    Plant {
 
 
 //GETS & SETS ======================================================================================
-    public void setId(int id) {
-        this.id = id;
+    public void setPlantID(int plantID) {
+        this.plantID = plantID;
     }
 
-    public int getId(){
-        return this.id;
+    public int getPlantID(){
+        return this.plantID;
     }
 
     public void setPlantName(String name){

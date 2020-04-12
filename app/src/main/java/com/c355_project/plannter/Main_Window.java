@@ -89,9 +89,7 @@ public class Main_Window extends AppCompatActivity {
         changeFragment("MainMenu");
     }
 
-
-
-//METHODS ==========================================================================================
+    //METHODS ==========================================================================================
     public void changeFragment(String menuFragment) {
         switch (menuFragment) {
             case "MainMenu": {
@@ -307,7 +305,7 @@ public class Main_Window extends AppCompatActivity {
 
                     // UPDATE CORRECT PLANT WITH PICTURE ===========================================
                     plant.setPhotoPath(filePath);
-                    plant.setId((int)id);
+                    plant.setPlantID((int)id);
                     PlantDatabase.getInstance(getApplicationContext()).plantDao().updatePlant(plant);
 
                     // Update Frag_settingsAddPlants class photo variable to null
