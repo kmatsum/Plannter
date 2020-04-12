@@ -3,12 +3,15 @@ package com.c355_project.plannter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.text.Html;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,6 +55,7 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
     Date                selectedDate;
     Button              btnNext;
     Spinner             spnPlants;
+    int                 dialogIcon;
 
     //Plant Database List
     List<Plant> PlantDatabase;
@@ -92,6 +96,7 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
 
         //Set all OnClickListeners needed for this View
         view.findViewById(R.id.btnCalculate).setOnClickListener(this);
+        view.findViewById(R.id.btnAddLog).setOnClickListener(this);
         view.findViewById(R.id.btnNext).setOnClickListener(this);
         view.findViewById(R.id.btnPrevious).setOnClickListener(this);
         view.findViewById(R.id.arrowNext).setOnClickListener(this);
@@ -176,6 +181,7 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
                 Date minPlantDate = new Date(calendarViewInLayout.getMinDate());
                 selectedDate = minPlantDate;
             }
+            makeToast("Add Log Button Clicked");
             openConfirmationDialog(selectedPlantName ,simpleDateFormat.format(selectedDate), Main_Window);
         }
 
@@ -241,18 +247,19 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
     protected void openConfirmationDialog(String potentialCropName, String potentialPlantDate, Context context) {
         new AlertDialog.Builder(context)
                 .setTitle("Add Plant to Log?")
-                .setMessage("Are you sure you want to add: " + potentialCropName.toLowerCase() + " planted on " + potentialPlantDate + " to your plant log?")
+                .setMessage(Html.fromHtml("Are you sure you want to add <b>" + potentialCropName.toLowerCase() + "</b> planted on <b>" + potentialPlantDate + "</b> to your plant log?"))
 
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         //TODO: Add New Plant To Log
+                        //DEBUG
                         makeToast("Plant Add Button Clicked");
                     }
                 })
 
                 // A null listener allows the button to close the dialog and take no further action.
                 .setNegativeButton(android.R.string.no, null)
-                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setIcon(R.drawable.ic_dialog_check_box)
                 .show();
     }
 }

@@ -1,15 +1,21 @@
 package com.c355_project.plannter;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.Fragment;
+
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +37,12 @@ public class Frag_settings extends Fragment implements View.OnClickListener {
     //GUI Elements
     TextView    txtSpringFrost,
                 txtFallFrost;
+    EditText    txtSpringFrostMonth,
+                txtSpringFrostDay,
+                txtSpringFrostYear,
+                txtFallFrostMonth,
+                txtFallFrostDay,
+                txtFallFrostYear;
 
     //Date Format
     SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
@@ -46,7 +58,7 @@ public class Frag_settings extends Fragment implements View.OnClickListener {
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(final View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Main_Window = (Main_Window) getActivity();
 
@@ -61,6 +73,12 @@ public class Frag_settings extends Fragment implements View.OnClickListener {
         //Find GUI Elements
         txtSpringFrost = view.findViewById(R.id.txtCurrentSpringFrost);
         txtFallFrost = view.findViewById(R.id.txtCurrentFallFrost);
+        txtFallFrostDay = view.findViewById(R.id.fallFrostDateDay);
+        txtFallFrostMonth = view.findViewById(R.id.fallFrostDateMonth);
+        txtFallFrostYear = view.findViewById(R.id.fallFrostDateYear);
+        txtSpringFrostDay = view.findViewById(R.id.springFrostDateDay);
+        txtSpringFrostMonth = view.findViewById(R.id.springFrostDateMonth);
+        txtSpringFrostYear = view.findViewById(R.id.springFrostDateYear);
         SpringFrostDate = Main_Window.getLastSpringFrostDate();
         FallFrostDate = Main_Window.getFirstFallFrostDate();
 
@@ -78,6 +96,80 @@ public class Frag_settings extends Fragment implements View.OnClickListener {
         AdView adView = view.findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
         adView.loadAd(adRequest);
+
+        //Automatically moves focus to spring frost day when spring frost month is full
+        txtSpringFrostMonth.addTextChangedListener(new TextWatcher() {
+
+            public void onTextChanged(CharSequence s, int start,int before, int count) {
+                if(txtSpringFrostMonth.getText().toString().length()==2) {
+                    txtSpringFrostDay.requestFocus();
+                }
+            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            public void afterTextChanged(Editable s) { }
+        });
+
+        //Automatically moves focus to spring frost year when spring frost day is full
+        txtSpringFrostDay.addTextChangedListener(new TextWatcher() {
+
+            public void onTextChanged(CharSequence s, int start,int before, int count) {
+                if (txtSpringFrostDay.getText().toString().length()==2) {
+                    txtSpringFrostYear.requestFocus();
+                }
+            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            public void afterTextChanged(Editable s) { }
+        });
+
+        //Automatically hides keyboard when spring frost year is full
+        txtSpringFrostYear.addTextChangedListener(new TextWatcher() {
+
+            public void onTextChanged(CharSequence s, int start,int before, int count) {
+                if (txtSpringFrostYear.getText().toString().length()==4) {
+
+                    hideKeyboardFrom(Main_Window,view);
+                }
+            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            public void afterTextChanged(Editable s) { }
+        });
+
+        //Automatically moves focus to fall frost day when fall frost month is full
+        txtFallFrostMonth.addTextChangedListener(new TextWatcher() {
+
+            public void onTextChanged(CharSequence s, int start,int before, int count) {
+                if(txtFallFrostMonth.getText().toString().length()==2) {
+                    txtFallFrostDay.requestFocus();
+                }
+            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            public void afterTextChanged(Editable s) { }
+        });
+
+        //Automatically moves focus to fall frost year when fall frost day is full
+        txtFallFrostDay.addTextChangedListener(new TextWatcher() {
+
+            public void onTextChanged(CharSequence s, int start,int before, int count) {
+                if (txtFallFrostDay.getText().toString().length()==2) {
+                    txtFallFrostYear.requestFocus();
+                }
+            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            public void afterTextChanged(Editable s) { }
+        });
+
+        //Automatically hides keyboard when fall frost year is full
+        txtFallFrostYear.addTextChangedListener(new TextWatcher() {
+
+            public void onTextChanged(CharSequence s, int start,int before, int count) {
+                if (txtFallFrostYear.getText().toString().length()==4) {
+
+                    hideKeyboardFrom(Main_Window,view);
+                }
+            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            public void afterTextChanged(Editable s) { }
+        });
     }
 
 
@@ -167,5 +259,10 @@ public class Frag_settings extends Fragment implements View.OnClickListener {
         Toast toast = Toast.makeText(getActivity(), Message, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL,0,0);
         toast.show();
+    }
+
+    public static void hideKeyboardFrom(Context context, View view) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }
