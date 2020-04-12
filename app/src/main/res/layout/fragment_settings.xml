@@ -23,15 +23,20 @@
 
 
                 android:layout_margin="5dp"
+                android:background="@color/colorTitleText"
                 android:gravity="center">
 
                 <Button
                     android:id="@+id/btnFrostDateIntent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
+                    android:layout_marginLeft="11dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginRight="11dp"
+                    android:layout_marginBottom="2dp"
+                    android:background="@color/colorPrimary"
                     android:fontFamily="@font/finger_paint"
-                    android:text="Find Local Spring And Fall Frost Dates"
+                    android:text="Find Local Frost Dates"
                     android:textColor="@color/colorTitleText"
                     android:textSize="20sp" />
             </TableRow>
@@ -62,7 +67,8 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/finger_paint"
                         android:hint="MM"
-                        android:maxLength="2" />
+                        android:maxLength="2"
+                        android:inputType = "number"/>
 
                     <TextView
                         android:id="@+id/textView8"
@@ -80,7 +86,8 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/finger_paint"
                         android:hint="DD"
-                        android:maxLength="2" />
+                        android:maxLength="2"
+                        android:inputType = "number"/>
 
                     <TextView
                         android:id="@+id/textView6"
@@ -97,7 +104,8 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/finger_paint"
                         android:hint="YYYY"
-                        android:maxLength="4" />
+                        android:maxLength="4"
+                        android:inputType = "number"/>
 
                     <Button
                         android:id="@+id/btnUpdateSpring"
@@ -137,7 +145,8 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/finger_paint"
                         android:hint="MM"
-                        android:maxLength="2" />
+                        android:maxLength="2"
+                        android:inputType = "number"/>
 
                     <TextView
                         android:id="@+id/textView14"
@@ -155,7 +164,8 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/finger_paint"
                         android:hint="DD"
-                        android:maxLength="2" />
+                        android:maxLength="2"
+                        android:inputType = "number"/>
 
                     <TextView
                         android:id="@+id/textView12"
@@ -172,7 +182,8 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/finger_paint"
                         android:hint="YYYY"
-                        android:maxLength="4" />
+                        android:maxLength="4"
+                        android:inputType = "number"/>
 
                     <Button
                         android:id="@+id/btnUpdateFall"
