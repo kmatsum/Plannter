@@ -19,6 +19,11 @@ import java.util.Date;
 import java.util.List;
 
 public class Main_Window extends AppCompatActivity {
+
+    /*TODO:
+        - Fix broken ads
+     */
+
 //VARIABLES ========================================================================================
 
     // Location to store all files
