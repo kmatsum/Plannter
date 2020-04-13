@@ -13,6 +13,9 @@ public class    Plant {
     /* VARIABLE DESCRIPTIONS =======================================================================
 
     plantID:            Auto-generated primary key (starts at 1, increments by 1).
+    logs:               ArrayList of corresponding Log objects, dynamically read from the database
+                        at runtime. This value is ignored by Room and NOT kept track of in the
+                        database. A custom query is run to get the results based on matching plantIDs.
     plantName:          Name of plant.
     seedCompany:        Seed company, preloaded plants will have value "General".
     firstPlantDate:     # of weeks BEFORE Avg Last Spring Frost that the plant should be planted.
@@ -35,7 +38,7 @@ public class    Plant {
     @PrimaryKey(autoGenerate = true)
     private int plantID;
     @Ignore
-    ArrayList<Log> logs;
+    private ArrayList<Log> logs;
     private String plantName;
     private String seedCompany;
     private int firstPlantDate;
@@ -52,11 +55,10 @@ public class    Plant {
 
 
 //CONSTRUCTOR ======================================================================================
-    public Plant(String plantName, ArrayList<Log> logs, String seedCompany, int firstPlantDate,
+    public Plant(String plantName, String seedCompany, int firstPlantDate,
                  int weeksToHarvest, int harvestRange, int seedIndoorDate, int lastPlantDate,
                  String notes, String photoPath, boolean raisedRows, boolean raisedHills,
                  int distBetweenPlants, double seedDepth) {
-        this.logs = logs;
         this.plantName = plantName;
         this.seedCompany = seedCompany;
         this.firstPlantDate = firstPlantDate;
