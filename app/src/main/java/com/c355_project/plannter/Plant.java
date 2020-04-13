@@ -1,8 +1,10 @@
 package com.c355_project.plannter;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import java.util.ArrayList;
 
 
 @Entity()
@@ -32,6 +34,8 @@ public class    Plant {
 
     @PrimaryKey(autoGenerate = true)
     private int plantID;
+    @Ignore
+    ArrayList<Log> logs;
     private String plantName;
     private String seedCompany;
     private int firstPlantDate;
@@ -48,10 +52,11 @@ public class    Plant {
 
 
 //CONSTRUCTOR ======================================================================================
-    public Plant(String plantName, String seedCompany, int firstPlantDate, int weeksToHarvest,
-                 int harvestRange, int seedIndoorDate, int lastPlantDate, String notes,
-                 String photoPath, boolean raisedRows, boolean raisedHills, int distBetweenPlants,
-                 double seedDepth) {
+    public Plant(String plantName, ArrayList<Log> logs, String seedCompany, int firstPlantDate,
+                 int weeksToHarvest, int harvestRange, int seedIndoorDate, int lastPlantDate,
+                 String notes, String photoPath, boolean raisedRows, boolean raisedHills,
+                 int distBetweenPlants, double seedDepth) {
+        this.logs = logs;
         this.plantName = plantName;
         this.seedCompany = seedCompany;
         this.firstPlantDate = firstPlantDate;
@@ -76,6 +81,14 @@ public class    Plant {
 
     public int getPlantID(){
         return this.plantID;
+    }
+
+    public ArrayList<Log> getLogs() {
+        return logs;
+    }
+
+    public void setLogs(ArrayList<Log> logs) {
+        this.logs = logs;
     }
 
     public void setPlantName(String name){
