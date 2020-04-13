@@ -19,6 +19,11 @@ import java.util.Date;
 import java.util.List;
 
 public class Main_Window extends AppCompatActivity {
+
+    /*TODO:
+        - Fix broken ads
+     */
+
 //VARIABLES ========================================================================================
 
     // Location to store all files
@@ -89,9 +94,7 @@ public class Main_Window extends AppCompatActivity {
         changeFragment("MainMenu");
     }
 
-
-
-//METHODS ==========================================================================================
+    //METHODS ==========================================================================================
     public void changeFragment(String menuFragment) {
         switch (menuFragment) {
             case "MainMenu": {
@@ -307,7 +310,7 @@ public class Main_Window extends AppCompatActivity {
 
                     // UPDATE CORRECT PLANT WITH PICTURE ===========================================
                     plant.setPhotoPath(filePath);
-                    plant.setId((int)id);
+                    plant.setPlantID((int)id);
                     PlantDatabase.getInstance(getApplicationContext()).plantDao().updatePlant(plant);
 
                     // Update Frag_settingsAddPlants class photo variable to null
@@ -336,7 +339,14 @@ public class Main_Window extends AppCompatActivity {
             return null;
         }
 
-        @Override
+    @Override
+    protected void onCancelled() {
+        super.onCancelled();
+        // Dismiss the dialog
+        progress.dismiss();
+    }
+
+    @Override
         protected void onPostExecute(Object o) {
             super.onPostExecute(o);
             System.out.println("DatabaseTransaction.onPostExecute() Called");

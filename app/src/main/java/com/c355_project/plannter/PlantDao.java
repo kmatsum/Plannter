@@ -10,6 +10,8 @@ import java.util.List;
 
 @Dao
 public interface PlantDao {
+
+    // PLANTS ======================================================================================
     @Insert
     long insertPlant(Plant plant);
     @Delete
@@ -18,4 +20,20 @@ public interface PlantDao {
     void updatePlant(Plant plant);
     @Query("SELECT * FROM Plant ORDER BY PlantName")
     List<Plant> getAllPlants();
+
+    // LOGS ========================================================================================
+    @Insert
+    long insertLog(Log log);
+    @Delete
+    void deleteLog(Log log);
+    @Query("SELECT * FROM Log WHERE plantID = :plantID")
+    List<Log> getAllLogsForPlant(int plantID);
+
+    // NOTES =======================================================================================
+    @Insert
+    long insertNote(Note note);
+    @Delete
+    void deleteNote(Note note);
+    @Query("SELECT * FROM Note WHERE logID = :logID")
+    List<Note> getAllNotesForLog(int logID);
 }
