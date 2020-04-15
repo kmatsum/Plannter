@@ -30,7 +30,7 @@ public class Main_Window extends AppCompatActivity {
     public static String ROOT_STORAGE_LOCATION;
     public static String PLANT_PHOTO_STORAGE_LOCATION;
     public static String DATABASE_DIRECTORY = "./data/data/" + BuildConfig.APPLICATION_ID + "/databases/";
-    public static String DB_NAME = "plant_db";
+    public static String DB_NAME = "plant.db";
 
     //Date Formatter
     SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
