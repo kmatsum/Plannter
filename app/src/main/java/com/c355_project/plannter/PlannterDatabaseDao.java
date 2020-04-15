@@ -73,7 +73,17 @@ public abstract class PlannterDatabaseDao {
         // Delete plant
         _deletePlant(plant);
 
-        /*TODO: add logic for deleting corresponding plant folder*/
+        // Delete its corresponding photo folder from internal storage
+        // Internal files must be deleted first before directory can be deleted
+        File folder = new File(Main_Window.PLANT_PHOTO_STORAGE_LOCATION + "/" + plant.getPlantID());
+        String[] files = folder.list();
+        if (files != null){
+            for(String s: files){
+                File currentFile = new File(folder.getPath(),s);
+                currentFile.delete();
+            }
+        }
+        folder.delete();
 
         // Update console
         System.out.println("PlannterDatabaseDao DELETE Plant Operation Completed\r\n\t\tPlant ID: "
