@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 import java.util.ArrayList;
 
 
-@Entity()
+@Entity
 public class    Plant {
 
     /* VARIABLE DESCRIPTIONS =======================================================================
