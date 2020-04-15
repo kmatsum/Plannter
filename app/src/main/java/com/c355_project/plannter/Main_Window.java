@@ -10,8 +10,6 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.widget.Toast;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -30,7 +28,7 @@ public class Main_Window extends AppCompatActivity {
     public static String ROOT_STORAGE_LOCATION;
     public static String PLANT_PHOTO_STORAGE_LOCATION;
     public static String DATABASE_DIRECTORY = "./data/data/" + BuildConfig.APPLICATION_ID + "/databases/";
-    public static String DB_NAME = "plant_db";
+    public static String DB_NAME = "plant.db";
 
     //Date Formatter
     SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
@@ -173,8 +171,7 @@ public class Main_Window extends AppCompatActivity {
          */
 
         //Delete Database File
-        File db = new File (Main_Window.DATABASE_DIRECTORY, Main_Window.DB_NAME);
-        db.delete();
+        this.getApplicationContext().deleteDatabase(Main_Window.DB_NAME);
 
         //Recreate database
         editTransaction("GetPlantList", null);
@@ -274,8 +271,8 @@ public class Main_Window extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            System.out.println("DatabaseTransaction.onPreExecute() Called");
-            progress.setTitle("Loading Default Plants");
+            // Make user wait
+            progress.setTitle("Loading " + transactionType + " Transaction.");
             progress.setMessage("Wait while loading...");
             progress.setCancelable(false); // disable dismiss by tapping outside of the dialog
             progress.show();
@@ -283,36 +280,16 @@ public class Main_Window extends AppCompatActivity {
 
         @Override
         protected Object doInBackground(Object[] objects) {
-            // Make User Wait
-            System.out.println("DatabaseTransaction.doInBackground() Called");
-
+            System.out.println("\r\n=============================================================");
+            System.out.println("\r\nDATABASE TRANSACTION BEGINNING");
             switch (transactionType){
-
                 case ("InsertPlant"): {
-                    System.out.println("doInBackground() Inserting Plant");
 
-                    long id = PlantDatabase.getInstance(getApplicationContext()).plantDao().insertPlant(plant);
-                    System.out.println("doInBackground() plant id " + id);
-
-                    // SAVE PHOTO ==================================================================
+                    // Get plant photo
                     Bitmap photo = Frag_settingsAddPlants.photo;
-                    //Create directory in which to store photo
-                    File f = new File(Main_Window.PLANT_PHOTO_STORAGE_LOCATION, String.valueOf(id));
-                    f.mkdir();
-                    String filePath = f.getAbsoluteFile() + "/photo.png";
 
-
-                    // Export photo in storage location
-                    try (FileOutputStream out = new FileOutputStream(filePath)) {
-                        photo.compress(Bitmap.CompressFormat.PNG, 100, out);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                    // UPDATE CORRECT PLANT WITH PICTURE ===========================================
-                    plant.setPhotoPath(filePath);
-                    plant.setPlantID((int)id);
-                    PlantDatabase.getInstance(getApplicationContext()).plantDao().updatePlant(plant);
+                    // Call DAO to insert photo
+                    PlantDatabase.getInstance(getApplicationContext()).plantDao().insertPlant(plant, photo);
 
                     // Update Frag_settingsAddPlants class photo variable to null
                     // This is required as the fragment is never recycled
@@ -336,6 +313,9 @@ public class Main_Window extends AppCompatActivity {
 
             //Get plants
             PlantList = PlantDatabase.getInstance(Main_Window.this).plantDao().getAllPlants();
+
+            System.out.println("\r\nDATABASE TRANSACTION ENDING");
+            System.out.println("\r\n=============================================================");
 
             return null;
         }

@@ -1,20 +1,12 @@
 package com.c355_project.plannter;
 
 import androidx.room.Entity;
-import androidx.room.ForeignKey;
 import androidx.room.Ignore;
-import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import java.util.ArrayList;
 
-import static androidx.room.ForeignKey.CASCADE;
-
-@Entity(foreignKeys = @ForeignKey(entity = Plant.class,
-        parentColumns = "plantID",
-        childColumns = "plantID",
-        onDelete = CASCADE),
-        indices = {@Index(value="plantID")})
+@Entity
 public class Log {
 
     /* VARIABLE DESCRIPTIONS =======================================================================
