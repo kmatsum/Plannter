@@ -43,12 +43,12 @@ public abstract class PlannterDatabaseDao {
         // Insert log and get corresponding id
         long id = _insertPlant(plant);
 
-        //Create directory in which to store photo
-        File f = new File(Main_Window.PLANT_PHOTO_STORAGE_LOCATION, String.valueOf(id));
+        // Create corresponding directory
+        File f = new File(Main_Window.PLANT_MEDIA_LOCATION, String.valueOf(id));
         f.mkdir();
-        String filePath = f.getAbsoluteFile() + "/photo.png";
+        String filePath = f.getAbsoluteFile() + "/" +  id + ".png";
 
-        // Export photo in storage location
+        // Export photo to corresponding directory
         try (FileOutputStream out = new FileOutputStream(filePath)) {
             photo.compress(Bitmap.CompressFormat.PNG, 100, out);
         } catch (IOException e) {
@@ -74,16 +74,7 @@ public abstract class PlannterDatabaseDao {
         _deletePlant(plant);
 
         // Delete its corresponding photo folder from internal storage
-        // Internal files must be deleted first before directory can be deleted
-        File folder = new File(Main_Window.PLANT_PHOTO_STORAGE_LOCATION + "/" + plant.getPlantID());
-        String[] files = folder.list();
-        if (files != null){
-            for(String s: files){
-                File currentFile = new File(folder.getPath(),s);
-                currentFile.delete();
-            }
-        }
-        folder.delete();
+        _deleteFolder(new File(Main_Window.PLANT_MEDIA_LOCATION + "/" + plant.getPlantID()));
 
         // Update console
         System.out.println("PlannterDatabaseDao DELETE Plant Operation Completed\r\n\t\tPlant ID: "
@@ -130,6 +121,9 @@ public abstract class PlannterDatabaseDao {
         // Insert log
         long logID = _insertLog(log);
 
+        // Create corresponding directory
+        new File(Main_Window.LOG_MEDIA_LOCATION, String.valueOf(logID)).mkdir();
+
         // Update console
         System.out.println("PlannterDatabaseDao INSERT Log Operation Completed\r\n\t\tLog ID: "
                 + logID + "\tPlant ID: " + log.getPlantID());
@@ -146,7 +140,8 @@ public abstract class PlannterDatabaseDao {
         // Delete log
         _deleteLog(log);
 
-        /*TODO: add logic for deleting corresponding log folder*/
+        // Delete its corresponding photo folder from internal storage
+        _deleteFolder(new File(Main_Window.LOG_MEDIA_LOCATION + "/" + log.getLogID()));
 
         // Update console
         System.out.println("PlannterDatabaseDao DELETE Log Operation Completed\r\n\t\tLog ID: "
@@ -212,6 +207,9 @@ public abstract class PlannterDatabaseDao {
         // Insert note
         _insertNote(note);
 
+        // Create corresponding directory
+        new File(Main_Window.LOG_MEDIA_LOCATION, note.getLogID() + "/" + note.getNoteID()).mkdir();
+
         // Update console
         System.out.println("PlannterDatabaseDao INSERT Note Operation Completed\r\n\t\tNote ID: "
                 + note.getNoteID() + "\tLog ID: " + note.getLogID() + "\tNote Type: " + note.getNoteType());
@@ -224,7 +222,8 @@ public abstract class PlannterDatabaseDao {
         // Delete note
         _deleteNote(note);
 
-        /*TODO: add logic for deleting corresponding note folder*/
+        // Delete its corresponding photo folder from internal storage
+        _deleteFolder(new File(Main_Window.LOG_MEDIA_LOCATION + "/" + note.getLogID() + "/" + note.getNoteID()));
 
         // Update console
         System.out.println("PlannterDatabaseDao DELETE Note Operation Completed\r\n\t\tNote ID: "
@@ -265,5 +264,23 @@ public abstract class PlannterDatabaseDao {
         }
         // Update Console
         System.out.println("PlannterDatabaseDao DELETE All Notes For Log With ID " + log.getLogID() + " Completed");
+    }
+
+    // HELPER METHODS ==============================================================================
+    // Method to delete passed folder and all files in passed folder
+    // Internal files must be deleted first before the folder can be deleted
+    public void _deleteFolder(File folder){
+        String[] files = folder.list();
+        if (files != null){
+            for(String s: files){
+                File currentFile = new File(folder.getPath(),s);
+                currentFile.delete();
+                // Update Console
+                System.out.println("PlannterDatabaseDao FILE DELETED: " + currentFile.getAbsolutePath());
+            }
+        }
+        folder.delete();
+        // Update Console
+        System.out.println("PlannterDatabaseDao FOLDER DELETED: " + folder.getAbsolutePath());
     }
 }

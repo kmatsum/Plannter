@@ -25,10 +25,11 @@ public class Main_Window extends AppCompatActivity {
 //VARIABLES ========================================================================================
 
     // Location to store all files
-    public static String ROOT_STORAGE_LOCATION;
-    public static String PLANT_PHOTO_STORAGE_LOCATION;
-    public static String DATABASE_DIRECTORY = "./data/data/" + BuildConfig.APPLICATION_ID + "/databases/";
-    public static String DB_NAME = "plannter.db";
+    public static String ROOT_MEDIA_LOCATION,
+            PLANT_MEDIA_LOCATION,
+            LOG_MEDIA_LOCATION,
+            DB_NAME = "plannter.db",
+            DATABASE_DIRECTORY = "./data/data/" + BuildConfig.APPLICATION_ID + "/databases/";
 
     //Date Formatter
     SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
@@ -73,13 +74,19 @@ public class Main_Window extends AppCompatActivity {
 
         // Set internal location to store all files, adding a subfolder called "media"
         File ext_folder = this.getFilesDir();
-        File storage_loc = new File(ext_folder, "media");
-        storage_loc.mkdir();
-        ROOT_STORAGE_LOCATION =  storage_loc.getAbsolutePath() + "/";
-        // Set plant photo storage within root storage location
-        File photo_loc = new File(storage_loc, "plant_photos");
-        photo_loc.mkdir();
-        PLANT_PHOTO_STORAGE_LOCATION = photo_loc.getAbsolutePath() + "/";
+        File media_loc = new File(ext_folder, "media");
+        media_loc.mkdir();
+        ROOT_MEDIA_LOCATION =  media_loc.getAbsolutePath() + "/";
+
+        // Set plant storage within root storage location
+        File plant_loc = new File(media_loc, "Plants");
+        plant_loc.mkdir();
+        PLANT_MEDIA_LOCATION = plant_loc.getAbsolutePath() + "/";
+
+        // Set plant storage within root storage location
+        File log_loc = new File(media_loc, "Logs");
+        log_loc.mkdir();
+        LOG_MEDIA_LOCATION = log_loc.getAbsolutePath() + "/";
 
         //Get/Set Default Fall and Spring Plant Date Shared Preferences
         int year = Calendar.getInstance().get(Calendar.YEAR);
@@ -197,9 +204,6 @@ public class Main_Window extends AppCompatActivity {
 
 
 //GET AND SET METHODS ==============================================================================
-    public List<Plant> getPlantList() {
-        return PlantList;
-    }
 
     /*
         Method to call AsyncTask to interact with the database, but wait until the AsyncTask

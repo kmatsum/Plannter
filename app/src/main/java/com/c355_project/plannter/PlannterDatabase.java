@@ -169,14 +169,15 @@ public abstract class PlannterDatabase extends RoomDatabase {
                             R.drawable.squash, R.drawable.corn, R.drawable.tomato
         };
 
-        //Create directories in which to store photos
+        //Create corresponding directories for each plant
         Bitmap photo;
         for (int i = 1; i <= 21; i++){
-            File f = new File(Main_Window.PLANT_PHOTO_STORAGE_LOCATION, String.valueOf(i));
+            File f = new File(Main_Window.PLANT_MEDIA_LOCATION, String.valueOf(i));
             f.mkdir();
-            filePaths[i-1] = f.getAbsoluteFile() + "/photo.jpg";
+            filePaths[i-1] = f.getAbsoluteFile() + "/" + i + ".jpg";
             photo = ((BitmapDrawable) ResourcesCompat.getDrawable(context.getResources(), drawableIds[i-1], null)).getBitmap();
-            // Export photo in storage location
+
+            // Export photo to corresponding directory
             try (FileOutputStream out = new FileOutputStream(filePaths[i-1])) {
                 photo.compress(Bitmap.CompressFormat.JPEG, 100, out);
             } catch (IOException e) {
