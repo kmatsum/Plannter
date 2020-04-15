@@ -12,6 +12,7 @@
     <string name="crop_info">Crop Info</string>
     <string name="btn_Back">Back</string>
     <string name="you_can_plant_harvest_the_following_crops_on">You can Plant/Harvest the following crops on</string>
+    <string name="ChangeFrostDates">Change Frost Dates:</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
