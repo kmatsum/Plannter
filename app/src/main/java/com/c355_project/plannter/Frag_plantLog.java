@@ -8,6 +8,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
@@ -23,6 +24,7 @@ public class Frag_plantLog extends Fragment implements View.OnClickListener {
     Main_Window Main_Window;
 
     //GUI Elements
+    ListView lv;
 
 
     //Date Format
@@ -42,6 +44,10 @@ public class Frag_plantLog extends Fragment implements View.OnClickListener {
 
         //Provide values for variables needed to be set on activity start
         Main_Window = (Main_Window) getActivity();
+        lv = view.findViewById(R.id.listView);
+
+        //Sets listView Adapter
+        lv.setAdapter(new PlantLogCustomListAdapter(Main_Window));
 
         //Implements hardware back button to take user back to the Main Menu
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
@@ -69,9 +75,4 @@ public class Frag_plantLog extends Fragment implements View.OnClickListener {
     }
 
 //METHODS ==========================================================================================
-    public void makeToast(String Message) {
-        Toast toast = Toast.makeText(getActivity(), Message, Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL,0,0);
-        toast.show();
-    }
 }

@@ -53,6 +53,7 @@ public class Main_Window extends AppCompatActivity {
 
     //Plant List
     List<Plant> PlantList;
+    List<Log>   LogList;
 
     //PlantHarvest
     Date userInputDate;

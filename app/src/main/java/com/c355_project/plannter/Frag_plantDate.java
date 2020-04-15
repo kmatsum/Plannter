@@ -251,9 +251,10 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
 
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        //TODO: Add New Plant To Log
-                        //DEBUG
-                        makeToast("Plant Add Button Clicked");
+                        //TODO: Create New Log Object and Fill Log Object With Plant Type, Planted Date & Harvest Range
+                        String harvestRange = harvestRangeMin + " - " + harvestRangeMax;
+                        Log tempLog = new Log(Main_Window.LogList.size()+1, PlantDatabase.get(spnPlants.getSelectedItemPosition()).getPlantID(), selectedPlantName, selectedDate.toString(), harvestRange);
+                        Main_Window.LogList.add(tempLog);
                     }
                 })
 
