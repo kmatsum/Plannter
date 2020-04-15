@@ -1,7 +1,9 @@
 package com.c355_project.plannter;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,6 +12,7 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -196,6 +199,10 @@ public class Frag_settings extends Fragment implements View.OnClickListener {
                     Date springDate = Main_Window.dateFormat.parse(springInputDate);
                     //Updates The Database With The User Inputted Spring Frost Date Values
                     Main_Window.setLastSpringFrostDate(springDate);
+                    txtSpringMonth.setText("");
+                    txtSpringDay.setText("");
+                    txtSpringYear.setText("");
+                    txtSpringMonth.requestFocus();
                     makeToast("Last Spring Frost Date Successfully Updated!");
                 }
                 //If Date Is Invalid, Toast The User To Input A Valid Date
@@ -222,6 +229,10 @@ public class Frag_settings extends Fragment implements View.OnClickListener {
                     Date fallDate = Main_Window.dateFormat.parse(fallInputDate);
                     //Updates The Database With The User Inputted Fall Frost Date Values
                     Main_Window.setFirstFallFrostDate(fallDate);
+                    txtFallMonth.setText("");
+                    txtFallDay.setText("");
+                    txtFallYear.setText("");
+                    txtFallMonth.requestFocus();
                     makeToast("First Fall Frost Date Successfully Updated!");
                 }
                 //If Date Is Invalid, Toast The User To Input A Valid Date
@@ -235,12 +246,7 @@ public class Frag_settings extends Fragment implements View.OnClickListener {
             } break;
 
             case (R.id.btnResetDB): {
-                Main_Window.resetPlantDB();
-                //Update the class local Spring and Fall Frost Dates
-                SpringFrostDate = Main_Window.getLastSpringFrostDate();
-                FallFrostDate = Main_Window.getFirstFallFrostDate();
-                txtSpringFrost.setText(dateFormat.format(SpringFrostDate));
-                txtFallFrost.setText(dateFormat.format(FallFrostDate));
+                openConfirmationDialog(Main_Window);
             } break;
 
             //Used for handling exceptions on if the given ViewID and the expected ViewID does not match
@@ -264,5 +270,27 @@ public class Frag_settings extends Fragment implements View.OnClickListener {
     public static void hideKeyboardFrom(Context context, View view) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    protected void openConfirmationDialog(Context context) {
+        new AlertDialog.Builder(context)
+                .setTitle("Are You Sure You Want To Reset?")
+                .setMessage(Html.fromHtml("Doing so will remove any custom plants and frost dates."))
+
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Main_Window.resetPlantDB();
+                        //Update the class local Spring and Fall Frost Dates
+                        SpringFrostDate = Main_Window.getLastSpringFrostDate();
+                        FallFrostDate = Main_Window.getFirstFallFrostDate();
+                        txtSpringFrost.setText(dateFormat.format(SpringFrostDate));
+                        txtFallFrost.setText(dateFormat.format(FallFrostDate));
+                    }
+                })
+
+                // A null listener allows the button to close the dialog and take no further action.
+                .setNegativeButton(android.R.string.no, null)
+                .setIcon(R.drawable.ic_dialog_warning)
+                .show();
     }
 }

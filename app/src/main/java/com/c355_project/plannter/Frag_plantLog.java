@@ -17,7 +17,7 @@ import java.text.SimpleDateFormat;
 
 
 
-public class Frag_plantHistory extends Fragment implements View.OnClickListener {
+public class Frag_plantLog extends Fragment implements View.OnClickListener {
     //VARIABLES ========================================================================================
     //Main_Window Activity Instantiation
     Main_Window Main_Window;
@@ -33,7 +33,7 @@ public class Frag_plantHistory extends Fragment implements View.OnClickListener 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_plant_history, container, false);
+        return inflater.inflate(R.layout.fragment_plant_log, container, false);
     }
 
     @Override
