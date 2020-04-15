@@ -1,11 +1,16 @@
 package com.c355_project.plannter;
 
+import android.graphics.Bitmap;
+
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 @Dao
@@ -33,9 +38,31 @@ public abstract class PlantDao {
 
     // Method to insert passed plant
     // Returns Room auto-generated plantID
-    public long insertPlant(Plant plant) {
-        // Insert log
-        return _insertPlant(plant);
+    public void insertPlant(Plant plant, Bitmap photo) {
+
+        // Insert log and get corresponding id
+        long id = _insertPlant(plant);
+
+        //Create directory in which to store photo
+        File f = new File(Main_Window.PLANT_PHOTO_STORAGE_LOCATION, String.valueOf(id));
+        f.mkdir();
+        String filePath = f.getAbsoluteFile() + "/photo.png";
+
+        // Export photo in storage location
+        try (FileOutputStream out = new FileOutputStream(filePath)) {
+            photo.compress(Bitmap.CompressFormat.PNG, 100, out);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Update plant object
+        plant.setPhotoPath(filePath);
+        plant.setPlantID((int)id);
+        updatePlant(plant);
+
+        // Update console
+        System.out.println("PlantDao INSERT Plant Operation Completed\r\n\t\tPlant ID: " +
+                plant.getPlantID() + "\tPlant Name: " + plant.getPlantName());
     }
 
     // Method to delete passed plant and corresponding logs and notes
@@ -47,11 +74,21 @@ public abstract class PlantDao {
         _deletePlant(plant);
 
         /*TODO: add logic for deleting corresponding plant folder*/
+
+        // Update console
+        System.out.println("PlantDao DELETE Plant Operation Completed\r\n\t\tPlant ID: "
+                + plant.getPlantID() + "\tPlant Name: " + plant.getPlantName());
     }
 
     // Method to update passed plant
-    @Update
-    abstract void updatePlant(Plant plant);
+    public void updatePlant(Plant plant){
+        // Update plant
+        _updatePlant(plant);
+
+        // Update console
+        System.out.println("PlantDao UPDATE Plant Operation Completed\r\n\t\tPlant ID: "
+                + plant.getPlantID() + "\tPlant Name: " + plant.getPlantName());
+    }
 
     // Method to return all plants
     @Query("SELECT * FROM Plant")
@@ -60,6 +97,7 @@ public abstract class PlantDao {
     // INTERNAL METHODS ============================================================================
 
     // Method that shouldn't be called outside this class to insert a plant
+    // EXCEPTION TO THE PREVIOUS LINE: this method is called in PlantDatabase.java
     // Returns Room auto-generated plantID
     @Insert
     abstract long _insertPlant(Plant plant);
@@ -68,26 +106,41 @@ public abstract class PlantDao {
     @Delete
     abstract void _deletePlant(Plant plant);
 
+    // Method that shouldn't be called outside this class to update passed plant
+    @Update
+    abstract void _updatePlant(Plant plant);
+
 // LOG METHODS =====================================================================================
 
     // EXTERNAL METHODS ============================================================================
 
     // Method to insert passed log
     // Returns Room auto-generated logID
-    public long insertLog(Log log) {
+    public void insertLog(Log log) {
         // Insert log
-        return _insertLog(log);
+        long logID = _insertLog(log);
+
+        // Update console
+        System.out.println("PlantDao INSERT Log Operation Completed\r\n\t\tLog ID: "
+                + logID + "\tPlant ID: " + log.getPlantID());
     }
 
     // Method to delete passed log and corresponding notes
     public void deleteLog(Log log){
         // Delete all corresponding notes
-        _deleteAllNotesForLog(log.getLogID());
+        _deleteAllNotesForLog(log);
+
+        // Update Console
+        System.out.println("PlantDao DELETE All Notes For Log With ID " + log.getPlantID() + " Completed");
 
         // Delete log
         _deleteLog(log);
 
         /*TODO: add logic for deleting corresponding log folder*/
+
+        // Update console
+        System.out.println("PlantDao DELETE Log Operation Completed\r\n\t\tLog ID: "
+                + log.getLogID() + "\tPlant ID: " + log.getPlantID());
     }
 
     // Method to return all logs
@@ -124,6 +177,8 @@ public abstract class PlantDao {
         for (Log log : plantLogs){
             deleteLog(log);
         }
+        // Update Console
+        System.out.println("PlantDao DELETE All Logs For Plant With ID " + plant.getPlantID() + " Completed");
     }
 
 // NOTE METHODS ====================================================================================
@@ -147,6 +202,10 @@ public abstract class PlantDao {
         // Insert note
         _insertNote(note);
 
+        // Update console
+        System.out.println("PlantDao INSERT Note Operation Completed\r\n\t\tNote ID: "
+                + note.getNoteID() + "\tLog ID: " + note.getLogID() + "\tNote Type: " + note.getNoteType());
+
         return lastNoteID + 1;
     }
 
@@ -156,6 +215,10 @@ public abstract class PlantDao {
         _deleteNote(note);
 
         /*TODO: add logic for deleting corresponding note folder*/
+
+        // Update console
+        System.out.println("PlantDao DELETE Note Operation Completed\r\n\t\tNote ID: "
+                + note.getNoteID() + "\tLog ID: " + note.getLogID() + "\tNote Type: " + note.getNoteType());
     }
 
     // Method to return all notes
@@ -182,7 +245,15 @@ public abstract class PlantDao {
     @Delete
     abstract void _deleteNote(Note note);
 
-    // Method that shouldn't be called outside this class to delete all notes with a certain logID
-    @Query("DELETE FROM Note WHERE logID = :logID")
-    abstract void _deleteAllNotesForLog(int logID);
+    // Method that shouldn't be called outside this class to delete all notes for passed log
+    private void _deleteAllNotesForLog(Log log){
+        // Get all corresponding notes
+        List<Note> plantNotes = getAllNotesForLog(log);
+        // Delete logs
+        for (Note note : plantNotes){
+            deleteNote(note);
+        }
+        // Update Console
+        System.out.println("PlantDao DELETE All Notes For Log With ID " + log.getLogID() + " Completed");
+    }
 }
