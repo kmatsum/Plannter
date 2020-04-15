@@ -28,7 +28,7 @@ public class Main_Window extends AppCompatActivity {
     public static String ROOT_STORAGE_LOCATION;
     public static String PLANT_PHOTO_STORAGE_LOCATION;
     public static String DATABASE_DIRECTORY = "./data/data/" + BuildConfig.APPLICATION_ID + "/databases/";
-    public static String DB_NAME = "plant.db";
+    public static String DB_NAME = "plannter.db";
 
     //Date Formatter
     SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
@@ -288,7 +288,7 @@ public class Main_Window extends AppCompatActivity {
                     Bitmap photo = Frag_settingsAddPlants.photo;
 
                     // Call DAO to insert photo
-                    PlantDatabase.getInstance(getApplicationContext()).plantDao().insertPlant(plant, photo);
+                    PlannterDatabase.getInstance(getApplicationContext()).plannterDatabaseDao().insertPlant(plant, photo);
 
                     // Update Frag_settingsAddPlants class photo variable to null
                     // This is required as the fragment is never recycled
@@ -298,11 +298,11 @@ public class Main_Window extends AppCompatActivity {
                 } break;
 
                 case ("UpdatePlant"): {
-                    PlantDatabase.getInstance(getApplicationContext()).plantDao().updatePlant(plant);
+                    PlannterDatabase.getInstance(getApplicationContext()).plannterDatabaseDao().updatePlant(plant);
                 } break;
 
                 case ("DeletePlant"): {
-                    PlantDatabase.getInstance(getApplicationContext()).plantDao().deletePlant(plant);
+                    PlannterDatabase.getInstance(getApplicationContext()).plannterDatabaseDao().deletePlant(plant);
                 } break;
 
                 case ("GetPlantList"): {
@@ -311,7 +311,7 @@ public class Main_Window extends AppCompatActivity {
             }
 
             //Get plants
-            PlantList = PlantDatabase.getInstance(Main_Window.this).plantDao().getAllPlants();
+            PlantList = PlannterDatabase.getInstance(Main_Window.this).plannterDatabaseDao().getAllPlants();
 
             System.out.println("\r\nDATABASE TRANSACTION ENDING");
             System.out.println("\r\n=============================================================");
