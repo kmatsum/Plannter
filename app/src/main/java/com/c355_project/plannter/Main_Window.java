@@ -175,7 +175,7 @@ public class Main_Window extends AppCompatActivity {
         this.getApplicationContext().deleteDatabase(Main_Window.DB_NAME);
 
         //Recreate database
-        editTransaction("GetPlantList", null);
+        editTransaction("UpdateAllLists", null);
     }
 
     // Helper method to convert passed String in MM/dd/yyyy format to Date
@@ -294,20 +294,29 @@ public class Main_Window extends AppCompatActivity {
 
                 } break;
 
-                case ("UpdatePlant"): {
-                    // Call DAO to update plant
-                    PlannterDatabase.getInstance(getApplicationContext()).plannterDatabaseDao().updatePlant((Plant) object);
-                } break;
-
                 case ("DeletePlant"): {
                     // Call DAO to delete plant
                     PlannterDatabase.getInstance(getApplicationContext()).plannterDatabaseDao().deletePlant((Plant) object);
                 } break;
 
-
                 case ("InsertLog"): {
                     // Call DAO to insert log
                     PlannterDatabase.getInstance(getApplicationContext()).plannterDatabaseDao().insertLog((Log) object);
+                }
+
+                case ("DeleteLog"): {
+                    // Call DAO to delete log
+                    PlannterDatabase.getInstance(getApplicationContext()).plannterDatabaseDao().deleteLog((Log) object);
+                }
+
+                case ("InsertNote"): {
+                    // Call DAO to insert note
+                    PlannterDatabase.getInstance(getApplicationContext()).plannterDatabaseDao().insertNote((Note) object);
+                }
+
+                case ("DeleteNote"): {
+                    // Call DAO to delete note
+                    PlannterDatabase.getInstance(getApplicationContext()).plannterDatabaseDao().insertNote((Note) object);
                 }
 
                 case ("UpdateAllLists"): {
