@@ -26,8 +26,7 @@ public class Note {
 
 //CONSTRUCTOR ======================================================================================
 
-    public Note(int noteID, int logID, String noteType, String noteText, String noteFilepath) {
-        this.noteID = noteID;
+    public Note(int logID, String noteType, String noteText, String noteFilepath) {
         this.logID = logID;
         this.noteType = noteType;
         this.noteText = noteText;
