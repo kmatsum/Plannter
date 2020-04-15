@@ -51,6 +51,7 @@ public class Main_Window extends AppCompatActivity {
 
     //Plant List
     List<Plant> PlantList;
+    List<Log>   LogList;
 
     //PlantHarvest
     Date userInputDate;
@@ -85,11 +86,14 @@ public class Main_Window extends AppCompatActivity {
         lastSpringFrostDate = pref.getString("Spring", "04/30/" + year);
         firstFallFrostDate = pref.getString("Fall", "10/09/" + year);
 
+        //TODO: Handle creation of log Array list
+
         // Update Local Plant List Variable
         editTransaction("GetPlantList", null);
 
         //Replace to first fragment
         changeFragment("MainMenu");
+
     }
 
     //METHODS ==========================================================================================

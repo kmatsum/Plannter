@@ -91,7 +91,7 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
         txtSeedDistance = view.findViewById(R.id.txtSeedDistance);
         txtSeedDepth = view.findViewById(R.id.txtSeedDepth);
         txtNotes = view.findViewById(R.id.txtNotes);
-        imageView = view.findViewById(R.id.imageView);
+        imageView = view.findViewById(R.id.imgCrop);
         txtSeedIndoorsDate = view.findViewById(R.id.txtSeedIndoorsDate);
         txtSeasons = view.findViewById(R.id.txtSeasons);
         txtMethod = view.findViewById(R.id.txtMethod);
