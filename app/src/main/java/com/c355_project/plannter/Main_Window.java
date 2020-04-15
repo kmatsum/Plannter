@@ -303,22 +303,22 @@ public class Main_Window extends AppCompatActivity {
                 case ("InsertLog"): {
                     // Call DAO to insert log
                     PlannterDatabase.getInstance(getApplicationContext()).plannterDatabaseDao().insertLog((Log) object);
-                }
+                } break;
 
                 case ("DeleteLog"): {
                     // Call DAO to delete log
                     PlannterDatabase.getInstance(getApplicationContext()).plannterDatabaseDao().deleteLog((Log) object);
-                }
+                } break;
 
                 case ("InsertNote"): {
                     // Call DAO to insert note
                     PlannterDatabase.getInstance(getApplicationContext()).plannterDatabaseDao().insertNote((Note) object);
-                }
+                } break;
 
                 case ("DeleteNote"): {
                     // Call DAO to delete note
-                    PlannterDatabase.getInstance(getApplicationContext()).plannterDatabaseDao().insertNote((Note) object);
-                }
+                    PlannterDatabase.getInstance(getApplicationContext()).plannterDatabaseDao().deleteNote((Note) object);
+                } break;
 
                 case ("UpdateAllLists"): {
                     System.out.println("doInBackground() Updating Plant, Log, and Note Lists");
