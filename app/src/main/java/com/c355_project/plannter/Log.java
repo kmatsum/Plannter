@@ -32,8 +32,7 @@ public class Log {
     private ArrayList<Note> notes;
 
 //CONSTRUCTOR ======================================================================================
-    public Log(int logID, int plantID, String plantName, String plantDate, String harvestRange) {
-        this.logID = logID;
+    public Log(int plantID, String plantName, String plantDate, String harvestRange) {
         this.plantID = plantID;
         this.plantName = plantName;
         this.plantDate = plantDate;

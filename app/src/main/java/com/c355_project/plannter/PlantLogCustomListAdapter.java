@@ -55,12 +55,12 @@ public class PlantLogCustomListAdapter extends BaseAdapter {
 
         //Variable Instantiation
         rowView = inflater.inflate(R.layout.plantlogcustomlistadapter, null);
-        ImageButton btnVoiceMemo = convertView.findViewById(R.id.btnOpenVoiceMemo);
-        ImageButton btnDeleteLogEntry = convertView.findViewById(R.id.btnDeleteLog);
-        holder.imgCrop = convertView.findViewById(R.id.imgCrop);
-        holder.txtCropName = convertView.findViewById(R.id.txtCropName);
-        holder.txtPlantDate = convertView.findViewById(R.id.txtDatePlanted);
-        holder.txtHarvestRange = convertView.findViewById(R.id.txtCropHarvest);
+        ImageButton btnVoiceMemo = rowView.findViewById(R.id.btnOpenVoiceMemo);
+        ImageButton btnDeleteLogEntry = rowView.findViewById(R.id.btnDeleteLog);
+        holder.imgCrop = rowView.findViewById(R.id.imgCrop);
+        holder.txtCropName = rowView.findViewById(R.id.txtCropName);
+        holder.txtPlantDate = rowView.findViewById(R.id.txtDatePlanted);
+        holder.txtHarvestRange = rowView.findViewById(R.id.txtCropHarvest);
 
         //TODO:Set Plant Images, Plant Names, DatePlanted & Harvest Rages
 
