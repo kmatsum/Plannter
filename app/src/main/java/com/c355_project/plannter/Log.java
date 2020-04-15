@@ -26,8 +26,7 @@ public class Log {
     private ArrayList<Note> notes;
 
 //CONSTRUCTOR ======================================================================================
-    public Log(int logID, int plantID) {
-        this.logID = logID;
+    public Log(int plantID) {
         this.plantID = plantID;
     }
 
