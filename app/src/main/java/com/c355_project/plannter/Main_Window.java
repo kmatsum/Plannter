@@ -172,8 +172,7 @@ public class Main_Window extends AppCompatActivity {
          */
 
         //Delete Database File
-        File db = new File (Main_Window.DATABASE_DIRECTORY, Main_Window.DB_NAME);
-        db.delete();
+        this.getApplicationContext().deleteDatabase(Main_Window.DB_NAME);
 
         //Recreate database
         editTransaction("GetPlantList", null);
