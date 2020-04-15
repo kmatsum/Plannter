@@ -28,7 +28,7 @@ public class Main_Window extends AppCompatActivity {
     public static String ROOT_STORAGE_LOCATION;
     public static String PLANT_PHOTO_STORAGE_LOCATION;
     public static String DATABASE_DIRECTORY = "./data/data/" + BuildConfig.APPLICATION_ID + "/databases/";
-    public static String DB_NAME = "plant.db";
+    public static String DB_NAME = "plannter.db";
 
     //Date Formatter
     SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
@@ -39,7 +39,7 @@ public class Main_Window extends AppCompatActivity {
     Frag_settingsAddPlants  Frag_settingsAddPlants;
     Frag_plantInfo          Frag_plantInfo;
     Frag_plantDate          Frag_plantDate;
-    Frag_plantLog Frag_plantHistory;
+    Frag_plantLog           Frag_plantHistory;
 
     //Shared Preferences
     SharedPreferences pref;
@@ -49,9 +49,10 @@ public class Main_Window extends AppCompatActivity {
     String lastSpringFrostDate;
     String firstFallFrostDate;
 
-    //Plant List
+    //Object Lists
     List<Plant> PlantList;
     List<Log>   LogList;
+    List<Note>  NoteList;
 
     //PlantHarvest
     Date userInputDate;
@@ -86,10 +87,8 @@ public class Main_Window extends AppCompatActivity {
         lastSpringFrostDate = pref.getString("Spring", "04/30/" + year);
         firstFallFrostDate = pref.getString("Fall", "10/09/" + year);
 
-        //TODO: Handle creation of log Array list
-
-        // Update Local Plant List Variable
-        editTransaction("GetPlantList", null);
+        // Update Local List Variables
+        editTransaction("UpdateAllLists", null);
 
         //Replace to first fragment
         changeFragment("MainMenu");
@@ -177,7 +176,7 @@ public class Main_Window extends AppCompatActivity {
         this.getApplicationContext().deleteDatabase(Main_Window.DB_NAME);
 
         //Recreate database
-        editTransaction("GetPlantList", null);
+        editTransaction("UpdateAllLists", null);
     }
 
     // Helper method to convert passed String in MM/dd/yyyy format to Date
@@ -206,14 +205,9 @@ public class Main_Window extends AppCompatActivity {
         Method to call AsyncTask to interact with the database, but wait until the AsyncTask
         finishes before moving on in the main thread (hence variable isAsyncTaskRunning).
      */
-    public void editTransaction(String xTransactionType, Plant xPlant){
+    public void editTransaction(String xTransactionType, Object xObject){
         // Start Transaction
-        new DatabaseTransaction(xTransactionType, xPlant).execute();
-
-        //Update User
-        if (xPlant != null){
-            makeToast(xPlant.getPlantName() + " Transaction Complete");
-        }
+        new DatabaseTransaction(xTransactionType, xObject).execute();
     }
 
     public Date getLastSpringFrostDate() {
@@ -252,22 +246,22 @@ public class Main_Window extends AppCompatActivity {
 
 //ASYNC TASK =======================================================================================
     /*
-        An AsyncTask to update Main_Window's local PlantList variable from the database.
+        An AsyncTask to update Main_Window's local List variables from the database.
         Creates the database file using default plant list if one doesn't exist.
 
         This Async Task is its own class in order to utilize onPreExecute and onPostExecute to add
-        a loading box so the app will wait while updating plants.
+        a loading box so the app will wait while updating plant/log/note lists.
    */
     public class DatabaseTransaction extends AsyncTask {
 
         ProgressDialog progress;
         String transactionType;
-        Plant plant;
+        Object object;
 
-        public DatabaseTransaction(String xTransactionType, Plant xPlant) {
+        public DatabaseTransaction(String xTransactionType, Object xObject) {
             super();
             transactionType = xTransactionType;
-            plant = xPlant;
+            object = xObject;
             progress = new ProgressDialog(Main_Window.this);
         }
 
@@ -291,8 +285,8 @@ public class Main_Window extends AppCompatActivity {
                     // Get plant photo
                     Bitmap photo = Frag_settingsAddPlants.photo;
 
-                    // Call DAO to insert photo
-                    PlantDatabase.getInstance(getApplicationContext()).plantDao().insertPlant(plant, photo);
+                    // Call DAO to insert plant
+                    PlannterDatabase.getInstance(getApplicationContext()).plannterDatabaseDao().insertPlant((Plant) object, photo);
 
                     // Update Frag_settingsAddPlants class photo variable to null
                     // This is required as the fragment is never recycled
@@ -301,21 +295,40 @@ public class Main_Window extends AppCompatActivity {
 
                 } break;
 
-                case ("UpdatePlant"): {
-                    PlantDatabase.getInstance(getApplicationContext()).plantDao().updatePlant(plant);
-                } break;
-
                 case ("DeletePlant"): {
-                    PlantDatabase.getInstance(getApplicationContext()).plantDao().deletePlant(plant);
+                    // Call DAO to delete plant
+                    PlannterDatabase.getInstance(getApplicationContext()).plannterDatabaseDao().deletePlant((Plant) object);
                 } break;
 
-                case ("GetPlantList"): {
-                    System.out.println("doInBackground() Getting Plant Array List");
+                case ("InsertLog"): {
+                    // Call DAO to insert log
+                    PlannterDatabase.getInstance(getApplicationContext()).plannterDatabaseDao().insertLog((Log) object);
+                }
+
+                case ("DeleteLog"): {
+                    // Call DAO to delete log
+                    PlannterDatabase.getInstance(getApplicationContext()).plannterDatabaseDao().deleteLog((Log) object);
+                }
+
+                case ("InsertNote"): {
+                    // Call DAO to insert note
+                    PlannterDatabase.getInstance(getApplicationContext()).plannterDatabaseDao().insertNote((Note) object);
+                }
+
+                case ("DeleteNote"): {
+                    // Call DAO to delete note
+                    PlannterDatabase.getInstance(getApplicationContext()).plannterDatabaseDao().insertNote((Note) object);
+                }
+
+                case ("UpdateAllLists"): {
+                    System.out.println("doInBackground() Updating Plant, Log, and Note Lists");
                 } break;
             }
 
-            //Get plants
-            PlantList = PlantDatabase.getInstance(Main_Window.this).plantDao().getAllPlants();
+            // Update All Lists
+            PlantList = PlannterDatabase.getInstance(Main_Window.this).plannterDatabaseDao().getAllPlants();
+            LogList = PlannterDatabase.getInstance(Main_Window.this).plannterDatabaseDao().getAllLogs();
+            NoteList = PlannterDatabase.getInstance(Main_Window.this).plannterDatabaseDao().getAllNotes();
 
             System.out.println("\r\nDATABASE TRANSACTION ENDING");
             System.out.println("\r\n=============================================================");
