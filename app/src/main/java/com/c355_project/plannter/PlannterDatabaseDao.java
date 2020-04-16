@@ -74,7 +74,7 @@ public abstract class PlannterDatabaseDao {
         _deletePlant(plant);
 
         // Delete its corresponding photo folder from internal storage
-        _deleteFolder(new File(Main_Window.PLANT_MEDIA_LOCATION + "/" + plant.getPlantID()));
+        _deleteDirectory(new File(Main_Window.PLANT_MEDIA_LOCATION + "/" + plant.getPlantID()));
 
         // Update console
         System.out.println("PlannterDatabaseDao DELETE Plant Operation Completed\r\n\t\tPlant ID: "
@@ -141,7 +141,7 @@ public abstract class PlannterDatabaseDao {
         _deleteLog(log);
 
         // Delete its corresponding photo folder from internal storage
-        _deleteFolder(new File(Main_Window.LOG_MEDIA_LOCATION + "/" + log.getLogID()));
+        _deleteDirectory(new File(Main_Window.LOG_MEDIA_LOCATION + "/" + log.getLogID()));
 
         // Update console
         System.out.println("PlannterDatabaseDao DELETE Log Operation Completed\r\n\t\tLog ID: "
@@ -223,7 +223,7 @@ public abstract class PlannterDatabaseDao {
         _deleteNote(note);
 
         // Delete its corresponding photo folder from internal storage
-        _deleteFolder(new File(Main_Window.LOG_MEDIA_LOCATION + "/" + note.getLogID() + "/" + note.getNoteID()));
+        _deleteDirectory(new File(Main_Window.LOG_MEDIA_LOCATION + "/" + note.getLogID() + "/" + note.getNoteID()));
 
         // Update console
         System.out.println("PlannterDatabaseDao DELETE Note Operation Completed\r\n\t\tNote ID: "
@@ -269,18 +269,15 @@ public abstract class PlannterDatabaseDao {
     // HELPER METHODS ==============================================================================
     // Method to delete passed folder and all files in passed folder
     // Internal files must be deleted first before the folder can be deleted
-    public void _deleteFolder(File folder){
-        String[] files = folder.list();
-        if (files != null){
-            for(String s: files){
-                File currentFile = new File(folder.getPath(),s);
-                currentFile.delete();
-                // Update Console
-                System.out.println("PlannterDatabaseDao FILE DELETED: " + currentFile.getAbsolutePath());
+    private void _deleteDirectory(File directoryToBeDeleted){
+        File[] allContents = directoryToBeDeleted.listFiles();
+        if (allContents != null) {
+            for (File file : allContents) {
+                _deleteDirectory(file);
             }
         }
-        folder.delete();
+        directoryToBeDeleted.delete();
         // Update Console
-        System.out.println("PlannterDatabaseDao FOLDER DELETED: " + folder.getAbsolutePath());
+        System.out.println("PlannterDatabaseDao FOLDER OR FILE DELETED: " + directoryToBeDeleted.getAbsolutePath());
     }
 }
