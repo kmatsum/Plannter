@@ -55,7 +55,6 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
     Date                selectedDate;
     Button              btnNext;
     Spinner             spnPlants;
-    int                 dialogIcon;
 
     //Plant Database List
     List<Plant> PlantDatabase;
@@ -172,7 +171,7 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
             }
             else
                 setHarvestRanges();
-            txtCropHarvest.setText("Selected Date: " + simpleDateFormat.format(selectedDate) + "\n" + "Expect to Harvest Between: " + simpleDateFormat.format(harvestRangeMin.getTime()) + "-" + simpleDateFormat.format(harvestRangeMax.getTime()));
+                txtCropHarvest.setText("Selected Date: " + simpleDateFormat.format(selectedDate) + "\n" + "Expect to Harvest Between: " + simpleDateFormat.format(harvestRangeMin.getTime()) + "-" + simpleDateFormat.format(harvestRangeMax.getTime()));
 
         }
 
@@ -181,7 +180,6 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
                 Date minPlantDate = new Date(calendarViewInLayout.getMinDate());
                 selectedDate = minPlantDate;
             }
-            makeToast("Add Log Button Clicked");
             openConfirmationDialog(selectedPlantName ,simpleDateFormat.format(selectedDate), Main_Window);
         }
 
@@ -252,8 +250,9 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         //Add new log to the DB
-                        String harvestRange = harvestRangeMin + " - " + harvestRangeMax;
-                        Log tempLog = new Log(PlantDatabase.get(spnPlants.getSelectedItemPosition()).getPlantID(), selectedPlantName, selectedDate.toString(), harvestRange);
+                        setHarvestRanges();
+                        String harvestRange = simpleDateFormat.format(harvestRangeMin.getTime()) + " & " + simpleDateFormat.format(harvestRangeMax.getTime());
+                        Log tempLog = new Log(PlantDatabase.get(spnPlants.getSelectedItemPosition()).getPlantID(), selectedPlantName, simpleDateFormat.format(selectedDate.getTime()), harvestRange);
                         Main_Window.editTransaction("InsertLog", tempLog);
                     }
                 })

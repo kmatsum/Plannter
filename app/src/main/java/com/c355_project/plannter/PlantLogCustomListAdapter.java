@@ -1,6 +1,7 @@
 package com.c355_project.plannter;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +28,7 @@ public class PlantLogCustomListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return 1;
+        return Main_window.LogList.size();
     }
 
     @Override
@@ -42,6 +43,7 @@ public class PlantLogCustomListAdapter extends BaseAdapter {
 
     public class Holder {
         ImageView imgCrop;
+        TextView txtLogID;
         TextView txtCropName;
         TextView txtPlantDate;
         TextView txtHarvestRange;
@@ -58,11 +60,26 @@ public class PlantLogCustomListAdapter extends BaseAdapter {
         ImageButton btnVoiceMemo = rowView.findViewById(R.id.btnOpenVoiceMemo);
         ImageButton btnDeleteLogEntry = rowView.findViewById(R.id.btnDeleteLog);
         holder.imgCrop = rowView.findViewById(R.id.imgCrop);
+        holder.txtLogID = rowView.findViewById(R.id.txtLogID);
         holder.txtCropName = rowView.findViewById(R.id.txtCropName);
         holder.txtPlantDate = rowView.findViewById(R.id.txtDatePlanted);
-        holder.txtHarvestRange = rowView.findViewById(R.id.txtCropHarvest);
+        holder.txtHarvestRange = rowView.findViewById(R.id.txtExpectedHarvestRange);
 
         //TODO:Set Plant Images, Plant Names, DatePlanted & Harvest Rages
+        List<Log> LogList = Main_window.LogList;
+        List<Plant> PlantList = Main_window.PlantList;
+        String plantImageFilePath = null;
+            for (Plant currentPlant:PlantList) {
+                if (LogList.get(position).getPlantID() == currentPlant.getPlantID()) {
+                    plantImageFilePath = currentPlant.getPhotoPath();
+                    break;
+                }
+            }
+        holder.imgCrop.setImageURI(Uri.parse(plantImageFilePath));
+        holder.txtLogID.setText(String.valueOf(LogList.get(position).getLogID()));
+        holder.txtCropName.setText(LogList.get(position).getPlantName());
+        holder.txtPlantDate.setText(LogList.get(position).getPlantDate());
+        holder.txtHarvestRange.setText(LogList.get(position).getHarvestRange());
 
 
         //Attaches onClickListener to Voice Memo Buttons

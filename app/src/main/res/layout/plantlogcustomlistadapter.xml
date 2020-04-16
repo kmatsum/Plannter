@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/imgCrop"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="125dp"
+        android:layout_height="125dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -99,32 +99,27 @@
                 app:layout_constraintTop_toBottomOf="@+id/txtCropName" />
         </LinearLayout>
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/txtExpectedHarvestRangeTitle"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:orientation="horizontal">
+            android:layout_weight="1"
+            android:fontFamily="@font/finger_paint"
+            android:text="Harvest Between: "
+            android:textColor="@color/colorTitleText"
+            android:textSize="14.5sp" />
 
-            <TextView
-                android:id="@+id/txtExpectedHarvestRangeTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/finger_paint"
-                android:text="Harvest Between: "
-                android:textColor="@color/colorTitleText"
-                android:textSize="14.5sp" />
-
-            <TextView
-                android:id="@+id/txtExpectedHarvestRange"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/finger_paint"
-                android:textColor="@color/colorTitleText"
-                android:textSize="14.5sp"
-                app:layout_constraintStart_toStartOf="@+id/txtDatePlanted"
-                app:layout_constraintTop_toBottomOf="@+id/txtDatePlanted" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/txtExpectedHarvestRange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:fontFamily="@font/finger_paint"
+            android:textColor="@color/colorTitleText"
+            android:textSize="14.5sp"
+            app:layout_constraintStart_toStartOf="@+id/txtDatePlanted"
+            app:layout_constraintTop_toBottomOf="@+id/txtDatePlanted" />
 
     </LinearLayout>
 
@@ -137,7 +132,7 @@
         <ImageButton
             android:id="@+id/btnOpenVoiceMemo"
             android:layout_width="50dp"
-            android:layout_height="100dp"
+            android:layout_height="125dp"
             android:background="@color/colorPrimary"
             app:layout_constraintEnd_toStartOf="@+id/btnDeleteLog"
             app:layout_constraintTop_toTopOf="parent"
@@ -146,7 +141,7 @@
         <ImageButton
             android:id="@+id/btnDeleteLog"
             android:layout_width="50dp"
-            android:layout_height="100dp"
+            android:layout_height="125dp"
             android:background="@color/colorPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
