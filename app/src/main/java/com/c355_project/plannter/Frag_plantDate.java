@@ -82,7 +82,7 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
 
-        PlantDatabase = Main_Window.getPlantList();
+        PlantDatabase = Main_Window.PlantList;
         PlantNames = new ArrayList<>();
 
         //[DEBUG] Print all the plant names

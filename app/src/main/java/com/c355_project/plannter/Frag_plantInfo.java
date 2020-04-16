@@ -16,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -69,7 +68,7 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
         super.onViewCreated(view, savedInstanceState);
       
         Main_Window = (Main_Window) getActivity();
-        plantList = Main_Window.getPlantList();
+        plantList = Main_Window.PlantList;
         SpringFrostDate = Main_Window.getLastSpringFrostDate();
         FallFrostDate = Main_Window.getFirstFallFrostDate();
 
@@ -148,26 +147,20 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
 
         //Delete selected plant. Alert user if only 1 plant is left (and prevent deletion).
         else if (id == R.id.btnDelete) {
+
+            // Ensure there will be at least 1 plant after deletion
             if (spnrSelectPlant.getAdapter().getCount() == 1){
                 makeToast("You must have at least 1 plant.");
                 return;
             }
+
+            // Delete plant from database
             int position = spnrSelectPlant.getSelectedItemPosition();
             Plant plant = plantList.get(position);
             Main_Window.editTransaction("DeletePlant", plant);
-            // Delete its corresponding photo folder from internal storage
-            // Internal files must be deleted first before directory can be deleted
-            File folder = new File(Main_Window.PLANT_PHOTO_STORAGE_LOCATION + "/" + plant.getPlantID());
-            String[] files = folder.list();
-            if (files != null){
-                for(String s: files){
-                    File currentFile = new File(folder.getPath(),s);
-                    currentFile.delete();
-                }
-            }
-            folder.delete();
+
             //Update plant list
-            plantList = Main_Window.getPlantList();
+            plantList = Main_Window.PlantList;
             Main_Window.changeFragment("MainMenu");
         }
 
