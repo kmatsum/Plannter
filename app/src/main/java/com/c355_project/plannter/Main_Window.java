@@ -169,18 +169,22 @@ public class Main_Window extends AppCompatActivity {
 
     //Resets Database to Default and Resets frost dates in Shared preferences.
     public void resetPlantDB(){
-        //Resets Frost Dates
+
+        //Reset Frost Dates
         int year = Calendar.getInstance().get(Calendar.YEAR);
         setFirstFallFrostDate(parseDateString("10/09/" + year));
         setLastSpringFrostDate(parseDateString("04/30/" + year));
 
-        //Delete photo folders
-        /*TODO:
-            - Delete folder plant_photos
-         */
+        //Delete everything in Plant and Log folders
+        deleteDirectory(new File(PLANT_MEDIA_LOCATION));
+        deleteDirectory(new File(LOG_MEDIA_LOCATION));
+
+        //Recreate Plant and Log folders
+        new File(PLANT_MEDIA_LOCATION).mkdir();
+        new File(LOG_MEDIA_LOCATION).mkdir();
 
         //Delete Database File
-        this.getApplicationContext().deleteDatabase(Main_Window.DB_NAME);
+        this.getApplicationContext().deleteDatabase(DB_NAME);
 
         //Recreate database
         editTransaction("UpdateAllLists", null);
@@ -200,6 +204,20 @@ public class Main_Window extends AppCompatActivity {
             }
         }
         return date;
+    }
+
+    // Method to delete passed folder and all files in passed folder
+    // Internal files must be deleted first before the folder can be deleted
+    public void deleteDirectory(File directoryToBeDeleted){
+        File[] allContents = directoryToBeDeleted.listFiles();
+        if (allContents != null) {
+            for (File file : allContents) {
+                deleteDirectory(file);
+            }
+        }
+        directoryToBeDeleted.delete();
+        // Update Console
+        System.out.println("Main_Window FOLDER OR FILE DELETED: " + directoryToBeDeleted.getAbsolutePath());
     }
 
 
@@ -327,6 +345,7 @@ public class Main_Window extends AppCompatActivity {
                 case ("UpdateAllLists"): {
                     System.out.println("doInBackground() Updating Plant, Log, and Note Lists");
                 } break;
+
             }
 
             // Update All Lists
