@@ -318,7 +318,7 @@ public class Main_Window extends AppCompatActivity {
                 case ("DeleteNote"): {
                     // Call DAO to delete note
                     PlannterDatabase.getInstance(getApplicationContext()).plannterDatabaseDao().deleteNote((Note) object);
-                }  break;
+                } break;
 
                 case ("UpdateAllLists"): {
                     System.out.println("doInBackground() Updating Plant, Log, and Note Lists");
