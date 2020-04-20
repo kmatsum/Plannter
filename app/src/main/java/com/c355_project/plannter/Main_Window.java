@@ -346,8 +346,32 @@ public class Main_Window extends AppCompatActivity {
                 } break;
 
                 case ("InsertNote"): {
-                    // Call DAO to insert note
-                    PlannterDatabase.getInstance(getApplicationContext()).plannterDatabaseDao().insertNote((Note) object);
+                    // Parse note
+                    Note note = (Note) object;
+
+                    // Insert SIMPLE Note
+                    if (note.getNoteType() == "Simple"){
+
+                        // Call DAO to insert note
+                        PlannterDatabase.getInstance(getApplicationContext()).plannterDatabaseDao().insertNote(note, null);
+                    }
+
+                    // Insert IMAGE Note
+                    else if (note.getNoteType() == "Image"){
+
+                        // Get note photo
+                        Bitmap noteImage = Frag_logNote.noteImage;
+
+                        // Call DAO to insert note
+                        PlannterDatabase.getInstance(getApplicationContext()).plannterDatabaseDao().insertNote(note, noteImage);
+                    }
+
+                    // Update Frag_logNote class noteImage variable to null
+                    // This is required as the fragment is never recycled
+                    Frag_logNote.noteImage = null;
+                    Main_Window.this.changeFragment("PlantHistory");
+
+
                 } break;
 
                 case ("DeleteNote"): {

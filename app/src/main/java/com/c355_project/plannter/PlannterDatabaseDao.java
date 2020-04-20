@@ -192,7 +192,7 @@ public abstract class PlannterDatabaseDao {
 
     // Method to insert passed note
     // Returns noteID generated in PlannterDatabaseDao.java
-    public long insertNote(Note note){
+    public long insertNote(Note note, Bitmap photo){
         // Determine what noteID should be based on logID
         List<Note> logNotes = getAllNotesForLog(note.getLogID());
         // Get the last NoteID for the current log
@@ -204,11 +204,28 @@ public abstract class PlannterDatabaseDao {
         }
         // Set NoteID to lastNoteID incremented by 1
         note.setNoteID(lastNoteID + 1);
-        // Insert note
-        _insertNote(note);
 
         // Create corresponding directory
-        new File(Main_Window.LOG_MEDIA_LOCATION, note.getLogID() + "/" + note.getNoteID()).mkdir();
+        File f = new File(Main_Window.LOG_MEDIA_LOCATION, note.getLogID() + "/" + note.getNoteID());
+        f.mkdir();
+
+        // If Image Note..
+        if (note.getNoteType() == "Image"){
+
+            // Export photo to corresponding directory
+            String filePath = f.getAbsoluteFile() + "/" +  note.getNoteID() + ".png";
+            try (FileOutputStream out = new FileOutputStream(filePath)) {
+                photo.compress(Bitmap.CompressFormat.PNG, 100, out);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            // Update note object
+            note.setNoteFilepath(filePath);
+        }
+
+        // Insert note
+        _insertNote(note);
 
         // Update console
         System.out.println("PlannterDatabaseDao INSERT Note Operation Completed\r\n\t\tNote ID: "
