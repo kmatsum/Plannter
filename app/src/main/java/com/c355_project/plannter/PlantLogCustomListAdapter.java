@@ -93,7 +93,7 @@ public class PlantLogCustomListAdapter extends BaseAdapter {
                     case(R.id.btnOpenVoiceMemo):
                     {
                         Main_window.changeFragment("Notes");
-                        Main_window.setLogID(position);
+                        Main_window.currentLogID = position + 1;
                     }
                 }
             }

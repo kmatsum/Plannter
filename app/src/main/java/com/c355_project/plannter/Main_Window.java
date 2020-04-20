@@ -59,8 +59,9 @@ public class Main_Window extends AppCompatActivity {
     //PlantHarvest
     Date userInputDate;
 
-    //LogID
-    int logID;
+    // LogID
+    // This variable is set when the note button is clicked on a specific log
+    int currentLogID;
 
 //Lifecycle Methods ================================================================================
     @Override
@@ -247,9 +248,6 @@ public class Main_Window extends AppCompatActivity {
     public Date getLastSpringFrostDate() {
         return parseDateString(lastSpringFrostDate);
     }
-
-    public int getLogID() {return logID + 1;}
-    public void setLogID(int xLogID) {this.logID = xLogID;}
 
     public void setLastSpringFrostDate(Date xLastSpringFrostDate) {
         // Save to local variable
