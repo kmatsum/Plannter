@@ -15,7 +15,7 @@ import java.util.List;
 public class PlantLogCustomListAdapter extends BaseAdapter {
 
     //Global Variable Declarations
-    private static LayoutInflater inflater=null;
+    private LayoutInflater inflater = null;
     private Context context;
     Main_Window Main_window;
 
@@ -40,6 +40,7 @@ public class PlantLogCustomListAdapter extends BaseAdapter {
     public long getItemId(int position) {
         return position;
     }
+
 
     public class Holder {
         ImageView imgCrop;
@@ -87,6 +88,14 @@ public class PlantLogCustomListAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 //TODO: Open Notes Fragment
+                switch (view.getId())
+                {
+                    case(R.id.btnOpenVoiceMemo):
+                    {
+                        Main_window.changeFragment("Notes");
+                        Main_window.setLogID(position);
+                    }
+                }
             }
         });
 

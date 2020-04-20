@@ -4,12 +4,12 @@ import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.Fragment;
-import android.view.Gravity;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -22,6 +22,7 @@ public class Frag_plantLog extends Fragment implements View.OnClickListener {
     //VARIABLES ========================================================================================
     //Main_Window Activity Instantiation
     Main_Window Main_Window;
+    Button btnOpenNotes;
 
     //GUI Elements
     ListView lv;
@@ -45,6 +46,7 @@ public class Frag_plantLog extends Fragment implements View.OnClickListener {
         //Provide values for variables needed to be set on activity start
         Main_Window = (Main_Window) getActivity();
         lv = view.findViewById(R.id.listView);
+        btnOpenNotes = view.findViewById(R.id.btnOpenVoiceMemo);
 
         //Sets listView Adapter
         lv.setAdapter(new PlantLogCustomListAdapter(Main_Window));

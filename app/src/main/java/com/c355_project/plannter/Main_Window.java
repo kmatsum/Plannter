@@ -41,6 +41,7 @@ public class Main_Window extends AppCompatActivity {
     Frag_plantInfo          Frag_plantInfo;
     Frag_plantDate          Frag_plantDate;
     Frag_plantLog           Frag_plantHistory;
+    Frag_logNote            Frag_logNote;
 
     //Shared Preferences
     SharedPreferences pref;
@@ -58,6 +59,9 @@ public class Main_Window extends AppCompatActivity {
     //PlantHarvest
     Date userInputDate;
 
+    //LogID
+    int logID;
+
 //Lifecycle Methods ================================================================================
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +75,7 @@ public class Main_Window extends AppCompatActivity {
         Frag_plantInfo          = new Frag_plantInfo();
         Frag_plantDate          = new Frag_plantDate();
         Frag_plantHistory       = new Frag_plantLog();
+        Frag_logNote          = new Frag_logNote();
 
         // Set internal location to store all files, adding a subfolder called "media"
         File ext_folder = this.getFilesDir();
@@ -142,6 +147,13 @@ public class Main_Window extends AppCompatActivity {
                 System.out.println("=============================================================");
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainFragmentWindow, Frag_settings).commit();
+            } break;
+            case "Notes": {
+                System.out.println("=============================================================");
+                System.out.println("SWITCH THE FRAGMENT TO NOTES");
+                System.out.println("=============================================================");
+
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainFragmentWindow, Frag_logNote).commit();
             } break;
 
             case "SettingsAddPlants": {
@@ -235,6 +247,9 @@ public class Main_Window extends AppCompatActivity {
     public Date getLastSpringFrostDate() {
         return parseDateString(lastSpringFrostDate);
     }
+
+    public int getLogID() {return logID + 1;}
+    public void setLogID(int xLogID) {this.logID = xLogID;}
 
     public void setLastSpringFrostDate(Date xLastSpringFrostDate) {
         // Save to local variable
