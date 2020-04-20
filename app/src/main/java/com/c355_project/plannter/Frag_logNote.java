@@ -20,7 +20,26 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 
 import java.io.File;
-import java.util.ArrayList;
+
+/*
+    What Is Done:
+        - Added Frag_Camera, eventually to be able to see the photos we have taken of our plants
+        - Frag_logNote is the code for the fragment dedicated to creating notes
+        - LogNoteCustomListAdapter is the adapter for the list view in the frag_logNote
+        - Added a couple more png files to populate image buttons and switch the resource of said image buttons on the record button
+   TODO:
+    - I have a file provider xml added but being that the notes are a non-static folder
+      i wasnt sure that it was going to work I know roughly how to sift through the file
+      folders like that just not with file provider
+    - Recording button works and saves where it should however its not saving like the file tree
+      design that we specified, for example i recorded two audio files and they both stored in the
+      1st folder and no second was created
+    - Camera button will open up the camera but does not save it anywhere
+    - Text button has no functionality behind it yet
+    - Finally list view is not populating with the notes saved, which from the code looks like it
+      updates after every saved note. I used the log section for reference on that part just havent
+      gotten it working just yet
+ */
 
 public class Frag_logNote extends Fragment implements View.OnClickListener {
     //VARIABLES ========================================================================================
