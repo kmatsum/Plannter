@@ -369,7 +369,7 @@ public class Main_Window extends AppCompatActivity {
                     // Update Frag_logNote class noteImage variable to null
                     // This is required as the fragment is never recycled
                     Frag_logNote.noteImage = null;
-                    Main_Window.this.changeFragment("PlantHistory");
+                    //Main_Window.this.changeFragment("PlantHistory");
 
 
                 } break;
