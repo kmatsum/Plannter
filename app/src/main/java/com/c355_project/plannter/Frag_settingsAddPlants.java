@@ -25,8 +25,11 @@ import android.widget.ToggleButton;
 
 public class Frag_settingsAddPlants extends Fragment implements View.OnClickListener {
 //VARIABLES ========================================================================================
+
     //Main_Window Activity Instantiation
     Main_Window Main_Window;
+
+    //GUI Elements
     TextView txtName,
             txtSeedCompany,
             txtFirstPlantDate,
@@ -44,9 +47,13 @@ public class Frag_settingsAddPlants extends Fragment implements View.OnClickList
     RadioButton rbFlat,
             rbRaisedHills,
             rbRaisedRows;
+
+    // Photo handling
     private static final int CAMERA_REQUEST = 1888;
     private static final int PICK_IMAGE = 1999;
     Bitmap photo = null;
+
+    // Temp object
     Plant tempPlant = null;
 
     public Frag_settingsAddPlants() {
