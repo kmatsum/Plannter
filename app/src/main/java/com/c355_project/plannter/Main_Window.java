@@ -1,9 +1,12 @@
 package com.c355_project.plannter;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -26,6 +29,7 @@ public class Main_Window extends AppCompatActivity {
 
     // Location to store all files
     public static String ROOT_MEDIA_LOCATION,
+            TEMP_MEDIA_LOCATION,
             PLANT_MEDIA_LOCATION,
             LOG_MEDIA_LOCATION,
             DB_NAME = "plannter.db",
@@ -41,6 +45,7 @@ public class Main_Window extends AppCompatActivity {
     Frag_plantInfo          Frag_plantInfo;
     Frag_plantDate          Frag_plantDate;
     Frag_plantLog           Frag_plantHistory;
+    Frag_logNote            Frag_logNote;
 
     //Shared Preferences
     SharedPreferences pref;
@@ -58,6 +63,10 @@ public class Main_Window extends AppCompatActivity {
     //PlantHarvest
     Date userInputDate;
 
+    // LogID
+    // This variable is set when the note button is clicked on a specific log
+    int currentLogID;
+
 //Lifecycle Methods ================================================================================
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,12 +80,18 @@ public class Main_Window extends AppCompatActivity {
         Frag_plantInfo          = new Frag_plantInfo();
         Frag_plantDate          = new Frag_plantDate();
         Frag_plantHistory       = new Frag_plantLog();
+        Frag_logNote          = new Frag_logNote();
 
         // Set internal location to store all files, adding a subfolder called "media"
         File ext_folder = this.getFilesDir();
         File media_loc = new File(ext_folder, "media");
         media_loc.mkdir();
         ROOT_MEDIA_LOCATION =  media_loc.getAbsolutePath() + "/";
+
+        // Set internal location to store temp media files
+        File temp_loc = new File(media_loc, "Temp");
+        temp_loc.mkdir();
+        TEMP_MEDIA_LOCATION =  temp_loc.getAbsolutePath() + "/";
 
         // Set plant storage within root storage location
         File plant_loc = new File(media_loc, "Plants");
@@ -142,6 +157,13 @@ public class Main_Window extends AppCompatActivity {
                 System.out.println("=============================================================");
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainFragmentWindow, Frag_settings).commit();
+            } break;
+            case "Notes": {
+                System.out.println("=============================================================");
+                System.out.println("SWITCH THE FRAGMENT TO NOTES");
+                System.out.println("=============================================================");
+
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainFragmentWindow, Frag_logNote).commit();
             } break;
 
             case "SettingsAddPlants": {
@@ -333,8 +355,32 @@ public class Main_Window extends AppCompatActivity {
                 } break;
 
                 case ("InsertNote"): {
-                    // Call DAO to insert note
-                    PlannterDatabase.getInstance(getApplicationContext()).plannterDatabaseDao().insertNote((Note) object);
+                    // Parse note
+                    Note note = (Note) object;
+
+                    // If IMAGE Note (must pass photo from Frag_logNote)
+                    if (note.getNoteType() == "Image"){
+
+                        // Get note photo
+                        Bitmap noteImage = Frag_logNote.noteImage;
+
+                        // Call DAO to insert note
+                        PlannterDatabase.getInstance(getApplicationContext()).plannterDatabaseDao().insertNote(note, noteImage);
+                    }
+
+                    // Else (it must be SIMPLE or AUDIO), and neither need a passed photo
+                    else {
+                        // Call DAO to insert note
+                        PlannterDatabase.getInstance(getApplicationContext()).plannterDatabaseDao().insertNote(note, null);
+                    }
+
+                    // Update Frag_logNote class noteImage variable to null
+                    // This is required as the fragment is never recycled
+                    Frag_logNote.noteImage = null;
+
+                    //Main_Window.this.changeFragment("PlantHistory");
+
+
                 } break;
 
                 case ("DeleteNote"): {
@@ -346,6 +392,13 @@ public class Main_Window extends AppCompatActivity {
                     System.out.println("doInBackground() Updating Plant, Log, and Note Lists");
                 } break;
 
+            }
+
+            // Clear temp directory
+            File tempDir = new File (Main_Window.TEMP_MEDIA_LOCATION);
+            if (tempDir.isDirectory()){
+                deleteDirectory(tempDir);
+                tempDir.mkdir();
             }
 
             // Update All Lists

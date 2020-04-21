@@ -12,8 +12,8 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import android.os.ParcelFileDescriptor;
+import android.provider.MediaStore;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,13 +21,15 @@ import android.widget.CheckBox;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 
 public class Frag_settingsAddPlants extends Fragment implements View.OnClickListener {
 //VARIABLES ========================================================================================
+
     //Main_Window Activity Instantiation
     Main_Window Main_Window;
+
+    //GUI Elements
     TextView txtName,
             txtSeedCompany,
             txtFirstPlantDate,
@@ -45,9 +47,13 @@ public class Frag_settingsAddPlants extends Fragment implements View.OnClickList
     RadioButton rbFlat,
             rbRaisedHills,
             rbRaisedRows;
+
+    // Photo handling
     private static final int CAMERA_REQUEST = 1888;
     private static final int PICK_IMAGE = 1999;
     Bitmap photo = null;
+
+    // Temp object
     Plant tempPlant = null;
 
     public Frag_settingsAddPlants() {
@@ -110,14 +116,14 @@ public class Frag_settingsAddPlants extends Fragment implements View.OnClickList
             //Take Picture
             case (R.id.btnTakePicture):{
                 // Send Intent to camera, response handled below in onActivityResult method
-                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(cameraIntent, CAMERA_REQUEST);
             } break;
 
             //Download Image
             case (R.id.btnOpenGallery):{
                 Intent galleryIntent = new Intent(Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(Intent.createChooser(galleryIntent, "Select Picture"), PICK_IMAGE);
             } break;
 
@@ -134,59 +140,59 @@ public class Frag_settingsAddPlants extends Fragment implements View.OnClickList
             case (R.id.btnSave): {
                 // INPUT VALIDATION ================================================================
                 if (txtName.getText().toString().matches("")){
-                    makeToast("Please enter plant name!");
+                    Main_Window.makeToast("Please enter plant name!");
                     txtName.requestFocus();
                     return;
                 }
 
                 if (!cbFall.isChecked() && !cbSpring.isChecked()){
-                    makeToast("Please check Spring, Fall, or both!");
+                    Main_Window.makeToast("Please check Spring, Fall, or both!");
                     cbSpring.requestFocus();
                     return;
                 }
 
                 if (txtFirstPlantDate.getText().toString().matches("")){
-                    makeToast("Please enter a first plant date!");
+                    Main_Window.makeToast("Please enter a first plant date!");
                     txtFirstPlantDate.requestFocus();
                     return;
                 } else if (Integer.parseInt(txtFirstPlantDate.getText().toString()) > 51){
-                    makeToast("First plant date must be less than 52 weeks!");
+                    Main_Window.makeToast("First plant date must be less than 52 weeks!");
                     txtFirstPlantDate.requestFocus();
                     return;
                 }
 
                 if (txtWeeksToHarvest.getText().toString().matches("")){
-                    makeToast("Please enter weeks to harvest!");
+                    Main_Window.makeToast("Please enter weeks to harvest!");
                     txtWeeksToHarvest.requestFocus();
                     return;
                 } else if (Integer.parseInt(txtWeeksToHarvest.getText().toString()) > 51){
-                    makeToast("Weeks to harvest must be less than 52 weeks!");
+                    Main_Window.makeToast("Weeks to harvest must be less than 52 weeks!");
                     txtWeeksToHarvest.requestFocus();
                     return;
                 }
 
                 if (txtHarvestRange.getText().toString().matches("")){
-                    makeToast("Please enter harvest range!");
+                    Main_Window.makeToast("Please enter harvest range!");
                     txtHarvestRange.requestFocus();
                     return;
                 } else if (Integer.parseInt(txtHarvestRange.getText().toString()) > 29){
-                    makeToast("Harvest Range must be less than 30 weeks!");
+                    Main_Window.makeToast("Harvest Range must be less than 30 weeks!");
                     txtHarvestRange.requestFocus();
                     return;
                 }
 
                 if (txtLastPlantDate.getText().toString().matches("")){
-                    makeToast("Please enter last plant date!");
+                    Main_Window.makeToast("Please enter last plant date!");
                     txtLastPlantDate.requestFocus();
                     return;
                 } else if (Integer.parseInt(txtLastPlantDate.getText().toString()) > 51){
-                    makeToast("Last plant date must be less than 52 weeks!");
+                    Main_Window.makeToast("Last plant date must be less than 52 weeks!");
                     txtLastPlantDate.requestFocus();
                     return;
                 }
 
                 if (txtSeedIndoors.getText().toString().matches("") && toggleButton.isChecked()){
-                    makeToast("Please toggle off seed indoors or enter the number of weeks!");
+                    Main_Window.makeToast("Please toggle off seed indoors or enter the number of weeks!");
                     txtSeedIndoors.requestFocus();
                     return;
                 } else if (!toggleButton.isChecked()){
@@ -194,21 +200,21 @@ public class Frag_settingsAddPlants extends Fragment implements View.OnClickList
                 }
 
                 if (txtSeedDistance.getText().toString().matches("")){
-                    makeToast("Please enter seed distance!");
+                    Main_Window.makeToast("Please enter seed distance!");
                     txtSeedDistance.requestFocus();
                     return;
                 } else if (Integer.parseInt(txtSeedDistance.getText().toString()) > 48){
-                    makeToast("Seed distance must be less than 49 inches (4 feet)!");
+                    Main_Window.makeToast("Seed distance must be less than 49 inches (4 feet)!");
                     txtSeedDistance.requestFocus();
                     return;
                 }
 
                 if (txtSeedDepth.getText().toString().matches("")){
-                    makeToast("Please enter seed depth!");
+                    Main_Window.makeToast("Please enter seed depth!");
                     txtSeedDepth.requestFocus();
                     return;
                 } else if (Integer.parseInt(txtSeedDepth.getText().toString()) > 48){
-                    makeToast("Seed depth must be less than 49 inches (4 feet)!");
+                    Main_Window.makeToast("Seed depth must be less than 49 inches (4 feet)!");
                     txtSeedDepth.requestFocus();
                     return;
                 }
@@ -240,7 +246,7 @@ public class Frag_settingsAddPlants extends Fragment implements View.OnClickList
             //Used for handling exceptions on if the given ViewID and the expected ViewID does not match
             default: {
                 //Toast Error Information
-                makeToast("[ERROR] Menu parameter passed was not found, returning to main menu...");
+                Main_Window.makeToast("[ERROR] Menu parameter passed was not found, returning to main menu...");
                 System.out.println("[ERROR] Menu parameter passed was not found, returning to main menu...\n");
 
                 Main_Window.changeFragment("MainMenu");
@@ -251,13 +257,8 @@ public class Frag_settingsAddPlants extends Fragment implements View.OnClickList
 
 
 //METHODS ==========================================================================================
-    public void makeToast(String Message) {
-        Toast toast = Toast.makeText(getActivity(), Message, Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL,0,0);
-        toast.show();
-    }
 
-    public void resetGUI(){
+    private void resetGUI(){
         //Resets the GUI to blank input
         txtName.setText("");
         txtSeedCompany.setText("");
@@ -291,7 +292,7 @@ public class Frag_settingsAddPlants extends Fragment implements View.OnClickList
                     throw new Exception("Photo is Null");
             } catch (Exception e) {
                 //Display an error
-                makeToast("Error reading image.");
+                Main_Window.makeToast("Error reading image.");
                 Log.e("CAMERA_REQUEST Intent", "Exception: ", e);
             }
         }
@@ -311,7 +312,7 @@ public class Frag_settingsAddPlants extends Fragment implements View.OnClickList
                     throw new Exception("Photo is Null");
             } catch (Exception e) {
                 //Display an error
-                makeToast("Error reading selected image.");
+                Main_Window.makeToast("Error reading selected image.");
                 Log.e("PICK_IMAGE Intent", "Exception: ", e);
             }
         }

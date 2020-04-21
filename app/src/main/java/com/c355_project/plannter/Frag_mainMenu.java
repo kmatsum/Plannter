@@ -1,5 +1,6 @@
 package com.c355_project.plannter;
 
+import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
@@ -14,14 +15,17 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
 
-
 public class Frag_mainMenu extends Fragment implements View.OnClickListener {
 //VARIABLES ========================================================================================
     //Main_Window Activity Instantiation
     Main_Window Main_Window;
 
     // Permissions
-    String[] PERMISSIONS = {};
+    private String[] PERMISSIONS =
+            {
+                    Manifest.permission.CAMERA,
+                    Manifest.permission.RECORD_AUDIO
+            };
 
 //LIFECYCLE METHODS ================================================================================
     @Nullable
