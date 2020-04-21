@@ -1,9 +1,12 @@
 package com.c355_project.plannter;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -26,6 +29,7 @@ public class Main_Window extends AppCompatActivity {
 
     // Location to store all files
     public static String ROOT_MEDIA_LOCATION,
+            TEMP_MEDIA_LOCATION,
             PLANT_MEDIA_LOCATION,
             LOG_MEDIA_LOCATION,
             DB_NAME = "plannter.db",
@@ -83,6 +87,11 @@ public class Main_Window extends AppCompatActivity {
         File media_loc = new File(ext_folder, "media");
         media_loc.mkdir();
         ROOT_MEDIA_LOCATION =  media_loc.getAbsolutePath() + "/";
+
+        // Set internal location to store temp media files
+        File temp_loc = new File(media_loc, "Temp");
+        temp_loc.mkdir();
+        TEMP_MEDIA_LOCATION =  temp_loc.getAbsolutePath() + "/";
 
         // Set plant storage within root storage location
         File plant_loc = new File(media_loc, "Plants");
@@ -349,15 +358,8 @@ public class Main_Window extends AppCompatActivity {
                     // Parse note
                     Note note = (Note) object;
 
-                    // Insert SIMPLE Note
-                    if (note.getNoteType() == "Simple"){
-
-                        // Call DAO to insert note
-                        PlannterDatabase.getInstance(getApplicationContext()).plannterDatabaseDao().insertNote(note, null);
-                    }
-
-                    // Insert IMAGE Note
-                    else if (note.getNoteType() == "Image"){
+                    // If IMAGE Note (must pass photo from Frag_logNote)
+                    if (note.getNoteType() == "Image"){
 
                         // Get note photo
                         Bitmap noteImage = Frag_logNote.noteImage;
@@ -366,9 +368,16 @@ public class Main_Window extends AppCompatActivity {
                         PlannterDatabase.getInstance(getApplicationContext()).plannterDatabaseDao().insertNote(note, noteImage);
                     }
 
+                    // Else (it must be SIMPLE or AUDIO), and neither need a passed photo
+                    else {
+                        // Call DAO to insert note
+                        PlannterDatabase.getInstance(getApplicationContext()).plannterDatabaseDao().insertNote(note, null);
+                    }
+
                     // Update Frag_logNote class noteImage variable to null
                     // This is required as the fragment is never recycled
                     Frag_logNote.noteImage = null;
+
                     //Main_Window.this.changeFragment("PlantHistory");
 
 
@@ -383,6 +392,13 @@ public class Main_Window extends AppCompatActivity {
                     System.out.println("doInBackground() Updating Plant, Log, and Note Lists");
                 } break;
 
+            }
+
+            // Clear temp directory
+            File tempDir = new File (Main_Window.TEMP_MEDIA_LOCATION);
+            if (tempDir.isDirectory()){
+                deleteDirectory(tempDir);
+                tempDir.mkdir();
             }
 
             // Update All Lists

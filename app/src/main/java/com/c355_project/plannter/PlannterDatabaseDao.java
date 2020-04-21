@@ -11,6 +11,8 @@ import androidx.room.Update;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
 @Dao
@@ -121,8 +123,10 @@ public abstract class PlannterDatabaseDao {
         // Insert log
         long logID = _insertLog(log);
 
-        // Create corresponding directory
-        new File(Main_Window.LOG_MEDIA_LOCATION, String.valueOf(logID)).mkdir();
+        // Create corresponding directories
+        File logFolder = new File(Main_Window.LOG_MEDIA_LOCATION, String.valueOf(logID));
+        logFolder.mkdir();
+        new File(logFolder, "Notes").mkdir();
 
         // Update console
         System.out.println("PlannterDatabaseDao INSERT Log Operation Completed\r\n\t\tLog ID: "
@@ -206,14 +210,14 @@ public abstract class PlannterDatabaseDao {
         note.setNoteID(lastNoteID + 1);
 
         // Create corresponding directory
-        File f = new File(Main_Window.LOG_MEDIA_LOCATION, note.getLogID() + "/" + note.getNoteID());
-        f.mkdir();
+        File noteFolder = new File(Main_Window.LOG_MEDIA_LOCATION, note.getLogID() + "/Notes/" + note.getNoteID());
+        noteFolder.mkdir();
 
         // If Image Note..
         if (note.getNoteType() == "Image"){
 
             // Export photo to corresponding directory
-            String filePath = f.getAbsoluteFile() + "/" +  note.getNoteID() + ".png";
+            String filePath = noteFolder.getAbsoluteFile() + "/" +  note.getNoteID() + ".png";
             try (FileOutputStream out = new FileOutputStream(filePath)) {
                 photo.compress(Bitmap.CompressFormat.PNG, 100, out);
             } catch (IOException e) {
@@ -222,6 +226,27 @@ public abstract class PlannterDatabaseDao {
 
             // Update note object
             note.setNoteFilepath(filePath);
+        }
+
+        // If image Audio..
+        else if (note.getNoteType() == "Audio"){
+
+            // Move audio file from temp folder
+            String audioFilepath = "";
+            try {
+                audioFilepath = noteFolder + "/" + note.getNoteID() + ".mp3";
+                Files.move(Paths.get(Main_Window.TEMP_MEDIA_LOCATION + "tempAudio.mp3"),
+                        Paths.get(audioFilepath));
+                // Update Console
+                System.out.println("PlannterDatabaseDao INSERT NOTE successfully saved audio for Note with ID: " + note.getNoteID() + " to filepath: " + audioFilepath);
+            } catch (Exception e){
+                // Update Console
+                System.out.println("PlannterDatabaseDao INSERT NOTE FAILED to save audio for Note with ID: " + note.getNoteID() + " to filepath: " + audioFilepath);
+                e.printStackTrace();
+            }
+
+            // Update note object
+            note.setNoteFilepath(audioFilepath);
         }
 
         // Insert note
