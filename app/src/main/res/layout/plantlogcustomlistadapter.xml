@@ -3,20 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="150dp"
     android:background="@color/colorPrimary"
     android:orientation="horizontal">
 
-    <ImageView
-        android:id="@+id/imgCrop"
-        android:layout_width="125dp"
-        android:layout_height="125dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        android:layout_weight=".3"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imgCrop"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp" />
+    </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight=".5"
+        android:gravity="center_vertical"
         android:orientation="vertical">
 
         <LinearLayout
@@ -32,16 +41,17 @@
                 android:fontFamily="@font/finger_paint"
                 android:text="Log ID: "
                 android:textColor="@color/colorTitleText"
-                android:textSize="14.5sp" />
+                android:textSize="14.5sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/txtLogID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/finger_paint"
+                android:fontFamily="sans-serif-medium"
                 android:textColor="@color/colorTitleText"
-                android:textSize="14.5sp" />
+                android:textSize="12sp" />
 
         </LinearLayout>
 
@@ -55,26 +65,26 @@
                 android:id="@+id/txtCropNameTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:fontFamily="@font/finger_paint"
                 android:text="Type: "
                 android:textColor="@color/colorTitleText"
-                android:textSize="14.5sp" />
+                android:textSize="14.5sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/txtCropName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/finger_paint"
+                android:fontFamily="sans-serif-medium"
                 android:textColor="@color/colorTitleText"
-                android:textSize="14.5sp"
+                android:textSize="12sp"
                 app:layout_constraintStart_toEndOf="@+id/imgCrop"
                 app:layout_constraintTop_toTopOf="parent" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:orientation="horizontal">
 
@@ -82,19 +92,19 @@
                 android:id="@+id/txtDatePlantedTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:fontFamily="@font/finger_paint"
                 android:text="Date Planted: "
                 android:textColor="@color/colorTitleText"
-                android:textSize="14.5sp" />
+                android:textSize="14.5sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/txtDatePlanted"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/finger_paint"
+                android:fontFamily="sans-serif-medium"
                 android:textColor="@color/colorTitleText"
-                android:textSize="14.5sp"
+                android:textSize="12sp"
                 app:layout_constraintStart_toEndOf="@+id/imgCrop"
                 app:layout_constraintTop_toBottomOf="@+id/txtCropName" />
         </LinearLayout>
@@ -104,47 +114,46 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_weight="1"
             android:fontFamily="@font/finger_paint"
             android:text="Harvest Between: "
             android:textColor="@color/colorTitleText"
-            android:textSize="14.5sp" />
+            android:textSize="14.5sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/txtExpectedHarvestRange"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:fontFamily="@font/finger_paint"
+            android:fontFamily="sans-serif-medium"
             android:textColor="@color/colorTitleText"
-            android:textSize="14.5sp"
+            android:textSize="12sp"
             app:layout_constraintStart_toStartOf="@+id/txtDatePlanted"
             app:layout_constraintTop_toBottomOf="@+id/txtDatePlanted" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="right"
-        android:orientation="horizontal">
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight=".2"
+        android:gravity="center"
+        android:orientation="vertical">
 
         <ImageButton
             android:id="@+id/btnOpenVoiceMemo"
-            android:layout_width="50dp"
-            android:layout_height="125dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
             android:background="@color/colorPrimary"
-            app:layout_constraintEnd_toStartOf="@+id/btnDeleteLog"
-            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_add_note" />
 
         <ImageButton
             android:id="@+id/btnDeleteLog"
-            android:layout_width="50dp"
-            android:layout_height="125dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
             android:background="@color/colorPrimary"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_trashcan" />
     </LinearLayout>
 

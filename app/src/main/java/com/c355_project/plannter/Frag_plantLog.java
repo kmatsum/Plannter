@@ -1,14 +1,17 @@
 package com.c355_project.plannter;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.Fragment;
 
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ListView;
 
 import com.google.android.gms.ads.AdRequest;
@@ -22,7 +25,6 @@ public class Frag_plantLog extends Fragment implements View.OnClickListener {
     //VARIABLES ========================================================================================
     //Main_Window Activity Instantiation
     Main_Window Main_Window;
-    Button btnOpenNotes;
 
     //GUI Elements
     ListView lv;
@@ -46,10 +48,16 @@ public class Frag_plantLog extends Fragment implements View.OnClickListener {
         //Provide values for variables needed to be set on activity start
         Main_Window = (Main_Window) getActivity();
         lv = view.findViewById(R.id.listView);
-        btnOpenNotes = view.findViewById(R.id.btnOpenVoiceMemo);
+
 
         //Sets listView Adapter
-        lv.setAdapter(new PlantLogCustomListAdapter(Main_Window));
+        PlantLogCustomListAdapter adapter = new PlantLogCustomListAdapter(Main_Window);
+        lv.setAdapter(adapter);
+
+        // If there are no logs...
+        if (adapter.getCount() == 0){
+            openConfirmationDialog(Main_Window);
+        }
 
         //Implements hardware back button to take user back to the Main Menu
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
@@ -77,4 +85,23 @@ public class Frag_plantLog extends Fragment implements View.OnClickListener {
     }
 
 //METHODS ==========================================================================================
+    private void openConfirmationDialog(Context context) {
+        new AlertDialog.Builder(context)
+                .setTitle("You have no logs!")
+                .setMessage(Html.fromHtml("Add a new log on the Plant By Date screen."))
+
+                .setPositiveButton("Open Plant By Date", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Main_Window.changeFragment("PlantDate");
+                    }
+                })
+
+                .setNegativeButton("Go Back", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Main_Window.changeFragment("MainMenu");
+                    }
+                })
+                .setIcon(R.drawable.ic_dialog_warning)
+                .show();
+    }
 }

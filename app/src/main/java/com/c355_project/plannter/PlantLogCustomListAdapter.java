@@ -59,15 +59,14 @@ public class PlantLogCustomListAdapter extends BaseAdapter {
         //Variable Instantiation
         rowView = inflater.inflate(R.layout.plantlogcustomlistadapter, null);
         ImageButton btnVoiceMemo = rowView.findViewById(R.id.btnOpenVoiceMemo);
-        ImageButton btnDeleteLogEntry = rowView.findViewById(R.id.btnDeleteLog);
+        ImageButton btnDeleteLog = rowView.findViewById(R.id.btnDeleteLog);
         holder.imgCrop = rowView.findViewById(R.id.imgCrop);
         holder.txtLogID = rowView.findViewById(R.id.txtLogID);
         holder.txtCropName = rowView.findViewById(R.id.txtCropName);
         holder.txtPlantDate = rowView.findViewById(R.id.txtDatePlanted);
         holder.txtHarvestRange = rowView.findViewById(R.id.txtExpectedHarvestRange);
 
-        //TODO:Set Plant Images, Plant Names, DatePlanted & Harvest Rages
-        List<Log> LogList = Main_window.LogList;
+        final List<Log> LogList = Main_window.LogList;
         List<Plant> PlantList = Main_window.PlantList;
         String plantImageFilePath = null;
             for (Plant currentPlant:PlantList) {
@@ -82,28 +81,21 @@ public class PlantLogCustomListAdapter extends BaseAdapter {
         holder.txtPlantDate.setText(LogList.get(position).getPlantDate());
         holder.txtHarvestRange.setText(LogList.get(position).getHarvestRange());
 
-
         //Attaches onClickListener to Voice Memo Buttons
         btnVoiceMemo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: Open Notes Fragment
-                switch (view.getId())
-                {
-                    case(R.id.btnOpenVoiceMemo):
-                    {
-                        Main_window.changeFragment("Notes");
-                        Main_window.currentLogID = position + 1;
-                    }
-                }
+                Main_window.changeFragment("Notes");
+                Main_window.currentLogID = position + 1;
             }
         });
 
-        //Attaches onClickListener to TTS Buttons
-        btnDeleteLogEntry.setOnClickListener(new View.OnClickListener() {
+        //Attaches onClickListener to Delete Log Buttons
+        btnDeleteLog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: Delete Log Entry From DB
+                Main_window.changeFragment("MainMenu");
+                Main_window.editTransaction("DeleteLog", LogList.get(position));
             }
         });
 

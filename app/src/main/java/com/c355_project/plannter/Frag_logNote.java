@@ -39,12 +39,12 @@ public class Frag_logNote extends Fragment implements View.OnClickListener {
     Context context;
 
     // GUI Elements
-    LinearLayout viewNotes, createNote, createNoteImage, createNoteAudio;
-    RadioButton rbSimple, rbAudio, rbImage;
-    EditText txtNoteCaption;
-    ImageView imgNoteImage;
-    ImageButton imgRecording;
-    private ListView list;
+    private LinearLayout viewNotes, createNote, createNoteImage, createNoteAudio;
+    private RadioButton rbSimple, rbAudio, rbImage;
+    private EditText txtNoteCaption;
+    private ImageView imgNoteImage;
+    private ImageButton imgRecording;
+    private ListView listView;
 
     // Image Note handling
     private static final int CAMERA_REQUEST = 1888;
@@ -53,7 +53,6 @@ public class Frag_logNote extends Fragment implements View.OnClickListener {
 
     // Audio Note Handling
     MediaRecorder noteMedia = null;
-    int count = 0;//, noteID = 1;
 
     // Temp object
     Note tempNote = null;
@@ -95,6 +94,7 @@ public class Frag_logNote extends Fragment implements View.OnClickListener {
         txtNoteCaption = view.findViewById(R.id.txtNoteCaption);
         imgNoteImage = view.findViewById(R.id.imgNoteImage);
         imgRecording = view.findViewById(R.id.imgRecording);
+        listView = view.findViewById(R.id.listView);
 
         // Implements hardware back button to take user back to the Main Menu
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
