@@ -1,5 +1,7 @@
 package com.c355_project.plannter;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -17,6 +19,13 @@ public class Frag_mainMenu extends Fragment implements View.OnClickListener {
 //VARIABLES ========================================================================================
     //Main_Window Activity Instantiation
     Main_Window Main_Window;
+
+    // Permissions
+    private String[] PERMISSIONS =
+            {
+                    Manifest.permission.CAMERA,
+                    Manifest.permission.RECORD_AUDIO
+            };
 
 //LIFECYCLE METHODS ================================================================================
     @Nullable
@@ -43,6 +52,18 @@ public class Frag_mainMenu extends Fragment implements View.OnClickListener {
         AdView adView = view.findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
         adView.loadAd(adRequest);
+
+        // PERMISSIONS =============================================================================
+        // Loop to request permissions if not already granted
+        if (PERMISSIONS != null) {
+            for (String str : PERMISSIONS) {
+                if (Main_Window.checkSelfPermission(str) != PackageManager.PERMISSION_GRANTED) {
+                    this.requestPermissions(PERMISSIONS, 1);
+                    System.out.println("[DEBUG] Requesting permissions.");
+                    return;
+                }
+            }
+        }
     }
 
 
