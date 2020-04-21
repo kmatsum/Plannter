@@ -11,11 +11,22 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".1"
+            android:fontFamily="@font/finger_paint"
+            android:text="View Logs"
+            android:textAlignment="center"
+            android:textColor="@color/colorTitleText"
+            android:textSize="40sp"
+            android:textStyle="bold" />
+
         <ListView
             android:id="@+id/listView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight=".9" />
 
         <com.google.android.gms.ads.AdView
             android:id="@+id/adView"
