@@ -22,7 +22,6 @@ public class Frag_plantLog extends Fragment implements View.OnClickListener {
     //VARIABLES ========================================================================================
     //Main_Window Activity Instantiation
     Main_Window Main_Window;
-    Button btnOpenNotes;
 
     //GUI Elements
     ListView lv;
@@ -46,7 +45,7 @@ public class Frag_plantLog extends Fragment implements View.OnClickListener {
         //Provide values for variables needed to be set on activity start
         Main_Window = (Main_Window) getActivity();
         lv = view.findViewById(R.id.listView);
-        btnOpenNotes = view.findViewById(R.id.btnOpenVoiceMemo);
+
 
         //Sets listView Adapter
         lv.setAdapter(new PlantLogCustomListAdapter(Main_Window));
