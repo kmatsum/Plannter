@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-
 import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.Fragment;
 
@@ -17,24 +16,17 @@ import android.widget.ListView;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
-import java.text.SimpleDateFormat;
-
-
-
 public class Frag_plantLog extends Fragment implements View.OnClickListener {
-    //VARIABLES ========================================================================================
+
+//VARIABLES ========================================================================================
+
     //Main_Window Activity Instantiation
     Main_Window Main_Window;
 
-    //GUI Elements
+    // GUI Elements
     ListView lv;
 
-
-    //Date Format
-    SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-
-
-    //LIFECYCLE METHODS ================================================================================
+//LIFECYCLE METHODS ================================================================================
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -47,17 +39,6 @@ public class Frag_plantLog extends Fragment implements View.OnClickListener {
 
         //Provide values for variables needed to be set on activity start
         Main_Window = (Main_Window) getActivity();
-        lv = view.findViewById(R.id.listView);
-
-
-        //Sets listView Adapter
-        PlantLogCustomListAdapter adapter = new PlantLogCustomListAdapter(Main_Window);
-        lv.setAdapter(adapter);
-
-        // If there are no logs...
-        if (adapter.getCount() == 0){
-            openConfirmationDialog(Main_Window);
-        }
 
         //Implements hardware back button to take user back to the Main Menu
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
@@ -67,9 +48,19 @@ public class Frag_plantLog extends Fragment implements View.OnClickListener {
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
 
+        //Find GUI Elements
+        lv = view.findViewById(R.id.lv);
+
         //Set all OnClickListeners needed for this View
 
-        //Set the required Widget variables to their respective views
+        // Setup list adapter
+        PlantLogCustomListAdapter adapter = new PlantLogCustomListAdapter(Main_Window);
+        lv.setAdapter(adapter);
+
+        // If there are no logs...
+        if (adapter.getCount() == 0){
+            openConfirmationDialog(Main_Window);
+        }
 
         //Adds banner ad to UI
         AdView adView = view.findViewById(R.id.adView);
@@ -87,21 +78,21 @@ public class Frag_plantLog extends Fragment implements View.OnClickListener {
 //METHODS ==========================================================================================
     private void openConfirmationDialog(Context context) {
         new AlertDialog.Builder(context)
-                .setTitle("You have no logs!")
-                .setMessage(Html.fromHtml("Add a new log on the Plant By Date screen."))
+            .setTitle("You have no logs!")
+            .setMessage(Html.fromHtml("Add a new log on the Plant By Date screen."))
 
-                .setPositiveButton("Open Plant By Date", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        Main_Window.changeFragment("PlantDate");
-                    }
-                })
+            .setPositiveButton("Open Plant By Date", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    Main_Window.changeFragment("PlantDate");
+                }
+            })
 
-                .setNegativeButton("Go Back", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        Main_Window.changeFragment("MainMenu");
-                    }
-                })
-                .setIcon(R.drawable.ic_dialog_warning)
-                .show();
+            .setNegativeButton("Go Back", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    Main_Window.changeFragment("MainMenu");
+                }
+            })
+            .setIcon(R.drawable.ic_dialog_warning)
+            .show();
     }
 }
