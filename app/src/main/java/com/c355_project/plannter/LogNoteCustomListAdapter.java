@@ -4,9 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -41,23 +39,21 @@ public class LogNoteCustomListAdapter extends BaseAdapter {
         return 0;
     }
 
-    public class Holder {
-        TextView txtFileName;
-    }
-
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
+
         //Variable Declaration
         View rowView;
-        LogNoteCustomListAdapter.Holder holder=new LogNoteCustomListAdapter.Holder();
+        TextView txtNoteType;
 
         //Variable Instantiation
-        rowView = inflater.inflate(R.layout.plantlogcustomlistadapter, null);
-        holder.txtFileName = rowView.findViewById(R.id.txtFileName);
-
+        rowView = inflater.inflate(R.layout.lognotecustomlistadapter, null);
+        txtNoteType = rowView.findViewById(R.id.txtNoteType);
         List<Note> NoteList = Main_window.NoteList;
 
-        holder.txtFileName.setText(NoteList.get(i).getLogID());
+        txtNoteType.setText(NoteList.get(i).getNoteType());
+
+        Main_window.makeToast("Note type: " + NoteList.get(i).getNoteType());
 
         return rowView;
     }
