@@ -28,6 +28,10 @@ public class BluetoothService {
     String tempReceivedMessage;
 
     public BluetoothService (Main_Window xMain_Window) {
+        System.out.println("[DEBUG]: BluetoothService Constructor Called!");
 
+        Main_Window_Instance = xMain_Window;
+
+        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     }
 }
