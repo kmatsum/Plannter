@@ -16,7 +16,7 @@ import java.util.UUID;
 public class BluetoothService {
     // Intent request codes
     private static final int    REQUEST_MAKE_DISCOVERABLE = 10;
-    private static final int    REQUEST_ENABLE_BT = 2;
+    private static final int    REQUEST_ENABLE_BT = 11;
     private static final int    DISCOVERABLE_BT_REQUEST_CODE = 3;
     private static final int    DISCOVERABLE_DURATION = 300;
 
@@ -43,6 +43,35 @@ public class BluetoothService {
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     }
 
+    public boolean getDeviceState() {
+        System.out.println("[DEBUG]: BluetoothService.getDeviceState() Called");
+
+        if (bluetoothAdapter == null) {
+            System.out.println("[DEBUG]: BluetoothService.getDeviceState(): BluetoothAdapter == null: returning false");
+            return false;
+        } else {
+            System.out.println("[DEBUG]: BluetoothService.getDeviceState(): BluetoothAdapter != null: Bluetooth Available: returning true");
+            return true;
+        }
+    }
+
+    public boolean enableBluetooth() {
+        System.out.println("[DEBUG]: BluetoothService.enableBluetooth() Called");
+
+        if (bluetoothAdapter.isEnabled()) {
+            System.out.println("[DEBUG]: Bluetooth is ENABLED, do the Next Step");
+            return true;
+        } else {
+            System.out.println("[DEBUG]: Bluetooth NOT ENABLED, asking user to Enable Bluetooth...");
+
+            Intent bluetoothRequestEnable = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            targetContext.startActivityForResult(bluetoothRequestEnable, REQUEST_ENABLE_BT);
+            System.out.println("[DEBUG]: targetContext.startActivityForResult(bluetoothRequestEnable, REQUEST_ENABLE_BT) called");
+
+            return false;
+        }
+    }
+
     public void makeThisDeviceDiscoverable () {
         System.out.println("[DEBUG]: makeThisDeviceDiscoverable() Called");
         System.out.println("[DEBUG]: Starting the Activity-Intent to make the device discoverable to searching devices for 300 seconds");
@@ -66,7 +95,7 @@ public class BluetoothService {
             bluetoothServerThread.start();
             System.out.println("[DEBUG]: Start the BluetoothServerThread Thread. This will make the device available for connecting");
         } else {
-            //TODO: Add things when the bluetooth adapter is null
+            System.out.println("[DEBUG]: (bluetoothAdapter != null && bluetoothAdapter.isEnabled()) returned false, Device Discovery not available");
         }
     }
 
