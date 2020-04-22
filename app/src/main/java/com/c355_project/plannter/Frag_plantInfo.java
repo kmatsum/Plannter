@@ -164,6 +164,10 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
             Main_Window.changeFragment("MainMenu");
         }
 
+        else if (id == R.id.btnSharePlant) {
+            //TODO: Add Sharing Plant Functionality Here
+        }
+
         //Used for handling exceptions on if the given ViewID and the expected ViewID does not match
         else {
             //Toast Error Information
