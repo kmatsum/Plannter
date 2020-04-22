@@ -57,7 +57,7 @@ public class BluetoothService {
     public void startBluetoothServerThread () {
         System.out.println("[DEBUG]: startBluetoothServerThread() Called");
 
-        if (bluetoothAdapter != null || !bluetoothAdapter.isEnabled()) {
+        if (bluetoothAdapter != null && bluetoothAdapter.isEnabled()) {
             bluetoothServerThread = new BluetoothServerThread();
             System.out.println("[DEBUG]: bluetoothServerThread() instantiated!");
 

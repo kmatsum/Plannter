@@ -2,10 +2,12 @@ package com.c355_project.plannter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import android.view.Gravity;
@@ -32,6 +34,9 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
     private static final int    REQUEST_ENABLE_BT = 2;
     private static final int    DISCOVERABLE_BT_REQUEST_CODE = 3;
     private static final int    DISCOVERABLE_DURATION = 300;
+
+    // Permissions
+    String[] PERMISSIONS = {android.Manifest.permission.BLUETOOTH, android.Manifest.permission.BLUETOOTH_ADMIN, android.Manifest.permission.ACCESS_FINE_LOCATION};
 
     //Main_Window Activity Instantiation
     Main_Window Main_Window;
@@ -186,8 +191,10 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
 
         else if (id == R.id.btnSharePlant) {
             //TODO: Add Sharing Plant Functionality Here
-            bluetoothService = new BluetoothService(this);
-            bluetoothService.makeThisDeviceDiscoverable();
+            if (checkBluetoothPermissions() == PERMISSIONS.length) {
+                bluetoothService = new BluetoothService(this);
+                bluetoothService.makeThisDeviceDiscoverable();
+            }
         }
 
         //Used for handling exceptions on if the given ViewID and the expected ViewID does not match
@@ -288,11 +295,57 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == 1) {
+            if (verifyPermissions(grantResults)) {
+                // all permissions granted
+                bluetoothService.makeThisDeviceDiscoverable();
+            } else {
+                // some permissions denied
+            }
+        }
+
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
     //METHODS ==========================================================================================
     public void makeToast(String Message) {
         Toast toast = Toast.makeText(getActivity(), Message, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL,0,0);
         toast.show();
+    }
+
+    public int checkBluetoothPermissions () {
+        //This will check for permission
+        int permissionGrantedCounter = 0;
+        for (String str : PERMISSIONS) {
+            if (Main_Window.checkSelfPermission(str) != PackageManager.PERMISSION_GRANTED) {
+                this.requestPermissions(PERMISSIONS, 1);
+                System.out.println("[DEBUG] Requesting permissions.");
+                return permissionGrantedCounter;
+            } else {
+                //This will be invoked if the permission in this round of the For Loop is granted
+                //When all permission are granted, then the counter will be 3, since there are only 3 permissions to ask for...
+                permissionGrantedCounter++;
+            }
+        }
+        return permissionGrantedCounter;
+    }
+
+    private boolean verifyPermissions(int[] grantResults) {
+        // At least one result must be checked.
+        if (grantResults.length < 1){
+            return false;
+        }
+
+        // Verify that each required permission has been granted, otherwise return false.
+        for (int result : grantResults) {
+            if (result != PackageManager.PERMISSION_GRANTED) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public Date calculatePlantDate(int distanceFromFrostDate, Date xFrostDate) {
