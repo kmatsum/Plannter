@@ -148,6 +148,7 @@ public class BluetoothService {
             BluetoothSocket bluetoothServerSocket = null;
 
             while (bluetoothServerSocket == null) {
+                System.out.println("IM LOOKING FOR A POSSIBLE BLUETOOTH CONNECTION!");
                 try {
                     bluetoothServerSocket = bluetoothSocket.accept();
                     System.out.println("[DEBUG]: BluetoothServerThread.run().BluetoothServerSocket.accept(): called!");
