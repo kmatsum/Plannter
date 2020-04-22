@@ -37,7 +37,6 @@ public class Frag_addNotes extends Fragment implements View.OnClickListener {
     private EditText txtNoteCaption;
     private ImageView imgNoteImage;
     private ImageButton imgRecording;
-    private ListView lv;
 
     // Image Note handling
     private static final int CAMERA_REQUEST = 1888;
@@ -84,7 +83,6 @@ public class Frag_addNotes extends Fragment implements View.OnClickListener {
         txtNoteCaption = view.findViewById(R.id.txtNoteCaption);
         imgNoteImage = view.findViewById(R.id.imgNoteImage);
         imgRecording = view.findViewById(R.id.imgRecording);
-        lv = view.findViewById(R.id.listView);
 
         // Implements hardware back button to take user back to the Main Menu
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
