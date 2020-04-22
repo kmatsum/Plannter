@@ -1,5 +1,6 @@
 package com.c355_project.plannter;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
@@ -50,6 +51,9 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
                 txtSeedDepth,
                 txtNotes;
 
+    BluetoothService
+                bluetoothService;
+
     //Date Format
     SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 
@@ -66,7 +70,7 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-      
+
         Main_Window = (Main_Window) getActivity();
         plantList = Main_Window.PlantList;
         SpringFrostDate = Main_Window.getLastSpringFrostDate();
@@ -120,6 +124,15 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
         adView.loadAd(adRequest);
     }
 
+    @Override
+    public void onPause() {
+        if (bluetoothService != null) {
+            bluetoothService.stopBluetooth();
+            bluetoothService = null;
+        }
+        super.onPause();
+    }
+
 
 
 //LISTENER METHODS =================================================================================
@@ -166,6 +179,7 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
 
         else if (id == R.id.btnSharePlant) {
             //TODO: Add Sharing Plant Functionality Here
+            bluetoothService = new BluetoothService(this);
         }
 
         //Used for handling exceptions on if the given ViewID and the expected ViewID does not match
@@ -244,9 +258,22 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
 
     }
 
+    //onActivityResult =================================================================================
+    /*
+    This onActivityResult is mainly used for Bluetooth
+    */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        switch (requestCode) {
+            case (1): {
 
+            }
+            break;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
-//METHODS ==========================================================================================
+    //METHODS ==========================================================================================
     public void makeToast(String Message) {
         Toast toast = Toast.makeText(getActivity(), Message, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL,0,0);

@@ -1,10 +1,12 @@
 package com.c355_project.plannter;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -115,6 +117,21 @@ public class Main_Window extends AppCompatActivity {
         //Replace to first fragment
         changeFragment("MainMenu");
 
+    }
+
+//onActivityResult =================================================================================
+    /*
+    This onActivityResult is mainly used for Bluetooth
+    */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        switch (requestCode) {
+            case (1): {
+
+            }
+            break;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     //METHODS ==========================================================================================

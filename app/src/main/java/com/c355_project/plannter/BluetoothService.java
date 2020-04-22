@@ -5,6 +5,9 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
+
+import androidx.fragment.app.Fragment;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -30,10 +33,13 @@ public class BluetoothService {
 
     Main_Window                     Main_Window_Instance;
 
-    public BluetoothService (Main_Window xMain_Window, String xTypeConnection) {
+    Fragment                        targetContext;
+
+    public BluetoothService (Fragment xTargetContext) {
         System.out.println("[DEBUG]: BluetoothService Constructor Called!");
 
-        Main_Window_Instance = xMain_Window;
+//        Main_Window_Instance = xMain_Window;
+        targetContext = xTargetContext;
 
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     }
@@ -46,6 +52,23 @@ public class BluetoothService {
         Intent discoverThisByBluetooth = new Intent (BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
         discoverThisByBluetooth.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
         Main_Window_Instance.startActivity(discoverThisByBluetooth);
+
+        //Start the Bluetooth Thread to begin to accept incoming traffic
+        startBluetoothServerThread();
+    }
+
+    public void startBluetoothServerThread () {
+        System.out.println("[DEBUG]: startBluetoothServerThread() Called");
+
+        if (bluetoothAdapter != null || !bluetoothAdapter.isEnabled()) {
+            bluetoothServerThread = new BluetoothServerThread();
+            System.out.println("[DEBUG]: bluetoothServerThread() instantiated!");
+
+            bluetoothServerThread.start();
+            System.out.println("[DEBUG]: Start the BluetoothServerThread Thread. This will make the device available for connecting");
+        } else {
+            //TODO: Add things when the bluetooth adapter is null
+        }
     }
 
     public void  stopBluetooth() {
