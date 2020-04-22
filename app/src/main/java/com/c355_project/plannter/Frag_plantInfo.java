@@ -1,5 +1,6 @@
 package com.c355_project.plannter;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -26,6 +27,12 @@ import com.google.android.gms.ads.AdView;
 
 public class Frag_plantInfo extends Fragment implements View.OnClickListener, Spinner.OnItemSelectedListener {
 //VARIABLES ========================================================================================
+    // Intent request codes
+    private static final int    REQUEST_MAKE_DISCOVERABLE = 10;
+    private static final int    REQUEST_ENABLE_BT = 2;
+    private static final int    DISCOVERABLE_BT_REQUEST_CODE = 3;
+    private static final int    DISCOVERABLE_DURATION = 300;
+
     //Main_Window Activity Instantiation
     Main_Window Main_Window;
 
@@ -180,6 +187,7 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
         else if (id == R.id.btnSharePlant) {
             //TODO: Add Sharing Plant Functionality Here
             bluetoothService = new BluetoothService(this);
+            bluetoothService.makeThisDeviceDiscoverable();
         }
 
         //Used for handling exceptions on if the given ViewID and the expected ViewID does not match
@@ -265,8 +273,15 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         switch (requestCode) {
-            case (1): {
+            case (REQUEST_MAKE_DISCOVERABLE): {
+                System.out.println("[DEBUG]: Frag_plantInfo.onActivityResult.case[REQUEST_MAKE_DISCOVERABLE]");
+                if (resultCode == Activity.RESULT_OK) {
+                    System.out.println("[DEBUG]: Frag_plantInfo.onActivityResult.case[REQUEST_MAKE_DISCOVERABLE] invoked an Activity.RESULT_OK");
 
+                    bluetoothService.startBluetoothServerThread();
+                } else {
+                    System.out.println("[DEBUG]: Frag_plantInfo.onActivityResult.case[REQUEST_MAKE_DISCOVERABLE] DID NOT invoke an Activity.RESULT_OK");
+                }
             }
             break;
         }

@@ -15,7 +15,7 @@ import java.util.UUID;
 
 public class BluetoothService {
     // Intent request codes
-    private static final int    REQUEST_CONNECT_DEVICE = 1;
+    private static final int    REQUEST_MAKE_DISCOVERABLE = 10;
     private static final int    REQUEST_ENABLE_BT = 2;
     private static final int    DISCOVERABLE_BT_REQUEST_CODE = 3;
     private static final int    DISCOVERABLE_DURATION = 300;
@@ -51,10 +51,7 @@ public class BluetoothService {
         //Makes the device Discoverable by other bluetooth devices for 300 seconds
         Intent discoverThisByBluetooth = new Intent (BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
         discoverThisByBluetooth.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
-        Main_Window_Instance.startActivity(discoverThisByBluetooth);
-
-        //Start the Bluetooth Thread to begin to accept incoming traffic
-        startBluetoothServerThread();
+        targetContext.startActivityForResult(discoverThisByBluetooth, REQUEST_MAKE_DISCOVERABLE);
     }
 
     public void startBluetoothServerThread () {
