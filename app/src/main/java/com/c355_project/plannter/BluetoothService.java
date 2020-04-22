@@ -148,7 +148,7 @@ public class BluetoothService {
             BluetoothSocket bluetoothServerSocket = null;
 
             while (bluetoothServerSocket == null) {
-                System.out.println("IM LOOKING FOR A POSSIBLE BLUETOOTH CONNECTION!");
+                System.out.println("IM LOOKING FOR A POSSIBLE BLUETOOTH CONNECTION: " + bluetoothServerSocket);
                 try {
                     bluetoothServerSocket = bluetoothSocket.accept();
                     System.out.println("[DEBUG]: BluetoothServerThread.run().BluetoothServerSocket.accept(): called!");
@@ -157,6 +157,7 @@ public class BluetoothService {
                     break;
                 }
             }
+            System.out.println("[DEBUG]: BluetoothServerThread.run().BluetoothServerSocket: Passed the While Loop!");
 
             if (bluetoothServerSocket != null) {
                 BluetoothCommunicationThread bluetoothServerCommunicationThread = new BluetoothCommunicationThread(bluetoothServerSocket, "This message is from the Bluetooth Server");
@@ -165,6 +166,8 @@ public class BluetoothService {
                 bluetoothServerCommunicationThread.start();
                 System.out.println("[DEBUG]: BluetoothCommunicationThread.start() method Called");
             }
+
+            System.out.println("[DEBUG]: BluetoothServerThread.run().BluetoothServerSocket: Passed the if (bluetoothServerSocket != null) !");
         }
 
         public void cancel() {
