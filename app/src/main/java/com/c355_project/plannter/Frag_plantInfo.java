@@ -140,11 +140,11 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
 
     @Override
     public void onPause() {
-        System.out.println("[DEBUG]: Frag_plantInfo.onPause(): Called");
-        if (bluetoothService != null) {
-            bluetoothService.stopBluetooth();
-            bluetoothService = null;
-        }
+//        System.out.println("[DEBUG]: Frag_plantInfo.onPause(): Called");
+//        if (bluetoothService != null) {
+//            bluetoothService.stopBluetooth();
+//            bluetoothService = null;
+//        }
         super.onPause();
     }
 
