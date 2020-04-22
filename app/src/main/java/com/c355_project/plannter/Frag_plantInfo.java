@@ -206,8 +206,11 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
             if (bluetoothService.getDeviceState()) {
                 //Bluetooth is supported
                 if (bluetoothService.enableBluetooth()) {
+
+                    int grantedPermissionCounter = checkBluetoothPermissions();
+                    System.out.println("[DEBUG]: onClick.CASE(R.id.btnSharePlant): if(bluetoothService.enableBluetooth(): grantedPermissionCounter = " + grantedPermissionCounter + " PERMISSIONS.length = " + PERMISSIONS.length);
                     //Check for Bluetooth Permissions
-                    if (checkBluetoothPermissions() == PERMISSIONS.length) {
+                    if (grantedPermissionCounter == PERMISSIONS.length) {
                         bluetoothService.makeThisDeviceDiscoverable();
                     }
                 }
