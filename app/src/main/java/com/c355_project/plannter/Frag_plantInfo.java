@@ -206,7 +206,6 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
             if (bluetoothService.getDeviceState()) {
                 //Bluetooth is supported
                 if (bluetoothService.enableBluetooth()) {
-
                     int grantedPermissionCounter = checkBluetoothPermissions();
                     System.out.println("[DEBUG]: onClick.CASE(R.id.btnSharePlant): if(bluetoothService.enableBluetooth(): grantedPermissionCounter = " + grantedPermissionCounter + " PERMISSIONS.length = " + PERMISSIONS.length);
                     //Check for Bluetooth Permissions
@@ -311,8 +310,6 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
             } break;
             case (REQUEST_MAKE_DISCOVERABLE): {
                 System.out.println("[DEBUG]: Frag_plantInfo.onActivityResult.case[REQUEST_MAKE_DISCOVERABLE]: called with result code: " + resultCode);
-                System.out.println("[DEBUG]: Frag_plantInfo.onActivityResult.case[REQUEST_MAKE_DISCOVERABLE]: " + Activity.RESULT_OK );
-
                 if (resultCode == 300) {
                     System.out.println("[DEBUG]: Frag_plantInfo.onActivityResult.case[REQUEST_MAKE_DISCOVERABLE] invoked an Activity.RESULT_OK");
                     bluetoothService.startBluetoothServerThread();
