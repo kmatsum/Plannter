@@ -2,7 +2,6 @@ package com.c355_project.plannter;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -24,17 +23,19 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
 public class Frag_plantInfo extends Fragment implements View.OnClickListener, Spinner.OnItemSelectedListener {
+
 //VARIABLES ========================================================================================
-    //Main_Window Activity Instantiation
+
+    // Main_Window Activity Instantiation
     Main_Window Main_Window;
 
-    //Plant Object List
+    // Plant Object List
     List<Plant> plantList;
     String[]    plantNames;
     Date        FallFrostDate,
                 SpringFrostDate;
 
-    //GUI Elements
+    // GUI Elements
     Spinner     spnrSelectPlant;
     ImageView   imageView;
     TextView    txtSeedIndoors,
@@ -50,7 +51,7 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
                 txtSeedDepth,
                 txtNotes;
 
-    //Date Format
+    // Date Format
     SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 
 //LIFECYCLE METHODS ================================================================================
