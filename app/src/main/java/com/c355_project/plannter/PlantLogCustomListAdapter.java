@@ -1,7 +1,10 @@
 package com.c355_project.plannter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.Uri;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,7 +61,6 @@ public class PlantLogCustomListAdapter extends BaseAdapter {
 
         //Variable Instantiation
         rowView = inflater.inflate(R.layout.plantlogcustomlistadapter, null);
-        ImageButton btnVoiceMemo = rowView.findViewById(R.id.btnOpenVoiceMemo);
         ImageButton btnDeleteLog = rowView.findViewById(R.id.btnDeleteLog);
         holder.imgCrop = rowView.findViewById(R.id.imgCrop);
         holder.txtLogID = rowView.findViewById(R.id.txtLogID);
@@ -82,7 +84,7 @@ public class PlantLogCustomListAdapter extends BaseAdapter {
         holder.txtHarvestRange.setText(LogList.get(position).getHarvestRange());
 
         //Attaches onClickListener to Voice Memo Buttons
-        btnVoiceMemo.setOnClickListener(new View.OnClickListener() {
+        rowView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Main_window.currLog = LogList.get(position);
@@ -94,11 +96,32 @@ public class PlantLogCustomListAdapter extends BaseAdapter {
         btnDeleteLog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Main_window.changeFragment("MainMenu");
-                Main_window.editTransaction("DeleteLog", LogList.get(position));
+                openConfirmationDialog(context, LogList.get(position));
             }
         });
 
         return rowView;
+    }
+
+// METHODS =========================================================================================
+    private void openConfirmationDialog(Context context, final Log log) {
+        new AlertDialog.Builder(context)
+                .setTitle("Are you sure you want to delete log " + log.getLogID() + ": " + log.getPlantName() + "?")
+                .setMessage(Html.fromHtml("This action cannot be undone."))
+
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Main_window.changeFragment("MainMenu");
+                        Main_window.editTransaction("DeleteLog", log);
+                        Main_window.makeToast("Log " + log.getLogID() + ": " + log.getPlantName() + " deleted.");
+                    }
+                })
+
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                })
+                .setIcon(R.drawable.ic_dialog_warning)
+                .show();
     }
 }
