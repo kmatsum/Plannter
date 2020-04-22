@@ -69,12 +69,12 @@ public class PlantLogCustomListAdapter extends BaseAdapter {
         final List<Log> LogList = Main_window.LogList;
         List<Plant> PlantList = Main_window.PlantList;
         String plantImageFilePath = null;
-            for (Plant currentPlant:PlantList) {
-                if (LogList.get(position).getPlantID() == currentPlant.getPlantID()) {
-                    plantImageFilePath = currentPlant.getPhotoPath();
-                    break;
-                }
+        for (Plant currentPlant:PlantList) {
+            if (LogList.get(position).getPlantID() == currentPlant.getPlantID()) {
+                plantImageFilePath = currentPlant.getPhotoPath();
+                break;
             }
+        }
         holder.imgCrop.setImageURI(Uri.parse(plantImageFilePath));
         holder.txtLogID.setText(String.valueOf(LogList.get(position).getLogID()));
         holder.txtCropName.setText(LogList.get(position).getPlantName());
@@ -85,8 +85,8 @@ public class PlantLogCustomListAdapter extends BaseAdapter {
         btnVoiceMemo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Main_window.currLog = LogList.get(position);
                 Main_window.changeFragment("Notes");
-                Main_window.currentLogID = position + 1;
             }
         });
 
