@@ -2,11 +2,9 @@ package com.c355_project.plannter;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -41,10 +39,11 @@ public class Main_Window extends AppCompatActivity {
     //Fragments
     Frag_mainMenu           Frag_mainMenu;
     Frag_settings           Frag_settings;
-    Frag_settingsAddPlants  Frag_settingsAddPlants;
+    Frag_addPlants          Frag_addPlants;
     Frag_plantInfo          Frag_plantInfo;
     Frag_plantDate          Frag_plantDate;
     Frag_plantLog           Frag_plantHistory;
+    Frag_addNotes           Frag_addNotes;
     Frag_logNote            Frag_logNote;
 
     //Shared Preferences
@@ -65,7 +64,7 @@ public class Main_Window extends AppCompatActivity {
 
     // LogID
     // This variable is set when the note button is clicked on a specific log
-    int currentLogID;
+    Log currLog;
 
 //Lifecycle Methods ================================================================================
     @Override
@@ -76,11 +75,12 @@ public class Main_Window extends AppCompatActivity {
         //Fragment Instantiation
         Frag_mainMenu           = new Frag_mainMenu();
         Frag_settings           = new Frag_settings();
-        Frag_settingsAddPlants  = new Frag_settingsAddPlants();
+        Frag_addPlants          = new Frag_addPlants();
         Frag_plantInfo          = new Frag_plantInfo();
         Frag_plantDate          = new Frag_plantDate();
         Frag_plantHistory       = new Frag_plantLog();
-        Frag_logNote          = new Frag_logNote();
+        Frag_logNote            = new Frag_logNote();
+        Frag_addNotes           = new Frag_addNotes();
 
         // Set internal location to store all files, adding a subfolder called "media"
         File ext_folder = this.getFilesDir();
@@ -151,6 +151,7 @@ public class Main_Window extends AppCompatActivity {
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainFragmentWindow, Frag_plantInfo).commit();
             } break;
+
             case "Settings": {
                 System.out.println("=============================================================");
                 System.out.println("SWITCH THE FRAGMENT TO SETTINGS");
@@ -158,6 +159,7 @@ public class Main_Window extends AppCompatActivity {
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainFragmentWindow, Frag_settings).commit();
             } break;
+
             case "Notes": {
                 System.out.println("=============================================================");
                 System.out.println("SWITCH THE FRAGMENT TO NOTES");
@@ -166,12 +168,20 @@ public class Main_Window extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainFragmentWindow, Frag_logNote).commit();
             } break;
 
-            case "SettingsAddPlants": {
+            case "AddPlants": {
                 System.out.println("=============================================================");
-                System.out.println("SWITCH THE FRAGMENT TO SETTINGSADDPLANTS");
+                System.out.println("SWITCH THE FRAGMENT TO ADDPLANTS");
                 System.out.println("=============================================================");
 
-                getSupportFragmentManager().beginTransaction().replace(R.id.mainFragmentWindow, Frag_settingsAddPlants).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainFragmentWindow, Frag_addPlants).commit();
+            } break;
+
+            case "AddNotes": {
+                System.out.println("=============================================================");
+                System.out.println("SWITCH THE FRAGMENT TO ADDNOTES");
+                System.out.println("=============================================================");
+
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainFragmentWindow, Frag_addNotes).commit();
             } break;
 
             default: {
@@ -327,14 +337,14 @@ public class Main_Window extends AppCompatActivity {
                 case ("InsertPlant"): {
 
                     // Get plant photo
-                    Bitmap photo = Frag_settingsAddPlants.photo;
+                    Bitmap photo = Frag_addPlants.photo;
 
                     // Call DAO to insert plant
                     PlannterDatabase.getInstance(getApplicationContext()).plannterDatabaseDao().insertPlant((Plant) object, photo);
 
-                    // Update Frag_settingsAddPlants class photo variable to null
+                    // Update Frag_addPlants class photo variable to null
                     // This is required as the fragment is never recycled
-                    Frag_settingsAddPlants.photo = null;
+                    Frag_addPlants.photo = null;
                     Main_Window.this.changeFragment("PlantInfo");
 
                 } break;
@@ -358,11 +368,11 @@ public class Main_Window extends AppCompatActivity {
                     // Parse note
                     Note note = (Note) object;
 
-                    // If IMAGE Note (must pass photo from Frag_logNote)
+                    // If IMAGE Note (must pass photo from Frag_addNotes)
                     if (note.getNoteType() == "Image"){
 
                         // Get note photo
-                        Bitmap noteImage = Frag_logNote.noteImage;
+                        Bitmap noteImage = Frag_addNotes.noteImage;
 
                         // Call DAO to insert note
                         PlannterDatabase.getInstance(getApplicationContext()).plannterDatabaseDao().insertNote(note, noteImage);
@@ -374,9 +384,9 @@ public class Main_Window extends AppCompatActivity {
                         PlannterDatabase.getInstance(getApplicationContext()).plannterDatabaseDao().insertNote(note, null);
                     }
 
-                    // Update Frag_logNote class noteImage variable to null
+                    // Update Frag_addNotes class noteImage variable to null
                     // This is required as the fragment is never recycled
-                    Frag_logNote.noteImage = null;
+                    Frag_addNotes.noteImage = null;
 
                     //Main_Window.this.changeFragment("PlantHistory");
 
@@ -386,6 +396,11 @@ public class Main_Window extends AppCompatActivity {
                 case ("DeleteNote"): {
                     // Call DAO to delete note
                     PlannterDatabase.getInstance(getApplicationContext()).plannterDatabaseDao().deleteNote((Note) object);
+                } break;
+
+                case ("GetNotesForCurrLog"): {
+                    // Call DAO to get List of Notes
+                    NoteList = PlannterDatabase.getInstance(getApplicationContext()).plannterDatabaseDao().getAllNotesForLog(currLog);
                 } break;
 
                 case ("UpdateAllLists"): {
