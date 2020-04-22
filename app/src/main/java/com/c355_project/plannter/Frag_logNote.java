@@ -25,7 +25,7 @@ public class Frag_logNote extends Fragment implements View.OnClickListener{
     Main_Window Main_Window;
 
     // GUI Elements
-    ListView lv;
+    ListView notesListView;
     ImageView imgAddNote;
 
     // Object variables
@@ -56,7 +56,7 @@ public class Frag_logNote extends Fragment implements View.OnClickListener{
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
 
         //Find GUI Elements
-        lv = view.findViewById(R.id.listView);
+        notesListView = view.findViewById(R.id.notesListView);
         imgAddNote = view.findViewById(R.id.imgAddNote);
 
         //Set all OnClickListeners needed for this View
@@ -65,9 +65,12 @@ public class Frag_logNote extends Fragment implements View.OnClickListener{
         // Setup current objects
         currLog = Main_Window.currLog;
 
+        // Update NoteList for Current Log
+        Main_Window.editTransaction("GetNotesForCurrLog", null);
+
         // Setup list adapter
         LogNoteCustomListAdapter adapter = new LogNoteCustomListAdapter(Main_Window);
-        lv.setAdapter(adapter);
+        notesListView.setAdapter(adapter);
 
         // If there are no notes...
         if (adapter.getCount() == 0){
