@@ -140,7 +140,7 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
 
     @Override
     public void onPause() {
-//        System.out.println("[DEBUG]: Frag_plantInfo.onPause(): Called");
+        System.out.println("[DEBUG]: Frag_plantInfo.onPause(): Called");
 //        if (bluetoothService != null) {
 //            bluetoothService.stopBluetooth();
 //            bluetoothService = null;
@@ -148,9 +148,21 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
         super.onPause();
     }
 
+    @Override
+    public void onDestroyView() {
+        System.out.println("[DEBUG]: Frag_plantInfo.onDestroyView(): Called");
 
+        super.onDestroyView();
+    }
 
-//LISTENER METHODS =================================================================================
+    @Override
+    public void onDestroy() {
+        System.out.println("[DEBUG]: Frag_plantInfo.onDestroy(): Called");
+
+        super.onDestroy();
+    }
+
+    //LISTENER METHODS =================================================================================
     public void onClick (View view) {
         Integer id = view.getId();
 
