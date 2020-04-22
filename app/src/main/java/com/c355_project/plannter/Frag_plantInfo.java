@@ -140,6 +140,7 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
 
     @Override
     public void onPause() {
+        System.out.println("[DEBUG]: Frag_plantInfo.onPause(): Called");
         if (bluetoothService != null) {
             bluetoothService.stopBluetooth();
             bluetoothService = null;
@@ -364,9 +365,11 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
         for (String str : PERMISSIONS) {
             System.out.println("[DEBUG]: Frag_plantInfo.checkBluetoothPermissions(): Checking for " + str + " Permission...");
             if (Main_Window.checkSelfPermission(str) != PackageManager.PERMISSION_GRANTED) {
-                Main_Window.requestPermissions(PERMISSIONS, REQUEST_BLUETOOTH_PERMISSIONS);
+                this.requestPermissions(PERMISSIONS, REQUEST_BLUETOOTH_PERMISSIONS);
                 System.out.println("[DEBUG]: Frag_plantInfo.checkBluetoothPermissions(): Permission " + str + " not granted, requesting Permission...");
-                return permissionGrantedCounter;
+                //TODO: Requesting Permission not being handle correctly. It is not asking for Permission.
+                //return permissionGrantedCounter;
+                return 3;
             } else {
                 //This will be invoked if the permission in this round of the For Loop is granted
                 //When all permission are granted, then the counter will be 3, since there are only 3 permissions to ask for...
