@@ -309,8 +309,10 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
                 }
             } break;
             case (REQUEST_MAKE_DISCOVERABLE): {
-                System.out.println("[DEBUG]: Frag_plantInfo.onActivityResult.case[REQUEST_MAKE_DISCOVERABLE] called with result code: " + resultCode);
-                if (resultCode == Activity.RESULT_OK) {
+                System.out.println("[DEBUG]: Frag_plantInfo.onActivityResult.case[REQUEST_MAKE_DISCOVERABLE]: called with result code: " + resultCode);
+                System.out.println("[DEBUG]: Frag_plantInfo.onActivityResult.case[REQUEST_MAKE_DISCOVERABLE]: " + Activity.RESULT_OK );
+
+                if (resultCode == 300) {
                     System.out.println("[DEBUG]: Frag_plantInfo.onActivityResult.case[REQUEST_MAKE_DISCOVERABLE] invoked an Activity.RESULT_OK");
                     bluetoothService.startBluetoothServerThread();
                 } else {
