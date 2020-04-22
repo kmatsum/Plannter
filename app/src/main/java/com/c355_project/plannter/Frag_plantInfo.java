@@ -301,7 +301,6 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
         switch (requestCode) {
             case (REQUEST_ENABLE_BT): {
                 System.out.println("[DEBUG]: Frag_plantInfo.onActivityResult.case[REQUEST_ENABLE_BT]");
-                //TODO: Make something happen when the onActivityResult is called
                 //Check for Bluetooth Permissions
                 if (checkBluetoothPermissions() == PERMISSIONS.length) {
                     bluetoothService.makeThisDeviceDiscoverable();
@@ -368,9 +367,7 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
             if (Main_Window.checkSelfPermission(str) != PackageManager.PERMISSION_GRANTED) {
                 this.requestPermissions(PERMISSIONS, REQUEST_BLUETOOTH_PERMISSIONS);
                 System.out.println("[DEBUG]: Frag_plantInfo.checkBluetoothPermissions(): Permission " + str + " not granted, requesting Permission...");
-                //TODO: Requesting Permission not being handle correctly. It is not asking for Permission.
-                //return permissionGrantedCounter;
-                return 3;
+                return permissionGrantedCounter;
             } else {
                 //This will be invoked if the permission in this round of the For Loop is granted
                 //When all permission are granted, then the counter will be 3, since there are only 3 permissions to ask for...

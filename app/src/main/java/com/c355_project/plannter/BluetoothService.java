@@ -160,7 +160,7 @@ public class BluetoothService {
             System.out.println("[DEBUG]: BluetoothServerThread.run().BluetoothServerSocket: Passed the While Loop!");
 
             if (bluetoothSocket != null) {
-                bluetoothCommunicationThread = new BluetoothCommunicationThread(bluetoothSocket, "This message is from the Bluetooth Server");
+                bluetoothCommunicationThread = new BluetoothCommunicationThread(bluetoothSocket, passThisPlant);
                 System.out.println("[DEBUG]: BluetoothServerThread().BluetoothCommunicationThread() instantiated!");
 
                 bluetoothCommunicationThread.start();
@@ -212,7 +212,7 @@ public class BluetoothService {
                     System.out.println("[DEBUG]: BluetoothClientThread.run().BluetoothSocket.connect() Called!");
 
                     //Do something for SEND / RECEIVE
-                    bluetoothCommunicationThread = new BluetoothCommunicationThread(bluetoothClientSocket, "This is from the Bluetooth Client");
+                    bluetoothCommunicationThread = new BluetoothCommunicationThread(bluetoothClientSocket, null);
 
                     System.out.println("[DEBUG]: BluetoothClientThread().BluetoothCommunicationThread() instantiated!");
                     System.out.println("[DEBUG]: BluetoothCommunicationThread.start() method Called");
@@ -244,30 +244,25 @@ public class BluetoothService {
 
 
     private class BluetoothCommunicationThread extends Thread {
-        private final BluetoothSocket bluetoothSocket;
-        private final InputStream bluetoothInputStream;
-        private final OutputStream bluetoothOutputStream;
-        private final String message;
+        private final   BluetoothSocket bluetoothSocket;
+        private final   InputStream bluetoothInputStream;
+        private final   OutputStream bluetoothOutputStream;
 
-        public BluetoothCommunicationThread(BluetoothSocket xSocket, String xMessage) {
-            System.out.println("==========================================");
-            System.out.println("BluetoothCommunicationThread() Constructor Called");
-            System.out.println("BluetoothCommunicationThread was Instantiated!");
-            System.out.println("==========================================");
+        Plant           passThisPlant;
+
+        public BluetoothCommunicationThread(BluetoothSocket xSocket, Plant xPlant) {
+            System.out.println("[DEBUG]: BluetoothCommunicationThread(): Constructor Called");
 
             bluetoothSocket = xSocket;
-            message = xMessage;
+            passThisPlant = xPlant;
             InputStream tmpBluetoothInputStream = null;
             OutputStream tmpBluetoothOutputStream = null;
 
             try {
-                System.out.println("==========================================");
-                System.out.println("BluetoothCommunicationThread()");
-                System.out.println("Both Input and Output Streams were created using the provided Bluetooth Socket.");
-                System.out.println("==========================================");
-
                 tmpBluetoothInputStream = bluetoothSocket.getInputStream();
                 tmpBluetoothOutputStream = bluetoothSocket.getOutputStream();
+
+                System.out.println("[DEBUG]: BluetoothCommunicationThread(): Both Input and Output Streams were created using the provided Bluetooth Socket.");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -277,27 +272,22 @@ public class BluetoothService {
         }
 
         public void run() {
-            System.out.println("\r\n==========================================");
-            System.out.println("BluetoothCommunicationThread.run() method Called");
-            System.out.println("Running the new BluetoothCommunicationThread!");
-            System.out.println("==========================================");
-
+            System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): Called");
             byte[] buffer = new byte[1024];
             int bytes;
 
             // Keep listening to the InputStream while connected
             while (true) {
-                System.out.println("\r\n==========================================");
-                System.out.println("BluetoothCommunicationThread WHILE LOOPPPPPPPPPPPPP");
-                System.out.println("==========================================");
+                System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): Entered WHILE Loop");
 
-                write(message.getBytes());
+                if ( passThisPlant == null ) {
+                    write();
+                    System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): While(): Writing the Plant Information into the Output Stream");
+                }
 
-                System.out.println("\r\n==========================================");
-                System.out.println("BluetoothCommunicationThread.write CALLED!");
-                System.out.println("Written Message: \n\t\t\t\t" + message);
-                System.out.println("Written Message in bytes: \n\t\t\t\t" + message.getBytes());
-                System.out.println("==========================================");
+//                System.out.println("BluetoothCommunicationThread.write CALLED!");
+//                System.out.println("Written Message: \n\t\t\t\t" + message);
+//                System.out.println("Written Message in bytes: \n\t\t\t\t" + message.getBytes());
 
                 try {
                     bytes = bluetoothInputStream.read(buffer);
@@ -324,17 +314,18 @@ public class BluetoothService {
             }
         }
 
-        public void write(byte[] buffer) {
-            try {
-                bluetoothOutputStream.write(buffer);
+        public void write() {
+            System.out.println("[DEBUG]: BluetoothCommunicationThread.write(): Called!");
 
-                System.out.println("==========================================");
-                System.out.println("BluetoothCommunicationThread.write() Method Called!");
-                System.out.println("Parameter buffer: \n\t\t\t\t\t" + buffer);
-                System.out.println("==========================================");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            String messagePlantInfo = "";
+
+            //TODO: Figure Out How to send Plant Info
+//            try {
+//                bluetoothOutputStream.write();
+//
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
         }
 
         public void cancel() {
