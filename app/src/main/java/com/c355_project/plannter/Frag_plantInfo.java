@@ -362,9 +362,9 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
         //This will check for permission
         int permissionGrantedCounter = 0;
         for (String str : PERMISSIONS) {
-            System.out.println("[DEBUG]: Frag_plantInfo.checkBluetoothPermissions(): Checking for " + str + "Permission...");
+            System.out.println("[DEBUG]: Frag_plantInfo.checkBluetoothPermissions(): Checking for " + str + " Permission...");
             if (Main_Window.checkSelfPermission(str) != PackageManager.PERMISSION_GRANTED) {
-                this.requestPermissions(PERMISSIONS, REQUEST_BLUETOOTH_PERMISSIONS);
+                Main_Window.requestPermissions(PERMISSIONS, REQUEST_BLUETOOTH_PERMISSIONS);
                 System.out.println("[DEBUG]: Frag_plantInfo.checkBluetoothPermissions(): Permission " + str + " not granted, requesting Permission...");
                 return permissionGrantedCounter;
             } else {
