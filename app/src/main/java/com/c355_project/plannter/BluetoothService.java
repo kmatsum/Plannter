@@ -21,14 +21,14 @@ public class BluetoothService {
 
     private static final UUID   TEST_UUID = UUID.fromString("47ef049d-5347-473f-a143-2e1eed78df48");
 
-    BluetoothAdapter            bluetoothAdapter;
-    BluetoothDevice             bluetoothDevice;
+    BluetoothAdapter                bluetoothAdapter;
+    BluetoothDevice                 bluetoothDevice;
 
-    BluetoothServerThread bluetoothServerThread;
-    BluetoothClientThread bluetoothClientThread;
-    BluetoothCommunicationThread bluetoothCommunicationThread;
+    BluetoothServerThread           bluetoothServerThread;
+    BluetoothClientThread           bluetoothClientThread;
+    BluetoothCommunicationThread    bluetoothCommunicationThread;
 
-    Main_Window                 Main_Window_Instance;
+    Main_Window                     Main_Window_Instance;
 
     public BluetoothService (Main_Window xMain_Window, String xTypeConnection) {
         System.out.println("[DEBUG]: BluetoothService Constructor Called!");
