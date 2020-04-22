@@ -126,14 +126,14 @@ public class BluetoothService {
 
 //BLUETOOTH SERVER THREAD SUB-CLASS ================================================================
     private class BluetoothServerThread extends Thread {
-        private BluetoothServerSocket bluetoothSocket;
+        private BluetoothServerSocket bluetoothServerSocket;
 
         public BluetoothServerThread() {
             System.out.println("[DEBUG]: BluetoothServerThread(): Constructor Called");
             System.out.println("[DEBUG]: BluetoothServerThread was Instantiated!");
 
             try {
-                bluetoothSocket = bluetoothAdapter.listenUsingRfcommWithServiceRecord("BluetoothTest", TEST_UUID);
+                bluetoothServerSocket = bluetoothAdapter.listenUsingRfcommWithServiceRecord("BluetoothTest", TEST_UUID);
 
                 System.out.println("[DEBUG]: BluetoothServerThread().bluetoothAdapter.listenUsingRfcommWithServiceRecord saved as a BluetoothServerSocket.");
             } catch (IOException e) {
@@ -145,12 +145,12 @@ public class BluetoothService {
             System.out.println("[DEBUG]: BluetoothServerThread.run(): Called");
             System.out.println("[DEBUG]: BluetoothServerThread.run(): Running the new BluetoothServerThread!");
 
-            BluetoothSocket bluetoothServerSocket = null;
+            BluetoothSocket bluetoothSocket = null;
 
-            while (bluetoothServerSocket == null) {
-                System.out.println("IM LOOKING FOR A POSSIBLE BLUETOOTH CONNECTION: " + bluetoothServerSocket);
+            while (bluetoothSocket == null) {
+                System.out.println("IM LOOKING FOR A POSSIBLE BLUETOOTH CONNECTION: " + bluetoothSocket);
                 try {
-                    bluetoothServerSocket = bluetoothSocket.accept();
+                    bluetoothSocket = bluetoothServerSocket.accept();
                     System.out.println("[DEBUG]: BluetoothServerThread.run().BluetoothServerSocket.accept(): called!");
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -159,11 +159,11 @@ public class BluetoothService {
             }
             System.out.println("[DEBUG]: BluetoothServerThread.run().BluetoothServerSocket: Passed the While Loop!");
 
-            if (bluetoothServerSocket != null) {
-                BluetoothCommunicationThread bluetoothServerCommunicationThread = new BluetoothCommunicationThread(bluetoothServerSocket, "This message is from the Bluetooth Server");
+            if (bluetoothSocket != null) {
+                bluetoothCommunicationThread = new BluetoothCommunicationThread(bluetoothSocket, "This message is from the Bluetooth Server");
                 System.out.println("[DEBUG]: BluetoothServerThread().BluetoothCommunicationThread() instantiated!");
 
-                bluetoothServerCommunicationThread.start();
+                bluetoothCommunicationThread.start();
                 System.out.println("[DEBUG]: BluetoothCommunicationThread.start() method Called");
             }
 
@@ -171,8 +171,9 @@ public class BluetoothService {
         }
 
         public void cancel() {
+            System.out.println("[DEBUG]: BluetoothServerThread.cancel(): Attempting to close the BluetoothSocket Connection");
             try {
-                bluetoothSocket.close();
+                bluetoothServerSocket.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
