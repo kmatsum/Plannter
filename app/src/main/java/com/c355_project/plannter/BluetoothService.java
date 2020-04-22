@@ -36,7 +36,7 @@ public class BluetoothService {
     Fragment                        targetContext;
 
     public BluetoothService (Fragment xTargetContext) {
-        System.out.println("[DEBUG]: BluetoothService Constructor Called!");
+        System.out.println("[DEBUG]: BluetoothService(): Constructor Called!");
 
         targetContext = xTargetContext;
 
@@ -44,7 +44,7 @@ public class BluetoothService {
     }
 
     public boolean getDeviceState() {
-        System.out.println("[DEBUG]: BluetoothService.getDeviceState() Called");
+        System.out.println("[DEBUG]: BluetoothService.getDeviceState(): Called");
 
         if (bluetoothAdapter == null) {
             System.out.println("[DEBUG]: BluetoothService.getDeviceState(): BluetoothAdapter == null: returning false");
@@ -56,50 +56,52 @@ public class BluetoothService {
     }
 
     public boolean enableBluetooth() {
-        System.out.println("[DEBUG]: BluetoothService.enableBluetooth() Called");
+        System.out.println("[DEBUG]: BluetoothService.enableBluetooth(): Called");
 
         if (bluetoothAdapter.isEnabled()) {
-            System.out.println("[DEBUG]: Bluetooth is ENABLED, do the Next Step");
+            System.out.println("[DEBUG]: BluetoothService.enableBluetooth(): Bluetooth is ENABLED, do the Next Step");
             return true;
         } else {
-            System.out.println("[DEBUG]: Bluetooth NOT ENABLED, asking user to Enable Bluetooth...");
+            System.out.println("[DEBUG]: BluetoothService.enableBluetooth(): Bluetooth NOT ENABLED, asking user to Enable Bluetooth...");
 
             Intent bluetoothRequestEnable = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             targetContext.startActivityForResult(bluetoothRequestEnable, REQUEST_ENABLE_BT);
-            System.out.println("[DEBUG]: targetContext.startActivityForResult(bluetoothRequestEnable, REQUEST_ENABLE_BT) called");
+            System.out.println("[DEBUG]: BluetoothService.enableBluetooth(): targetContext.startActivityForResult(bluetoothRequestEnable, REQUEST_ENABLE_BT) called");
 
             return false;
         }
     }
 
     public void makeThisDeviceDiscoverable () {
-        System.out.println("[DEBUG]: makeThisDeviceDiscoverable() Called");
-        System.out.println("[DEBUG]: Starting the Activity-Intent to make the device discoverable to searching devices for 300 seconds");
+        System.out.println("[DEBUG]: BluetoothService.makeThisDeviceDiscoverable(): Called");
         if (bluetoothAdapter != null && bluetoothAdapter.isEnabled()) {
             //Makes the device Discoverable by other bluetooth devices for 300 seconds
             Intent discoverThisByBluetooth = new Intent (BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
             discoverThisByBluetooth.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
             targetContext.startActivityForResult(discoverThisByBluetooth, REQUEST_MAKE_DISCOVERABLE);
+            System.out.println("[DEBUG]: BluetoothService.makeThisDeviceDiscoverable(): Starting the Activity-Intent to make the device discoverable to searching devices for 300 seconds");
         } else {
-            System.out.println("[DEBUG]: (bluetoothAdapter != null && bluetoothAdapter.isEnabled()) returned false, Device Discovery not available");
+            System.out.println("[DEBUG]: BluetoothService.makeThisDeviceDiscoverable(): (bluetoothAdapter != null && bluetoothAdapter.isEnabled()) returned false, Device Discovery not available");
         }
     }
 
     public void startBluetoothServerThread () {
-        System.out.println("[DEBUG]: startBluetoothServerThread() Called");
+        System.out.println("[DEBUG]: BluetoothService.startBluetoothServerThread(): Called");
 
         if (bluetoothAdapter != null && bluetoothAdapter.isEnabled()) {
             bluetoothServerThread = new BluetoothServerThread();
-            System.out.println("[DEBUG]: bluetoothServerThread() instantiated!");
+            System.out.println("[DEBUG]: BluetoothService.bluetoothServerThread(): instantiated!");
 
             bluetoothServerThread.start();
-            System.out.println("[DEBUG]: Start the BluetoothServerThread Thread. This will make the device available for connecting");
+            System.out.println("[DEBUG]: BluetoothService.startBluetoothServerThread(): Start the BluetoothServerThread Thread. This will make the device available for connecting");
         } else {
-            System.out.println("[DEBUG]: (bluetoothAdapter != null && bluetoothAdapter.isEnabled()) returned false, Device Discovery not available");
+            System.out.println("[DEBUG]: BluetoothService.startBluetoothServerThread(): (bluetoothAdapter != null && bluetoothAdapter.isEnabled()) returned false, Device Discovery not available");
         }
     }
 
     public void  stopBluetooth() {
+        System.out.println("[DEBUG]: BluetoothService.stopBluetooth(): Called");
+
         if (bluetoothServerThread != null) {
             bluetoothServerThread.cancel();
             bluetoothServerThread = null;
@@ -123,7 +125,7 @@ public class BluetoothService {
         private BluetoothServerSocket bluetoothSocket;
 
         public BluetoothServerThread() {
-            System.out.println("[DEBUG]: BluetoothServerThread() Constructor Called");
+            System.out.println("[DEBUG]: BluetoothServerThread(): Constructor Called");
             System.out.println("[DEBUG]: BluetoothServerThread was Instantiated!");
 
             try {
@@ -136,15 +138,15 @@ public class BluetoothService {
         }
 
         public void run() {
-            System.out.println("[DEBUG]: BluetoothServerThread.run() method Called");
-            System.out.println("[DEBUG]: Running the new BluetoothServerThread!");
+            System.out.println("[DEBUG]: BluetoothServerThread.run(): Called");
+            System.out.println("[DEBUG]: BluetoothServerThread.run(): Running the new BluetoothServerThread!");
 
             BluetoothSocket bluetoothServerSocket = null;
 
             while (bluetoothServerSocket == null) {
                 try {
                     bluetoothServerSocket = bluetoothSocket.accept();
-                    System.out.println("[DEBUG]: BluetoothServerThread.run().BluetoothServerSocket.accept() called!");
+                    System.out.println("[DEBUG]: BluetoothServerThread.run().BluetoothServerSocket.accept(): called!");
                 } catch (IOException e) {
                     e.printStackTrace();
                     break;
@@ -176,27 +178,21 @@ public class BluetoothService {
         private BluetoothSocket bluetoothClientSocket;
 
         public BluetoothClientThread () {
-            System.out.println("==========================================");
-            System.out.println("BluetoothClientThread() constructor Called");
-            System.out.println("BluetoothClientThread was instantiated!");
-            System.out.println("==========================================");
+            System.out.println("[DEBUG]: BluetoothClientThread(): constructor Called");
+            System.out.println("[DEBUG]: BluetoothClientThread was instantiated!");
             try {
                 bluetoothClientSocket = bluetoothDevice.createRfcommSocketToServiceRecord(TEST_UUID);
 
-                System.out.println("==========================================");
-                System.out.println("BluetoothClientThread().bluetoothAdapter.createRfcommSocketToServiceRecord() saved as a BluetoothServerSocket.");
-                System.out.println("==========================================");
+                System.out.println("[DEBUG]: BluetoothClientThread().bluetoothAdapter.createRfcommSocketToServiceRecord() saved as a BluetoothServerSocket.");
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
 
         public void run () {
-            System.out.println("==========================================");
-            System.out.println("BluetoothClientThread.run() method Called");
-            System.out.println("BluetoothAdapter.cancelDiscovery() called");
-            System.out.println("Running the new BluetoothClientThread!");
-            System.out.println("==========================================");
+            System.out.println("[DEBUG]: BluetoothClientThread.run() method Called");
+            System.out.println("[DEBUG]: BluetoothAdapter.cancelDiscovery() called");
+            System.out.println("[DEBUG]: Running the new BluetoothClientThread!");
 
             bluetoothAdapter.cancelDiscovery();
 
@@ -204,16 +200,14 @@ public class BluetoothService {
                 try {
                     bluetoothClientSocket.connect();
 
-                    System.out.println("==========================================");
-                    System.out.println("BluetoothClientThread.run().BluetoothSocket.connect() Called!");
-                    System.out.println("==========================================");
+                    System.out.println("[DEBUG]: BluetoothClientThread.run().BluetoothSocket.connect() Called!");
 
                     //Do something for SEND / RECEIVE
                     bluetoothCommunicationThread = new BluetoothCommunicationThread(bluetoothClientSocket, "This is from the Bluetooth Client");
-                    System.out.println("==========================================");
-                    System.out.println("BluetoothClientThread().BluetoothCommuncationThread() instantiated!");
-                    System.out.println("BluetoothCommunicationThread.start() method Called");
-                    System.out.println("==========================================");
+
+                    System.out.println("[DEBUG]: BluetoothClientThread().BluetoothCommunicationThread() instantiated!");
+                    System.out.println("[DEBUG]: BluetoothCommunicationThread.start() method Called");
+
                     bluetoothCommunicationThread.start();
                 } catch (IOException e) {
                     try {
