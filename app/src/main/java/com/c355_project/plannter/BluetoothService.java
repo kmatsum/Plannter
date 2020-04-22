@@ -35,12 +35,18 @@ public class BluetoothService {
 
     Fragment                        targetContext;
 
+    Plant                           passThisPlant;
+
     public BluetoothService (Fragment xTargetContext) {
         System.out.println("[DEBUG]: BluetoothService(): Constructor Called!");
 
         targetContext = xTargetContext;
 
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+    }
+
+    public void setPlantToPassViaBluetooth ( Plant xPlant ) {
+        passThisPlant = xPlant;
     }
 
     public boolean getDeviceState() {
@@ -63,11 +69,9 @@ public class BluetoothService {
             return true;
         } else {
             System.out.println("[DEBUG]: BluetoothService.enableBluetooth(): Bluetooth NOT ENABLED, asking user to Enable Bluetooth...");
-
             Intent bluetoothRequestEnable = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             targetContext.startActivityForResult(bluetoothRequestEnable, REQUEST_ENABLE_BT);
             System.out.println("[DEBUG]: BluetoothService.enableBluetooth(): targetContext.startActivityForResult(bluetoothRequestEnable, REQUEST_ENABLE_BT) called");
-
             return false;
         }
     }

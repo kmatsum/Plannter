@@ -196,6 +196,11 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
             //TODO: Add Sharing Plant Functionality Here
             bluetoothService = new BluetoothService(this);
 
+            //Grab and set the Plant we want to send via Bluetooth
+            int position = spnrSelectPlant.getSelectedItemPosition();
+            Plant plant = plantList.get(position);
+            bluetoothService.setPlantToPassViaBluetooth(plant);
+
             //Check if Bluetooth is available
             //If the getDeviceState returns false, then bluetooth is not supported
             if (bluetoothService.getDeviceState()) {
