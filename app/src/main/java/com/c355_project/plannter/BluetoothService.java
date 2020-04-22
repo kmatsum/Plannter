@@ -38,7 +38,6 @@ public class BluetoothService {
     public BluetoothService (Fragment xTargetContext) {
         System.out.println("[DEBUG]: BluetoothService Constructor Called!");
 
-//        Main_Window_Instance = xMain_Window;
         targetContext = xTargetContext;
 
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -47,11 +46,14 @@ public class BluetoothService {
     public void makeThisDeviceDiscoverable () {
         System.out.println("[DEBUG]: makeThisDeviceDiscoverable() Called");
         System.out.println("[DEBUG]: Starting the Activity-Intent to make the device discoverable to searching devices for 300 seconds");
-
-        //Makes the device Discoverable by other bluetooth devices for 300 seconds
-        Intent discoverThisByBluetooth = new Intent (BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
-        discoverThisByBluetooth.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
-        targetContext.startActivityForResult(discoverThisByBluetooth, REQUEST_MAKE_DISCOVERABLE);
+        if (bluetoothAdapter != null && bluetoothAdapter.isEnabled()) {
+            //Makes the device Discoverable by other bluetooth devices for 300 seconds
+            Intent discoverThisByBluetooth = new Intent (BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+            discoverThisByBluetooth.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
+            targetContext.startActivityForResult(discoverThisByBluetooth, REQUEST_MAKE_DISCOVERABLE);
+        } else {
+            System.out.println("[DEBUG]: (bluetoothAdapter != null && bluetoothAdapter.isEnabled()) returned false, Device Discovery not available");
+        }
     }
 
     public void startBluetoothServerThread () {
