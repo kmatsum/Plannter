@@ -122,6 +122,7 @@ public class Frag_addNotes extends Fragment implements View.OnClickListener {
             //Cancel
             case (R.id.btnCancelNote): {
                 resetGUI();
+                Main_Window.changeFragment("Notes");
             } break;
 
             //Show audio note layout
@@ -214,9 +215,17 @@ public class Frag_addNotes extends Fragment implements View.OnClickListener {
                 // Determine note type
                 String noteType;
 
+                // Save optional caption
+                String noteCaption = txtNoteCaption.getText().toString();
+
                 // Simple Note
                 if (rbSimple.isChecked()){
-                    noteType = "Simple";
+                    if (noteCaption.equals("")){
+                        Main_Window.makeToast("You must add a caption to save a simple note!");
+                        return;
+                    } else {
+                        noteType = "Simple";
+                    }
                 }
 
                 // Image Note
@@ -238,9 +247,6 @@ public class Frag_addNotes extends Fragment implements View.OnClickListener {
                     }
                     noteType = "Audio";
                 }
-
-                // Save optional caption
-                String noteCaption = txtNoteCaption.getText().toString();
 
                 // Save note to database
                 tempNote = new Note(Main_Window.getCurrLog().getLogID(), noteType, noteCaption, "");
