@@ -45,7 +45,7 @@ public class Frag_logNote extends Fragment implements View.OnClickListener{
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                Main_Window.changeFragment("PlantHistory");            }
+                Main_Window.changeFragment("PlantLog");            }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
 

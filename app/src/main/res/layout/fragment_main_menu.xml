@@ -72,14 +72,14 @@
                 android:textSize="40sp" />
 
             <Button
-                android:id="@+id/btnPlantHistory"
+                android:id="@+id/btnPlantLog"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="10"
                 android:background="#00FFFFFF"
                 android:fontFamily="@font/finger_paint"
                 android:paddingLeft="20sp"
-                android:text="@string/plant_history"
+                android:text="@string/plant_log"
                 android:textColor="#4CAF50"
                 android:textSize="40sp" />
 

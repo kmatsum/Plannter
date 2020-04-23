@@ -97,7 +97,8 @@ public class Frag_addNotes extends Fragment implements View.OnClickListener {
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                Main_Window.changeFragment("Notes");
+                resetGUI();
+                Main_Window.changeFragment("LogNote");
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
@@ -122,7 +123,7 @@ public class Frag_addNotes extends Fragment implements View.OnClickListener {
             //Cancel
             case (R.id.btnCancelNote): {
                 resetGUI();
-                Main_Window.changeFragment("Notes");
+                Main_Window.changeFragment("LogNote");
             } break;
 
             //Show audio note layout
