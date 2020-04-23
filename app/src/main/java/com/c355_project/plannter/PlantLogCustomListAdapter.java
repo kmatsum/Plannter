@@ -45,6 +45,7 @@ public class PlantLogCustomListAdapter extends BaseAdapter {
     }
 
 
+    /*TODO: make holder follow tutorial here: https://gist.github.com/cesarferreira/4c4ae3841fee8894ccfd*/
     public class Holder {
         ImageView imgCrop;
         TextView txtLogID;

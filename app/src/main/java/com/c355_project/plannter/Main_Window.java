@@ -140,6 +140,8 @@ public class Main_Window extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainFragmentWindow, Frag_plantDate).commit();
             } break;
 
+            // TODO: rename cases to match fragment names
+            //TODO: rename PLANTHISTORY fragment
             case "PlantHistory": {
                 System.out.println("=============================================================");
                 System.out.println("SWITCH THE FRAGMENT TO PLANTHISTORY");
