@@ -81,7 +81,7 @@
                 app:srcCompat="@android:drawable/ic_media_play" />
 
             <ImageButton
-                android:id="@+id/btnPause"
+                android:id="@+id/btnStop"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"

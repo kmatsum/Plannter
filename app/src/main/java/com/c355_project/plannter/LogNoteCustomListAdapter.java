@@ -31,7 +31,7 @@ public class LogNoteCustomListAdapter extends BaseAdapter {
     // GUI Elements
     TextView txtNoteID, txtNoteCaption;
     ImageView imgNoteImage;
-    ImageButton btnDeleteNote, btnPlay, btnPause;
+    ImageButton btnDeleteNote, btnPlay, btnStop;
     LinearLayout layoutNoteCaption;
 
     @Override
@@ -45,7 +45,7 @@ public class LogNoteCustomListAdapter extends BaseAdapter {
         if (noteType.equals("Audio")){
             rowView = inflater.inflate(R.layout.lognotecustomlistadapter_audio, null);
             btnPlay = rowView.findViewById(R.id.btnPlay);
-            btnPause = rowView.findViewById(R.id.btnPause);
+            btnStop = rowView.findViewById(R.id.btnStop);
             layoutNoteCaption = rowView.findViewById(R.id.layoutNoteCaption);
         } else if (noteType.equals("Image")){
             rowView = inflater.inflate(R.layout.lognotecustomlistadapter_image, null);
@@ -70,13 +70,13 @@ public class LogNoteCustomListAdapter extends BaseAdapter {
             btnPlay.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view) {
-                    /*TODO: play audio*/
+                    Main_window.playAudio(currNote.getNoteFilepath());
                 }
             });
-            btnPause.setOnClickListener(new View.OnClickListener(){
+            btnStop.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view) {
-                    /*TODO: pause audio*/
+                    Main_window.stopAudio();
                 }
             });
         } else if (noteType.equals("Image")){
@@ -121,14 +121,15 @@ public class LogNoteCustomListAdapter extends BaseAdapter {
     // METHODS =========================================================================================
     private void openConfirmationDialog(Context context, final Note note) {
         new AlertDialog.Builder(context)
-                .setTitle("Are you sure you want to delete note " + note.getNoteID() + ": " + note.getNoteType() + "?")
+                .setTitle("Are you sure you want to delete " + note.getNoteType() + " note " + note.getNoteID() + "?")
                 .setMessage(Html.fromHtml("This action cannot be undone."))
 
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        Main_window.changeFragment("PlantHistory");
+                        btnStop.callOnClick();
+                        Main_window.changeFragment("PlantLog");
                         Main_window.editTransaction("DeleteNote", note);
-                        Main_window.makeToast("Log " + note.getNoteID() + ": " + note.getNoteType() + " deleted.");
+                        Main_window.makeToast(note.getNoteType() + " note " + note.getNoteID() + " deleted.");
                     }
                 })
 

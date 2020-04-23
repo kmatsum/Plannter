@@ -45,6 +45,7 @@ public class Frag_logNote extends Fragment implements View.OnClickListener{
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
+                Main_Window.stopAudio();
                 Main_Window.changeFragment("PlantLog");            }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
@@ -79,14 +80,11 @@ public class Frag_logNote extends Fragment implements View.OnClickListener{
         switch (view.getId()){
 
             case (R.id.imgAddNote): {
+                Main_Window.stopAudio();
                 Main_Window.changeFragment("AddNotes");
             } break;
 
         }
 
     }
-
-//METHODS ==========================================================================================
-
-
 }
