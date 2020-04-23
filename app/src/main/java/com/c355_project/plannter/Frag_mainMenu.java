@@ -1,7 +1,5 @@
 package com.c355_project.plannter;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -10,22 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-
 
 public class Frag_mainMenu extends Fragment implements View.OnClickListener {
 //VARIABLES ========================================================================================
     //Main_Window Activity Instantiation
     Main_Window Main_Window;
-
-    // Permissions
-    private String[] PERMISSIONS =
-            {
-                    Manifest.permission.CAMERA,
-                    Manifest.permission.RECORD_AUDIO
-            };
 
 //LIFECYCLE METHODS ================================================================================
     @Nullable
@@ -44,7 +33,7 @@ public class Frag_mainMenu extends Fragment implements View.OnClickListener {
 
         //Set all OnClickListeners needed for this View
         view.findViewById(R.id.btnPlantByDate).setOnClickListener(this);
-        view.findViewById(R.id.btnPlantHistory).setOnClickListener(this);
+        view.findViewById(R.id.btnPlantLog).setOnClickListener(this);
         view.findViewById(R.id.btnPlantInfo).setOnClickListener(this);
         view.findViewById(R.id.imgSettings).setOnClickListener(this);
 
@@ -52,18 +41,6 @@ public class Frag_mainMenu extends Fragment implements View.OnClickListener {
         AdView adView = view.findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
         adView.loadAd(adRequest);
-
-        // PERMISSIONS =============================================================================
-        // Loop to request permissions if not already granted
-        if (PERMISSIONS != null) {
-            for (String str : PERMISSIONS) {
-                if (Main_Window.checkSelfPermission(str) != PackageManager.PERMISSION_GRANTED) {
-                    this.requestPermissions(PERMISSIONS, 1);
-                    System.out.println("[DEBUG] Requesting permissions.");
-                    return;
-                }
-            }
-        }
     }
 
 
@@ -77,8 +54,8 @@ public class Frag_mainMenu extends Fragment implements View.OnClickListener {
                 Main_Window.changeFragment("PlantDate");
             } break;
 
-            case (R.id.btnPlantHistory): {
-                Main_Window.changeFragment("PlantHistory");
+            case (R.id.btnPlantLog): {
+                Main_Window.changeFragment("PlantLog");
             } break;
 
             case (R.id.btnPlantInfo): {

@@ -42,7 +42,7 @@ public class Main_Window extends AppCompatActivity {
     Frag_addPlants          Frag_addPlants;
     Frag_plantInfo          Frag_plantInfo;
     Frag_plantDate          Frag_plantDate;
-    Frag_plantLog           Frag_plantHistory;
+    Frag_plantLog           Frag_plantLog;
     Frag_addNotes           Frag_addNotes;
     Frag_logNote            Frag_logNote;
 
@@ -82,7 +82,7 @@ public class Main_Window extends AppCompatActivity {
         Frag_addPlants          = new Frag_addPlants();
         Frag_plantInfo          = new Frag_plantInfo();
         Frag_plantDate          = new Frag_plantDate();
-        Frag_plantHistory       = new Frag_plantLog();
+        Frag_plantLog       = new Frag_plantLog();
         Frag_logNote            = new Frag_logNote();
         Frag_addNotes           = new Frag_addNotes();
 
@@ -140,12 +140,12 @@ public class Main_Window extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainFragmentWindow, Frag_plantDate).commit();
             } break;
 
-            case "PlantHistory": {
+            case "PlantLog": {
                 System.out.println("=============================================================");
-                System.out.println("SWITCH THE FRAGMENT TO PLANTHISTORY");
+                System.out.println("SWITCH THE FRAGMENT TO PLANTLOGS");
                 System.out.println("=============================================================");
 
-                getSupportFragmentManager().beginTransaction().replace(R.id.mainFragmentWindow, Frag_plantHistory).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainFragmentWindow, Frag_plantLog).commit();
             } break;
 
             case "PlantInfo": {
@@ -164,9 +164,9 @@ public class Main_Window extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainFragmentWindow, Frag_settings).commit();
             } break;
 
-            case "Notes": {
+            case "LogNote": {
                 System.out.println("=============================================================");
-                System.out.println("SWITCH THE FRAGMENT TO NOTES");
+                System.out.println("SWITCH THE FRAGMENT TO LOGNOTE");
                 System.out.println("=============================================================");
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainFragmentWindow, Frag_logNote).commit();
@@ -406,14 +406,21 @@ public class Main_Window extends AppCompatActivity {
                         PlannterDatabase.getInstance(getApplicationContext()).plannterDatabaseDao().insertNote(note, null);
                     }
 
+                    // Update currLogNoteList
+                    setCurrLogNoteList(PlannterDatabase.getInstance(getApplicationContext()).plannterDatabaseDao().getAllNotesForLog(currLog));
+
                     // Update Frag_addNotes class noteImage variable to null
                     // This is required as the fragment is never recycled
                     Frag_addNotes.noteImage = null;
+
+                    changeFragment("LogNote");
                 } break;
 
                 case ("DeleteNote"): {
                     // Call DAO to delete note
                     PlannterDatabase.getInstance(getApplicationContext()).plannterDatabaseDao().deleteNote((Note) object);
+                    // Update currLogNoteList
+                    setCurrLogNoteList(PlannterDatabase.getInstance(getApplicationContext()).plannterDatabaseDao().getAllNotesForLog(currLog));
                 } break;
 
                 case ("GetNotesForCurrLog"): {
