@@ -107,7 +107,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="100"
                         android:ems="10"
-                        android:hint="note caption (optional)"
+                        android:hint="note caption"
                         android:inputType="textCapSentences|textMultiLine"
                         android:lines="3"
                         android:maxLength="1000"
