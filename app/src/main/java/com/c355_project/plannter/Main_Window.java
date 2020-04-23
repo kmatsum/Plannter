@@ -408,14 +408,21 @@ public class Main_Window extends AppCompatActivity {
                         PlannterDatabase.getInstance(getApplicationContext()).plannterDatabaseDao().insertNote(note, null);
                     }
 
+                    // Update currLogNoteList
+                    setCurrLogNoteList(PlannterDatabase.getInstance(getApplicationContext()).plannterDatabaseDao().getAllNotesForLog(currLog));
+
                     // Update Frag_addNotes class noteImage variable to null
                     // This is required as the fragment is never recycled
                     Frag_addNotes.noteImage = null;
+
+                    changeFragment("Notes");
                 } break;
 
                 case ("DeleteNote"): {
                     // Call DAO to delete note
                     PlannterDatabase.getInstance(getApplicationContext()).plannterDatabaseDao().deleteNote((Note) object);
+                    // Update currLogNoteList
+                    setCurrLogNoteList(PlannterDatabase.getInstance(getApplicationContext()).plannterDatabaseDao().getAllNotesForLog(currLog));
                 } break;
 
                 case ("GetNotesForCurrLog"): {
