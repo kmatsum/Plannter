@@ -3,13 +3,19 @@ package com.c355_project.plannter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.net.Uri;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+/* LogNoteCustomListAdapter class, created "the right way" following tutorial here:
+    https://gist.github.com/cesarferreira/4c4ae3841fee8894ccfd */
 
 public class LogNoteCustomListAdapter extends BaseAdapter {
     //VARIABLES=====================================================================================
@@ -41,28 +47,86 @@ public class LogNoteCustomListAdapter extends BaseAdapter {
         return 0;
     }
 
+    public class ViewHolder {
+        TextView txtNoteID, txtNoteCaption;
+        ImageView imgNoteImage;
+        ImageButton btnDeleteNote, btnPlay, btnPause;
+        LinearLayout layoutNoteCaption;
+    }
+
     @Override
-    public View getView(int position, View view, ViewGroup viewGroup) {
+    public View getView(int position, View rowView, ViewGroup viewGroup) {
 
-        //Variable Declaration
-        View rowView;
-        TextView txtNoteID, txtNoteType, txtNoteCaption;
-        ImageButton btnDeleteNote;
-
-        //Variable Instantiation
-        rowView = inflater.inflate(R.layout.lognotecustomlistadapter, null);
-        btnDeleteNote = rowView.findViewById(R.id.btnDeleteNote);
-        txtNoteID = rowView.findViewById(R.id.txtNoteID);
-        txtNoteType = rowView.findViewById(R.id.txtNoteType);
-        txtNoteCaption = rowView.findViewById(R.id.txtNoteCaption);
+        // A ViewHolder keeps references to children views to avoid unnecessary calls
+        // to findViewById() on each row.
+        ViewHolder holder;
         currNote = Main_window.getCurrLogNoteList().get(position);
+        String noteType = currNote.getNoteType();
 
-        txtNoteID.setText(String.valueOf(currNote.getNoteID()));
-        txtNoteType.setText(String.valueOf(currNote.getNoteType()));
-        txtNoteCaption.setText(currNote.getNoteText());
+        // When rowView is not null, we can reuse it directly, there is no need to re-inflate it
+        if (rowView == null) {
+
+            // Creates a ViewHolder and store references to the two children views
+            // we want to bind data to.
+            holder = new ViewHolder();
+
+            // Inflate the correct view based on noteType, set respective variables
+            if (noteType.equals("Audio")){
+                rowView = inflater.inflate(R.layout.lognotecustomlistadapter_audio, null);
+                holder.btnPlay = rowView.findViewById(R.id.btnPlay);
+                holder.btnPause = rowView.findViewById(R.id.btnPause);
+                holder.layoutNoteCaption = rowView.findViewById(R.id.layoutNoteCaption);
+            } else if (noteType.equals("Image")){
+                rowView = inflater.inflate(R.layout.lognotecustomlistadapter_image, null);
+                holder.imgNoteImage = rowView.findViewById(R.id.imgNoteImage);
+                holder.layoutNoteCaption = rowView.findViewById(R.id.layoutNoteCaption);
+            } else {
+                rowView = inflater.inflate(R.layout.lognotecustomlistadapter_simple, null);
+            }
+
+            // Set variables that all noteTypes have
+            holder.btnDeleteNote = rowView.findViewById(R.id.btnDeleteNote);
+            holder.txtNoteID = rowView.findViewById(R.id.txtNoteID);
+            holder.txtNoteCaption = rowView.findViewById(R.id.txtNoteCaption);
+
+            rowView.setTag(holder);
+
+        } else {
+            // Get the ViewHolder back to get fast access to holder variables
+            holder = (ViewHolder) rowView.getTag();
+        }
+
+        if (noteType.equals("Audio")){
+            // Hide caption if there is none
+            if (currNote.getNoteText().equals("")){
+                holder.layoutNoteCaption.setVisibility(View.GONE);
+            }
+            // Set onClickListeners
+            holder.btnPlay.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view) {
+                    /*TODO: play audio*/
+                }
+            });
+            holder.btnPause.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view) {
+                    /*TODO: pause audio*/
+                }
+            });
+        } else if (noteType.equals("Image")){
+            // Hide caption if there is none
+            if (currNote.getNoteText().equals("")){
+                holder.layoutNoteCaption.setVisibility(View.GONE);
+            }
+            holder.imgNoteImage.setImageURI(Uri.parse(currNote.getNoteFilepath()));
+        }
+
+        holder.txtNoteID.setText(String.valueOf(currNote.getNoteID()));
+        holder.txtNoteCaption.setText(currNote.getNoteText());
 
         //Attaches onClickListener to Delete Note Buttons
-        btnDeleteNote.setOnClickListener(new View.OnClickListener() {
+        holder.btnDeleteNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openConfirmationDialog(Main_window, currNote);
