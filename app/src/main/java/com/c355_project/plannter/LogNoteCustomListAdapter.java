@@ -7,53 +7,51 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import java.util.List;
-
 public class LogNoteCustomListAdapter extends BaseAdapter {
     //VARIABLES=====================================================================================
     //Global Variable Declarations
     private LayoutInflater inflater = null;
-    private Context context;
     Main_Window Main_window;
+
+    Note currNote;
 
     public LogNoteCustomListAdapter(Main_Window main_window)
     {
-        context = main_window;
         Main_window = main_window;
-        inflater = (LayoutInflater)context.
+        inflater = (LayoutInflater)Main_window.
                 getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
     public int getCount() {
-        return 0;
+        return Main_window.getCurrLogNoteList().size();
     }
 
     @Override
-    public Object getItem(int i) {
+    public Object getItem(int position) {
         return null;
     }
 
     @Override
-    public long getItemId(int i) {
+    public long getItemId(int position) {
         return 0;
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(int position, View view, ViewGroup viewGroup) {
 
         //Variable Declaration
         View rowView;
-        TextView txtNoteType;
+        TextView txtNoteID, txtNoteType;
 
         //Variable Instantiation
         rowView = inflater.inflate(R.layout.lognotecustomlistadapter, null);
+        txtNoteID = rowView.findViewById(R.id.txtNoteID);
         txtNoteType = rowView.findViewById(R.id.txtNoteType);
-        List<Note> NoteList = Main_window.NoteList;
+        currNote = Main_window.getCurrLogNoteList().get(position);
 
-        txtNoteType.setText(NoteList.get(i).getNoteType());
-
-        Main_window.makeToast("Note type: " + NoteList.get(i).getNoteType());
+        txtNoteID.setText(String.valueOf(currNote.getNoteID()));
+        txtNoteType.setText(String.valueOf(currNote.getNoteType()));
 
         return rowView;
     }
