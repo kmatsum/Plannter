@@ -1,8 +1,10 @@
 package com.c355_project.plannter;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaRecorder;
@@ -49,6 +51,13 @@ public class Frag_addNotes extends Fragment implements View.OnClickListener {
     // Temp object
     Note tempNote = null;
 
+    // Permissions
+    private String[] PERMISSIONS =
+            {
+                    Manifest.permission.CAMERA,
+                    Manifest.permission.RECORD_AUDIO
+            };
+
 //LIFECYCLE METHODS ================================================================================
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -93,6 +102,15 @@ public class Frag_addNotes extends Fragment implements View.OnClickListener {
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
 
+        // PERMISSIONS =============================================================================
+        // Loop to request permissions if not already granted
+        for (String str : PERMISSIONS) {
+            if (Main_Window.checkSelfPermission(str) != PackageManager.PERMISSION_GRANTED) {
+                this.requestPermissions(PERMISSIONS, 1);
+                System.out.println("[DEBUG] Requesting permissions.");
+                return;
+            }
+        }
     }
 
     @Override
@@ -223,17 +241,12 @@ public class Frag_addNotes extends Fragment implements View.OnClickListener {
 
                 // Save optional caption
                 String noteCaption = txtNoteCaption.getText().toString();
-                if (noteCaption.equals("")){
-                    noteCaption = "N/A";
-                }
 
                 // Save note to database
                 tempNote = new Note(Main_Window.getCurrLog().getLogID(), noteType, noteCaption, "");
                 Main_Window.editTransaction("InsertNote", tempNote);
 
                 resetGUI();
-
-                Main_Window.changeFragment("Notes");
             }
             break;
         }

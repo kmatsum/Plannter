@@ -20,13 +20,6 @@ public class Frag_mainMenu extends Fragment implements View.OnClickListener {
     //Main_Window Activity Instantiation
     Main_Window Main_Window;
 
-    // Permissions
-    private String[] PERMISSIONS =
-            {
-                    Manifest.permission.CAMERA,
-                    Manifest.permission.RECORD_AUDIO
-            };
-
 //LIFECYCLE METHODS ================================================================================
     @Nullable
     @Override
@@ -52,18 +45,6 @@ public class Frag_mainMenu extends Fragment implements View.OnClickListener {
         AdView adView = view.findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
         adView.loadAd(adRequest);
-
-        // PERMISSIONS =============================================================================
-        // Loop to request permissions if not already granted
-        if (PERMISSIONS != null) {
-            for (String str : PERMISSIONS) {
-                if (Main_Window.checkSelfPermission(str) != PackageManager.PERMISSION_GRANTED) {
-                    this.requestPermissions(PERMISSIONS, 1);
-                    System.out.println("[DEBUG] Requesting permissions.");
-                    return;
-                }
-            }
-        }
     }
 
 
