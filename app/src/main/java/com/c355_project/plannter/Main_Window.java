@@ -54,17 +54,21 @@ public class Main_Window extends AppCompatActivity {
     String lastSpringFrostDate;
     String firstFallFrostDate;
 
-    //Object Lists
+    //Public Object Lists
     List<Plant> PlantList;
     List<Log>   LogList;
-    List<Note>  NoteList;
 
     //PlantHarvest
     Date userInputDate;
 
-    // LogID
-    // This variable is set when the note button is clicked on a specific log
-    Log currLog;
+    // currLog
+    /*  This variable is set when the note button is clicked on a specific log. It is only
+        available to modify via get and set methods. Every time it is updated, the corresponding
+        currLogNoteList is also updated (and only accessible via get and set methods).
+     */
+
+    private Log currLog;
+    private List<Note>  currLogNoteList;
 
 //Lifecycle Methods ================================================================================
     @Override
@@ -264,6 +268,24 @@ public class Main_Window extends AppCompatActivity {
         new DatabaseTransaction(xTransactionType, xObject).execute();
     }
 
+    public Log getCurrLog() {
+        return currLog;
+    }
+
+    public void setCurrLog(Log currLog) {
+        this.currLog = currLog;
+        // Update currLogNoteList
+        editTransaction("GetNotesForCurrLog", null);
+    }
+
+    public List<Note> getCurrLogNoteList() {
+        return currLogNoteList;
+    }
+
+    public void setCurrLogNoteList(List<Note> currLogNoteList) {
+        this.currLogNoteList = currLogNoteList;
+    }
+
     public Date getLastSpringFrostDate() {
         return parseDateString(lastSpringFrostDate);
     }
@@ -387,10 +409,6 @@ public class Main_Window extends AppCompatActivity {
                     // Update Frag_addNotes class noteImage variable to null
                     // This is required as the fragment is never recycled
                     Frag_addNotes.noteImage = null;
-
-                    //Main_Window.this.changeFragment("PlantHistory");
-
-
                 } break;
 
                 case ("DeleteNote"): {
@@ -400,7 +418,7 @@ public class Main_Window extends AppCompatActivity {
 
                 case ("GetNotesForCurrLog"): {
                     // Call DAO to get List of Notes
-                    NoteList = PlannterDatabase.getInstance(getApplicationContext()).plannterDatabaseDao().getAllNotesForLog(currLog);
+                    setCurrLogNoteList(PlannterDatabase.getInstance(getApplicationContext()).plannterDatabaseDao().getAllNotesForLog(currLog));
                 } break;
 
                 case ("UpdateAllLists"): {
@@ -419,7 +437,6 @@ public class Main_Window extends AppCompatActivity {
             // Update All Lists
             PlantList = PlannterDatabase.getInstance(Main_Window.this).plannterDatabaseDao().getAllPlants();
             LogList = PlannterDatabase.getInstance(Main_Window.this).plannterDatabaseDao().getAllLogs();
-            NoteList = PlannterDatabase.getInstance(Main_Window.this).plannterDatabaseDao().getAllNotes();
 
             System.out.println("\r\nDATABASE TRANSACTION ENDING");
             System.out.println("\r\n=============================================================");

@@ -63,7 +63,7 @@ public class Frag_logNote extends Fragment implements View.OnClickListener{
         imgAddNote.setOnClickListener(this);
 
         // Setup current objects
-        currLog = Main_Window.currLog;
+        currLog = Main_Window.getCurrLog();
 
         // Update NoteList for Current Log
         Main_Window.editTransaction("GetNotesForCurrLog", null);

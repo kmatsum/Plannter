@@ -87,7 +87,7 @@ public class PlantLogCustomListAdapter extends BaseAdapter {
         rowView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Main_window.currLog = LogList.get(position);
+                Main_window.setCurrLog(LogList.get(position));
                 Main_window.changeFragment("Notes");
             }
         });

@@ -225,7 +225,7 @@ public class Frag_addNotes extends Fragment implements View.OnClickListener {
                 String noteCaption = txtNoteCaption.getText().toString();
 
                 // Save note to database
-                tempNote = new Note(Main_Window.currLog.getLogID(), noteType, noteCaption, "");
+                tempNote = new Note(Main_Window.getCurrLog().getLogID(), noteType, noteCaption, "");
                 Main_Window.editTransaction("InsertNote", tempNote);
 
                 resetGUI();
