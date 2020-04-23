@@ -1,11 +1,11 @@
 package com.c355_project.plannter;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -69,6 +69,7 @@ public class Main_Window extends AppCompatActivity {
 
     private Log currLog;
     private List<Note>  currLogNoteList;
+    MediaPlayer player;
 
 //Lifecycle Methods ================================================================================
     @Override
@@ -318,6 +319,38 @@ public class Main_Window extends AppCompatActivity {
 
     public void setUserInputDate(Date userInputDate) {
         this.userInputDate = userInputDate;
+    }
+
+    public void playAudio(String filePath){
+        // Reset/create the Media Player
+        stopAudio();
+        player = new MediaPlayer();
+        makeToast("Filepath: " + filePath);
+        try {
+            player.setDataSource(filePath);
+            player.setLooping(false);
+            player.prepare();
+            player.start();
+        } catch (Exception e){
+            System.out.println("Main_Window - playAudio Exception:");
+            makeToast("Error reading the recording.");
+            return;
+        }
+    }
+    public void stopAudio(){
+        try {
+            // Check that the player isn't null and is currently playing
+            if (player != null && player.isPlaying()){
+                // Stop the player
+                player.stop();
+                player.release();
+            }
+            player = null;
+        } catch (Exception e){
+            System.out.println("Main_Window - stopAudio Exception:");
+            e.printStackTrace();
+            return;
+        }
     }
 
 //ASYNC TASK =======================================================================================
