@@ -14,9 +14,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-/* LogNoteCustomListAdapter class, created "the right way" following tutorial here:
-    https://gist.github.com/cesarferreira/4c4ae3841fee8894ccfd */
-
 public class LogNoteCustomListAdapter extends BaseAdapter {
     //VARIABLES=====================================================================================
     //Global Variable Declarations
@@ -24,6 +21,11 @@ public class LogNoteCustomListAdapter extends BaseAdapter {
     Main_Window Main_window;
 
     Note currNote;
+
+    TextView txtNoteID, txtNoteCaption;
+    ImageView imgNoteImage;
+    ImageButton btnDeleteNote, btnPlay, btnPause;
+    LinearLayout layoutNoteCaption;
 
     public LogNoteCustomListAdapter(Main_Window main_window)
     {
@@ -47,68 +49,44 @@ public class LogNoteCustomListAdapter extends BaseAdapter {
         return 0;
     }
 
-    public class ViewHolder {
-        TextView txtNoteID, txtNoteCaption;
-        ImageView imgNoteImage;
-        ImageButton btnDeleteNote, btnPlay, btnPause;
-        LinearLayout layoutNoteCaption;
-    }
-
     @Override
     public View getView(int position, View rowView, ViewGroup viewGroup) {
 
-        // A ViewHolder keeps references to children views to avoid unnecessary calls
-        // to findViewById() on each row.
-        ViewHolder holder;
         currNote = Main_window.getCurrLogNoteList().get(position);
         String noteType = currNote.getNoteType();
 
-        // When rowView is not null, we can reuse it directly, there is no need to re-inflate it
-        if (rowView == null) {
-
-            // Creates a ViewHolder and store references to the two children views
-            // we want to bind data to.
-            holder = new ViewHolder();
-
-            // Inflate the correct view based on noteType, set respective variables
-            if (noteType.equals("Audio")){
-                rowView = inflater.inflate(R.layout.lognotecustomlistadapter_audio, null);
-                holder.btnPlay = rowView.findViewById(R.id.btnPlay);
-                holder.btnPause = rowView.findViewById(R.id.btnPause);
-                holder.layoutNoteCaption = rowView.findViewById(R.id.layoutNoteCaption);
-            } else if (noteType.equals("Image")){
-                rowView = inflater.inflate(R.layout.lognotecustomlistadapter_image, null);
-                holder.imgNoteImage = rowView.findViewById(R.id.imgNoteImage);
-                holder.layoutNoteCaption = rowView.findViewById(R.id.layoutNoteCaption);
-            } else {
-                rowView = inflater.inflate(R.layout.lognotecustomlistadapter_simple, null);
-            }
-
-            // Set variables that all noteTypes have
-            holder.btnDeleteNote = rowView.findViewById(R.id.btnDeleteNote);
-            holder.txtNoteID = rowView.findViewById(R.id.txtNoteID);
-            holder.txtNoteCaption = rowView.findViewById(R.id.txtNoteCaption);
-
-            rowView.setTag(holder);
-
+        // Inflate the correct view based on noteType, set respective variables
+        if (noteType.equals("Audio")){
+            rowView = inflater.inflate(R.layout.lognotecustomlistadapter_audio, null);
+            btnPlay = rowView.findViewById(R.id.btnPlay);
+            btnPause = rowView.findViewById(R.id.btnPause);
+            layoutNoteCaption = rowView.findViewById(R.id.layoutNoteCaption);
+        } else if (noteType.equals("Image")){
+            rowView = inflater.inflate(R.layout.lognotecustomlistadapter_image, null);
+            imgNoteImage = rowView.findViewById(R.id.imgNoteImage);
+            layoutNoteCaption = rowView.findViewById(R.id.layoutNoteCaption);
         } else {
-            // Get the ViewHolder back to get fast access to holder variables
-            holder = (ViewHolder) rowView.getTag();
+            rowView = inflater.inflate(R.layout.lognotecustomlistadapter_simple, null);
         }
+
+        // Set variables that all noteTypes have
+        btnDeleteNote = rowView.findViewById(R.id.btnDeleteNote);
+        txtNoteID = rowView.findViewById(R.id.txtNoteID);
+        txtNoteCaption = rowView.findViewById(R.id.txtNoteCaption);
 
         if (noteType.equals("Audio")){
             // Hide caption if there is none
             if (currNote.getNoteText().equals("")){
-                holder.layoutNoteCaption.setVisibility(View.GONE);
+                layoutNoteCaption.setVisibility(View.GONE);
             }
             // Set onClickListeners
-            holder.btnPlay.setOnClickListener(new View.OnClickListener(){
+            btnPlay.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view) {
                     /*TODO: play audio*/
                 }
             });
-            holder.btnPause.setOnClickListener(new View.OnClickListener(){
+            btnPause.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view) {
                     /*TODO: pause audio*/
@@ -117,16 +95,16 @@ public class LogNoteCustomListAdapter extends BaseAdapter {
         } else if (noteType.equals("Image")){
             // Hide caption if there is none
             if (currNote.getNoteText().equals("")){
-                holder.layoutNoteCaption.setVisibility(View.GONE);
+                layoutNoteCaption.setVisibility(View.GONE);
             }
-            holder.imgNoteImage.setImageURI(Uri.parse(currNote.getNoteFilepath()));
+            imgNoteImage.setImageURI(Uri.parse(currNote.getNoteFilepath()));
         }
 
-        holder.txtNoteID.setText(String.valueOf(currNote.getNoteID()));
-        holder.txtNoteCaption.setText(currNote.getNoteText());
+        txtNoteID.setText(String.valueOf(currNote.getNoteID()));
+        txtNoteCaption.setText(currNote.getNoteText());
 
         //Attaches onClickListener to Delete Note Buttons
-        holder.btnDeleteNote.setOnClickListener(new View.OnClickListener() {
+        btnDeleteNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openConfirmationDialog(Main_window, currNote);
