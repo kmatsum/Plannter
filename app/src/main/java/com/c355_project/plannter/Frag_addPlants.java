@@ -23,7 +23,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-public class Frag_settingsAddPlants extends Fragment implements View.OnClickListener {
+public class Frag_addPlants extends Fragment implements View.OnClickListener {
 //VARIABLES ========================================================================================
 
     //Main_Window Activity Instantiation
@@ -56,7 +56,7 @@ public class Frag_settingsAddPlants extends Fragment implements View.OnClickList
     // Temp object
     Plant tempPlant = null;
 
-    public Frag_settingsAddPlants() {
+    public Frag_addPlants() {
         // Required empty public constructor
     }
 
@@ -65,7 +65,7 @@ public class Frag_settingsAddPlants extends Fragment implements View.OnClickList
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_settings_add_plants, container, false);
+        return inflater.inflate(R.layout.fragment_add_plants, container, false);
     }
 
     @Override

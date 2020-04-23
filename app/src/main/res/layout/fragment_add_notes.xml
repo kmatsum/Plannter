@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    tools:context=".Frag_addNotes">
+
+    <LinearLayout
+        android:id="@+id/createNote"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:visibility="visible">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".1"
+            android:fontFamily="@font/finger_paint"
+            android:text="Add A New Note"
+            android:textAlignment="center"
+            android:textColor="@color/colorTitleText"
+            android:textSize="40sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".05"
+            android:fontFamily="@font/finger_paint"
+            android:text="Note Type"
+            android:textAlignment="center"
+            android:textColor="@color/colorTitleText"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".05"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rbSimple"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/colorTitleText"
+                android:checked="true"
+                android:text="Simple"
+                android:textColor="@color/colorTitleText" />
+
+            <RadioButton
+                android:id="@+id/rbImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/colorTitleText"
+                android:text="Image"
+                android:textColor="@color/colorTitleText" />
+
+            <RadioButton
+                android:id="@+id/rbAudio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/colorTitleText"
+                android:text="Audio"
+                android:textColor="@color/colorTitleText" />
+
+        </RadioGroup>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight=".7"
+            android:background="@color/colorPrimaryLight"
+            android:orientation="horizontal">
+
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:background="@color/colorAccentBrown">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/finger_paint"
+                        android:text="Note Caption"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorTitleText"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/txtNoteCaption"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="100"
+                        android:ems="10"
+                        android:hint="note caption (optional)"
+                        android:inputType="textCapSentences|textMultiLine"
+                        android:lines="3"
+                        android:maxLength="1000"
+                        android:maxLines="3"
+                        android:scrollHorizontally="false"
+                        android:textAlignment="center" />
+
+                    <LinearLayout
+                        android:id="@+id/createNoteAudio"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:visibility="invisible">
+
+                        <ImageButton
+                            android:id="@+id/imgRecording"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/black_microphone" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/createNoteImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:visibility="invisible"
+                        tools:visibility="invisible">
+
+                        <LinearLayout
+                            android:id="@+id/imgMicrophone"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <Button
+                                android:id="@+id/btnTakeNotePicture"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_margin="5dp"
+                                android:layout_weight="30"
+                                android:background="@color/colorTitleText"
+                                android:text="Take Picture" />
+
+                            <Button
+                                android:id="@+id/btnNoteOpenGallery"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_margin="5dp"
+                                android:layout_weight="30"
+                                android:background="@color/colorTitleText"
+                                android:text="Open Gallery" />
+
+                        </LinearLayout>
+
+                        <ImageView
+                            android:id="@+id/imgNoteImage"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:adjustViewBounds="true"
+                            android:src="@drawable/plant" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </ScrollView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".1"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnCancelNote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:background="#00FFFFFF"
+                android:fontFamily="@font/finger_paint"
+                android:gravity="bottom|center"
+                android:paddingLeft="5sp"
+                android:text="Cancel"
+                android:textColor="@color/colorTitleText"
+                android:textSize="40sp" />
+
+            <Button
+                android:id="@+id/btnSaveNote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:background="#00FFFFFF"
+                android:fontFamily="@font/finger_paint"
+                android:gravity="bottom|center"
+                android:paddingLeft="5sp"
+                android:text="@string/save"
+                android:textColor="@color/colorTitleText"
+                android:textSize="40sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>
