@@ -58,10 +58,11 @@ public class PlantLogCustomListAdapter extends BaseAdapter {
         //Variable Declaration
         View rowView;
         Holder holder=new Holder();
+        ImageButton btnDeleteLog;
 
         //Variable Instantiation
         rowView = inflater.inflate(R.layout.plantlogcustomlistadapter, null);
-        ImageButton btnDeleteLog = rowView.findViewById(R.id.btnDeleteLog);
+        btnDeleteLog = rowView.findViewById(R.id.btnDeleteLog);
         holder.imgCrop = rowView.findViewById(R.id.imgCrop);
         holder.txtLogID = rowView.findViewById(R.id.txtLogID);
         holder.txtCropName = rowView.findViewById(R.id.txtCropName);
