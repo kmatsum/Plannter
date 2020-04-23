@@ -66,6 +66,32 @@
                 app:layout_constraintTop_toTopOf="parent" />
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/finger_paint"
+                android:text="Caption: "
+                android:textColor="@color/colorTitleText"
+                android:textSize="14.5sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtNoteCaption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:textColor="@color/colorTitleText"
+                android:textSize="12sp"
+                app:layout_constraintStart_toEndOf="@+id/imgCrop"
+                app:layout_constraintTop_toTopOf="parent" />
+        </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout

@@ -88,7 +88,7 @@ public class Frag_addNotes extends Fragment implements View.OnClickListener {
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                Main_Window.changeFragment("MainMenu");
+                Main_Window.changeFragment("Notes");
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
@@ -223,6 +223,9 @@ public class Frag_addNotes extends Fragment implements View.OnClickListener {
 
                 // Save optional caption
                 String noteCaption = txtNoteCaption.getText().toString();
+                if (noteCaption.equals("")){
+                    noteCaption = "N/A";
+                }
 
                 // Save note to database
                 tempNote = new Note(Main_Window.getCurrLog().getLogID(), noteType, noteCaption, "");
