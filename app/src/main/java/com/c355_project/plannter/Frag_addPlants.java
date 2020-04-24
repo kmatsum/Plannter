@@ -137,6 +137,12 @@ public class Frag_addPlants extends Fragment implements View.OnClickListener {
                 }
             } break;
 
+            /*  TODO: Add a "Get Plant Info From Bluetooth" Button.
+                - Create the Intent which calls the Device List Activity class
+                - Then startActivityForResult
+                - Retrieve the result of the activity, then start the "Client Side Connection of Bluetooth"
+            */
+
             case (R.id.btnSave): {
                 // INPUT VALIDATION ================================================================
                 if (txtName.getText().toString().matches("")){

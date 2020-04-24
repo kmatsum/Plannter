@@ -1,8 +1,12 @@
 package com.c355_project.plannter;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import android.view.Gravity;
@@ -25,8 +29,17 @@ import com.google.android.gms.ads.AdView;
 public class Frag_plantInfo extends Fragment implements View.OnClickListener, Spinner.OnItemSelectedListener {
 
 //VARIABLES ========================================================================================
+    // Intent request codes
+    private static final int    REQUEST_BLUETOOTH_PERMISSIONS = 1;
+    private static final int    REQUEST_MAKE_DISCOVERABLE = 10;
+    private static final int    REQUEST_ENABLE_BT = 11;
+    private static final int    DISCOVERABLE_BT_REQUEST_CODE = 3;
+    private static final int    DISCOVERABLE_DURATION = 300;
 
-    // Main_Window Activity Instantiation
+    // Permissions
+    String[] PERMISSIONS = {android.Manifest.permission.BLUETOOTH, android.Manifest.permission.BLUETOOTH_ADMIN, android.Manifest.permission.ACCESS_FINE_LOCATION};
+
+    //Main_Window Activity Instantiation
     Main_Window Main_Window;
 
     // Plant Object List
@@ -50,8 +63,11 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
                 txtSeedIndoorsDate,
                 txtSeedDepth,
                 txtNotes;
+				
+    BluetoothService
+                bluetoothService;
 
-    // Date Format
+    //Date Format
     SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 
 //LIFECYCLE METHODS ================================================================================
@@ -67,7 +83,7 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-      
+
         Main_Window = (Main_Window) getActivity();
         plantList = Main_Window.PlantList;
         SpringFrostDate = Main_Window.getLastSpringFrostDate();
@@ -99,6 +115,7 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
         //Set all OnClickListeners needed for this View
         view.findViewById(R.id.btnNext).setOnClickListener(this);
         view.findViewById(R.id.btnPrevious).setOnClickListener(this);
+        view.findViewById(R.id.btnSharePlant).setOnClickListener(this);
         view.findViewById(R.id.btnDelete).setOnClickListener(this);
         view.findViewById(R.id.imgSettingsAddPlants).setOnClickListener(this);
         view.findViewById(R.id.arrowNext).setOnClickListener(this);
@@ -121,9 +138,18 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
         adView.loadAd(adRequest);
     }
 
+    @Override
+    public void onDestroyView() {
+        System.out.println("[DEBUG]: Frag_plantInfo.onDestroyView(): Called");
+        if (bluetoothService != null) {
+            System.out.println("[DEBUG]: Frag_plantInfo.onDestroyView(): (BluetoothService != null), stopping the BluetoothService and un-instantiating it");
+            bluetoothService.stopBluetooth();
+            bluetoothService = null;
+        }
+        super.onDestroyView();
+    }
 
-
-//LISTENER METHODS =================================================================================
+    //LISTENER METHODS =================================================================================
     public void onClick (View view) {
         Integer id = view.getId();
 
@@ -163,6 +189,33 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
             //Update plant list
             plantList = Main_Window.PlantList;
             Main_Window.changeFragment("MainMenu");
+        }
+
+        //Share Plant Via Bluetooth Button
+        else if (id == R.id.btnSharePlant) {
+            //TODO: Add Sharing Plant Functionality Here
+            bluetoothService = new BluetoothService(this);
+
+            //Grab and set the Plant we want to send via Bluetooth
+            int position = spnrSelectPlant.getSelectedItemPosition();
+            Plant plant = plantList.get(position);
+            bluetoothService.setPlantToPassViaBluetooth(plant);
+
+            //Check if Bluetooth is available
+            //If the getDeviceState returns false, then bluetooth is not supported
+            if (bluetoothService.getDeviceState()) {
+                //Bluetooth is supported
+                if (bluetoothService.enableBluetooth()) {
+                    int grantedPermissionCounter = checkBluetoothPermissions();
+                    System.out.println("[DEBUG]: onClick.CASE(R.id.btnSharePlant): if(bluetoothService.enableBluetooth(): grantedPermissionCounter = " + grantedPermissionCounter + " PERMISSIONS.length = " + PERMISSIONS.length);
+                    //Check for Bluetooth Permissions
+                    if (grantedPermissionCounter == PERMISSIONS.length) {
+                        bluetoothService.makeThisDeviceDiscoverable();
+                    }
+                }
+            } else {
+                //TODO: Bluetooth is NOT Available
+            }
         }
 
         //Used for handling exceptions on if the given ViewID and the expected ViewID does not match
@@ -241,13 +294,88 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
 
     }
 
+    //onActivityResult =================================================================================
+    /*
+    This onActivityResult is mainly used for Bluetooth
+    */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        switch (requestCode) {
+            case (REQUEST_ENABLE_BT): {
+                System.out.println("[DEBUG]: Frag_plantInfo.onActivityResult.case[REQUEST_ENABLE_BT]");
+                //Check for Bluetooth Permissions
+                if (checkBluetoothPermissions() == PERMISSIONS.length) {
+                    bluetoothService.makeThisDeviceDiscoverable();
+                }
+            } break;
+            case (REQUEST_MAKE_DISCOVERABLE): {
+                System.out.println("[DEBUG]: Frag_plantInfo.onActivityResult.case[REQUEST_MAKE_DISCOVERABLE]: called with result code: " + resultCode);
+                if (resultCode == 300) {
+                    System.out.println("[DEBUG]: Frag_plantInfo.onActivityResult.case[REQUEST_MAKE_DISCOVERABLE] invoked an Activity.RESULT_OK");
+                    bluetoothService.startBluetoothServerThread();
+                } else {
+                    System.out.println("[DEBUG]: Frag_plantInfo.onActivityResult.case[REQUEST_MAKE_DISCOVERABLE] DID NOT invoke an Activity.RESULT_OK");
+                }
+            } break;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        System.out.println("[DEBUG]: onRequestPermissionResult Called!");
+        if (requestCode == REQUEST_BLUETOOTH_PERMISSIONS) {
+            if (verifyPermissions(grantResults)) {
+                //All Permissions Granted
+                System.out.println("[DEBUG]: onRequestPermissionResult.verifyPermissions(grantResults) returned true, ALL PERMISSIONS GRANTED");
+                bluetoothService.makeThisDeviceDiscoverable();
+            } else {
+                //Permissions Denied
+                System.out.println("[DEBUG]: onRequestPermissionResult.verifyPermissions(grantResults) returned false, ALL PERMISSIONS NOT GRANTED");
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
 
 //METHODS ==========================================================================================
     public void makeToast(String Message) {
         Toast toast = Toast.makeText(getActivity(), Message, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL,0,0);
         toast.show();
+    }
+
+    private boolean verifyPermissions(int[] grantResults) {
+        // At least one result must be checked.
+        if (grantResults.length < 1){
+            return false;
+        }
+        // Verify that each required permission has been granted, otherwise return false.
+        for (int result : grantResults) {
+            if (result != PackageManager.PERMISSION_GRANTED) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public int checkBluetoothPermissions () {
+        System.out.println("[DEBUG]: Frag_plantInfo.checkBluetoothPermissions() Called");
+        //This will check for permission
+        int permissionGrantedCounter = 0;
+        for (String str : PERMISSIONS) {
+            System.out.println("[DEBUG]: Frag_plantInfo.checkBluetoothPermissions(): Checking for " + str + " Permission...");
+            if (Main_Window.checkSelfPermission(str) != PackageManager.PERMISSION_GRANTED) {
+                this.requestPermissions(PERMISSIONS, REQUEST_BLUETOOTH_PERMISSIONS);
+                System.out.println("[DEBUG]: Frag_plantInfo.checkBluetoothPermissions(): Permission " + str + " not granted, requesting Permission...");
+                return permissionGrantedCounter;
+            } else {
+                //This will be invoked if the permission in this round of the For Loop is granted
+                //When all permission are granted, then the counter will be 3, since there are only 3 permissions to ask for...
+                System.out.println("[DEBUG]: Frag_plantInfo.checkBluetoothPermissions(): Permission " + str + " granted... ");
+                permissionGrantedCounter++;
+            }
+        }
+        return permissionGrantedCounter;
     }
 
     public Date calculatePlantDate(int distanceFromFrostDate, Date xFrostDate) {
