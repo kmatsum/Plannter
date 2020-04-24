@@ -578,19 +578,29 @@
                                 android:layout_margin="5dp"
                                 android:gravity="center">
 
-                                <Button
-                                    android:id="@+id/btnDelete"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:background="#00FFFFFF"
-                                    android:fontFamily="@font/finger_paint"
-                                    android:text="Delete Plant"
-                                    android:textColor="@android:color/holo_red_dark"
-                                    android:textSize="40sp" />
-
                             </TableRow>
 
                         </TableLayout>
+
+                        <Button
+                            android:id="@+id/btnSharePlant"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="#00FFFFFF"
+                            android:fontFamily="@font/finger_paint"
+                            android:text="Share Plant via Bluetooth"
+                            android:textColor="@color/colorTitleText"
+                            android:textSize="24sp" />
+
+                        <Button
+                            android:id="@+id/btnDelete"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="#00FFFFFF"
+                            android:fontFamily="@font/finger_paint"
+                            android:text="Delete Plant"
+                            android:textColor="@android:color/holo_red_dark"
+                            android:textSize="40sp" />
                     </LinearLayout>
                 </ScrollView>
             </LinearLayout>
