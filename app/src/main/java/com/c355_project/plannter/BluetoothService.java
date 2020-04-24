@@ -1,10 +1,13 @@
 package com.c355_project.plannter;
 
+import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.widget.ProgressBar;
 
 import androidx.fragment.app.Fragment;
 
@@ -93,6 +96,22 @@ public class BluetoothService {
         System.out.println("[DEBUG]: BluetoothService.startBluetoothServerThread(): Called");
 
         if (bluetoothAdapter != null && bluetoothAdapter.isEnabled()) {
+            System.out.println("[DEBUG]: Creating ProgressDialog...");
+            ProgressDialog serverRunningDialog = new ProgressDialog(targetContext.getContext());
+            serverRunningDialog.setTitle("Sharing Plant: " + passThisPlant.getPlantName());
+            serverRunningDialog.setMessage("Press 'Stop Sharing' to stop...");
+            serverRunningDialog.setCancelable(false); // disable dismiss by tapping outside of the dialog
+            serverRunningDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Stop Sharing", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    System.out.println("[DEBUG]: startBluetoothServerThread.serverRunningDialog.BUTTON_ON_CLICK Called! Stopping Bluetooth Threads!");
+                    stopBluetooth();
+                }
+            });
+            System.out.println("[DEBUG]: Show ProgressDialog...");
+            serverRunningDialog.show();
+
+
             bluetoothServerThread = new BluetoothServerThread();
             System.out.println("[DEBUG]: BluetoothService.bluetoothServerThread(): instantiated!");
 
