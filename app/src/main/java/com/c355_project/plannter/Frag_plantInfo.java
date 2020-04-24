@@ -129,7 +129,7 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
 
         //Go to fragment that adds plants
         if (id == R.id.imgSettingsAddPlants) {
-            Main_Window.changeFragment("SettingsAddPlants");
+            Main_Window.changeFragment("AddPlants");
         }
 
         //Go back in spinner plant list. Do nothing if position is already the first item.
