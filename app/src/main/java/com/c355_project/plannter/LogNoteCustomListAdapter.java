@@ -126,7 +126,7 @@ public class LogNoteCustomListAdapter extends BaseAdapter {
 
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        btnStop.callOnClick();
+                        Main_window.stopAudio();
                         Main_window.changeFragment("PlantLog");
                         Main_window.editTransaction("DeleteNote", note);
                         Main_window.makeToast(note.getNoteType() + " note " + note.getNoteID() + " deleted.");
