@@ -540,6 +540,19 @@
 
                             </TableRow>
                         </TableLayout>
+
+                        <Button
+                            android:id="@+id/btnGetFromBluetooth"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="15dp"
+                            android:background="@color/colorTitleText"
+                            android:fontFamily="@font/finger_paint"
+                            android:gravity="bottom|center"
+                            android:paddingLeft="5sp"
+                            android:text="Auto Fill Information from Bluetooth"
+                            android:textColor="#000000"
+                            android:textSize="18sp" />
                     </LinearLayout>
                 </ScrollView>
             </LinearLayout>
