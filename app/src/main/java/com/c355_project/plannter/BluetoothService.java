@@ -388,6 +388,9 @@ public class BluetoothService {
                             @Override
                             public void run() {
                                 targetFrag_addPlants.txtName.setText(tempReceivedMessage.substring(20));
+
+                                cancel();
+
                                 clientRunningDialog.dismiss();
                             }
                         });
