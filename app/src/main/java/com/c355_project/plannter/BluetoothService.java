@@ -52,6 +52,7 @@ public class BluetoothService {
             Main_Window_Instance = targetFrag_addPlants.Main_Window;
         } else {
             targetFrag_addPlants = null;
+            Main_Window_Instance = null;
         }
 
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
