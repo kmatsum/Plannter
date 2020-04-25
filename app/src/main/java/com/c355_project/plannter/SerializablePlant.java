@@ -6,23 +6,23 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 public class SerializablePlant implements Serializable {
-    char[] plantName;
-    char[] seedCompany;
+    String plantName;
+    String seedCompany;
     int firstPlantDate;
     int weeksToHarvest;
     int harvestRange;
     int seedIndoorDate;
     int lastPlantDate;
-    char[] notes;
-    char[] photoPath;
+    String notes;
+    String photoPath;
     boolean raisedRows;
     boolean raisedHills;
     int distBetweenPlants;
     double seedDepth;
 
-    public SerializablePlant(char[] plantName, char[] seedCompany, int firstPlantDate,
+    public SerializablePlant(String plantName, String seedCompany, int firstPlantDate,
                              int weeksToHarvest, int harvestRange, int seedIndoorDate, int lastPlantDate,
-                             char[] notes, char[] photoPath, boolean raisedRows, boolean raisedHills,
+                             String notes, String photoPath, boolean raisedRows, boolean raisedHills,
                              int distBetweenPlants, double seedDepth)
     {
         this.plantName = plantName;
