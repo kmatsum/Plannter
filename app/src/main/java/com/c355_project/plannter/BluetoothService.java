@@ -46,6 +46,7 @@ public class BluetoothService {
         System.out.println("[DEBUG]: BluetoothService(): Constructor Called!");
 
         targetContext = xTargetContext;
+        Main_Window_Instance = (Main_Window) targetContext.getActivity();
 
         if (bluetoothRole.equals("CLIENT")) {
             targetFrag_addPlants = (Frag_addPlants) xTargetContext;
