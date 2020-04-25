@@ -38,6 +38,8 @@ public class BluetoothDeviceList extends Activity implements View.OnClickListene
 
         setResult(Activity.RESULT_CANCELED);
 
+        setTitle("Select a Device...");
+
         txtBluetoothDeviceListOutput = findViewById(R.id.txtBluetoothDeviceListOutput);
         findViewById(R.id.btnBluetoothScanForDevices).setOnClickListener(this);
 
@@ -95,7 +97,16 @@ public class BluetoothDeviceList extends Activity implements View.OnClickListene
     public void onClick(View view) {
         switch (view.getId()) {
             case (R.id.btnBluetoothScanForDevices): {
+                setTitle("Scanning for new Devices...");
+                setProgressBarIndeterminateVisibility(true);
 
+                // If we're already discovering, stop it
+                if (bluetoothAdapter.isDiscovering()) {
+                    bluetoothAdapter.cancelDiscovery();
+                }
+
+                // Request discover from BluetoothAdapter
+                bluetoothAdapter.startDiscovery();
             } break;
         }
     }
@@ -134,11 +145,7 @@ public class BluetoothDeviceList extends Activity implements View.OnClickListene
                 // When discovery is finished, change the Activity title
             } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
                 setProgressBarIndeterminateVisibility(false);
-//                setTitle(R.string.select_device);
-//                if (bluetoothDevicesArrayAdapter.getCount() == 0) {
-//                    String noDevices = getResources().getText(R.string.none_found).toString();
-//                    bluetoothDevicesArrayAdapter.add(noDevices);
-//                }
+                setTitle("Select a Device...");
             }
         }
     };
