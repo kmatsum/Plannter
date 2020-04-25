@@ -331,13 +331,29 @@ public class BluetoothService {
             byte[] buffer = new byte[1024];
             int bytes;
 
+            //TEST
+            Boolean doneCommunicating = false;
+
             // Keep listening to the InputStream while connected
             while (true) {
                 System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): Entered WHILE Loop");
 
-                if ( passThisPlant == null ) {
-                    write();
+                if ( passThisPlant != null ) {
                     System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): While(): Writing the Plant Information into the Output Stream");
+                    if (doneCommunicating) {
+                        System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): PLANT IS NOT NULL: doneCommunicating was TRUE!");
+                        return;
+                    } else {
+                        write(null);
+                        System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): While(): Writing the Plant Information into the Output Stream");
+                    }
+                } else {
+                    if (doneCommunicating) {
+                        System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): PLANT IS NULL: doneCommunicating was TRUE!");
+                        write("Client");
+                    } else {
+                        System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): PLANT IS NOT NULL: doneCommunicating was FALSE!");
+                    }
                 }
 
 //                System.out.println("BluetoothCommunicationThread.write CALLED!");
@@ -349,18 +365,18 @@ public class BluetoothService {
 
                     String tempReceivedMessage = new String(buffer, 0, bytes);
 
-                    System.out.println("\r\n==========================================");
-                    System.out.println("BluetoothCommunicationThread.run() IN THE WHILE(true) LOOP");
-                    System.out.println("Received Message: \n\t\t\t\t" + tempReceivedMessage);
-                    System.out.println("Received Message in bytes: \n\t\t\t\t" + buffer);
-                    System.out.println("==========================================");
+                    doneCommunicating = true;
 
-                    Main_Window_Instance.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
+                    System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): IN THE WHILE(true) LOOP");
+                    System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): Received Message: \n\t\t\t\t" + tempReceivedMessage);
+                    System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): Received Message in bytes: \n\t\t\t\t" + buffer);
 
-                        }
-                    });
+//                    Main_Window_Instance.runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//
+//                        }
+//                    });
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -369,18 +385,28 @@ public class BluetoothService {
             }
         }
 
-        public void write() {
+        public void write(String xMessage) {
             System.out.println("[DEBUG]: BluetoothCommunicationThread.write(): Called!");
 
-            String messagePlantInfo = "";
 
             //TODO: Figure Out How to send Plant Info
-//            try {
-//                bluetoothOutputStream.write();
-//
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
+            if (xMessage == null) {
+                String messagePlantInfo = "PASSING THIS PLANT: " + passThisPlant.getPlantName() + " I hope you got that!";
+                try {
+                    bluetoothOutputStream.write(messagePlantInfo.getBytes());
+                    System.out.println("[DEBUG]: BluetoothCommunicationThread.run().write(): WROTE THIS MESSAGE: " + messagePlantInfo);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                try {
+                    String response = xMessage + ": GOT YO MESSAGE BOIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII";
+                    bluetoothOutputStream.write(response.getBytes());
+                    System.out.println("[DEBUG]: BluetoothCommunicationThread.run().write(): WROTE THIS MESSAGE: " + response);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
 
         public void cancel() {
