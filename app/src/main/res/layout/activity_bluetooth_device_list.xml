@@ -1,9 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorTitleText"
+    android:orientation="vertical"
     tools:context=".BluetoothDeviceList">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        android:background="@color/colorPrimary"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txtPairedDevicesTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorTitleText"
+            android:fontFamily="@font/finger_paint"
+            android:text="Available Devices:"
+            android:textSize="24sp" />
+
+        <ListView
+            android:id="@+id/listViewBluetoothDevices"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="2" >
+
+        </ListView>
+
+        <TextView
+            android:id="@+id/txtBluetoothDeviceListOutput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@color/colorTitleText"
+            android:fontFamily="@font/finger_paint"
+            android:textAlignment="textEnd"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnBluetoothScanForDevices"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorAccentBrown"
+            android:fontFamily="@font/finger_paint"
+            android:text="Scan for Devices"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+</LinearLayout>

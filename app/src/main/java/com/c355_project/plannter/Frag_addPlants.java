@@ -34,6 +34,8 @@ public class Frag_addPlants extends Fragment implements View.OnClickListener {
     private static final int    REQUEST_ENABLE_BT = 11;
     private static final int    DISCOVERABLE_BT_REQUEST_CODE = 3;
     private static final int    DISCOVERABLE_DURATION = 300;
+    private static final String SELECTED_DEVICE = "Selected Device";
+
 
     // Permissions
     String[] PERMISSIONS = {android.Manifest.permission.BLUETOOTH, android.Manifest.permission.BLUETOOTH_ADMIN, android.Manifest.permission.ACCESS_FINE_LOCATION};
