@@ -120,8 +120,8 @@ public class Frag_addPlants extends Fragment implements View.OnClickListener {
         txtSeedDistance = view.findViewById(R.id.txtSeedDistance);
         txtSeedDepth = view.findViewById(R.id.txtSeedDepth);
         txtNotes = view.findViewById(R.id.txtNotes);
-        cbFall = view.findViewById(R.id.cbFall);
-        cbSpring = view.findViewById(R.id.cbSpring);
+        //cbFall = view.findViewById(R.id.cbFall);
+        //cbSpring = view.findViewById(R.id.cbSpring);
         toggleButton = view.findViewById(R.id.toggleButton);
         rgMethod = view.findViewById(R.id.rgMethod);
         rbFlat = view.findViewById(R.id.rbFlat);
@@ -199,11 +199,11 @@ public class Frag_addPlants extends Fragment implements View.OnClickListener {
                     return;
                 }
 
-                if (!cbFall.isChecked() && !cbSpring.isChecked()){
-                    Main_Window.makeToast("Please check Spring, Fall, or both!");
-                    cbSpring.requestFocus();
-                    return;
-                }
+//                if (!cbFall.isChecked() && !cbSpring.isChecked()){
+//                    Main_Window.makeToast("Please check Spring, Fall, or both!");
+//                    cbSpring.requestFocus();
+//                    return;
+//                }
 
                 if (txtFirstPlantDate.getText().toString().matches("")){
                     Main_Window.makeToast("Please enter a first plant date!");
