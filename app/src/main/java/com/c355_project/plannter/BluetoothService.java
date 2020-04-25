@@ -46,10 +46,10 @@ public class BluetoothService {
         System.out.println("[DEBUG]: BluetoothService(): Constructor Called!");
 
         targetContext = xTargetContext;
-        Main_Window_Instance = (Main_Window) targetContext.getActivity();
 
         if (bluetoothRole.equals("CLIENT")) {
             targetFrag_addPlants = (Frag_addPlants) xTargetContext;
+            Main_Window_Instance = targetFrag_addPlants.Main_Window;
         } else {
             targetFrag_addPlants = null;
         }
@@ -386,7 +386,7 @@ public class BluetoothService {
                         Main_Window_Instance.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                targetFrag_addPlants.txtName.setText(tempReceivedMessage.substring(77));
+                                targetFrag_addPlants.txtName.setText(tempReceivedMessage.substring(20));
                                 clientRunningDialog.dismiss();
                             }
                         });
