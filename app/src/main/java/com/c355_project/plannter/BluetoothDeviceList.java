@@ -33,6 +33,9 @@ public class BluetoothDeviceList extends Activity implements View.OnClickListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        System.out.println("[DEBUG]: BluetoothDeviceList.onCreate() Called!");
+
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_bluetooth_device_list);
 
@@ -81,6 +84,8 @@ public class BluetoothDeviceList extends Activity implements View.OnClickListene
     protected void onDestroy() {
         super.onDestroy();
 
+        System.out.println("[DEBUG]: BluetoothDeviceList.onDestroy() Called!");
+
         // Make sure we're not doing discovery anymore
         if (bluetoothAdapter != null) {
             bluetoothAdapter.cancelDiscovery();
@@ -95,8 +100,12 @@ public class BluetoothDeviceList extends Activity implements View.OnClickListene
 //EVENT METHODS ====================================================================================
     @Override
     public void onClick(View view) {
+        System.out.println("[DEBUG]: BluetoothDeviceList.onClick Called!");
+
         switch (view.getId()) {
             case (R.id.btnBluetoothScanForDevices): {
+                System.out.println("[DEBUG]: BluetoothDeviceList.onClick.case(R.id.btnBluetoothScanForDevices) Called!");
+
                 setTitle("Scanning for new Devices...");
                 setProgressBarIndeterminateVisibility(true);
 
@@ -107,38 +116,44 @@ public class BluetoothDeviceList extends Activity implements View.OnClickListene
 
                 // Request discover from BluetoothAdapter
                 bluetoothAdapter.startDiscovery();
+                System.out.println("[DEBUG]: BluetoothDeviceList.onClick.case(R.id.btnBluetoothScanForDevices): bluetoothAdapter.startDiscovery Called!");
             } break;
         }
     }
 
     @Override
     public void onItemClick(AdapterView<?> av, View view, int arg2, long arg3) {
+        System.out.println("[DEBUG]: BluetoothDeviceList.onItemClick Called!");
+
         // Cancel discovery because it's costly and we're about to connect
         bluetoothAdapter.cancelDiscovery();
 
         BluetoothDevice passThisDevice = bluetoothDeviceArrayList.get(arg2);
+        System.out.println("[DEBUG]: BluetoothDeviceList.onItemClick(): passThisDevice is Device: " + passThisDevice.getName());
 
-        //TODO: Pass a Bluetooth Device Object rather than an address for a string
-        // Create the result Intent and include the MAC address
         Intent intent = new Intent();
         intent.putExtra(SELECTED_DEVICE, passThisDevice);
 
         // Set result and finish this Activity
         setResult(Activity.RESULT_OK, intent);
+        System.out.println("[DEBUG]: BluetoothDeviceList.onItemClick(): Set the activity result and added the Device to the intent!");
         finish();
     }
 
     private final BroadcastReceiver bluetoothDiscoveryBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+            System.out.println("[DEBUG]: BluetoothDeviceList.bluetoothDiscoveryBroadcastReceiver.onReceiver() called!");
             String action = intent.getAction();
 
             // When discovery finds a device
             if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+                System.out.println("[DEBUG]: BluetoothDeviceList.bluetoothDiscoveryBroadcastReceiver.onReceiver(): BluetoothDevice.ACTION_FOUND!");
                 // Get the BluetoothDevice object from the Intent
                 BluetoothDevice newPairingDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 // If it's already paired, skip it, because it's been listed already
                 if (newPairingDevice != null && newPairingDevice.getBondState() != BluetoothDevice.BOND_BONDED) {
+                    System.out.println("[DEBUG]: BluetoothDeviceList.bluetoothDiscoveryBroadcastReceiver.onReceiver(): BluetoothDevice.ACTION_FOUND: This newPairingDevice ( " + newPairingDevice.getName() + " ) is new... Adding to list... ");
                     bluetoothDevicesArrayAdapter.add(newPairingDevice.getName());
                     bluetoothDeviceArrayList.add(newPairingDevice);
                 }
