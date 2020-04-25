@@ -148,9 +148,9 @@ public class BluetoothService {
             System.out.println("[DEBUG]: BluetoothService.bluetoothServerThread(): instantiated!");
 
             bluetoothClientThread.start();
-            System.out.println("[DEBUG]: BluetoothService.startBluetoothServerThread(): Start the BluetoothServerThread Thread. This will make the device available for connecting");
+            System.out.println("[DEBUG]: BluetoothService.startBluetoothClientThread(): Start the BluetoothClientThread Thread. This will make the device attempt to connect");
         } else {
-            System.out.println("[DEBUG]: BluetoothService.startBluetoothServerThread(): (bluetoothAdapter != null && bluetoothAdapter.isEnabled()) returned false, Device Discovery not available");
+            System.out.println("[DEBUG]: BluetoothService.startBluetoothClientThread(): (bluetoothAdapter != null && bluetoothAdapter.isEnabled()) returned false, Device does not have Bluetooth");
         }
     }
 
@@ -286,10 +286,12 @@ public class BluetoothService {
         }
 
         public void cancel() {
-            try {
-                bluetoothClientSocket.close();
-            } catch (IOException e) {
-
+            if (bluetoothClientSocket != null) {
+                try {
+                    bluetoothClientSocket.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
@@ -410,10 +412,12 @@ public class BluetoothService {
         }
 
         public void cancel() {
-            try {
-                bluetoothSocket.close();
-            } catch (IOException e) {
-
+            if (bluetoothSocket != null) {
+                try {
+                    bluetoothSocket.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

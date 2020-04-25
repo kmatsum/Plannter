@@ -364,13 +364,13 @@ public class Frag_addPlants extends Fragment implements View.OnClickListener {
             case (BLUETOOTH_REQUEST_CONNECT): {
                 System.out.println("[DEBUG]: Frag_plantInfo.onActivityResult.case[BLUETOOTH_REQUEST_CONNECT]");
                 if (resultCode == Activity.RESULT_OK) {
-                    System.out.println("[DEBUG]: Frag_plantInfo.onActivityResult.case[REQUEST_ENABLE_BT].RESULT_OK");
+                    System.out.println("[DEBUG]: Frag_plantInfo.onActivityResult.case[BLUETOOTH_REQUEST_CONNECT].RESULT_OK");
                     Bundle receivedData = data.getExtras();
                     BluetoothDevice connectToThisDevice = (BluetoothDevice) receivedData.get(SELECTED_DEVICE);
-                    System.out.println("[DEBUG]: Frag_plantInfo.onActivityResult.case[REQUEST_ENABLE_BT].RESULT_OK: Received: " + connectToThisDevice.getName() + " as the target BluetoothDevice!");
+                    System.out.println("[DEBUG]: Frag_plantInfo.onActivityResult.case[BLUETOOTH_REQUEST_CONNECT].RESULT_OK: Received: " + connectToThisDevice.getName() + " as the target BluetoothDevice!");
 
                     bluetoothService.startBluetoothClientThread(connectToThisDevice);
-                    System.out.println("[DEBUG]: Frag_plantInfo.onActivityResult.case[REQUEST_ENABLE_BT].RESULT_OK: bluetoothService.startBluetoothClientThread was called!");
+                    System.out.println("[DEBUG]: Frag_plantInfo.onActivityResult.case[BLUETOOTH_REQUEST_CONNECT].RESULT_OK: bluetoothService.startBluetoothClientThread was called!");
                 }
             } break;
         }
