@@ -356,19 +356,13 @@ public class BluetoothService {
 
                 if ( passThisPlant != null ) {
                     System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): While(): Writing the Plant Information into the Output Stream");
-                    if (doneCommunicating) {
-                        System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): PLANT IS NOT NULL: doneCommunicating was TRUE!");
-                        return;
-                    } else {
-                        write("PLANT");
-                        System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): While(): Writing the Plant Information into the Output Stream");
-                    }
+                    write("PLANT");
                 } else {
                     if (doneCommunicating) {
-                        System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): PLANT IS NULL: doneCommunicating was TRUE!");
                         write("Client");
+                        System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): PLANT IS NULL: doneCommunicating was TRUE!");
                     } else {
-                        System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): PLANT IS NOT NULL: doneCommunicating was FALSE!");
+                        System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): PLANT IS NULL: doneCommunicating was FALSE! WRITING STUFF");
                     }
                 }
 
@@ -377,24 +371,28 @@ public class BluetoothService {
 //                System.out.println("Written Message in bytes: \n\t\t\t\t" + message.getBytes());
 
                 try {
-                    doneCommunicating = true;
                     bytes = bluetoothInputStream.read(buffer);
+                    System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): bluetoothInputStream read something...");
+                    doneCommunicating = true;
 
                     if (targetFrag_addPlants != null) {
                         SerializablePlant receivedSerializablePlant = null;
 
                         try {
                             receivedSerializablePlant = deserialize(buffer);
+                            System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): INPUT received: deserialization success!");
                         } catch (ClassNotFoundException e) {
                             e.printStackTrace();
                         }
 
                         if (receivedSerializablePlant != null) {
-
                             final SerializablePlant finalReceivedSerializablePlant = receivedSerializablePlant;
+                            System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): if (receivedSerializablePlant != null) reached! Unpacking Serialized Plant");
+
                             Main_Window_Instance.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
+                                    System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): if (receivedSerializablePlant != null): runOnUiThread: UNPACKING PLANT");
 
                                     targetFrag_addPlants.txtName.setText(finalReceivedSerializablePlant.plantName);
                                     targetFrag_addPlants.txtSeedCompany.setText(finalReceivedSerializablePlant.seedCompany);
@@ -420,9 +418,14 @@ public class BluetoothService {
                                     } else {
                                         targetFrag_addPlants.rbFlat.setChecked(true);
                                     }
+
+                                    System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): runOnUiThread(): GUI UPDATED");
+
                                     cancel();
+                                    System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): runOnUiThread(): BluetoothService.cancel() called!");
 
                                     clientRunningDialog.dismiss();
+                                    System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): close the Dialog Box");
                                 }
                             });
                         }
