@@ -1,6 +1,7 @@
 package com.c355_project.plannter;
 
 import android.app.Activity;
+import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -26,6 +27,8 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.google.android.gms.common.util.JsonUtils;
+
 public class Frag_addPlants extends Fragment implements View.OnClickListener {
 //VARIABLES ========================================================================================
     // Intent request codes
@@ -34,6 +37,7 @@ public class Frag_addPlants extends Fragment implements View.OnClickListener {
     private static final int    REQUEST_ENABLE_BT = 11;
     private static final int    DISCOVERABLE_BT_REQUEST_CODE = 3;
     private static final int    DISCOVERABLE_DURATION = 300;
+    private static final int    BLUETOOTH_REQUEST_CONNECT = 21;
     private static final String SELECTED_DEVICE = "Selected Device";
 
 
@@ -161,18 +165,22 @@ public class Frag_addPlants extends Fragment implements View.OnClickListener {
             */
             case (R.id.btnGetFromBluetooth): {
                 //TODO: Add Sharing Plant Functionality Here
+                System.out.println("[DEBUG]: Frag_addPlants.onClick(): btnGetFromBluetooth Clicked! Instantiating BluetoothService!");
                 bluetoothService = new BluetoothService(this);
 
                 //Check if Bluetooth is available
                 //If the getDeviceState returns false, then bluetooth is not supported
                 if (bluetoothService.getDeviceState()) {
+                    System.out.println("[DEBUG]: Frag_addPlants.onClick(): Bluetooth IS supported!");
                     //Bluetooth is supported
                     if (bluetoothService.enableBluetooth()) {
-                        int grantedPermissionCounter = checkBluetoothPermissions();
-                        System.out.println("[DEBUG]: onClick.CASE(R.id.btnSharePlant): if(bluetoothService.enableBluetooth(): grantedPermissionCounter = " + grantedPermissionCounter + " PERMISSIONS.length = " + PERMISSIONS.length);
+                        System.out.println("[DEBUG]: Frag_addPlants.onClick(): Bluetooth IS Enabled!");
+
                         //Check for Bluetooth Permissions
-                        if (grantedPermissionCounter == PERMISSIONS.length) {
-                            //TODO: Add Bluetooth Client Action Here
+                        if (checkBluetoothPermissions() == PERMISSIONS.length) {
+                            System.out.println("[DEBUG]: Frag_addPlants.onClick(): Permissions were all provided! Starting the BluetoothDeviceList ActivityForResult!");
+                            Intent serverIntent = new Intent(getActivity(), BluetoothDeviceList.class);
+                            startActivityForResult(serverIntent, BLUETOOTH_REQUEST_CONNECT);
                         }
                     }
                 } else {
@@ -346,7 +354,22 @@ public class Frag_addPlants extends Fragment implements View.OnClickListener {
                 System.out.println("[DEBUG]: Frag_plantInfo.onActivityResult.case[REQUEST_ENABLE_BT]");
                 //Check for Bluetooth Permissions
                 if (checkBluetoothPermissions() == PERMISSIONS.length) {
-                    //TODO: Add Bluetooth Client Action Here
+                    System.out.println("[DEBUG]: Frag_addPlants.onActivityResult(): Permissions were all provided! Starting the BluetoothDeviceList ActivityForResult!");
+                    Intent serverIntent = new Intent(getActivity(), BluetoothDeviceList.class);
+                    startActivityForResult(serverIntent, BLUETOOTH_REQUEST_CONNECT);
+                }
+            } break;
+
+            case (BLUETOOTH_REQUEST_CONNECT): {
+                System.out.println("[DEBUG]: Frag_plantInfo.onActivityResult.case[BLUETOOTH_REQUEST_CONNECT]");
+                if (resultCode == Activity.RESULT_OK) {
+                    System.out.println("[DEBUG]: Frag_plantInfo.onActivityResult.case[REQUEST_ENABLE_BT].RESULT_OK");
+                    Bundle receivedData = data.getExtras();
+                    BluetoothDevice connectToThisDevice = (BluetoothDevice) receivedData.get(SELECTED_DEVICE);
+                    System.out.println("[DEBUG]: Frag_plantInfo.onActivityResult.case[REQUEST_ENABLE_BT].RESULT_OK: Received: " + connectToThisDevice.getName() + " as the target BluetoothDevice!");
+
+                    bluetoothService.startBluetoothClientThread(connectToThisDevice);
+                    System.out.println("[DEBUG]: Frag_plantInfo.onActivityResult.case[REQUEST_ENABLE_BT].RESULT_OK: bluetoothService.startBluetoothClientThread was called!");
                 }
             } break;
         }
@@ -360,7 +383,9 @@ public class Frag_addPlants extends Fragment implements View.OnClickListener {
             if (verifyPermissions(grantResults)) {
                 //All Permissions Granted
                 System.out.println("[DEBUG]: onRequestPermissionResult.verifyPermissions(grantResults) returned true, ALL PERMISSIONS GRANTED");
-                //TODO: Add Bluetooth Client Action Here
+                System.out.println("[DEBUG]: Frag_addPlants.onRequestPermissionResult(): Permissions were all provided! Starting the BluetoothDeviceList ActivityForResult!");
+                Intent serverIntent = new Intent(getActivity(), BluetoothDeviceList.class);
+                startActivityForResult(serverIntent, BLUETOOTH_REQUEST_CONNECT);
             } else {
                 //Permissions Denied
                 System.out.println("[DEBUG]: onRequestPermissionResult.verifyPermissions(grantResults) returned false, ALL PERMISSIONS NOT GRANTED");

@@ -28,7 +28,7 @@ public class BluetoothService {
     private static final UUID   TEST_UUID = UUID.fromString("47ef049d-5347-473f-a143-2e1eed78df48");
 
     BluetoothAdapter                bluetoothAdapter;
-    BluetoothDevice                 bluetoothDevice;
+//    BluetoothDevice                 bluetoothDevice;
 
     BluetoothServerThread           bluetoothServerThread;
     BluetoothClientThread           bluetoothClientThread;
@@ -46,10 +46,6 @@ public class BluetoothService {
         targetContext = xTargetContext;
 
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-    }
-
-    public void setPlantToPassViaBluetooth ( Plant xPlant ) {
-        passThisPlant = xPlant;
     }
 
     public boolean getDeviceState() {
@@ -92,8 +88,10 @@ public class BluetoothService {
         }
     }
 
-    public void startBluetoothServerThread () {
+    public void startBluetoothServerThread ( Plant xPlant ) {
         System.out.println("[DEBUG]: BluetoothService.startBluetoothServerThread(): Called");
+
+        passThisPlant = xPlant;
 
         if (bluetoothAdapter != null && bluetoothAdapter.isEnabled()) {
             System.out.println("[DEBUG]: Creating ProgressDialog...");
@@ -116,6 +114,40 @@ public class BluetoothService {
             System.out.println("[DEBUG]: BluetoothService.bluetoothServerThread(): instantiated!");
 
             bluetoothServerThread.start();
+            System.out.println("[DEBUG]: BluetoothService.startBluetoothServerThread(): Start the BluetoothServerThread Thread. This will make the device available for connecting");
+        } else {
+            System.out.println("[DEBUG]: BluetoothService.startBluetoothServerThread(): (bluetoothAdapter != null && bluetoothAdapter.isEnabled()) returned false, Device Discovery not available");
+        }
+    }
+
+
+
+    public void startBluetoothClientThread ( BluetoothDevice xBluetoothDevice ) {
+        System.out.println("[DEBUG]: BluetoothService.startBluetoothClientThread(): Called");
+
+        BluetoothDevice bluetoothDevice = xBluetoothDevice;
+
+        if (bluetoothAdapter != null && bluetoothAdapter.isEnabled()) {
+            System.out.println("[DEBUG]: Creating ProgressDialog...");
+            ProgressDialog serverRunningDialog = new ProgressDialog(targetContext.getContext());
+            serverRunningDialog.setTitle("Attempting to connect to " + bluetoothDevice.getName() + "...");
+            serverRunningDialog.setMessage("Press 'Cancel' to stop...");
+            serverRunningDialog.setCancelable(false); // disable dismiss by tapping outside of the dialog
+            serverRunningDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    System.out.println("[DEBUG]: startBluetoothServerThread.serverRunningDialog.BUTTON_ON_CLICK Called! Stopping Bluetooth Threads!");
+                    stopBluetooth();
+                }
+            });
+            System.out.println("[DEBUG]: Show ProgressDialog...");
+            serverRunningDialog.show();
+
+
+            bluetoothClientThread = new BluetoothClientThread(bluetoothDevice);
+            System.out.println("[DEBUG]: BluetoothService.bluetoothServerThread(): instantiated!");
+
+            bluetoothClientThread.start();
             System.out.println("[DEBUG]: BluetoothService.startBluetoothServerThread(): Start the BluetoothServerThread Thread. This will make the device available for connecting");
         } else {
             System.out.println("[DEBUG]: BluetoothService.startBluetoothServerThread(): (bluetoothAdapter != null && bluetoothAdapter.isEnabled()) returned false, Device Discovery not available");
@@ -204,10 +236,14 @@ public class BluetoothService {
 
     private class BluetoothClientThread extends Thread {
         private BluetoothSocket bluetoothClientSocket;
+        BluetoothDevice         bluetoothDevice;
 
-        public BluetoothClientThread () {
+        public BluetoothClientThread (BluetoothDevice xBluetoothDevice) {
             System.out.println("[DEBUG]: BluetoothClientThread(): constructor Called");
             System.out.println("[DEBUG]: BluetoothClientThread was instantiated!");
+
+            bluetoothDevice = xBluetoothDevice;
+
             try {
                 bluetoothClientSocket = bluetoothDevice.createRfcommSocketToServiceRecord(TEST_UUID);
 

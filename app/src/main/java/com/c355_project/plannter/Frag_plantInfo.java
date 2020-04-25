@@ -196,11 +196,6 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
             //TODO: Add Sharing Plant Functionality Here
             bluetoothService = new BluetoothService(this);
 
-            //Grab and set the Plant we want to send via Bluetooth
-            int position = spnrSelectPlant.getSelectedItemPosition();
-            Plant plant = plantList.get(position);
-            bluetoothService.setPlantToPassViaBluetooth(plant);
-
             //Check if Bluetooth is available
             //If the getDeviceState returns false, then bluetooth is not supported
             if (bluetoothService.getDeviceState()) {
@@ -312,7 +307,12 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
                 System.out.println("[DEBUG]: Frag_plantInfo.onActivityResult.case[REQUEST_MAKE_DISCOVERABLE]: called with result code: " + resultCode);
                 if (resultCode == 300) {
                     System.out.println("[DEBUG]: Frag_plantInfo.onActivityResult.case[REQUEST_MAKE_DISCOVERABLE] invoked an Activity.RESULT_OK");
-                    bluetoothService.startBluetoothServerThread();
+
+                    //Grab and set the Plant we want to send via Bluetooth
+                    int position = spnrSelectPlant.getSelectedItemPosition();
+                    Plant sendThisPlant = plantList.get(position);
+
+                    bluetoothService.startBluetoothServerThread(sendThisPlant);
                 } else {
                     System.out.println("[DEBUG]: Frag_plantInfo.onActivityResult.case[REQUEST_MAKE_DISCOVERABLE] DID NOT invoke an Activity.RESULT_OK");
                 }
