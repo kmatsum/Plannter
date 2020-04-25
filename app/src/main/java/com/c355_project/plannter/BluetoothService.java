@@ -531,7 +531,7 @@ public class BluetoothService {
         public byte[] serialize() throws IOException {
             ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArray);
-            objectOutputStream.writeObject(this);
+            objectOutputStream.writeObject(SerializablePlant.this);
             System.out.println("[DEBUG]: serializablePlant was Serialized...");
             return byteArray.toByteArray();
         }
