@@ -28,22 +28,30 @@ public class BluetoothService {
     private static final UUID   TEST_UUID = UUID.fromString("47ef049d-5347-473f-a143-2e1eed78df48");
 
     BluetoothAdapter                bluetoothAdapter;
-//    BluetoothDevice                 bluetoothDevice;
 
     BluetoothServerThread           bluetoothServerThread;
     BluetoothClientThread           bluetoothClientThread;
     BluetoothCommunicationThread    bluetoothCommunicationThread;
 
     Main_Window                     Main_Window_Instance;
+    ProgressDialog                  clientRunningDialog;
 
     Fragment                        targetContext;
 
+    Frag_addPlants                  targetFrag_addPlants;
+
     Plant                           passThisPlant;
 
-    public BluetoothService (Fragment xTargetContext) {
+    public BluetoothService (Fragment xTargetContext, String bluetoothRole) {
         System.out.println("[DEBUG]: BluetoothService(): Constructor Called!");
 
         targetContext = xTargetContext;
+
+        if (bluetoothRole.equals("CLIENT")) {
+            targetFrag_addPlants = (Frag_addPlants) xTargetContext;
+        } else {
+            targetFrag_addPlants = null;
+        }
 
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     }
@@ -129,11 +137,11 @@ public class BluetoothService {
 
         if (bluetoothAdapter != null && bluetoothAdapter.isEnabled()) {
             System.out.println("[DEBUG]: Creating ProgressDialog...");
-            ProgressDialog serverRunningDialog = new ProgressDialog(targetContext.getContext());
-            serverRunningDialog.setTitle("Attempting to connect to " + bluetoothDevice.getName() + "...");
-            serverRunningDialog.setMessage("Press 'Cancel' to stop...");
-            serverRunningDialog.setCancelable(false); // disable dismiss by tapping outside of the dialog
-            serverRunningDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+            clientRunningDialog = new ProgressDialog(targetContext.getContext());
+            clientRunningDialog.setTitle("Attempting to connect to " + bluetoothDevice.getName() + "...");
+            clientRunningDialog.setMessage("Press 'Cancel' to stop...");
+            clientRunningDialog.setCancelable(false); // disable dismiss by tapping outside of the dialog
+            clientRunningDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     System.out.println("[DEBUG]: startBluetoothServerThread.serverRunningDialog.BUTTON_ON_CLICK Called! Stopping Bluetooth Threads!");
@@ -141,7 +149,7 @@ public class BluetoothService {
                 }
             });
             System.out.println("[DEBUG]: Show ProgressDialog...");
-            serverRunningDialog.show();
+            clientRunningDialog.show();
 
 
             bluetoothClientThread = new BluetoothClientThread(bluetoothDevice);
@@ -365,7 +373,7 @@ public class BluetoothService {
                 try {
                     bytes = bluetoothInputStream.read(buffer);
 
-                    String tempReceivedMessage = new String(buffer, 0, bytes);
+                    final String tempReceivedMessage = new String(buffer, 0, bytes);
 
                     doneCommunicating = true;
 
@@ -373,12 +381,15 @@ public class BluetoothService {
                     System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): Received Message: \n\t\t\t\t" + tempReceivedMessage);
                     System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): Received Message in bytes: \n\t\t\t\t" + buffer);
 
-//                    Main_Window_Instance.runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//
-//                        }
-//                    });
+                    if (targetFrag_addPlants != null) {
+                        Main_Window_Instance.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                targetFrag_addPlants.txtName.setText(tempReceivedMessage.substring(77));
+                                clientRunningDialog.dismiss();
+                            }
+                        });
+                    }
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -415,6 +426,8 @@ public class BluetoothService {
             if (bluetoothSocket != null) {
                 try {
                     bluetoothSocket.close();
+                    bluetoothInputStream.close();
+                    bluetoothOutputStream.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

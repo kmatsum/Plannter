@@ -167,7 +167,7 @@ public class Frag_addPlants extends Fragment implements View.OnClickListener {
             case (R.id.btnGetFromBluetooth): {
                 //TODO: Add Sharing Plant Functionality Here
                 System.out.println("[DEBUG]: Frag_addPlants.onClick(): btnGetFromBluetooth Clicked! Instantiating BluetoothService!");
-                bluetoothService = new BluetoothService(this);
+                bluetoothService = new BluetoothService(this, "CLIENT");
 
                 //Check if Bluetooth is available
                 //If the getDeviceState returns false, then bluetooth is not supported

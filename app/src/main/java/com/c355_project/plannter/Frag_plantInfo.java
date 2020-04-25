@@ -194,7 +194,7 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
         //Share Plant Via Bluetooth Button
         else if (id == R.id.btnSharePlant) {
             //TODO: Add Sharing Plant Functionality Here
-            bluetoothService = new BluetoothService(this);
+            bluetoothService = new BluetoothService(this, "SERVER");
 
             //Check if Bluetooth is available
             //If the getDeviceState returns false, then bluetooth is not supported
