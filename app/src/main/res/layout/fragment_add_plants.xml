@@ -191,44 +191,44 @@
                                     android:textStyle="bold" />
                             </TableRow>
 
-                            <TableRow
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent">
+<!--                            <TableRow-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="match_parent">-->
 
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_vertical"
-                                    android:layout_margin="5dp"
-                                    android:layout_weight="40"
-                                    android:fontFamily="@font/finger_paint"
-                                    android:gravity="center|right"
-                                    android:text="Seasons"
-                                    android:textColor="@color/colorTitleText"
-                                    android:textSize="13sp"
-                                    android:textStyle="bold" />
+<!--                                <TextView-->
+<!--                                    android:layout_width="0dp"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:layout_gravity="center_vertical"-->
+<!--                                    android:layout_margin="5dp"-->
+<!--                                    android:layout_weight="40"-->
+<!--                                    android:fontFamily="@font/finger_paint"-->
+<!--                                    android:gravity="center|right"-->
+<!--                                    android:text="Seasons"-->
+<!--                                    android:textColor="@color/colorTitleText"-->
+<!--                                    android:textSize="13sp"-->
+<!--                                    android:textStyle="bold" />-->
 
-                                <CheckBox
-                                    android:id="@+id/cbSpring"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="30"
-                                    android:buttonTint="@color/colorTitleText"
-                                    android:checked="true"
-                                    android:text="Spring"
-                                    android:textColor="@color/colorTitleText" />
+<!--                                <CheckBox-->
+<!--                                    android:id="@+id/cbSpring"-->
+<!--                                    android:layout_width="0dp"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:layout_weight="30"-->
+<!--                                    android:buttonTint="@color/colorTitleText"-->
+<!--                                    android:checked="true"-->
+<!--                                    android:text="Spring"-->
+<!--                                    android:textColor="@color/colorTitleText" />-->
 
-                                <CheckBox
-                                    android:id="@+id/cbFall"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="30"
-                                    android:buttonTint="@color/colorTitleText"
-                                    android:checked="true"
-                                    android:text="Fall"
-                                    android:textColor="@color/colorTitleText" />
+<!--                                <CheckBox-->
+<!--                                    android:id="@+id/cbFall"-->
+<!--                                    android:layout_width="0dp"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:layout_weight="30"-->
+<!--                                    android:buttonTint="@color/colorTitleText"-->
+<!--                                    android:checked="true"-->
+<!--                                    android:text="Fall"-->
+<!--                                    android:textColor="@color/colorTitleText" />-->
 
-                            </TableRow>
+<!--                            </TableRow>-->
 
                             <TableRow
                                 android:layout_width="match_parent"

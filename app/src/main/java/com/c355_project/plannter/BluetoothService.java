@@ -7,13 +7,17 @@ import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.widget.ProgressBar;
 
 import androidx.fragment.app.Fragment;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.io.Serializable;
 import java.util.UUID;
 
 public class BluetoothService {
@@ -356,7 +360,7 @@ public class BluetoothService {
                         System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): PLANT IS NOT NULL: doneCommunicating was TRUE!");
                         return;
                     } else {
-                        write(null);
+                        write("PLANT");
                         System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): While(): Writing the Plant Information into the Output Stream");
                     }
                 } else {
@@ -373,27 +377,62 @@ public class BluetoothService {
 //                System.out.println("Written Message in bytes: \n\t\t\t\t" + message.getBytes());
 
                 try {
+                    doneCommunicating = true;
                     bytes = bluetoothInputStream.read(buffer);
 
-                    final String tempReceivedMessage = new String(buffer, 0, bytes);
-
-                    doneCommunicating = true;
-
-                    System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): IN THE WHILE(true) LOOP");
-                    System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): Received Message: \n\t\t\t\t" + tempReceivedMessage);
-                    System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): Received Message in bytes: \n\t\t\t\t" + buffer);
-
                     if (targetFrag_addPlants != null) {
-                        Main_Window_Instance.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                targetFrag_addPlants.txtName.setText(tempReceivedMessage.substring(20));
+                        SerializablePlant receivedSerializablePlant = null;
 
-                                cancel();
+                        try {
+                            receivedSerializablePlant = deserialize(buffer);
+                        } catch (ClassNotFoundException e) {
+                            e.printStackTrace();
+                        }
 
-                                clientRunningDialog.dismiss();
-                            }
-                        });
+                        if (receivedSerializablePlant != null) {
+
+                            final SerializablePlant finalReceivedSerializablePlant = receivedSerializablePlant;
+                            Main_Window_Instance.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+
+                                    targetFrag_addPlants.txtName.setText(finalReceivedSerializablePlant.plantName);
+                                    targetFrag_addPlants.txtSeedCompany.setText(finalReceivedSerializablePlant.seedCompany);
+                                    targetFrag_addPlants.txtFirstPlantDate.setText(finalReceivedSerializablePlant.firstPlantDate);
+                                    targetFrag_addPlants.txtFirstPlantDate.setText(finalReceivedSerializablePlant.weeksToHarvest);
+                                    targetFrag_addPlants.txtHarvestRange.setText(finalReceivedSerializablePlant.harvestRange);
+                                    targetFrag_addPlants.txtLastPlantDate.setText(finalReceivedSerializablePlant.lastPlantDate);
+
+                                    if (finalReceivedSerializablePlant.seedIndoorDate == 52) {
+                                        targetFrag_addPlants.toggleButton.setChecked(false);
+                                    } else {
+                                        targetFrag_addPlants.toggleButton.setChecked(true);
+                                        targetFrag_addPlants.txtSeedIndoors.setText(finalReceivedSerializablePlant.seedIndoorDate);
+                                    }
+
+                                    targetFrag_addPlants.txtSeedDistance.setText(finalReceivedSerializablePlant.distBetweenPlants);
+                                    targetFrag_addPlants.txtSeedDepth.setText(Double.toString(finalReceivedSerializablePlant.seedDepth));
+
+                                    if (finalReceivedSerializablePlant.raisedRows) {
+                                        targetFrag_addPlants.rbRaisedRows.setChecked(true);
+                                    } else if (finalReceivedSerializablePlant.raisedHills) {
+                                        targetFrag_addPlants.rbRaisedHills.setChecked(true);
+                                    } else {
+                                        targetFrag_addPlants.rbFlat.setChecked(true);
+                                    }
+                                    cancel();
+
+                                    clientRunningDialog.dismiss();
+                                }
+                            });
+                        }
+                    } else {
+                        final String tempReceivedMessage = new String(buffer, 0, bytes);
+
+
+                        System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): IN THE WHILE(true) LOOP");
+                        System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): Received Message: \n\t\t\t\t" + tempReceivedMessage);
+                        System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): Received Message in bytes: \n\t\t\t\t" + buffer);
                     }
 
                 } catch (IOException e) {
@@ -408,11 +447,11 @@ public class BluetoothService {
 
 
             //TODO: Figure Out How to send Plant Info
-            if (xMessage == null) {
-                String messagePlantInfo = "PASSING THIS PLANT: " + passThisPlant.getPlantName() + " I hope you got that!";
+            if (xMessage.equals( "PLANT" )) {
+                SerializablePlant passThisSerializablePlant = new SerializablePlant(passThisPlant.getPlantName(),passThisPlant.getSeedCompany(),passThisPlant.getFirstPlantDate(),passThisPlant.getWeeksToHarvest(),passThisPlant.getHarvestRange(),passThisPlant.getSeedIndoorDate(),passThisPlant.getLastPlantDate(),passThisPlant.getNotes(),"",passThisPlant.isRaisedRows(),passThisPlant.isRaisedHills(),passThisPlant.getDistBetweenPlants(),passThisPlant.getSeedDepth());
                 try {
-                    bluetoothOutputStream.write(messagePlantInfo.getBytes());
-                    System.out.println("[DEBUG]: BluetoothCommunicationThread.run().write(): WROTE THIS MESSAGE: " + messagePlantInfo);
+                    bluetoothOutputStream.write(passThisSerializablePlant.serialize());
+                    System.out.println("[DEBUG]: BluetoothCommunicationThread.run().write(): SENT THE SERIALIZED PLANT");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -437,6 +476,60 @@ public class BluetoothService {
                     e.printStackTrace();
                 }
             }
+        }
+    }
+
+
+
+    public static SerializablePlant deserialize(byte[] bytes) throws IOException, ClassNotFoundException {
+        ByteArrayInputStream b = new ByteArrayInputStream(bytes);
+        ObjectInputStream o = new ObjectInputStream(b);
+        return (SerializablePlant) o.readObject();
+    }
+
+
+
+    public class SerializablePlant implements Serializable {
+        private String plantName;
+        private String seedCompany;
+        private int firstPlantDate;
+        private int weeksToHarvest;
+        private int harvestRange;
+        private int seedIndoorDate;
+        private int lastPlantDate;
+        private String notes;
+        private String photoPath;
+        private boolean raisedRows;
+        private boolean raisedHills;
+        private int distBetweenPlants;
+        private double seedDepth;
+
+        public SerializablePlant(String plantName, String seedCompany, int firstPlantDate,
+                                 int weeksToHarvest, int harvestRange, int seedIndoorDate, int lastPlantDate,
+                                 String notes, String photoPath, boolean raisedRows, boolean raisedHills,
+                                 int distBetweenPlants, double seedDepth)
+        {
+            this.plantName = plantName;
+            this.seedCompany = seedCompany;
+            this.firstPlantDate = firstPlantDate;
+            this.weeksToHarvest = weeksToHarvest;
+            this.harvestRange = harvestRange;
+            this.seedIndoorDate = seedIndoorDate;
+            this.lastPlantDate = lastPlantDate;
+            this.notes = notes;
+            this.photoPath = photoPath;
+            this.raisedRows = raisedRows;
+            this.raisedHills = raisedHills;
+            this.distBetweenPlants = distBetweenPlants;
+            this.seedDepth = seedDepth;
+        }
+
+        public byte[] serialize() throws IOException {
+            ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArray);
+            objectOutputStream.writeObject(this);
+            System.out.println("[DEBUG]: serializablePlant was Serialized...");
+            return byteArray.toByteArray();
         }
     }
 }
