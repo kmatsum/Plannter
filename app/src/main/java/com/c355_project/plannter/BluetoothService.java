@@ -362,7 +362,7 @@ public class BluetoothService {
                         write("Client");
                         System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): PLANT IS NULL: doneCommunicating was TRUE!");
                     } else {
-                        System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): PLANT IS NULL: doneCommunicating was FALSE! WRITING STUFF");
+                        System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): PLANT IS NULL: doneCommunicating was FALSE!");
                     }
                 }
 
@@ -394,8 +394,8 @@ public class BluetoothService {
                                 public void run() {
                                     System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): if (receivedSerializablePlant != null): runOnUiThread: UNPACKING PLANT");
 
-                                    targetFrag_addPlants.txtName.setText(finalReceivedSerializablePlant.plantName);
-                                    targetFrag_addPlants.txtSeedCompany.setText(finalReceivedSerializablePlant.seedCompany);
+                                    targetFrag_addPlants.txtName.setText(finalReceivedSerializablePlant.plantName.toString());
+                                    targetFrag_addPlants.txtSeedCompany.setText(finalReceivedSerializablePlant.seedCompany.toString());
                                     targetFrag_addPlants.txtFirstPlantDate.setText(finalReceivedSerializablePlant.firstPlantDate);
                                     targetFrag_addPlants.txtFirstPlantDate.setText(finalReceivedSerializablePlant.weeksToHarvest);
                                     targetFrag_addPlants.txtHarvestRange.setText(finalReceivedSerializablePlant.harvestRange);
@@ -419,6 +419,8 @@ public class BluetoothService {
                                         targetFrag_addPlants.rbFlat.setChecked(true);
                                     }
 
+                                    targetFrag_addPlants.txtNotes.setText(finalReceivedSerializablePlant.notes.toString());
+
                                     System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): runOnUiThread(): GUI UPDATED");
 
                                     cancel();
@@ -431,7 +433,6 @@ public class BluetoothService {
                         }
                     } else {
                         final String tempReceivedMessage = new String(buffer, 0, bytes);
-
 
                         System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): IN THE WHILE(true) LOOP");
                         System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): Received Message: \n\t\t\t\t" + tempReceivedMessage);
@@ -451,7 +452,7 @@ public class BluetoothService {
 
             //TODO: Figure Out How to send Plant Info
             if (xMessage.equals( "PLANT" )) {
-                SerializablePlant passThisSerializablePlant = new SerializablePlant(passThisPlant.getPlantName(),passThisPlant.getSeedCompany(),passThisPlant.getFirstPlantDate(),passThisPlant.getWeeksToHarvest(),passThisPlant.getHarvestRange(),passThisPlant.getSeedIndoorDate(),passThisPlant.getLastPlantDate(),passThisPlant.getNotes(),"",passThisPlant.isRaisedRows(),passThisPlant.isRaisedHills(),passThisPlant.getDistBetweenPlants(),passThisPlant.getSeedDepth());
+                SerializablePlant passThisSerializablePlant = new SerializablePlant(passThisPlant.getPlantName().toCharArray(),passThisPlant.getSeedCompany().toCharArray(),passThisPlant.getFirstPlantDate(),passThisPlant.getWeeksToHarvest(),passThisPlant.getHarvestRange(),passThisPlant.getSeedIndoorDate(),passThisPlant.getLastPlantDate(),passThisPlant.getNotes().toCharArray(),"".toCharArray(),passThisPlant.isRaisedRows(),passThisPlant.isRaisedHills(),passThisPlant.getDistBetweenPlants(),passThisPlant.getSeedDepth());
                 try {
                     bluetoothOutputStream.write(passThisSerializablePlant.serialize());
                     System.out.println("[DEBUG]: BluetoothCommunicationThread.run().write(): SENT THE SERIALIZED PLANT");
@@ -493,23 +494,23 @@ public class BluetoothService {
 
 
     public class SerializablePlant implements Serializable {
-        private String plantName;
-        private String seedCompany;
+        private char[] plantName;
+        private char[] seedCompany;
         private int firstPlantDate;
         private int weeksToHarvest;
         private int harvestRange;
         private int seedIndoorDate;
         private int lastPlantDate;
-        private String notes;
-        private String photoPath;
+        private char[] notes;
+        private char[] photoPath;
         private boolean raisedRows;
         private boolean raisedHills;
         private int distBetweenPlants;
         private double seedDepth;
 
-        public SerializablePlant(String plantName, String seedCompany, int firstPlantDate,
+        public SerializablePlant(char[] plantName, char[] seedCompany, int firstPlantDate,
                                  int weeksToHarvest, int harvestRange, int seedIndoorDate, int lastPlantDate,
-                                 String notes, String photoPath, boolean raisedRows, boolean raisedHills,
+                                 char[] notes, char[] photoPath, boolean raisedRows, boolean raisedHills,
                                  int distBetweenPlants, double seedDepth)
         {
             this.plantName = plantName;
