@@ -66,6 +66,8 @@ public class BluetoothDeviceList extends Activity implements View.OnClickListene
         // Get a set of currently paired devices
         bluetoothDeviceSet = bluetoothAdapter.getBondedDevices();
 
+        bluetoothDeviceArrayList = new ArrayList<BluetoothDevice>();
+
         // If there are paired devices, add each one to the ArrayAdapter
         if (bluetoothDeviceSet.size() > 0) {
             for (BluetoothDevice device : bluetoothDeviceSet) {
