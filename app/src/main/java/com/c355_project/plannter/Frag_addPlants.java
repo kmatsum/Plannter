@@ -107,6 +107,7 @@ public class Frag_addPlants extends Fragment implements View.OnClickListener {
         view.findViewById(R.id.btnOpenGallery).setOnClickListener(this);
         view.findViewById(R.id.btnSave).setOnClickListener(this);
         view.findViewById(R.id.toggleButton).setOnClickListener(this);
+        view.findViewById(R.id.btnGetFromBluetooth).setOnClickListener(this);
 
         //Find GUI elements
         txtName = view.findViewById(R.id.txtName);
