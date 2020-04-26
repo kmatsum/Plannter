@@ -52,6 +52,9 @@ public class Frag_addNotes extends Fragment implements View.OnClickListener {
     Note tempNote = null;
 
     // Permissions
+    /*
+        ToDo: duplicate camera permission on addPlant fragment
+     */
     private String[] PERMISSIONS =
             {
                     Manifest.permission.CAMERA,
