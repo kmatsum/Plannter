@@ -257,8 +257,8 @@ public class Frag_addPlants extends Fragment implements View.OnClickListener {
                     Main_Window.makeToast("Please enter seed distance!");
                     txtSeedDistance.requestFocus();
                     return;
-                } else if (Integer.parseInt(txtSeedDistance.getText().toString()) > 48){
-                    Main_Window.makeToast("Seed distance must be less than 49 inches (4 feet)!");
+                } else if (Integer.parseInt(txtSeedDistance.getText().toString()) > 119){
+                    Main_Window.makeToast("Seed distance must be less than 120 inches (10 feet)!");
                     txtSeedDistance.requestFocus();
                     return;
                 }
@@ -267,7 +267,7 @@ public class Frag_addPlants extends Fragment implements View.OnClickListener {
                     Main_Window.makeToast("Please enter seed depth!");
                     txtSeedDepth.requestFocus();
                     return;
-                } else if (Integer.parseInt(txtSeedDepth.getText().toString()) > 48){
+                } else if (Double.parseDouble(txtSeedDepth.getText().toString()) > 48){
                     Main_Window.makeToast("Seed depth must be less than 49 inches (4 feet)!");
                     txtSeedDepth.requestFocus();
                     return;
@@ -434,8 +434,8 @@ public class Frag_addPlants extends Fragment implements View.OnClickListener {
         //Resets the GUI to blank input
         txtName.setText("");
         txtSeedCompany.setText("");
-        cbSpring.setChecked(true);
-        cbFall.setChecked(true);
+//        cbSpring.setChecked(true);
+//        cbFall.setChecked(true);
         txtFirstPlantDate.setText("");
         txtWeeksToHarvest.setText("");
         txtHarvestRange.setText("");

@@ -6,13 +6,11 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.Fragment;
-
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
@@ -25,6 +23,10 @@ public class Frag_plantLog extends Fragment implements View.OnClickListener {
 
     // GUI Elements
     ListView lv;
+
+    /*
+    TODO: add instructions to instruct how to open notes
+     */
 
 //LIFECYCLE METHODS ================================================================================
     @Override

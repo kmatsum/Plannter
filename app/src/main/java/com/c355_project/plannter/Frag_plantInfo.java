@@ -173,6 +173,9 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
         }
 
         //Delete selected plant. Alert user if only 1 plant is left (and prevent deletion).
+        /*
+        TODO: add warning when deleting plant
+         */
         else if (id == R.id.btnDelete) {
 
             // Ensure there will be at least 1 plant after deletion
