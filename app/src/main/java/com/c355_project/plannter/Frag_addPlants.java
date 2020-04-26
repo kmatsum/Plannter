@@ -1,14 +1,17 @@
 package com.c355_project.plannter;
 
 import android.app.Activity;
+import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-
 import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import android.os.ParcelFileDescriptor;
@@ -25,28 +28,40 @@ import android.widget.ToggleButton;
 
 public class Frag_addPlants extends Fragment implements View.OnClickListener {
 //VARIABLES ========================================================================================
+    // Intent request codes
+    private static final int    REQUEST_BLUETOOTH_PERMISSIONS = 1;
+    private static final int    REQUEST_ENABLE_BT = 11;
+    private static final int    BLUETOOTH_REQUEST_CONNECT = 21;
+    private static final String SELECTED_DEVICE = "Selected Device";
+
+
+    // Permissions
+    String[] PERMISSIONS = {android.Manifest.permission.BLUETOOTH, android.Manifest.permission.BLUETOOTH_ADMIN, android.Manifest.permission.ACCESS_FINE_LOCATION};
 
     //Main_Window Activity Instantiation
-    Main_Window Main_Window;
+    Main_Window     Main_Window;
 
     //GUI Elements
-    TextView txtName,
-            txtSeedCompany,
-            txtFirstPlantDate,
-            txtWeeksToHarvest,
-            txtHarvestRange,
-            txtLastPlantDate,
-            txtSeedIndoors,
-            txtSeedDistance,
-            txtSeedDepth,
-            txtNotes;
-    CheckBox cbSpring,
-            cbFall;
-    ToggleButton toggleButton;
-    RadioGroup rgMethod;
-    RadioButton rbFlat,
-            rbRaisedHills,
-            rbRaisedRows;
+    TextView        txtName,
+                    txtSeedCompany,
+                    txtFirstPlantDate,
+                    txtWeeksToHarvest,
+                    txtHarvestRange,
+                    txtLastPlantDate,
+                    txtSeedIndoors,
+                    txtSeedDistance,
+                    txtSeedDepth,
+                    txtNotes;
+    CheckBox        cbSpring,
+                    cbFall;
+    ToggleButton    toggleButton;
+    RadioGroup      rgMethod;
+    RadioButton     rbFlat,
+                    rbRaisedHills,
+                    rbRaisedRows;
+
+    BluetoothService
+                    bluetoothService;
 
     // Photo handling
     private static final int CAMERA_REQUEST = 1888;
@@ -86,6 +101,7 @@ public class Frag_addPlants extends Fragment implements View.OnClickListener {
         view.findViewById(R.id.btnOpenGallery).setOnClickListener(this);
         view.findViewById(R.id.btnSave).setOnClickListener(this);
         view.findViewById(R.id.toggleButton).setOnClickListener(this);
+        view.findViewById(R.id.btnGetFromBluetooth).setOnClickListener(this);
 
         //Find GUI elements
         txtName = view.findViewById(R.id.txtName);
@@ -98,8 +114,8 @@ public class Frag_addPlants extends Fragment implements View.OnClickListener {
         txtSeedDistance = view.findViewById(R.id.txtSeedDistance);
         txtSeedDepth = view.findViewById(R.id.txtSeedDepth);
         txtNotes = view.findViewById(R.id.txtNotes);
-        cbFall = view.findViewById(R.id.cbFall);
-        cbSpring = view.findViewById(R.id.cbSpring);
+        //cbFall = view.findViewById(R.id.cbFall);
+        //cbSpring = view.findViewById(R.id.cbSpring);
         toggleButton = view.findViewById(R.id.toggleButton);
         rgMethod = view.findViewById(R.id.rgMethod);
         rbFlat = view.findViewById(R.id.rbFlat);
@@ -142,6 +158,32 @@ public class Frag_addPlants extends Fragment implements View.OnClickListener {
                 - Then startActivityForResult
                 - Retrieve the result of the activity, then start the "Client Side Connection of Bluetooth"
             */
+            case (R.id.btnGetFromBluetooth): {
+                //TODO: Add Sharing Plant Functionality Here
+                System.out.println("[DEBUG]: Frag_addPlants.onClick(): btnGetFromBluetooth Clicked! Instantiating BluetoothService!");
+                bluetoothService = new BluetoothService(this, "CLIENT");
+
+                //Check if Bluetooth is available
+                //If the getDeviceState returns false, then bluetooth is not supported
+                if (bluetoothService.getDeviceState()) {
+                    System.out.println("[DEBUG]: Frag_addPlants.onClick(): Bluetooth IS supported!");
+                    //Bluetooth is supported
+                    if (bluetoothService.enableBluetooth()) {
+                        System.out.println("[DEBUG]: Frag_addPlants.onClick(): Bluetooth IS Enabled!");
+
+                        //Check for Bluetooth Permissions
+                        if (checkBluetoothPermissions() == PERMISSIONS.length) {
+                            System.out.println("[DEBUG]: Frag_addPlants.onClick(): Permissions were all provided! Starting the BluetoothDeviceList ActivityForResult!");
+                            Intent serverIntent = new Intent(getActivity(), BluetoothDeviceList.class);
+                            startActivityForResult(serverIntent, BLUETOOTH_REQUEST_CONNECT);
+                        }
+                    }
+                } else {
+                    //TODO: Bluetooth is NOT Available
+                }
+            } break;
+
+            //Used for handling exceptions on if the given ViewID and the expected ViewID does not match
 
             case (R.id.btnSave): {
                 // INPUT VALIDATION ================================================================
@@ -151,11 +193,11 @@ public class Frag_addPlants extends Fragment implements View.OnClickListener {
                     return;
                 }
 
-                if (!cbFall.isChecked() && !cbSpring.isChecked()){
-                    Main_Window.makeToast("Please check Spring, Fall, or both!");
-                    cbSpring.requestFocus();
-                    return;
-                }
+//                if (!cbFall.isChecked() && !cbSpring.isChecked()){
+//                    Main_Window.makeToast("Please check Spring, Fall, or both!");
+//                    cbSpring.requestFocus();
+//                    return;
+//                }
 
                 if (txtFirstPlantDate.getText().toString().matches("")){
                     Main_Window.makeToast("Please enter a first plant date!");
@@ -209,8 +251,8 @@ public class Frag_addPlants extends Fragment implements View.OnClickListener {
                     Main_Window.makeToast("Please enter seed distance!");
                     txtSeedDistance.requestFocus();
                     return;
-                } else if (Integer.parseInt(txtSeedDistance.getText().toString()) > 48){
-                    Main_Window.makeToast("Seed distance must be less than 49 inches (4 feet)!");
+                } else if (Integer.parseInt(txtSeedDistance.getText().toString()) > 119){
+                    Main_Window.makeToast("Seed distance must be less than 120 inches (10 feet)!");
                     txtSeedDistance.requestFocus();
                     return;
                 }
@@ -219,7 +261,7 @@ public class Frag_addPlants extends Fragment implements View.OnClickListener {
                     Main_Window.makeToast("Please enter seed depth!");
                     txtSeedDepth.requestFocus();
                     return;
-                } else if (Integer.parseInt(txtSeedDepth.getText().toString()) > 48){
+                } else if (Double.parseDouble(txtSeedDepth.getText().toString()) > 48){
                     Main_Window.makeToast("Seed depth must be less than 49 inches (4 feet)!");
                     txtSeedDepth.requestFocus();
                     return;
@@ -248,8 +290,6 @@ public class Frag_addPlants extends Fragment implements View.OnClickListener {
                 resetGUI();
 
             } break;
-
-            //Used for handling exceptions on if the given ViewID and the expected ViewID does not match
             default: {
                 //Toast Error Information
                 Main_Window.makeToast("[ERROR] Menu parameter passed was not found, returning to main menu...");
@@ -261,15 +301,135 @@ public class Frag_addPlants extends Fragment implements View.OnClickListener {
     }
 
 
+//onResult METHODS =================================================================================
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        switch (requestCode) {
+            case (CAMERA_REQUEST): {
+                // Respond to the camera intent
+                // Check requestCode and resultCode
+                if (resultCode == Activity.RESULT_OK)
+                {
+                    try {
+                        // Unpack photo from intent
+                        photo = (Bitmap) data.getExtras().get("data");
+                        if (photo == null)
+                            throw new Exception("Photo is Null");
+                    } catch (Exception e) {
+                        //Display an error
+                        Main_Window.makeToast("Error reading image.");
+                        Log.e("CAMERA_REQUEST Intent", "Exception: ", e);
+                    }
+                }
+            } break;
+
+            case (PICK_IMAGE): {
+                // Respond to the gallery intent
+                // Followed tutorial here: https://medium.com/@pednekarshashank33/android-10s-scoped-storage-image-picker-gallery-camera-d3dcca427bbf
+                // Check requestCode and resultCode
+                if (resultCode == Activity.RESULT_OK) {
+                    try {
+                        // Unpack photo from intent
+                        Uri selectedImageUri = data.getData();
+                        ParcelFileDescriptor pfd = Main_Window.getContentResolver().openFileDescriptor(selectedImageUri, "r");
+                        photo = BitmapFactory.decodeFileDescriptor(pfd.getFileDescriptor());
+                        pfd.close();
+
+                        if (photo == null)
+                            throw new Exception("Photo is Null");
+                    } catch (Exception e) {
+                        //Display an error
+                        Main_Window.makeToast("Error reading selected image.");
+                        Log.e("PICK_IMAGE Intent", "Exception: ", e);
+                    }
+                }
+            } break;
+
+            case (REQUEST_ENABLE_BT): {
+                System.out.println("[DEBUG]: Frag_plantInfo.onActivityResult.case[REQUEST_ENABLE_BT]");
+                //Check for Bluetooth Permissions
+                if (checkBluetoothPermissions() == PERMISSIONS.length) {
+                    System.out.println("[DEBUG]: Frag_addPlants.onActivityResult(): Permissions were all provided! Starting the BluetoothDeviceList ActivityForResult!");
+                    Intent serverIntent = new Intent(getActivity(), BluetoothDeviceList.class);
+                    startActivityForResult(serverIntent, BLUETOOTH_REQUEST_CONNECT);
+                }
+            } break;
+
+            case (BLUETOOTH_REQUEST_CONNECT): {
+                System.out.println("[DEBUG]: Frag_plantInfo.onActivityResult.case[BLUETOOTH_REQUEST_CONNECT]");
+                if (resultCode == Activity.RESULT_OK) {
+                    System.out.println("[DEBUG]: Frag_plantInfo.onActivityResult.case[BLUETOOTH_REQUEST_CONNECT].RESULT_OK");
+                    Bundle receivedData = data.getExtras();
+                    BluetoothDevice connectToThisDevice = (BluetoothDevice) receivedData.get(SELECTED_DEVICE);
+                    System.out.println("[DEBUG]: Frag_plantInfo.onActivityResult.case[BLUETOOTH_REQUEST_CONNECT].RESULT_OK: Received: " + connectToThisDevice.getName() + " as the target BluetoothDevice!");
+
+                    bluetoothService.startBluetoothClientThread(connectToThisDevice);
+                    System.out.println("[DEBUG]: Frag_plantInfo.onActivityResult.case[BLUETOOTH_REQUEST_CONNECT].RESULT_OK: bluetoothService.startBluetoothClientThread was called!");
+                }
+            } break;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        System.out.println("[DEBUG]: onRequestPermissionResult Called!");
+        if (requestCode == REQUEST_BLUETOOTH_PERMISSIONS) {
+            if (verifyPermissions(grantResults)) {
+                //All Permissions Granted
+                System.out.println("[DEBUG]: onRequestPermissionResult.verifyPermissions(grantResults) returned true, ALL PERMISSIONS GRANTED");
+                System.out.println("[DEBUG]: Frag_addPlants.onRequestPermissionResult(): Permissions were all provided! Starting the BluetoothDeviceList ActivityForResult!");
+                Intent serverIntent = new Intent(getActivity(), BluetoothDeviceList.class);
+                startActivityForResult(serverIntent, BLUETOOTH_REQUEST_CONNECT);
+            } else {
+                //Permissions Denied
+                System.out.println("[DEBUG]: onRequestPermissionResult.verifyPermissions(grantResults) returned false, ALL PERMISSIONS NOT GRANTED");
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
 
 //METHODS ==========================================================================================
+    private boolean verifyPermissions(int[] grantResults) {
+        // At least one result must be checked.
+        if (grantResults.length < 1){
+            return false;
+        }
+        // Verify that each required permission has been granted, otherwise return false.
+        for (int result : grantResults) {
+            if (result != PackageManager.PERMISSION_GRANTED) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public int checkBluetoothPermissions () {
+        System.out.println("[DEBUG]: Frag_plantInfo.checkBluetoothPermissions() Called");
+        //This will check for permission
+        int permissionGrantedCounter = 0;
+        for (String str : PERMISSIONS) {
+            System.out.println("[DEBUG]: Frag_plantInfo.checkBluetoothPermissions(): Checking for " + str + " Permission...");
+            if (Main_Window.checkSelfPermission(str) != PackageManager.PERMISSION_GRANTED) {
+                this.requestPermissions(PERMISSIONS, REQUEST_BLUETOOTH_PERMISSIONS);
+                System.out.println("[DEBUG]: Frag_plantInfo.checkBluetoothPermissions(): Permission " + str + " not granted, requesting Permission...");
+                return permissionGrantedCounter;
+            } else {
+                //This will be invoked if the permission in this round of the For Loop is granted
+                //When all permission are granted, then the counter will be 3, since there are only 3 permissions to ask for...
+                System.out.println("[DEBUG]: Frag_plantInfo.checkBluetoothPermissions(): Permission " + str + " granted... ");
+                permissionGrantedCounter++;
+            }
+        }
+        return permissionGrantedCounter;
+    }
 
     private void resetGUI(){
         //Resets the GUI to blank input
         txtName.setText("");
         txtSeedCompany.setText("");
-        cbSpring.setChecked(true);
-        cbFall.setChecked(true);
+//        cbSpring.setChecked(true);
+//        cbFall.setChecked(true);
         txtFirstPlantDate.setText("");
         txtWeeksToHarvest.setText("");
         txtHarvestRange.setText("");
@@ -281,46 +441,5 @@ public class Frag_addPlants extends Fragment implements View.OnClickListener {
         txtSeedDepth.setText("");
         rbFlat.setChecked(true);
         txtNotes.setText("");
-    }
-
-    // Method to respond to intents
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        // Respond to the camera intent
-        // Check requestCode and resultCode
-        if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK)
-        {
-            try {
-                // Unpack photo from intent
-                photo = (Bitmap) data.getExtras().get("data");
-                if (photo == null)
-                    throw new Exception("Photo is Null");
-            } catch (Exception e) {
-                //Display an error
-                Main_Window.makeToast("Error reading image.");
-                Log.e("CAMERA_REQUEST Intent", "Exception: ", e);
-            }
-        }
-
-        // Respond to the gallery intent
-        // Followed tutorial here: https://medium.com/@pednekarshashank33/android-10s-scoped-storage-image-picker-gallery-camera-d3dcca427bbf
-        // Check requestCode and resultCode
-        if (requestCode == PICK_IMAGE && resultCode == Activity.RESULT_OK) {
-            try {
-                // Unpack photo from intent
-                Uri selectedImageUri = data.getData();
-                ParcelFileDescriptor pfd = Main_Window.getContentResolver().openFileDescriptor(selectedImageUri, "r");
-                photo = BitmapFactory.decodeFileDescriptor(pfd.getFileDescriptor());
-                pfd.close();
-
-                if (photo == null)
-                    throw new Exception("Photo is Null");
-            } catch (Exception e) {
-                //Display an error
-                Main_Window.makeToast("Error reading selected image.");
-                Log.e("PICK_IMAGE Intent", "Exception: ", e);
-            }
-        }
     }
 }

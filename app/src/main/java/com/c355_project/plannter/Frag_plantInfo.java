@@ -1,6 +1,5 @@
 package com.c355_project.plannter;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
@@ -33,8 +32,6 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
     private static final int    REQUEST_BLUETOOTH_PERMISSIONS = 1;
     private static final int    REQUEST_MAKE_DISCOVERABLE = 10;
     private static final int    REQUEST_ENABLE_BT = 11;
-    private static final int    DISCOVERABLE_BT_REQUEST_CODE = 3;
-    private static final int    DISCOVERABLE_DURATION = 300;
 
     // Permissions
     String[] PERMISSIONS = {android.Manifest.permission.BLUETOOTH, android.Manifest.permission.BLUETOOTH_ADMIN, android.Manifest.permission.ACCESS_FINE_LOCATION};
@@ -173,6 +170,9 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
         }
 
         //Delete selected plant. Alert user if only 1 plant is left (and prevent deletion).
+        /*
+        TODO: add warning when deleting plant
+         */
         else if (id == R.id.btnDelete) {
 
             // Ensure there will be at least 1 plant after deletion
@@ -194,12 +194,7 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
         //Share Plant Via Bluetooth Button
         else if (id == R.id.btnSharePlant) {
             //TODO: Add Sharing Plant Functionality Here
-            bluetoothService = new BluetoothService(this);
-
-            //Grab and set the Plant we want to send via Bluetooth
-            int position = spnrSelectPlant.getSelectedItemPosition();
-            Plant plant = plantList.get(position);
-            bluetoothService.setPlantToPassViaBluetooth(plant);
+            bluetoothService = new BluetoothService(this, "SERVER");
 
             //Check if Bluetooth is available
             //If the getDeviceState returns false, then bluetooth is not supported
@@ -312,7 +307,12 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
                 System.out.println("[DEBUG]: Frag_plantInfo.onActivityResult.case[REQUEST_MAKE_DISCOVERABLE]: called with result code: " + resultCode);
                 if (resultCode == 300) {
                     System.out.println("[DEBUG]: Frag_plantInfo.onActivityResult.case[REQUEST_MAKE_DISCOVERABLE] invoked an Activity.RESULT_OK");
-                    bluetoothService.startBluetoothServerThread();
+
+                    //Grab and set the Plant we want to send via Bluetooth
+                    int position = spnrSelectPlant.getSelectedItemPosition();
+                    Plant sendThisPlant = plantList.get(position);
+
+                    bluetoothService.startBluetoothServerThread(sendThisPlant);
                 } else {
                     System.out.println("[DEBUG]: Frag_plantInfo.onActivityResult.case[REQUEST_MAKE_DISCOVERABLE] DID NOT invoke an Activity.RESULT_OK");
                 }
