@@ -428,7 +428,7 @@ public class BluetoothService {
 
                             if (doneCommunicating) {
                                 write("Client");
-                                cancel();
+                                BluetoothService.this.cancel();
                                 System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): PLANT IS NULL: doneCommunicating was TRUE!");
                                 return;
                             } else {
@@ -449,7 +449,7 @@ public class BluetoothService {
                 }
 
                 if (!bluetoothSocket.isConnected()) {
-                    cancel();
+                    BluetoothCommunicationThread.this.cancel();
                     return;
                 }
             }
