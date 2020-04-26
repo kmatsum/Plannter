@@ -354,6 +354,14 @@ public class BluetoothService {
             while (true) {
                 System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): Entered WHILE Loop");
 
+                //If the passThisPlant object exists, write it to the other Bluetooth Device
+                if ( passThisPlant != null ) {
+                    System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): While(): Writing the Plant Information into the Output Stream");
+                    write("PLANT");
+                }
+
+
+
                 try {
                     bytes = bluetoothInputStream.read(buffer);
                     System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): bluetoothInputStream read something...");
@@ -434,14 +442,10 @@ public class BluetoothService {
                         System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): Received Message: \n\t\t\t\t" + tempReceivedMessage);
                         System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): Received Message in bytes: \n\t\t\t\t" + buffer);
                     }
+
                 } catch (IOException e) {
                     e.printStackTrace();
                     break;
-                }
-
-                if ( passThisPlant != null ) {
-                    System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): While(): Writing the Plant Information into the Output Stream");
-                    write("PLANT");
                 }
             }
         }
