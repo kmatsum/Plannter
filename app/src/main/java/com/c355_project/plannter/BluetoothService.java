@@ -447,6 +447,11 @@ public class BluetoothService {
                     e.printStackTrace();
                     break;
                 }
+
+                if (!bluetoothSocket.isConnected()) {
+                    cancel();
+                    return;
+                }
             }
         }
 
