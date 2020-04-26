@@ -1,6 +1,5 @@
 package com.c355_project.plannter;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
@@ -33,8 +32,6 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
     private static final int    REQUEST_BLUETOOTH_PERMISSIONS = 1;
     private static final int    REQUEST_MAKE_DISCOVERABLE = 10;
     private static final int    REQUEST_ENABLE_BT = 11;
-    private static final int    DISCOVERABLE_BT_REQUEST_CODE = 3;
-    private static final int    DISCOVERABLE_DURATION = 300;
 
     // Permissions
     String[] PERMISSIONS = {android.Manifest.permission.BLUETOOTH, android.Manifest.permission.BLUETOOTH_ADMIN, android.Manifest.permission.ACCESS_FINE_LOCATION};

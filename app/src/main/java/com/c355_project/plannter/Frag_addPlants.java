@@ -9,7 +9,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,16 +26,11 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-import com.google.android.gms.common.util.JsonUtils;
-
 public class Frag_addPlants extends Fragment implements View.OnClickListener {
 //VARIABLES ========================================================================================
     // Intent request codes
     private static final int    REQUEST_BLUETOOTH_PERMISSIONS = 1;
-    private static final int    REQUEST_MAKE_DISCOVERABLE = 10;
     private static final int    REQUEST_ENABLE_BT = 11;
-    private static final int    DISCOVERABLE_BT_REQUEST_CODE = 3;
-    private static final int    DISCOVERABLE_DURATION = 300;
     private static final int    BLUETOOTH_REQUEST_CONNECT = 21;
     private static final String SELECTED_DEVICE = "Selected Device";
 

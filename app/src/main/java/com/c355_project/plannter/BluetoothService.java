@@ -25,10 +25,6 @@ public class BluetoothService {
     // Intent request codes
     private static final int    REQUEST_MAKE_DISCOVERABLE = 10;
     private static final int    REQUEST_ENABLE_BT = 11;
-    private static final int    DISCOVERABLE_BT_REQUEST_CODE = 3;
-    private static final int    DISCOVERABLE_DURATION = 300;
-
-    public static String        EXTRA_DEVICE_ADDRESS = "device_address";
 
     private static final UUID   TEST_UUID = UUID.fromString("47ef049d-5347-473f-a143-2e1eed78df48");
 
