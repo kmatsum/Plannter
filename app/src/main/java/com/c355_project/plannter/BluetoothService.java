@@ -7,6 +7,7 @@ import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.view.View;
 
 import androidx.fragment.app.Fragment;
 
@@ -360,7 +361,8 @@ public class BluetoothService {
                 }
 
                 //If the passThisPlant object exists, write it to the other Bluetooth Device
-                if ( passThisPlant != null && bluetoothSocket.isConnected()) {
+                //TODO: For some reason this is envoking an error
+                if ( passThisPlant != null && bluetoothSocket.isConnected() ) {
                     System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): While(): Writing the Plant Information into the Output Stream");
                     write("PLANT");
                 }
@@ -404,6 +406,7 @@ public class BluetoothService {
                                         targetFrag_addPlants.toggleButton.setChecked(false);
                                     } else {
                                         targetFrag_addPlants.toggleButton.setChecked(true);
+                                        targetFrag_addPlants.txtSeedIndoors.setVisibility(View.VISIBLE);
                                         targetFrag_addPlants.txtSeedIndoors.setText(Integer.toString(finalReceivedSerializablePlant.seedIndoorDate));
                                     }
 
