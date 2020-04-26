@@ -428,8 +428,8 @@ public class BluetoothService {
 
                             if (doneCommunicating) {
                                 write("Client");
-                                BluetoothService.this.cancel();
                                 System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): PLANT IS NULL: doneCommunicating was TRUE!");
+                                BluetoothService.this.stopBluetooth();
                                 return;
                             } else {
                                 System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): PLANT IS NULL: doneCommunicating was FALSE!");
@@ -441,16 +441,15 @@ public class BluetoothService {
                         System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): IN THE WHILE(true) LOOP");
                         System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): Received Message: \n\t\t\t\t" + tempReceivedMessage);
                         System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): Received Message in bytes: \n\t\t\t\t" + buffer);
-                    }
 
+                        if (!bluetoothSocket.isConnected()) {
+                            BluetoothCommunicationThread.this.cancel();
+                            return;
+                        }
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                     break;
-                }
-
-                if (!bluetoothSocket.isConnected()) {
-                    BluetoothCommunicationThread.this.cancel();
-                    return;
                 }
             }
         }
