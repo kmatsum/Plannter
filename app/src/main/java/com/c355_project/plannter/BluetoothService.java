@@ -354,10 +354,10 @@ public class BluetoothService {
             while (true) {
                 System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): Entered WHILE Loop");
 
-//                if (!bluetoothSocket.isConnected()) {
-//                    BluetoothCommunicationThread.this.cancel();
-//                    return;
-//                }
+                if (!bluetoothSocket.isConnected()) {
+                    BluetoothCommunicationThread.this.cancel();
+                    return;
+                }
 
                 //If the passThisPlant object exists, write it to the other Bluetooth Device
                 if ( passThisPlant != null && bluetoothSocket.isConnected()) {
