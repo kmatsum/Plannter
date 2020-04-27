@@ -24,10 +24,6 @@ public class Frag_plantLog extends Fragment implements View.OnClickListener {
     // GUI Elements
     ListView lv;
 
-    /*
-    TODO: add instructions to instruct how to open notes
-     */
-
 //LIFECYCLE METHODS ================================================================================
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

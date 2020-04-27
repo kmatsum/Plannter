@@ -11,6 +11,7 @@ import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Bundle;
 import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
@@ -52,14 +53,12 @@ public class Frag_addNotes extends Fragment implements View.OnClickListener {
     Note tempNote = null;
 
     // Permissions
-    /*
-        ToDo: duplicate camera permission on addPlant fragment
-     */
-    private String[] PERMISSIONS =
-            {
-                    Manifest.permission.CAMERA,
-                    Manifest.permission.RECORD_AUDIO
-            };
+    // Intent request codes
+    private static final int    REQUEST_RECORD_AUDIO = 1;
+    private static final int    REQUEST_TAKE_PICTURE = 2;
+    private static final int    REQUEST_VIEW_GALLERY = 3;
+    private String[] CAM_PERMISSION = {Manifest.permission.CAMERA};
+    private String[] AUDIO_PERMISSION = {Manifest.permission.RECORD_AUDIO};
 
 //LIFECYCLE METHODS ================================================================================
     @Override
@@ -105,16 +104,6 @@ public class Frag_addNotes extends Fragment implements View.OnClickListener {
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
-
-        // PERMISSIONS =============================================================================
-        // Loop to request permissions if not already granted
-        for (String str : PERMISSIONS) {
-            if (Main_Window.checkSelfPermission(str) != PackageManager.PERMISSION_GRANTED) {
-                this.requestPermissions(PERMISSIONS, 1);
-                System.out.println("[DEBUG] Requesting permissions.");
-                return;
-            }
-        }
     }
 
     @Override
@@ -160,56 +149,71 @@ public class Frag_addNotes extends Fragment implements View.OnClickListener {
 
             //Take Picture
             case (R.id.btnTakeNotePicture):{
-                // Send Intent to camera, response handled below in onActivityResult method
-                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(cameraIntent, CAMERA_REQUEST);
+                if (Main_Window.checkSelfPermission(CAM_PERMISSION[0]) != PackageManager.PERMISSION_GRANTED) {
+                    this.requestPermissions(CAM_PERMISSION, REQUEST_TAKE_PICTURE);
+                    System.out.println("[DEBUG] Requesting permissions.");
+                } else {
+                    // Send Intent to camera, response handled in onActivityResult method
+                    Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(cameraIntent, CAMERA_REQUEST);
+                }
             } break;
 
             //Download Image
             case (R.id.btnNoteOpenGallery):{
-                Intent galleryIntent = new Intent(Intent.ACTION_PICK,
-                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(Intent.createChooser(galleryIntent, "Select Picture"), PICK_IMAGE);
+                if (Main_Window.checkSelfPermission(CAM_PERMISSION[0]) != PackageManager.PERMISSION_GRANTED) {
+                    this.requestPermissions(CAM_PERMISSION, REQUEST_VIEW_GALLERY);
+                    System.out.println("[DEBUG] Requesting permissions.");
+                } else {
+                    // Send Intent to camera, response handled in onActivityResult method
+                    Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(Intent.createChooser(galleryIntent, "Select Picture"), PICK_IMAGE);
+                }
             } break;
 
             // AUDIO NOTE SETUP ====================================================================
 
             case (R.id.imgRecording): {
 
-                // Start recording if not already started
-                if (noteMedia == null){
+                if (Main_Window.checkSelfPermission(AUDIO_PERMISSION[0]) != PackageManager.PERMISSION_GRANTED) {
+                    this.requestPermissions(AUDIO_PERMISSION, REQUEST_RECORD_AUDIO);
+                    System.out.println("[DEBUG] Requesting permissions.");
+                } else {
+                    // Start recording if not already started
+                    if (noteMedia == null){
 
-                    noteMedia = new MediaRecorder();
-                    imgRecording.setImageResource(R.drawable.red_microphone);
+                        noteMedia = new MediaRecorder();
+                        imgRecording.setImageResource(R.drawable.red_microphone);
 
-                    // Store file in temp folder
-                    noteMedia.setOutputFile(Main_Window.TEMP_MEDIA_LOCATION + "/tempAudio.mp3");
+                        // Store file in temp folder
+                        noteMedia.setOutputFile(Main_Window.TEMP_MEDIA_LOCATION + "/tempAudio.mp3");
 
-                    //Set the source of the audio pick up to the microphone
-                    noteMedia.setAudioSource(MediaRecorder.AudioSource.MIC);
-                    noteMedia.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
-                    noteMedia.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT);
+                        //Set the source of the audio pick up to the microphone
+                        noteMedia.setAudioSource(MediaRecorder.AudioSource.MIC);
+                        noteMedia.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+                        noteMedia.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT);
 
-                    try {
-                        //Start the recorder
-                        noteMedia.prepare();
-                        noteMedia.start();
-                    } catch (Exception e) {
-                        android.util.Log.e("Frag_addNotes", "Exception = " + e);
+                        try {
+                            //Start the recorder
+                            noteMedia.prepare();
+                            noteMedia.start();
+                        } catch (Exception e) {
+                            android.util.Log.e("Frag_addNotes", "Exception = " + e);
+                        }
+                    }
+
+                    // Else stop and save the recording
+                    else {
+                        //Set image back to colored picture to let user know they are done recording
+                        imgRecording.setImageResource(R.drawable.black_microphone);
+
+                        //Stops audio recording and releases Audio recorder resources
+                        noteMedia.stop();
+                        noteMedia.release();
+                        noteMedia = null;
                     }
                 }
-
-                // Else stop and save the recording
-                else {
-                    //Set image back to colored picture to let user know they are done recording
-                    imgRecording.setImageResource(R.drawable.black_microphone);
-
-                    //Stops audio recording and releases Audio recorder resources
-                    noteMedia.stop();
-                    noteMedia.release();
-                    noteMedia = null;
-                }
-
             } break;
 
             // SAVE NOTE ===========================================================================
@@ -304,7 +308,63 @@ public class Frag_addNotes extends Fragment implements View.OnClickListener {
         }
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        System.out.println("[DEBUG]: onRequestPermissionResult Called!");
+        if (requestCode == REQUEST_TAKE_PICTURE) {
+            if (verifyPermissions(grantResults)) {
+                //All Permissions Granted
+                System.out.println("[DEBUG]: onRequestPermissionResult.verifyPermissions(grantResults) returned true, ALL PERMISSIONS GRANTED");
+                // Send Intent to camera, response handled in onActivityResult method
+                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(cameraIntent, CAMERA_REQUEST);
+            } else {
+                //Permissions Denied
+                System.out.println("[DEBUG]: onRequestPermissionResult.verifyPermissions(grantResults) returned false, ALL PERMISSIONS NOT GRANTED");
+                Main_Window.makeToast("You must grant camera permissions to take a picture.");
+            }
+        } else if (requestCode == REQUEST_VIEW_GALLERY) {
+            if (verifyPermissions(grantResults)) {
+                //All Permissions Granted
+                System.out.println("[DEBUG]: onRequestPermissionResult.verifyPermissions(grantResults) returned true, ALL PERMISSIONS GRANTED");
+                // Send Intent to camera, response handled in onActivityResult method
+                Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(Intent.createChooser(galleryIntent, "Select Picture"), PICK_IMAGE);
+            } else {
+                //Permissions Denied
+                System.out.println("[DEBUG]: onRequestPermissionResult.verifyPermissions(grantResults) returned false, ALL PERMISSIONS NOT GRANTED");
+                Main_Window.makeToast("You must grant camera permissions to open gallery.");
+            }
+        } else if (requestCode == REQUEST_RECORD_AUDIO) {
+            if (verifyPermissions(grantResults)) {
+                //All Permissions Granted
+                System.out.println("[DEBUG]: onRequestPermissionResult.verifyPermissions(grantResults) returned true, ALL PERMISSIONS GRANTED");
+                // Call On Click
+                imgRecording.callOnClick();
+            } else {
+                //Permissions Denied
+                System.out.println("[DEBUG]: onRequestPermissionResult.verifyPermissions(grantResults) returned false, ALL PERMISSIONS NOT GRANTED");
+                Main_Window.makeToast("You must grant microphone permissions to record audio.");
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
 // METHODS =========================================================================================
+    private boolean verifyPermissions(int[] grantResults) {
+        // At least one result must be checked.
+        if (grantResults.length < 1){
+            return false;
+        }
+        // Verify that each required permission has been granted, otherwise return false.
+        for (int result : grantResults) {
+            if (result != PackageManager.PERMISSION_GRANTED) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     private void resetGUI(){
         //Resets the GUI to blank input

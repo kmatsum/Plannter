@@ -456,8 +456,6 @@ public class BluetoothService {
         public void write(String xMessage) {
             System.out.println("[DEBUG]: BluetoothCommunicationThread.write(): Called!");
 
-
-            //TODO: Figure Out How to send Plant Info
             if (xMessage.equals( "PLANT" )) {
                 SerializablePlant passThisSerializablePlant = new SerializablePlant(passThisPlant.getPlantName(),passThisPlant.getSeedCompany(),passThisPlant.getFirstPlantDate(),passThisPlant.getWeeksToHarvest(),passThisPlant.getHarvestRange(),passThisPlant.getSeedIndoorDate(),passThisPlant.getLastPlantDate(),passThisPlant.getNotes(),"",passThisPlant.isRaisedRows(),passThisPlant.isRaisedHills(),passThisPlant.getDistBetweenPlants(),passThisPlant.getSeedDepth());
                 try {

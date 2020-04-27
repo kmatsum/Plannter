@@ -1,5 +1,8 @@
 package com.c355_project.plannter;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
@@ -8,6 +11,8 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import android.text.Html;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -170,30 +175,18 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
         }
 
         //Delete selected plant. Alert user if only 1 plant is left (and prevent deletion).
-        /*
-        TODO: add warning when deleting plant
-         */
         else if (id == R.id.btnDelete) {
 
             // Ensure there will be at least 1 plant after deletion
             if (spnrSelectPlant.getAdapter().getCount() == 1){
                 makeToast("You must have at least 1 plant.");
-                return;
+            } else {
+                openConfirmationDialog(Main_Window);
             }
-
-            // Delete plant from database
-            int position = spnrSelectPlant.getSelectedItemPosition();
-            Plant plant = plantList.get(position);
-            Main_Window.editTransaction("DeletePlant", plant);
-
-            //Update plant list
-            plantList = Main_Window.PlantList;
-            Main_Window.changeFragment("MainMenu");
         }
 
         //Share Plant Via Bluetooth Button
         else if (id == R.id.btnSharePlant) {
-            //TODO: Add Sharing Plant Functionality Here
             bluetoothService = new BluetoothService(this, "SERVER");
 
             //Check if Bluetooth is available
@@ -209,7 +202,8 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
                     }
                 }
             } else {
-                //TODO: Bluetooth is NOT Available
+                //Bluetooth is NOT Available
+                Main_Window.makeToast("Bluetooth is not available on your device.");
             }
         }
 
@@ -393,5 +387,29 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
         resultingDate = c.getTime();
 
         return resultingDate;
+    }
+
+    private void openConfirmationDialog(Context context) {
+        new AlertDialog.Builder(context)
+                .setTitle("Are You Sure You Want To Delete Plant " + plantList.get(spnrSelectPlant.getSelectedItemPosition()).getPlantName() + "?")
+                .setMessage(Html.fromHtml("This action cannot be undone."))
+
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Delete plant from database
+                        int position = spnrSelectPlant.getSelectedItemPosition();
+                        Plant plant = plantList.get(position);
+                        Main_Window.editTransaction("DeletePlant", plant);
+
+                        //Update plant list
+                        plantList = Main_Window.PlantList;
+                        Main_Window.changeFragment("MainMenu");
+                    }
+                })
+
+                // A null listener allows the button to close the dialog and take no further action.
+                .setNegativeButton("Cancel", null)
+                .setIcon(R.drawable.ic_dialog_warning)
+                .show();
     }
 }
