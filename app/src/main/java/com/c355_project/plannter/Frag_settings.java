@@ -272,7 +272,7 @@ public class Frag_settings extends Fragment implements View.OnClickListener {
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    protected void openConfirmationDialog(Context context) {
+    private void openConfirmationDialog(Context context) {
         new AlertDialog.Builder(context)
                 .setTitle("Are You Sure You Want To Reset?")
                 .setMessage(Html.fromHtml("Doing so will remove any custom plants and frost dates."))
