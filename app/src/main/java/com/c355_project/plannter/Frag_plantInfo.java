@@ -204,6 +204,7 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
                 }
             } else {
                 //TODO: Bluetooth is NOT Available
+                Main_Window.makeToast("Bluetooth is not available on your device.");
             }
         }
 
