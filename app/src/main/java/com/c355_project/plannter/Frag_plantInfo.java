@@ -187,7 +187,6 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
 
         //Share Plant Via Bluetooth Button
         else if (id == R.id.btnSharePlant) {
-            //TODO: Add Sharing Plant Functionality Here
             bluetoothService = new BluetoothService(this, "SERVER");
 
             //Check if Bluetooth is available
@@ -203,7 +202,7 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
                     }
                 }
             } else {
-                //TODO: Bluetooth is NOT Available
+                //Bluetooth is NOT Available
                 Main_Window.makeToast("Bluetooth is not available on your device.");
             }
         }

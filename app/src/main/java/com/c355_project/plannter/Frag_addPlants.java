@@ -171,13 +171,7 @@ public class Frag_addPlants extends Fragment implements View.OnClickListener {
                 }
             } break;
 
-            /*  TODO: Add a "Get Plant Info From Bluetooth" Button.
-                - Create the Intent which calls the Device List Activity class
-                - Then startActivityForResult
-                - Retrieve the result of the activity, then start the "Client Side Connection of Bluetooth"
-            */
             case (R.id.btnGetFromBluetooth): {
-                //TODO: Add Sharing Plant Functionality Here
                 System.out.println("[DEBUG]: Frag_addPlants.onClick(): btnGetFromBluetooth Clicked! Instantiating BluetoothService!");
                 bluetoothService = new BluetoothService(this, "CLIENT");
 
@@ -197,7 +191,7 @@ public class Frag_addPlants extends Fragment implements View.OnClickListener {
                         }
                     }
                 } else {
-                    //TODO: Bluetooth is NOT Available
+                    //Bluetooth is NOT Available
                     Main_Window.makeToast("Bluetooth is not available on your device.");
                 }
             } break;
