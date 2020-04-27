@@ -1,5 +1,6 @@
 package com.c355_project.plannter;
 
+import android.Manifest;
 import android.app.Activity;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
@@ -30,13 +31,23 @@ public class Frag_addPlants extends Fragment implements View.OnClickListener {
 //VARIABLES ========================================================================================
     // Intent request codes
     private static final int    REQUEST_BLUETOOTH_PERMISSIONS = 1;
+    private static final int    REQUEST_TAKE_PICTURE = 2;
+    private static final int    REQUEST_VIEW_GALLERY = 3;
     private static final int    REQUEST_ENABLE_BT = 11;
     private static final int    BLUETOOTH_REQUEST_CONNECT = 21;
     private static final String SELECTED_DEVICE = "Selected Device";
 
 
     // Permissions
-    String[] PERMISSIONS = {android.Manifest.permission.BLUETOOTH, android.Manifest.permission.BLUETOOTH_ADMIN, android.Manifest.permission.ACCESS_FINE_LOCATION};
+    String[] PERMISSIONS = {
+            android.Manifest.permission.BLUETOOTH,
+            android.Manifest.permission.BLUETOOTH_ADMIN,
+            android.Manifest.permission.ACCESS_FINE_LOCATION};
+
+    private String[] CAM_PERMISSIONS =
+            {
+                    Manifest.permission.CAMERA,
+            };
 
     //Main_Window Activity Instantiation
     Main_Window     Main_Window;
@@ -121,7 +132,6 @@ public class Frag_addPlants extends Fragment implements View.OnClickListener {
         rbFlat = view.findViewById(R.id.rbFlat);
         rbRaisedHills = view.findViewById(R.id.rbRaisedHills);
         rbRaisedRows = view.findViewById(R.id.rbRaisedRows);
-
     }
 
 //LISTENER METHODS =================================================================================
@@ -131,16 +141,27 @@ public class Frag_addPlants extends Fragment implements View.OnClickListener {
         switch (view.getId()) {
             //Take Picture
             case (R.id.btnTakePicture):{
-                // Send Intent to camera, response handled below in onActivityResult method
-                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(cameraIntent, CAMERA_REQUEST);
+                if (Main_Window.checkSelfPermission(CAM_PERMISSIONS[0]) != PackageManager.PERMISSION_GRANTED) {
+                    this.requestPermissions(CAM_PERMISSIONS, REQUEST_TAKE_PICTURE);
+                    System.out.println("[DEBUG] Requesting permissions.");
+                } else {
+                    // Send Intent to camera, response handled below in onActivityResult method
+                    Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(cameraIntent, CAMERA_REQUEST);
+                }
             } break;
 
             //Download Image
             case (R.id.btnOpenGallery):{
-                Intent galleryIntent = new Intent(Intent.ACTION_PICK,
-                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(Intent.createChooser(galleryIntent, "Select Picture"), PICK_IMAGE);
+                if (Main_Window.checkSelfPermission(CAM_PERMISSIONS[0]) != PackageManager.PERMISSION_GRANTED) {
+                    this.requestPermissions(CAM_PERMISSIONS, REQUEST_VIEW_GALLERY);
+                    System.out.println("[DEBUG] Requesting permissions.");
+                } else {
+                    // Send Intent to camera, response handled below in onActivityResult method
+                    Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(Intent.createChooser(galleryIntent, "Select Picture"), PICK_IMAGE);
+                }
             } break;
 
             //Toggle the seed indoors textbox
@@ -180,6 +201,7 @@ public class Frag_addPlants extends Fragment implements View.OnClickListener {
                     }
                 } else {
                     //TODO: Bluetooth is NOT Available
+                    Main_Window.makeToast("Bluetooth is not available on your device.");
                 }
             } break;
 
@@ -384,6 +406,31 @@ public class Frag_addPlants extends Fragment implements View.OnClickListener {
             } else {
                 //Permissions Denied
                 System.out.println("[DEBUG]: onRequestPermissionResult.verifyPermissions(grantResults) returned false, ALL PERMISSIONS NOT GRANTED");
+            }
+        } else if (requestCode == REQUEST_TAKE_PICTURE) {
+            if (verifyPermissions(grantResults)) {
+                //All Permissions Granted
+                System.out.println("[DEBUG]: onRequestPermissionResult.verifyPermissions(grantResults) returned true, ALL PERMISSIONS GRANTED");
+                // Send Intent to camera, response handled in onActivityResult method
+                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(cameraIntent, CAMERA_REQUEST);
+            } else {
+                //Permissions Denied
+                System.out.println("[DEBUG]: onRequestPermissionResult.verifyPermissions(grantResults) returned false, ALL PERMISSIONS NOT GRANTED");
+                Main_Window.makeToast("You must grant camera permissions to take a picture.");
+            }
+        } else if (requestCode == REQUEST_VIEW_GALLERY) {
+            if (verifyPermissions(grantResults)) {
+                //All Permissions Granted
+                System.out.println("[DEBUG]: onRequestPermissionResult.verifyPermissions(grantResults) returned true, ALL PERMISSIONS GRANTED");
+                // Send Intent to camera, response handled in onActivityResult method
+                Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(Intent.createChooser(galleryIntent, "Select Picture"), PICK_IMAGE);
+            } else {
+                //Permissions Denied
+                System.out.println("[DEBUG]: onRequestPermissionResult.verifyPermissions(grantResults) returned false, ALL PERMISSIONS NOT GRANTED");
+                Main_Window.makeToast("You must grant camera permissions to open gallery.");
             }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
