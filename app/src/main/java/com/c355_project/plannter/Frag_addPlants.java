@@ -44,10 +44,7 @@ public class Frag_addPlants extends Fragment implements View.OnClickListener {
             android.Manifest.permission.BLUETOOTH_ADMIN,
             android.Manifest.permission.ACCESS_FINE_LOCATION};
 
-    private String[] CAM_PERMISSIONS =
-            {
-                    Manifest.permission.CAMERA,
-            };
+    private String[] CAM_PERMISSION = {Manifest.permission.CAMERA};
 
     //Main_Window Activity Instantiation
     Main_Window     Main_Window;
@@ -141,11 +138,11 @@ public class Frag_addPlants extends Fragment implements View.OnClickListener {
         switch (view.getId()) {
             //Take Picture
             case (R.id.btnTakePicture):{
-                if (Main_Window.checkSelfPermission(CAM_PERMISSIONS[0]) != PackageManager.PERMISSION_GRANTED) {
-                    this.requestPermissions(CAM_PERMISSIONS, REQUEST_TAKE_PICTURE);
+                if (Main_Window.checkSelfPermission(CAM_PERMISSION[0]) != PackageManager.PERMISSION_GRANTED) {
+                    this.requestPermissions(CAM_PERMISSION, REQUEST_TAKE_PICTURE);
                     System.out.println("[DEBUG] Requesting permissions.");
                 } else {
-                    // Send Intent to camera, response handled below in onActivityResult method
+                    // Send Intent to camera, response handled in onActivityResult method
                     Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     startActivityForResult(cameraIntent, CAMERA_REQUEST);
                 }
@@ -153,11 +150,11 @@ public class Frag_addPlants extends Fragment implements View.OnClickListener {
 
             //Download Image
             case (R.id.btnOpenGallery):{
-                if (Main_Window.checkSelfPermission(CAM_PERMISSIONS[0]) != PackageManager.PERMISSION_GRANTED) {
-                    this.requestPermissions(CAM_PERMISSIONS, REQUEST_VIEW_GALLERY);
+                if (Main_Window.checkSelfPermission(CAM_PERMISSION[0]) != PackageManager.PERMISSION_GRANTED) {
+                    this.requestPermissions(CAM_PERMISSION, REQUEST_VIEW_GALLERY);
                     System.out.println("[DEBUG] Requesting permissions.");
                 } else {
-                    // Send Intent to camera, response handled below in onActivityResult method
+                    // Send Intent to camera, response handled in onActivityResult method
                     Intent galleryIntent = new Intent(Intent.ACTION_PICK,
                             MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     startActivityForResult(Intent.createChooser(galleryIntent, "Select Picture"), PICK_IMAGE);
