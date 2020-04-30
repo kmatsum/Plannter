@@ -3,7 +3,6 @@ package com.c355_project.plannter;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-
 import androidx.core.content.res.ResourcesCompat;
 import androidx.room.Database;
 import androidx.room.Room;
@@ -11,7 +10,6 @@ import androidx.room.RoomDatabase;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
 
 @Database(entities = {Plant.class, Log.class, Note.class}, exportSchema = false, version = 15)
 

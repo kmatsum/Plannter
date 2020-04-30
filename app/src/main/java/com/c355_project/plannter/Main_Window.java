@@ -21,10 +21,6 @@ import java.util.List;
 
 public class Main_Window extends AppCompatActivity {
 
-    /*TODO:
-        - Fix broken ads
-     */
-
 //VARIABLES ========================================================================================
 
     // Location to store all files
@@ -74,6 +70,7 @@ public class Main_Window extends AppCompatActivity {
     MediaPlayer player;
 
 //Lifecycle Methods ================================================================================
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,22 +121,8 @@ public class Main_Window extends AppCompatActivity {
 
     }
 
-//onActivityResult =================================================================================
-    /*
-    This onActivityResult is mainly used for Bluetooth
-    */
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        switch (requestCode) {
-            case (1): {
+//METHODS ==========================================================================================
 
-            }
-            break;
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    //METHODS ==========================================================================================
     public void changeFragment(String menuFragment) {
         switch (menuFragment) {
             case "MainMenu": {
@@ -342,7 +325,6 @@ public class Main_Window extends AppCompatActivity {
         // Reset/create the Media Player
         stopAudio();
         player = new MediaPlayer();
-        makeToast("Filepath: " + filePath);
         try {
             player.setDataSource(filePath);
             player.setLooping(false);
@@ -378,6 +360,7 @@ public class Main_Window extends AppCompatActivity {
         This Async Task is its own class in order to utilize onPreExecute and onPostExecute to add
         a loading box so the app will wait while updating plant/log/note lists.
    */
+
     public class DatabaseTransaction extends AsyncTask {
 
         ProgressDialog progress;

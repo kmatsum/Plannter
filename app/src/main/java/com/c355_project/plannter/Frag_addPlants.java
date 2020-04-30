@@ -21,14 +21,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
 public class Frag_addPlants extends Fragment implements View.OnClickListener {
+
 //VARIABLES ========================================================================================
+
     // Intent request codes
     private static final int    REQUEST_BLUETOOTH_PERMISSIONS = 1;
     private static final int    REQUEST_TAKE_PICTURE = 2;
@@ -36,7 +37,6 @@ public class Frag_addPlants extends Fragment implements View.OnClickListener {
     private static final int    REQUEST_ENABLE_BT = 11;
     private static final int    BLUETOOTH_REQUEST_CONNECT = 21;
     private static final String SELECTED_DEVICE = "Selected Device";
-
 
     // Permissions
     String[] PERMISSIONS = {
@@ -60,8 +60,6 @@ public class Frag_addPlants extends Fragment implements View.OnClickListener {
                     txtSeedDistance,
                     txtSeedDepth,
                     txtNotes;
-    CheckBox        cbSpring,
-                    cbFall;
     ToggleButton    toggleButton;
     RadioGroup      rgMethod;
     RadioButton     rbFlat,
@@ -122,8 +120,6 @@ public class Frag_addPlants extends Fragment implements View.OnClickListener {
         txtSeedDistance = view.findViewById(R.id.txtSeedDistance);
         txtSeedDepth = view.findViewById(R.id.txtSeedDepth);
         txtNotes = view.findViewById(R.id.txtNotes);
-        //cbFall = view.findViewById(R.id.cbFall);
-        //cbSpring = view.findViewById(R.id.cbSpring);
         toggleButton = view.findViewById(R.id.toggleButton);
         rgMethod = view.findViewById(R.id.rgMethod);
         rbFlat = view.findViewById(R.id.rbFlat);
@@ -132,6 +128,7 @@ public class Frag_addPlants extends Fragment implements View.OnClickListener {
     }
 
 //LISTENER METHODS =================================================================================
+
     @Override
     public void onClick(View view) {
         //Determines how to respond to the click
@@ -196,8 +193,6 @@ public class Frag_addPlants extends Fragment implements View.OnClickListener {
                 }
             } break;
 
-            //Used for handling exceptions on if the given ViewID and the expected ViewID does not match
-
             case (R.id.btnSave): {
                 // INPUT VALIDATION ================================================================
                 if (txtName.getText().toString().matches("")){
@@ -205,12 +200,6 @@ public class Frag_addPlants extends Fragment implements View.OnClickListener {
                     txtName.requestFocus();
                     return;
                 }
-
-//                if (!cbFall.isChecked() && !cbSpring.isChecked()){
-//                    Main_Window.makeToast("Please check Spring, Fall, or both!");
-//                    cbSpring.requestFocus();
-//                    return;
-//                }
 
                 if (txtFirstPlantDate.getText().toString().matches("")){
                     Main_Window.makeToast("Please enter a first plant date!");
@@ -303,11 +292,12 @@ public class Frag_addPlants extends Fragment implements View.OnClickListener {
                 resetGUI();
 
             } break;
+
+            //Used for handling exceptions on if the given ViewID and the expected ViewID does not match
             default: {
                 //Toast Error Information
                 Main_Window.makeToast("[ERROR] Menu parameter passed was not found, returning to main menu...");
                 System.out.println("[ERROR] Menu parameter passed was not found, returning to main menu...\n");
-
                 Main_Window.changeFragment("MainMenu");
             }
         }
@@ -315,6 +305,7 @@ public class Frag_addPlants extends Fragment implements View.OnClickListener {
 
 
 //onResult METHODS =================================================================================
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         switch (requestCode) {
@@ -466,8 +457,6 @@ public class Frag_addPlants extends Fragment implements View.OnClickListener {
         //Resets the GUI to blank input
         txtName.setText("");
         txtSeedCompany.setText("");
-//        cbSpring.setChecked(true);
-//        cbFall.setChecked(true);
         txtFirstPlantDate.setText("");
         txtWeeksToHarvest.setText("");
         txtHarvestRange.setText("");

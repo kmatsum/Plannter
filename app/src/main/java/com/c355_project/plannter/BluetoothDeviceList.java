@@ -19,16 +19,16 @@ import java.util.Set;
 
 public class BluetoothDeviceList extends Activity implements View.OnClickListener, AdapterView.OnItemClickListener {
 
-    private static final String SELECTED_DEVICE = "Selected Device";
+//VARIABLES ========================================================================================
 
+    private static final String SELECTED_DEVICE = "Selected Device";
     BluetoothAdapter            bluetoothAdapter;
     Set<BluetoothDevice>        bluetoothDeviceSet;
     ArrayList<BluetoothDevice>  bluetoothDeviceArrayList;
-
-
     ArrayAdapter<String>        bluetoothDevicesArrayAdapter;
-
     TextView                    txtBluetoothDeviceListOutput;
+
+//LIFECYCLE METHODS ================================================================================
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,8 +80,6 @@ public class BluetoothDeviceList extends Activity implements View.OnClickListene
         }
     }
 
-
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -97,9 +95,8 @@ public class BluetoothDeviceList extends Activity implements View.OnClickListene
         this.unregisterReceiver(bluetoothDiscoveryBroadcastReceiver);
     }
 
+//LISTENER METHODS =================================================================================
 
-
-//EVENT METHODS ====================================================================================
     @Override
     public void onClick(View view) {
         System.out.println("[DEBUG]: BluetoothDeviceList.onClick Called!");

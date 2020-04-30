@@ -8,40 +8,34 @@ import android.bluetooth.BluetoothSocket;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.View;
-
 import androidx.fragment.app.Fragment;
-
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.OutputStream;
-import java.io.Serializable;
 import java.util.UUID;
 
 public class BluetoothService {
+
+//VARIABLES ========================================================================================
+
     // Intent request codes
     private static final int    REQUEST_MAKE_DISCOVERABLE = 10;
     private static final int    REQUEST_ENABLE_BT = 11;
-
     private static final UUID   TEST_UUID = UUID.fromString("47ef049d-5347-473f-a143-2e1eed78df48");
 
     BluetoothAdapter                bluetoothAdapter;
-
     BluetoothServerThread           bluetoothServerThread;
     BluetoothClientThread           bluetoothClientThread;
     BluetoothCommunicationThread    bluetoothCommunicationThread;
-
     Main_Window                     Main_Window_Instance;
     ProgressDialog                  clientRunningDialog;
-
     Fragment                        targetContext;
-
     Frag_addPlants                  targetFrag_addPlants;
-
     Plant                           passThisPlant;
+
+//CONSTRUCTOR ======================================================================================
 
     public BluetoothService (Fragment xTargetContext, String bluetoothRole) {
         System.out.println("[DEBUG]: BluetoothService(): Constructor Called!");
@@ -58,6 +52,8 @@ public class BluetoothService {
 
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     }
+
+//METHODS ==========================================================================================
 
     public boolean getDeviceState() {
         System.out.println("[DEBUG]: BluetoothService.getDeviceState(): Called");
@@ -131,8 +127,6 @@ public class BluetoothService {
         }
     }
 
-
-
     public void startBluetoothClientThread ( BluetoothDevice xBluetoothDevice ) {
         System.out.println("[DEBUG]: BluetoothService.startBluetoothClientThread(): Called");
 
@@ -181,10 +175,6 @@ public class BluetoothService {
             bluetoothCommunicationThread = null;
         }
     }
-
-
-
-
 
 //BLUETOOTH SERVER THREAD SUB-CLASS ================================================================
     private class BluetoothServerThread extends Thread {
@@ -241,9 +231,6 @@ public class BluetoothService {
             }
         }
     }
-
-
-
 
     private class BluetoothClientThread extends Thread {
         private BluetoothSocket bluetoothClientSocket;
@@ -307,9 +294,7 @@ public class BluetoothService {
         }
     }
 
-
-
-
+//THREAD CLASS =====================================================================================
 
     private class BluetoothCommunicationThread extends Thread {
         private final   BluetoothSocket bluetoothSocket;
@@ -357,13 +342,11 @@ public class BluetoothService {
                 }
 
                 //If the passThisPlant object exists, write it to the other Bluetooth Device
-                //TODO: For some reason this is envoking an error
+                //TODO: For some reason this is invoking an error
                 if ( passThisPlant != null && bluetoothSocket.isConnected() ) {
                     System.out.println("[DEBUG]: BluetoothCommunicationThread.run(): While(): Writing the Plant Information into the Output Stream");
                     write("PLANT");
                 }
-
-
 
                 try {
                     bytes = bluetoothInputStream.read(buffer);
@@ -487,8 +470,6 @@ public class BluetoothService {
             }
         }
     }
-
-
 
     public static SerializablePlant deserialize(byte[] bytes) throws IOException, ClassNotFoundException {
         ByteArrayInputStream b = new ByteArrayInputStream(bytes);

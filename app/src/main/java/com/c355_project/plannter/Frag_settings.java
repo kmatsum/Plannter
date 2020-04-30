@@ -7,10 +7,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-
 import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.Fragment;
-
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
@@ -29,7 +27,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Frag_settings extends Fragment implements View.OnClickListener {
+
 //VARIABLES ========================================================================================
+
     //Main_Window Activity Instantiation
     Main_Window Main_Window;
 
@@ -54,6 +54,7 @@ public class Frag_settings extends Fragment implements View.OnClickListener {
     String website = "https://morningchores.com/frost-dates/";
 
 //LIFECYCLE METHODS ================================================================================
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -175,8 +176,8 @@ public class Frag_settings extends Fragment implements View.OnClickListener {
         });
     }
 
-
 //LISTENER METHODS =================================================================================
+
     @Override
     public void onClick(View view) {
         //Determines how to respond to the click
@@ -261,6 +262,7 @@ public class Frag_settings extends Fragment implements View.OnClickListener {
     }
 
 //METHODS ==========================================================================================
+
     public void makeToast(String Message) {
         Toast toast = Toast.makeText(getActivity(), Message, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL,0,0);

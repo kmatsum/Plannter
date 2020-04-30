@@ -14,7 +14,7 @@ import android.widget.ListView;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
-public class Frag_plantLog extends Fragment implements View.OnClickListener {
+public class Frag_plantLog extends Fragment {
 
 //VARIABLES ========================================================================================
 
@@ -49,8 +49,6 @@ public class Frag_plantLog extends Fragment implements View.OnClickListener {
         //Find GUI Elements
         lv = view.findViewById(R.id.lv);
 
-        //Set all OnClickListeners needed for this View
-
         // Setup list adapter
         PlantLogCustomListAdapter adapter = new PlantLogCustomListAdapter(Main_Window);
         lv.setAdapter(adapter);
@@ -64,13 +62,6 @@ public class Frag_plantLog extends Fragment implements View.OnClickListener {
         AdView adView = view.findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
         adView.loadAd(adRequest);
-    }
-
-
-//LISTENER METHODS =================================================================================
-    @Override
-    public void onClick (View view) {
-
     }
 
 //METHODS ==========================================================================================

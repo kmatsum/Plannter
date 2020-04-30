@@ -17,6 +17,7 @@ import java.util.List;
 public class PlantLogCustomListAdapter extends BaseAdapter {
 
 // CONSTRUCTOR =====================================================================================
+
     public PlantLogCustomListAdapter (Main_Window main_window) {
         Main_window = main_window;
         inflater = (LayoutInflater)main_window.
@@ -24,6 +25,7 @@ public class PlantLogCustomListAdapter extends BaseAdapter {
     }
 
 // VARIABLES =======================================================================================
+
     // Global Variable Declarations
     private LayoutInflater inflater = null;
     Main_Window Main_window;
@@ -37,6 +39,8 @@ public class PlantLogCustomListAdapter extends BaseAdapter {
                 txtHarvestRange;
         ImageButton btnDeleteLog;
     }
+
+//OVERRIDE METHODS =================================================================================
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {

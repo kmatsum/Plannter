@@ -23,11 +23,11 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RadioButton;
 import java.io.File;
 
 public class Frag_addNotes extends Fragment implements View.OnClickListener {
+
 //VARIABLES ========================================================================================
 
     //Main_Window Activity Instantiation
@@ -61,6 +61,7 @@ public class Frag_addNotes extends Fragment implements View.OnClickListener {
     private String[] AUDIO_PERMISSION = {Manifest.permission.RECORD_AUDIO};
 
 //LIFECYCLE METHODS ================================================================================
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -105,6 +106,8 @@ public class Frag_addNotes extends Fragment implements View.OnClickListener {
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
     }
+
+//LISTENER METHODS =================================================================================
 
     @Override
     public void onClick(View view) {
@@ -265,6 +268,8 @@ public class Frag_addNotes extends Fragment implements View.OnClickListener {
             break;
         }
     }
+
+//onResult METHODS =================================================================================
 
     // Method to respond to intents
     @Override
