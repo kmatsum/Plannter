@@ -3,6 +3,8 @@ PLANNTER
 ==============================================
 Description: Plant/Crop Planning application based on Clyde's Garden Planner
 
+This plant planning application, allows the user to look up general planting information (planting depth, harvest time, etc.) for a set of default plants. Users have the ability to add and remove plants. Users can share and receive custom plants over Bluetooth from peers with the same app. Users can also create logs to keep track of planted plants. Users can add text, audio, and image notes to each log.
+
 ==============================================
 HOW TO INSTALL
 ==============================================
@@ -22,15 +24,15 @@ This version of the Plannter application is 1.0.0.
 CONTACT INFORMATION
 ==============================================
 This project was created as part of CNIT 35500 Software Development for Mobile Computers during the Fall 2019 semester.
-It is being updated as part of CNIT 42500 Software Development for Mobile Computers II during the Spring 2020 semester.
+It was updated as part of CNIT 42500 Software Development for Mobile Computers II during the Spring 2020 semester.
 
 The group members are outlined below:
 
-NAME ---------------- POSITION ------------ EMAIL -----------------
-Rachel Rettig		      Senior in CNIT		    rrettig@purdue.edu
-Kazushi Matsumoto	    Senior in CNIT		    kmatsum@purdue.edu 
+NAME ---------------- 		POSITION ------------ 	EMAIL -----------------
+Rachel Rettig		      	Senior in CNIT		    rrettig@purdue.edu
+Kazushi Matsumoto	    	Senior in CNIT		    kmatsum@purdue.edu 
 Jon Clark			        Senior in CNIT		    clark462@purdue.edu 
-Paul Mueller		      Senior in CNIT		    muellerp@purdue.edu
+Paul Mueller		      	Senior in CNIT		    muellerp@purdue.edu
 
 ==============================================
 LICENSING
