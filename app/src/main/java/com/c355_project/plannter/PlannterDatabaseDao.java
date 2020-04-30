@@ -1,13 +1,11 @@
 package com.c355_project.plannter;
 
 import android.graphics.Bitmap;
-
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;

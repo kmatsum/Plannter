@@ -17,6 +17,7 @@ import android.widget.TextView;
 public class LogNoteCustomListAdapter extends BaseAdapter {
 
 // CONSTRUCTOR =====================================================================================
+
     public LogNoteCustomListAdapter(Main_Window main_window) {
         Main_window = main_window;
         inflater = (LayoutInflater)Main_window.
@@ -24,6 +25,7 @@ public class LogNoteCustomListAdapter extends BaseAdapter {
     }
 
 // VARIABLES =======================================================================================
+
     // Global Variable Declarations
     private LayoutInflater inflater = null;
     Main_Window Main_window;
@@ -33,6 +35,8 @@ public class LogNoteCustomListAdapter extends BaseAdapter {
     ImageView imgNoteImage;
     ImageButton btnDeleteNote, btnPlay, btnStop;
     LinearLayout layoutNoteCaption;
+
+//OVERRIDE METHODS =================================================================================
 
     @Override
     public View getView(int position, View rowView, ViewGroup viewGroup) {
@@ -117,8 +121,8 @@ public class LogNoteCustomListAdapter extends BaseAdapter {
         return 0;
     }
 
+// METHODS =========================================================================================
 
-    // METHODS =========================================================================================
     private void openConfirmationDialog(Context context, final Note note) {
         new AlertDialog.Builder(context)
                 .setTitle("Are you sure you want to delete " + note.getNoteType() + " note " + note.getNoteID() + "?")

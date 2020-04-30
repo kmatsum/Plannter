@@ -6,7 +6,6 @@ import androidx.room.PrimaryKey;
 
 import java.util.ArrayList;
 
-
 @Entity
 public class    Plant {
 
@@ -53,8 +52,8 @@ public class    Plant {
     private int distBetweenPlants;
     private double seedDepth;
 
-
 //CONSTRUCTOR ======================================================================================
+
     public Plant(String plantName, String seedCompany, int firstPlantDate,
                  int weeksToHarvest, int harvestRange, int seedIndoorDate, int lastPlantDate,
                  String notes, String photoPath, boolean raisedRows, boolean raisedHills,
@@ -74,9 +73,8 @@ public class    Plant {
         this.seedDepth = seedDepth;
     }
 
-
-
 //GETS & SETS ======================================================================================
+
     public void setPlantID(int plantID) {
         this.plantID = plantID;
     }

@@ -71,10 +71,10 @@ public class Frag_logNote extends Fragment implements View.OnClickListener{
         if (adapter.getCount() == 0){
             Main_Window.makeToast("You have no notes for log: " + currLog.getPlantName());
         }
-
     }
 
 //LISTENER METHODS =================================================================================
+
     @Override
     public void onClick (View view) {
         switch (view.getId()){

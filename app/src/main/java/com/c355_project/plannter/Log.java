@@ -3,7 +3,6 @@ package com.c355_project.plannter;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
-
 import java.util.ArrayList;
 
 @Entity

@@ -11,7 +11,6 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
 import android.text.Html;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -33,6 +32,7 @@ import com.google.android.gms.ads.AdView;
 public class Frag_plantInfo extends Fragment implements View.OnClickListener, Spinner.OnItemSelectedListener {
 
 //VARIABLES ========================================================================================
+
     // Intent request codes
     private static final int    REQUEST_BLUETOOTH_PERMISSIONS = 1;
     private static final int    REQUEST_MAKE_DISCOVERABLE = 10;
@@ -73,6 +73,7 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
     SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 
 //LIFECYCLE METHODS ================================================================================
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -151,7 +152,8 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
         super.onDestroyView();
     }
 
-    //LISTENER METHODS =================================================================================
+//LISTENER METHODS =================================================================================
+
     public void onClick (View view) {
         Integer id = view.getId();
 
@@ -283,7 +285,8 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
 
     }
 
-    //onActivityResult =================================================================================
+//onResult METHODS =================================================================================
+
     /*
     This onActivityResult is mainly used for Bluetooth
     */
@@ -332,6 +335,7 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
     }
 
 //METHODS ==========================================================================================
+
     public void makeToast(String Message) {
         Toast toast = Toast.makeText(getActivity(), Message, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL,0,0);
@@ -392,7 +396,7 @@ public class Frag_plantInfo extends Fragment implements View.OnClickListener, Sp
     private void openConfirmationDialog(Context context) {
         new AlertDialog.Builder(context)
                 .setTitle("Are You Sure You Want To Delete Plant " + plantList.get(spnrSelectPlant.getSelectedItemPosition()).getPlantName() + "?")
-                .setMessage(Html.fromHtml("This action cannot be undone."))
+                .setMessage(Html.fromHtml("All corresponding logs and notes will be deleted. This action cannot be undone."))
 
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {

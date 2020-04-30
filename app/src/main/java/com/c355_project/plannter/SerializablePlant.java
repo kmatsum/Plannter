@@ -6,6 +6,9 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 public class SerializablePlant implements Serializable {
+
+// VARIABLES =======================================================================================
+
     String plantName;
     String seedCompany;
     int firstPlantDate;
@@ -19,6 +22,8 @@ public class SerializablePlant implements Serializable {
     boolean raisedHills;
     int distBetweenPlants;
     double seedDepth;
+
+// CONSTRUCTOR =====================================================================================
 
     public SerializablePlant(String plantName, String seedCompany, int firstPlantDate,
                              int weeksToHarvest, int harvestRange, int seedIndoorDate, int lastPlantDate,

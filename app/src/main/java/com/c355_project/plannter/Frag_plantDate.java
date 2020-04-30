@@ -3,14 +3,10 @@ package com.c355_project.plannter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-
 import android.text.Html;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -23,10 +19,8 @@ import android.widget.CalendarView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -34,10 +28,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-
-
 public class Frag_plantDate extends Fragment implements View.OnClickListener, CalendarView.OnDateChangeListener {
-    //VARIABLES ========================================================================================
+
+//VARIABLES ========================================================================================
+
     //Main_Window Activity Instantiation
     Main_Window Main_Window;
 
@@ -61,7 +55,8 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
     List<String> PlantNames;
     ArrayAdapter<String> adapter;
 
-    //LIFECYCLE METHODS ================================================================================
+//LIFECYCLE METHODS ================================================================================
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -91,7 +86,6 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
             System.out.println(PlantDatabase.get(i).getPlantName());
         }
         System.out.println("------------------------------------");
-
 
         //Set all OnClickListeners needed for this View
         view.findViewById(R.id.btnCalculate).setOnClickListener(this);
@@ -143,8 +137,8 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
         });
     }
 
+//LISTENER METHODS =================================================================================
 
-    //LISTENER METHODS =================================================================================
     public void onClick(View view) {
         Integer id = view.getId();
 
@@ -172,7 +166,6 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
             else
                 setHarvestRanges();
                 txtCropHarvest.setText("Selected Date: " + simpleDateFormat.format(selectedDate) + "\n" + "Expect to Harvest Between: " + simpleDateFormat.format(harvestRangeMin.getTime()) + "-" + simpleDateFormat.format(harvestRangeMax.getTime()));
-
         }
 
         else if (id == R.id.btnAddLog) {
@@ -192,6 +185,7 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
             Main_Window.changeFragment("MainMenu");
         }
     }
+
     @Override
     public void onSelectedDayChange(@NonNull CalendarView calendarView, int year, int month, int day) {
         //Concat both month and day so comparison is easier and code is cleaner
@@ -208,8 +202,8 @@ public class Frag_plantDate extends Fragment implements View.OnClickListener, Ca
         }
     }
 
+//METHODS ==========================================================================================
 
-    //METHODS ==========================================================================================
     public void makeToast(String Message) {
         Toast toast = Toast.makeText(getActivity(), Message, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 0);
