@@ -18,7 +18,7 @@ Defaults for harvesting and planting range for each crop are set based off of th
 ==============================================
 SOFTWARE VERSION
 ==============================================
-This version of the Plannter application is 1.0.0.
+This version of the Plannter application is 1.2.1.
 
 ==============================================
 CONTACT INFORMATION
