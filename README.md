@@ -24,7 +24,7 @@ Defaults for harvesting and planting range for each crop are set based off of th
 ## How to Install
 * In the project’s current state, the application can only be installed onto a physical device through Android Studio or via the provided apk file.
 * The APK file for each Plannter version can be found in the **/Plannter APK Packages** folder
-* The application can also be run on the Android Studio emulator, which can be accomplished once the emulator has been created by opening the project in Android Studio and pressing the green play button after the build has finished. To install the application using Android Studio, you must have your physical device connected to the computer via a USB cable and have downloaded Google USB Driver from the SDK Manager. You may also install it over Wifi. More information about debugging can be found [here] (https://developer.android.com/studio/command-line/adb).
+* The application can also be run on the Android Studio emulator, which can be accomplished once the emulator has been created by opening the project in Android Studio and pressing the green play button after the build has finished. To install the application using Android Studio, you must have your physical device connected to the computer via a USB cable and have downloaded Google USB Driver from the SDK Manager. You may also install it over Wifi. More information about debugging can be found [here](https://developer.android.com/studio/command-line/adb).
 
 <br />
 
