@@ -1,4 +1,4 @@
-<div align="center"><strong>Planting made easy!</strong></div>
+<div align="center"><strong># Planting made easy!</strong></div>
 <div align="center">Plant/Crop Planning application based on Clyde's Garden Planner!</div>
 
 <br />
