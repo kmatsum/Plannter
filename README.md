@@ -30,7 +30,7 @@ Defaults for harvesting and planting range for each crop are set based off of th
 
 ## Contributors
 This project was created as part of CNIT 35500 Software Development for Mobile Computers during the Fall 2019 semester.
-Additionally, during our time in CNIT 42500 Software Development for Mobile Computers II during the Spring 2020 semester, we continued development on the application. After graduation, our team will continue working on the project, alongside our career development.
+Additionally, during our time in CNIT 42500 Software Development for Mobile Computers II during the Spring 2020 semester, we continued development on the application. Our team will continue to actively develop Plannter in addition to starting our careers following graduation.
 
 ### The group members are outlined below:
 * Rachel Rettig
