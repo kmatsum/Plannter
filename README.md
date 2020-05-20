@@ -1,4 +1,4 @@
-<div align="center"><strong># Planting made easy!</strong></div>
+<div align="center"><h1>Planting made easy!</h1></div>
 <div align="center">Plant/Crop Planning application based on Clyde's Garden Planner!</div>
 
 <br />
@@ -34,10 +34,10 @@ It was updated as part of CNIT 42500 Software Development for Mobile Computers I
 
 ### The group members are outlined below:
 * Rachel Rettig
-	* Senior in CNIT
+	* Purdue Polytechnic CIT Graduate
 	* rachel.s.rettig@gmail.com
 * Kazushi Matsumoto
-	* Senior in CNIT
+	* Purdue Polytechnic CIT Graduate
 	* kazushi.matsumoto@gmail.com 
 * Jon Clark
 	* Purdue Polytechnic CIT Graduate
