@@ -15,6 +15,23 @@
 
 <br />
 
+## Application Images
+
+![Main Menu](assets/README_Images/Plannter_Main_Menu.png)
+![Plant Listings](assets/README_Images/Planter_Plant_Listing.png)
+![Planting Calendar](assets/README_Images/Plannter_Planting_Calendar.png)
+![Plant Logs](assets/README_Images/Plannter_Plant_Logs.png)
+
+## Links
+
+* This Application's Specifications Documentation can be found [here](https://docs.google.com/document/d/1s-XwBKtrc03HqLFiqbofNUjdgzlbqzlyzPURGRhQImM/edit?usp=sharing)
+* Plannter's Video Demo can be found [here](https://drive.google.com/file/d/1vvfwNfplSy3sSANlWKwMxv80k2_ai1FV/view?usp=sharing) (Narrated by Rachel Rettig)
+
+
+<br />
+<br />
+<br />
+
 ## Configuration
 
 Defaults for harvesting and planting range for each crop are set based off of the most recent first spring frost date and the last fall frost date. All plants in the database are from the Clyde’s Garden Planner slider sheet used for reference for making this app. All new plants and their corresponding information may be added in the Crop Info page. All frost dates may be changed in the settings menu, and those changes will then affect the planting and harvesting range for all crops in the database. You may remove individual plants via their corresponding page in Crop Info. You may also reset the database to its original plant values in the Settings page. No other configuration is necessary.
