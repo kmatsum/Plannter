@@ -17,7 +17,7 @@
 
 ## Application Images
 
-![Main Menu](assets/README_Images/Plannter_Main_Menu.png){:width="25%"} ![Plant Listings](assets/README_Images/Planter_Plant_Listing.png){:width="25%"} ![Planting Calendar](assets/README_Images/Plannter_Planting_Calendar.png){:width="25%"} ![Plant Logs](assets/README_Images/Plannter_Plant_Logs.png){:width="25%"}
+![Main Menu](assets/README_Images/Plannter_Main_Menu.png){:height="50%" width="50%"} ![Plant Listings](assets/README_Images/Planter_Plant_Listing.png){:width="25%"} ![Planting Calendar](assets/README_Images/Plannter_Planting_Calendar.png){:width="25%"} ![Plant Logs](assets/README_Images/Plannter_Plant_Logs.png){:width="25%"}
 
 ## Links
 
