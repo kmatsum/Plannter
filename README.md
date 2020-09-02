@@ -20,6 +20,8 @@
 | --- | --- |
 | <img src="https://github.com/kmatsum/Plannter/blob/master/assets/README_Images/Plannter_Main_Menu.png" alt="Main Menu" width="25%"> | <img src="https://github.com/kmatsum/Plannter/blob/master/assets/README_Images/Planter_Plant_Listing.png" alt="Plant Listing" width="25%"> |
 
+<img src="https://github.com/kmatsum/Plannter/blob/master/assets/README_Images/Plannter_Main_Menu.png" alt="Main Menu" width="25%"> <img src="https://github.com/kmatsum/Plannter/blob/master/assets/README_Images/Planter_Plant_Listing.png" alt="Plant Listing" width="25%">
+
 ## Links
 
 * This Application's Specifications Documentation can be found [here](https://docs.google.com/document/d/1s-XwBKtrc03HqLFiqbofNUjdgzlbqzlyzPURGRhQImM/edit?usp=sharing)
