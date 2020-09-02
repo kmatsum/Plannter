@@ -16,11 +16,8 @@
 <br />
 
 ## Application Images
-| | |
-| --- | --- |
-| <img src="https://github.com/kmatsum/Plannter/blob/master/assets/README_Images/Plannter_Main_Menu.png" alt="Main Menu" width="25%"> | <img src="https://github.com/kmatsum/Plannter/blob/master/assets/README_Images/Planter_Plant_Listing.png" alt="Plant Listing" width="25%"> |
 
-<img src="https://github.com/kmatsum/Plannter/blob/master/assets/README_Images/Plannter_Main_Menu.png" alt="Main Menu" width="25%"> <img src="https://github.com/kmatsum/Plannter/blob/master/assets/README_Images/Planter_Plant_Listing.png" alt="Plant Listing" width="25%">
+<img src="https://github.com/kmatsum/Plannter/blob/master/assets/README_Images/Plannter_Main_Menu.png" alt="Main Menu" width="25%"> <img src="https://github.com/kmatsum/Plannter/blob/master/assets/README_Images/Planter_Plant_Listing.png" alt="Plant Listing" width="25%"> <img src="https://github.com/kmatsum/Plannter/blob/master/assets/README_Images/Plannter_Planting_Calendar.png" alt="Planting Calendar" width="25%"> <img src="https://github.com/kmatsum/Plannter/blob/master/assets/README_Images/Plannter_Plant_Logs.png" alt="Plant Logs" width="25%">
 
 ## Links
 
