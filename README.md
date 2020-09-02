@@ -17,10 +17,7 @@
 
 ## Application Images
 
-![Main Menu](assets/README_Images/Plannter_Main_Menu.png)
-![Plant Listings](assets/README_Images/Planter_Plant_Listing.png)
-![Planting Calendar](assets/README_Images/Plannter_Planting_Calendar.png)
-![Plant Logs](assets/README_Images/Plannter_Plant_Logs.png)
+![Main Menu](assets/README_Images/Plannter_Main_Menu.png) ![Plant Listings](assets/README_Images/Planter_Plant_Listing.png) ![Planting Calendar](assets/README_Images/Plannter_Planting_Calendar.png) ![Plant Logs](assets/README_Images/Plannter_Plant_Logs.png)
 
 ## Links
 
